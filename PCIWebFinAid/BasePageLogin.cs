@@ -169,10 +169,9 @@ namespace PCIWebFinAid
 			if ( sessionGeneral == null )
 				return 10010;
 
-			int     ret = 10020;
-			string  fieldCode;
-			string  fieldValue;
-			Control ctl;
+			int    ret = 10020;
+			string fieldCode;
+			string fieldValue;
 
 			using (MiscList mList = new MiscList())
 				try	
