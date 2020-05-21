@@ -71,6 +71,7 @@
     <Content Include="Images\Calendar.gif" />
     <Content Include="Images\Chat.png" />
     <Content Include="Images\Close1.png" />
+    <Content Include="Images\Logo-ENG.png" />
     <Content Include="IncludeLogin1.htm" />
     <Content Include="IncludeLogin2.htm" />
     <Content Include="IncludeMain.htm" />

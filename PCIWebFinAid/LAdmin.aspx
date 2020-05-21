@@ -40,9 +40,11 @@ Mauritius<br />
 <br /><br />
 <a href="ContractLookup.aspx">Contract Lookup</a>
 <br /><br />
-<a href="LFinnHub.aspx">FinnHub Stock Ticker</a>
+<a href="LFinnHub.aspx">FinnHub Financial Tickers</a>
+<!--
 <br /><br />
 <a href="JavaScript:alert('Sorry, this is not yet available')">FinnHub Currency Exchange Rates</a>
+-->
 </td></tr>
 </table>
 

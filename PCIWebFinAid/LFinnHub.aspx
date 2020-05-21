@@ -15,6 +15,18 @@
 	<asp:Literal runat="server" ID="lblRefresh"></asp:Literal>
 </head>
 <body>
+<script type="text/javascript">
+function ChooseTicker(p)
+{
+	DisableElt('txtStock',(p!=1));
+	DisableElt('txtForex',(p!=2));
+	DisableElt('lstCurr' ,(p!=2));
+	if ( p == 1 )
+		GetElt('txtStock').focus();
+	else if ( p == 2 )
+		GetElt('txtForex').focus();
+}
+</script>
 <form id="frmMain" runat="server">
 <ascx:Header runat="server" ID="ascxHeader" />
 <ascx:Menu   runat="server" ID="ascxMenu" />
@@ -35,29 +47,60 @@ Mauritius<br />
 </td>
 <td style="vertical-align:top;padding-left:10px">
 
-<div class="Header4">FinnHub Stock Ticker</div>
+<div class="Header4">FinnHub Financial Tickers</div>
 <br />
 
 <table>
 <tr>
 	<td>FinnHub API Key</td>
-	<td>
+	<td colspan="2">
 		<asp:TextBox runat="server" ID="txtKey" Width="200px" value="bqvq9gnrh5rapls47e8g"></asp:TextBox></td></tr>
 <tr>
-	<td>Stock Symbol(s)<br />Separated by commas<br />Eg. AAPL,MSFT,GOOGL</td>
-	<td><asp:TextBox runat="server" ID="txtStock" Width="200px" TextMode="MultiLine" Rows="4"></asp:TextBox></td></tr>
-<tr>
 	<td>Refresh every</td>
-	<td><asp:TextBox runat="server" ID="txtRefresh" Width="30px" value="10"></asp:TextBox> seconds</td></tr>
+	<td colspan="2"><asp:TextBox runat="server" ID="txtRefresh" Width="30px" value="10"></asp:TextBox> seconds</td></tr>
 <tr>
-	<td>Status</td><td><b><asp:Literal runat="server" ID="lblStatus"></asp:Literal></b></td></tr>
+	<td>Status</td>
+	<td colspan="2"><b><asp:Label runat="server" ID="lblStatus"></asp:Label></b></td></tr>
 <tr>
-	<td colspan="2"><br />
-		<asp:Button runat="server" ID="btnStart" Text="Start"  OnClick="btnStart_Click" />
+	<td colspan="3"><hr /></td></tr>
+<tr>
+	<td>
+		<asp:RadioButton runat="server" id="rdoTick1" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(1)" />Stock values</td>
+	<td>
+		Stock symbol(s)<br />
+		Separated by commas<br />
+		Eg. AAPL,MSFT,GOOGL</td>
+	<td>
+		<asp:TextBox runat="server" ID="txtStock" Width="200px" TextMode="MultiLine" Rows="4"></asp:TextBox></td></tr>
+<tr>
+	<td colspan="3"><hr /></td></tr>
+<tr>
+	<td rowspan="2">
+		<asp:RadioButton runat="server" id="rdoTick2" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(2)" />Currency exchange rates</td>
+	<td>
+		Base currency</td>
+	<td>
+		<asp:DropDownList runat="server" ID="lstCurr">
+			<asp:ListItem Value="ZAR" Text="(ZAR) SA Rands"></asp:ListItem>
+			<asp:ListItem Value="EUR" Text="(EUR) Euros"></asp:ListItem>
+			<asp:ListItem Value="GBP" Text="(GBP) Pounds Sterling"></asp:ListItem>
+			<asp:ListItem Value="USD" Text="(USD) US Dollars"></asp:ListItem>
+			<asp:ListItem Value="CHF" Text="(CHF) Swiss Francs"></asp:ListItem>
+		</asp:DropDownList></td></tr>
+<tr>
+	<td>
+		Currency symbol(s)<br />
+		Separated by commas<br />
+		Eg. GBP,USD,EUR,ZAR</td>
+	<td>
+		<asp:TextBox runat="server" ID="txtForex" Width="200px" TextMode="MultiLine" Rows="4"></asp:TextBox></td></tr>
+<tr>
+	<td colspan="3"><br />
+		<asp:Button runat="server" ID="btnStart" Text="Start"  OnClick="btnStart_Click" OnClientClick="JavaScript:SetEltValue('lblStatus','<span style=\'color:orange\'>Starting</span>');return true" />
 		<asp:Button runat="server" ID="btnStop"  Text="Stop"   OnClick="btnStop_Click" />
 		<asp:Button runat="server" ID="btnClear" Text="Clear"  OnClick="btnClear_Click" /></td></tr>
 <tr>
-	<td colspan="2" class="Error"><asp:Label ID="lblErr" runat="server"></asp:Label></td></tr>
+	<td colspan="3" class="Error"><asp:Label ID="lblErr" runat="server"></asp:Label></td></tr>
 </table>
 
 </td><td style="vertical-align:top;padding-left:10px;border:1px solid #000000">
