@@ -31,6 +31,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.HtmlControls.HtmlForm frmMain;
         
         /// <summary>
+        /// ascxXMenu control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::PCIWebFinAid.XMenu ascxXMenu;
+        
+        /// <summary>
         /// ascxXFooter control.
         /// </summary>
         /// <remarks>

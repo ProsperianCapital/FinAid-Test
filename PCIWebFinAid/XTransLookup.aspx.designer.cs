@@ -10,7 +10,7 @@
 namespace PCIWebFinAid {
     
     
-    public partial class XLogin {
+    public partial class XTransLookup {
         
         /// <summary>
         /// ascxXHeader control.
@@ -22,76 +22,85 @@ namespace PCIWebFinAid {
         protected global::PCIWebFinAid.XHeader ascxXHeader;
         
         /// <summary>
-        /// frmLogin control.
+        /// frmLookup control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmLogin;
+        protected global::System.Web.UI.HtmlControls.HtmlForm frmLookup;
         
         /// <summary>
-        /// txtID control.
+        /// ascxXMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtID;
+        protected global::PCIWebFinAid.XMenu ascxXMenu;
         
         /// <summary>
-        /// txtPW control.
+        /// txtCard1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPW;
+        protected global::System.Web.UI.WebControls.TextBox txtCard1;
         
         /// <summary>
-        /// btnLogin control.
+        /// txtCard2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogin;
+        protected global::System.Web.UI.WebControls.TextBox txtCard2;
         
         /// <summary>
-        /// pnlSecurity control.
+        /// txtCard3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlSecurity;
+        protected global::System.Web.UI.WebControls.TextBox txtCard3;
         
         /// <summary>
-        /// txtSecurity control.
+        /// txtDate1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSecurity;
+        protected global::System.Web.UI.WebControls.TextBox txtDate1;
         
         /// <summary>
-        /// btnOK control.
+        /// txtDate2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOK;
+        protected global::System.Web.UI.WebControls.TextBox txtDate2;
         
         /// <summary>
-        /// lblErr2 control.
+        /// btnSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErr2;
+        protected global::System.Web.UI.WebControls.Button btnSearch;
+        
+        /// <summary>
+        /// lblTransactions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lblTransactions;
         
         /// <summary>
         /// ascxXFooter control.

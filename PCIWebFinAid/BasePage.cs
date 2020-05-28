@@ -22,7 +22,7 @@ namespace PCIWebFinAid
 		protected void StartOver(int errNo,string pageName)
 		{
 			if ( pageName.Length < 6 )
-				pageName = "Login.aspx";
+				pageName = "XLogin.aspx";
 			Response.Redirect ( pageName + ( errNo > 0 ? "?ErrNo=" + errNo.ToString() : "" ) , true );
 		}
 

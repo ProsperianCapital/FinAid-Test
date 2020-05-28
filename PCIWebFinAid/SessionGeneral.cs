@@ -44,6 +44,7 @@
 				if ( AccessType == "N" ) return "Client";
 				if ( AccessType == "A" ) return "Admin";
 				if ( AccessType == "P" ) return "Admin";
+				if ( AccessType == "X" ) return "Not secure";
 				return "AccessType " + AccessType;
 			}
 		}
@@ -53,7 +54,7 @@
 			get
 			{
 				if ( UserCode.Length < 1 )
-					accessType = "X";
+					accessType = "Q";
 				else
 				{
 					accessType = PCIBusiness.Tools.NullToString(accessType).ToUpper();
@@ -76,6 +77,8 @@
 						startPage = "XHome.aspx";
 					else if ( AccessType == "A" ) // Admin
 						startPage = "LAdmin.aspx";
+					else if ( AccessType == "X" ) // Login not confirmed
+						startPage = "XLogin.aspx";
 					else
 						startPage = "LWelcome.aspx";
 				return startPage;

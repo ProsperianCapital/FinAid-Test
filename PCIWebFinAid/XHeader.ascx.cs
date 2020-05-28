@@ -9,10 +9,16 @@ namespace PCIWebFinAid
 
 		}
 
-		public void ShowUser(string userName,string userAccess)
+		public void ShowUser(SessionGeneral sessionGeneral)
 		{
-			lblUName.Text = userName.Trim();
-			lblURole.Text = userAccess.Trim();
+			if ( sessionGeneral == null )
+				lblUName.Text = "";
+			else
+			{
+				lblUName.Text    = sessionGeneral.UserName;
+				lblUName.ToolTip = "UserCode " + sessionGeneral.UserCode;
+			//	lblURole.Text    = sessionGeneral.AccessName;
+			}
 		}
 	}
 }

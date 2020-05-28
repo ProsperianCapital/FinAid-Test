@@ -19,7 +19,7 @@
 	Back Office
 	</div>
 	<p style="text-align:center">
-	<asp:TextBox runat="server" ID="txtID" placeholder="User ID" width="300px"></asp:TextBox>
+	<asp:TextBox runat="server" ID="txtID" placeholder="User Name" width="300px"></asp:TextBox>
 	</p><p style="text-align:center">
 	<asp:TextBox runat="server" ID="txtPW" placeholder="Password" TextMode="Password" Width="300px"></asp:TextBox>
 	</p><p style="text-align:center">
@@ -27,6 +27,17 @@
 	</p><p style="text-align:center">
 	<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 	</p>
+	<asp:Panel runat="server" id="pnlSecurity" Visible="false" CssClass="Popup2">
+		<div class="PopupHead">Login Security Code</div>
+		<p>
+		Please capture the one-time security code<br />that was sent to your mobile device
+		</p>
+		<asp:TextBox runat="server" ID="txtSecurity" MaxLength="6" Width="64px"></asp:TextBox>
+		<hr />
+		<asp:Button runat="server" ID="btnOK" OnClick="btnOK_Click" Text="OK" />
+		<input type="button" value="Cancel" onclick="JavaScript:ShowElt('pnlSecurity',false);GetElt('txtID').focus();return false" />
+		<asp:Label runat="server" ID="lblErr2" CssClass="Error"></asp:Label>
+	</asp:Panel>
 	<!--#include file="IncludeErrorDtl.htm" -->
 	<ascx:XFooter runat="server" ID="ascxXFooter" />
 </form>

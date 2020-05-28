@@ -10,15 +10,15 @@
 namespace PCIWebFinAid {
     
     
-    public partial class XHeader {
+    public partial class XMenu {
         
         /// <summary>
-        /// lblUName control.
+        /// lblMenu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUName;
+        protected global::System.Web.UI.WebControls.Literal lblMenu;
     }
 }

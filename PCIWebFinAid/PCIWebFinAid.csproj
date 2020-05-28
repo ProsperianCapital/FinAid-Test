@@ -97,6 +97,8 @@
     <Content Include="XHeader.ascx" />
     <Content Include="XHome.aspx" />
     <Content Include="XLogin.aspx" />
+    <Content Include="XMenu.ascx" />
+    <Content Include="XTransLookup.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -283,6 +285,20 @@
     </Compile>
     <Compile Include="XLogin.aspx.designer.cs">
       <DependentUpon>XLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="XMenu.ascx.cs">
+      <DependentUpon>XMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XMenu.ascx.designer.cs">
+      <DependentUpon>XMenu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="XTransLookup.aspx.cs">
+      <DependentUpon>XTransLookup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XTransLookup.aspx.designer.cs">
+      <DependentUpon>XTransLookup.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

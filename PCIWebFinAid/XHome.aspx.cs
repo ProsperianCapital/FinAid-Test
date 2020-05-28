@@ -12,13 +12,8 @@ namespace PCIWebFinAid
 			if ( PageCheck()      != 0 )
 				return;
 			if ( Page.IsPostBack )
-				return;	
-	
-			ascxXHeader.ShowUser(sessionGeneral.UserName,sessionGeneral.AccessName);
-		}
-
-		protected void btnLogin_Click(Object sender, EventArgs e)
-		{
+				return;
+			ascxXMenu.LoadMenu(sessionGeneral.UserCode);
 		}
 	}
 }

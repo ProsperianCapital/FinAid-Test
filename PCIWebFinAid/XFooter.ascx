@@ -5,6 +5,7 @@
 <asp:HiddenField runat="server" ID="hdnVer" />
 
 <div class="Footer1">
+<hr />
 © 2020 All Rights Reserved - PlaNet Tech Limited
 <asp:Label runat="server" ID="lblVer" style="float:right"></asp:Label>
 </div>

@@ -113,11 +113,10 @@ namespace PCIWebFinAid
 
 			if ( sessionMode == 99 && sessionGeneral == null )
 			{
-				sessionGeneral              = new SessionGeneral();
-				sessionGeneral.UserCode     = "199383";
-				sessionGeneral.UserName     = "Samual Briggs";
-				sessionGeneral.ContractCode = "AZ-876342982/144";
-				sessionGeneral.AccessType   = "N";
+				sessionGeneral            = new SessionGeneral();
+				sessionGeneral.UserCode   = "653";
+				sessionGeneral.UserName   = "Samual Briggs";
+				sessionGeneral.AccessType = "P";
 			}
 
 			else if ( sessionMode == 4 && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )
@@ -144,6 +143,12 @@ namespace PCIWebFinAid
 				return 30;
 			}
 
+			else if ( sessionMode != 5 && sessionGeneral != null && sessionGeneral.AccessType == "X" )
+			{
+				StartOver(40);
+				return 40;
+			}
+
 			ShowUserDetails();
 			SessionSave();
 			return 0;
@@ -165,8 +170,12 @@ namespace PCIWebFinAid
 		{
 			try
 			{
-			//	Banner banner = (Banner)FindControl("ascxBanner");
-			//	banner.ShowUser(sessionGeneral);
+				XHeader head1 = (XHeader)FindControl("ascxXHeader");
+				if ( head1   != null )
+					head1.ShowUser(sessionGeneral);
+				Header  head2 = (Header) FindControl("ascxHeader");
+				if ( head2   != null )
+					head2.ShowUser(sessionGeneral);
 			}
 			catch
 			{ }
@@ -268,9 +277,15 @@ namespace PCIWebFinAid
 
 			if ( briefMode == 2 ) // Append
 				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
+			else if ( briefMode == 23 ) // Use "lblErr2"
+				try
+				{
+					((Label)FindControl("lblErr2")).Text = "<p>" + errBrief + "</p>";
+				}
+				catch {}
 			else
 				lblError.Text = errBrief;
-			lblError.Visible = ( lblError.Text.Length    > 0 );
+			lblError.Visible = ( lblError.Text.Length > 0 );
 
 			if ( lblErrorDtl == null )
 				return;
