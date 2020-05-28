@@ -68,6 +68,11 @@
   <ItemGroup>
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
+    <Content Include="Images\PCapital.png" />
+    <Content Include="Images\PFintech.png" />
+    <Content Include="Images\PKnab.png" />
+    <Content Include="Images\PlaNet.png" />
+    <Content Include="Images\PWealth.png" />
     <Content Include="IncludeErrorDtl.htm" />
     <Content Include="IncludeMainAdmin.htm" />
     <Content Include="JS\Timeout.js" />
@@ -118,7 +123,6 @@
     <Content Include="CSS\raleway-bold-webfont.svg" />
     <Content Include="CSS\raleway-semibold-webfont.svg" />
     <Content Include="CSS\raleway-medium-webfont.svg" />
-    <Content Include="Images\PlaNet-Tech.png" />
     <Content Include="Images\FinAid.png" />
     <Content Include="Images\Phone.png" />
     <Content Include="Images\VeriSign.png" />
