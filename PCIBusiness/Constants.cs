@@ -53,7 +53,8 @@ namespace PCIBusiness
 			PayGate    = 17,
 			PayGenius  = 18,
 			Ecentric   = 19,
-			eNETS      = 20
+			eNETS      = 20,
+			Peach      = 21
 
 //	Not implemented yet
 //			DinersClub = 21
