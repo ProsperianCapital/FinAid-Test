@@ -6,7 +6,7 @@ body
 {
 	font-family: ralewaymedium, Calibri, Arial, Tahoma;
 	font-size: 14px;
-	background-color: #D3D3D3;
+	background-color: #F3F3F3;
 }
 input[type=button], input[type=submit]
 {
@@ -51,9 +51,9 @@ table td
 	font-size: 16px;
 	font-style: italic;
 	font-weight: 100;
-	color: black;
+	color: white;
 	padding: 5px;
-	background-color: white;
+	background-color: #262827;
 }
 .Header1a
 {
