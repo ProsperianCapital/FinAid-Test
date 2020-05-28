@@ -19,14 +19,14 @@
 	<asp:Literal runat="server" ID="X103013"></asp:Literal>
 	</div>
 	<p style="text-align:center">
-	<asp:TextBox runat="server" ID="txtID" placeholder="ID Number"></asp:TextBox> <!-- placeholder="ID Number" -->
+	<asp:TextBox runat="server" ID="txtID" placeholder="ID Number"></asp:TextBox>
 	</p><p style="text-align:center">
-	<asp:TextBox runat="server" ID="txtPW" placeholder="PIN"></asp:TextBox> <!-- placeholder="PIN" -->
+	<asp:TextBox runat="server" ID="txtPW" placeholder="PIN" TextMode="Password"></asp:TextBox>
 	</p><p style="text-align:center">
 	<asp:Button runat="server" ID="X103016" Text="LOGIN" OnClick="btnLogin_Click" />
-	<asp:Button runat="server" ID="btnError" Text="ERROR ...?" OnClientClick="JavaScript:ShowElt('lblErrorDtl',true);return false" />
+	<asp:Button runat="server" ID="btnErrorDtl" Text="ERROR ...?" OnClientClick="JavaScript:ShowElt('lblErrorDtl',true);return false" />
 	</p><p style="text-align:center">
-	<a href="X"><asp:Literal runat="server" ID="X103018"></asp:Literal></a>
+	<a href="JavaScript:alert('This functionality is not yet available')"><asp:Literal runat="server" ID="X103018"></asp:Literal></a>
 	<br /><br />
 	<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 	</p>

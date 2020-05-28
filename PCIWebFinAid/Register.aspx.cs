@@ -1130,10 +1130,10 @@ namespace PCIWebFinAid
 
 			if ( errCode <  0 )
 			{
-				lblError.Text    = "";
-				lblErrorDtl.Text = "";
-				lblError.Visible = false;
-				btnError.Visible = false;
+				lblError.Text       = "";
+				lblErrorDtl.Text    = "";
+				lblError.Visible    = false;
+				btnErrorDtl.Visible = false;
 				return;
 			}
 
@@ -1152,8 +1152,8 @@ namespace PCIWebFinAid
 			//	lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white'>Error Details</div>" + lblErrorDtl.Text;
 				lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
 
-			lblError.Visible = ( lblError.Text.Length    > 0 );
-			btnError.Visible = ( lblErrorDtl.Text.Length > 0 ) && lblError.Visible && ! Tools.SystemIsLive();
+			lblError.Visible    = ( lblError.Text.Length    > 0 );
+			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && lblError.Visible && ! Tools.SystemIsLive();
 		}
 
 //	Script timeout is set to 230 seconds in MS Azure and can't be changed

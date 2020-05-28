@@ -103,7 +103,7 @@ namespace PCIWebFinAid
 				lblError.Text        = "";
 				lblErrorDtl.Text     = "";
 				lblError.Visible     = false;
-				btnError.Visible     = false;
+				btnErrorDtl.Visible  = false;
 				return;
 			}
 
@@ -124,7 +124,7 @@ namespace PCIWebFinAid
 				if ( ! lblErrorDtl.Text.StartsWith("<div") )
 					lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
 			}
-			btnError.Visible = ( lblErrorDtl.Text.Length > 0 ) && lblError.Visible && ! Tools.SystemIsLive();
+			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && lblError.Visible && ! Tools.SystemIsLive();
 		}
 	}
 }

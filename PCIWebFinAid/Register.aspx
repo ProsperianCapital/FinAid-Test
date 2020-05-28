@@ -645,7 +645,7 @@ Disabled
 &nbsp;&nbsp;&nbsp;&nbsp;
 <asp:Button runat="server" ID="btnBack2" UseSubmitBehavior="false" OnClientClick="JavaScript:if (!NextPage(-1,this)) return false" Width="200px" />
 &nbsp;&nbsp;&nbsp;&nbsp;
-<asp:Button runat="server" ID="btnError" Text="Error ...?" OnClientClick="JavaScript:ShowElt('lblErrorDtl',true);return false" />
+<asp:Button runat="server" ID="btnErrorDtl" Text="Error ...?" OnClientClick="JavaScript:ShowElt('lblErrorDtl',true);return false" />
 <br /><br />
 
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>

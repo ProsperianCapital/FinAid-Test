@@ -66,16 +66,17 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Footer.ascx" />
+    <Content Include="Header.ascx" />
+    <Content Include="IncludeErrorDtl.htm" />
+    <Content Include="IncludeMainAdmin.htm" />
+    <Content Include="JS\Timeout.js" />
+    <Content Include="Register.aspx" />
+    <Content Include="TransLookup.aspx" />
     <Content Include="ContractLookup.aspx" />
-    <Content Include="CSS\Calendar.css" />
-    <Content Include="Images\Calendar.gif" />
-    <Content Include="Images\Chat.png" />
-    <Content Include="Images\Close1.png" />
-    <Content Include="Images\Logo-ENG.png" />
     <Content Include="IncludeLogin1.htm" />
     <Content Include="IncludeLogin2.htm" />
     <Content Include="IncludeMain.htm" />
-    <Content Include="JS\Calendar.js" />
     <Content Include="LAdmin.aspx" />
     <Content Include="LChange.aspx" />
     <Content Include="LFinnHub.aspx" />
@@ -87,6 +88,10 @@
     <Content Include="LWelcome.aspx" />
     <Content Include="Menu.ascx" />
     <Content Include="packages.config" />
+    <Content Include="XFooter.ascx" />
+    <Content Include="XHeader.ascx" />
+    <Content Include="XHome.aspx" />
+    <Content Include="XLogin.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -95,13 +100,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Footer.ascx" />
-    <Content Include="Header.ascx" />
-    <Content Include="Register.aspx" />
-    <Content Include="TransLookup.aspx" />
     <Content Include="Web.config" />
     <Content Include="JS\Utils.js" />
+    <Content Include="JS\Calendar.js" />
     <Content Include="CSS\FinAid.css" />
+    <Content Include="CSS\BackOffice.css" />
+    <Content Include="CSS\Calendar.css" />
     <Content Include="CSS\raleway-bold-webfont.eot" />
     <Content Include="CSS\raleway-semibold-webfont.eot" />
     <Content Include="CSS\raleway-medium-webfont.eot" />
@@ -114,6 +118,7 @@
     <Content Include="CSS\raleway-bold-webfont.svg" />
     <Content Include="CSS\raleway-semibold-webfont.svg" />
     <Content Include="CSS\raleway-medium-webfont.svg" />
+    <Content Include="Images\PlaNet-Tech.png" />
     <Content Include="Images\FinAid.png" />
     <Content Include="Images\Phone.png" />
     <Content Include="Images\VeriSign.png" />
@@ -122,6 +127,10 @@
     <Content Include="Images\Flag-TH.png" />
     <Content Include="Images\Tick.png" />
     <Content Include="Images\Cross.png" />
+    <Content Include="Images\Calendar.gif" />
+    <Content Include="Images\Chat.png" />
+    <Content Include="Images\Close1.png" />
+    <Content Include="Images\Logo-ENG.png" />
     <Content Include="Templates\ConfirmationMail.htm" />
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +252,34 @@
       <DependentUpon>TransLookup.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebTools.cs" />
+    <Compile Include="XFooter.ascx.cs">
+      <DependentUpon>XFooter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XFooter.ascx.designer.cs">
+      <DependentUpon>XFooter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="XHeader.ascx.cs">
+      <DependentUpon>XHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XHeader.ascx.designer.cs">
+      <DependentUpon>XHeader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="XHome.aspx.cs">
+      <DependentUpon>XHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XHome.aspx.designer.cs">
+      <DependentUpon>XHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="XLogin.aspx.cs">
+      <DependentUpon>XLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XLogin.aspx.designer.cs">
+      <DependentUpon>XLogin.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PCIBusiness\PCIBusiness.csproj">

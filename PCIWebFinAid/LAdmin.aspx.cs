@@ -11,10 +11,10 @@ namespace PCIWebFinAid
 			maxTab                = 0;
 //			ascxMenu.CurrentPage  = "Welcome";
 
-			if ( SessionCheck()    != 0 )
+			if ( SessionCheck(19)  != 0 )
 				return;
-			if ( SecurityCheck(19) != 0 )
-				return;
+//			if ( SecurityCheck(19) != 0 )
+//				return;
 //			if ( PageCheck()       != 0 )
 //				return;
 			if ( Page.IsPostBack )

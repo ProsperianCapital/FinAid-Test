@@ -3,12 +3,14 @@
 	public partial class SessionGeneral
 	{
 //		User details
-		private string  clientCode;
-		private string  contractCode;
-//		private string  clientName;
+		private string  userCode;
+		private string  userName;
 		private string  accessType;
 
-//		Product details
+//		Admin stuff
+
+//		Client stuff
+		private string  contractCode;
 		private string  productCode;
 		private string  languageCode;
 		private string  languageDialectCode;
@@ -16,33 +18,49 @@
 //		System details
 		private string  startPage;
 
-		public  string  ClientCode
+		public  string  UserCode
 		{
-			get { return clientCode; }
-			set { clientCode = value.Trim(); }
+			get { return PCIBusiness.Tools.NullToString(userCode); }
+			set { userCode = value.Trim(); }
+		}
+		public  string  UserName
+		{
+			get { return PCIBusiness.Tools.NullToString(userName); }
+			set { userName = value.Trim(); }
 		}
 		public  string  ContractCode
 		{
-			get { return contractCode; }
+			get { return PCIBusiness.Tools.NullToString(contractCode); }
 			set { contractCode = value.Trim(); }
 		}
+		public  bool    AdminUser
+		{
+			get { return AccessType == "A" || AccessType == "P"; }
+		}
+		public  string  AccessName
+		{
+			get
+			{
+				if ( AccessType == "N" ) return "Client";
+				if ( AccessType == "A" ) return "Admin";
+				if ( AccessType == "P" ) return "Admin";
+				return "AccessType " + AccessType;
+			}
+		}
 
-//		public  string  ClientName
-//		{
-//			get { return clientName; }
-//			set { clientName = value.Trim(); }
-//		}
 		public  string  AccessType
 		{
 			get
 			{
-				if ( ClientCode.Length < 1 )
-					accessType = "";
+				if ( UserCode.Length < 1 )
+					accessType = "X";
 				else
 				{
 					accessType = PCIBusiness.Tools.NullToString(accessType).ToUpper();
 					if ( accessType.Length < 1 )
 						accessType = "N"; // Client/Normal = "N", Admin = "A"
+					else if ( accessType.Length > 1 )
+						accessType = accessType.Substring(0,1);
 				}
 				return accessType;
 			}
@@ -54,7 +72,9 @@
 			get
 			{
 				if ( PCIBusiness.Tools.NullToString(startPage).Length < 6 )
-					if ( AccessType == "A" ) // Admin
+					if ( AccessType == "P" ) // Admin
+						startPage = "XHome.aspx";
+					else if ( AccessType == "A" ) // Admin
 						startPage = "LAdmin.aspx";
 					else
 						startPage = "LWelcome.aspx";
@@ -78,11 +98,16 @@
 			set { languageDialectCode = value.Trim(); }
 		}
 
+		public int      CheckExpiry
+		{
+			get {	return ( userCode.Length > 0 ? 1 : 0 ); }
+		}
+
 		public void Clear()
 		{
-			clientCode          = "";
+			userCode            = "";
 			contractCode        = "";
-//			clientName          = "";
+			userName            = "";
 			accessType          = "";
 			productCode         = "";
 			languageCode        = "";

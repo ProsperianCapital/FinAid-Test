@@ -13,24 +13,29 @@ namespace PCIWebFinAid
 	{
 		protected SessionGeneral sessionGeneral;
 		protected Literal        lblJS;
-		protected Button         btnError;
-		protected Label          lblError;
-		protected Label          lblErrorDtl;
 		protected HiddenField    hdnTabNo;
+		protected Label          lblError;
 		protected int            tabNo;
 		protected int            maxTab;
 		protected string         sql;
 
-		protected void SessionSave(string clientCode=null,string contractCode=null,string accessType=null)
+//		IncludeErrorDtl.htm
+//		protected Panel          pnlErrorDtl;
+		protected Button         btnErrorDtl;
+		protected Label          lblErrorDtl;
+
+		protected void SessionSave(string userCode=null,string userName=null,string accessType=null,string contractCode=null)
 		{
 			if ( sessionGeneral == null )
 				sessionGeneral  = new SessionGeneral();
-			if ( clientCode   != null )
-				sessionGeneral.ClientCode   = Tools.NullToString(clientCode);
-			if ( contractCode != null )
-				sessionGeneral.ContractCode = Tools.NullToString(contractCode);
+			if ( userCode     != null )
+				sessionGeneral.UserCode     = Tools.NullToString(userCode);
+			if ( userName     != null )
+				sessionGeneral.UserName     = Tools.NullToString(userName);
 			if ( accessType   != null )
 				sessionGeneral.AccessType   = Tools.NullToString(accessType);
+			if ( contractCode != null )
+				sessionGeneral.ContractCode = Tools.NullToString(contractCode);
 			Session["SessionGeneral"]      = sessionGeneral;
 		}
 
@@ -46,15 +51,15 @@ namespace PCIWebFinAid
 			Session["LFinnHubData"] = null;
 		}
 
-		protected byte SecurityCheck(byte mode=0)
-		{
-			if ( mode == 19 && sessionGeneral.AccessType != "A" )
-			{
-				StartOver(19);
-				return 19;
-			}
-			return 0;
-		}
+//		protected byte SecurityCheck(byte mode=0)
+//		{
+//			if ( mode == 19 && ! sessionGeneral.AdminUser )
+//			{
+//				StartOver(19);
+//				return 19;
+//			}
+//			return 0;
+//		}
 
 		protected byte SessionCheck(byte sessionMode=43)
 		{
@@ -69,6 +74,7 @@ namespace PCIWebFinAid
 //  3 : Clear/delete then recreate
 //  4 : Not needed, access via back door, but set up session if it exists
 //  5 : Not needed, but set up session if it exists
+// 19 : Required, back office (admin)
 // 43 : Required
 // 99 : Set up test session (no login)
 
@@ -108,32 +114,35 @@ namespace PCIWebFinAid
 			if ( sessionMode == 99 && sessionGeneral == null )
 			{
 				sessionGeneral              = new SessionGeneral();
-				sessionGeneral.ClientCode   = "199383";
+				sessionGeneral.UserCode     = "199383";
+				sessionGeneral.UserName     = "Samual Briggs";
 				sessionGeneral.ContractCode = "AZ-876342982/144";
 				sessionGeneral.AccessType   = "N";
 			}
-			else if ( sessionGeneral == null || sessionGeneral.ClientCode.Length < 1 )
-				if ( sessionMode == 4 )
+
+			else if ( sessionMode == 4 && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )
+			{
+				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
+				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
+					backDoor = Session["BackDoor"].ToString();
+				if ( backDoor != "9999" )
 				{
-					string backDoor = WebTools.RequestValueString(Request,"BackDoor");
-					if ( backDoor.Length < 1 && Session["BackDoor"] != null )
-						backDoor = Session["BackDoor"].ToString();
-					if ( backDoor != "9999" )
-					{
-						StartOver(10);
-						return 10;
-					}
-//					if ( backDoor.Length > 0 && PCIBusiness.Tools.CheckSystemPassword(PCIBusiness.Constants.PasswordType.BackDoor,backDoor) )
-//					{
-//						Session["BackDoor"] = backDoor;
-//						return 0;
-//					}
+					StartOver(10);
+					return 10;
 				}
-				else if ( sessionMode != 5 )
-				{
-					StartOver(20);
-					return 20;
-				}
+			}
+
+			else if ( sessionMode == 19 && sessionGeneral != null && ! sessionGeneral.AdminUser )
+			{
+				StartOver(20);
+				return 20;
+			}
+
+			else if ( sessionMode != 5 && sessionGeneral == null )
+			{
+				StartOver(30);
+				return 30;
+			}
 
 			ShowUserDetails();
 			SessionSave();
@@ -227,17 +236,20 @@ namespace PCIWebFinAid
 				SetErrorDetail("ReplaceControlText", 90010, "Unrecognized HTML control (" + ctlID.ToString() + "/" + fieldValue.ToString() + ")",ctlID.ToString() + ", control type="+ctl.GetType().ToString());
 		}
 
-		protected void SetErrorDetail(string method,int errCode,string errBrief="",string errDetail="",byte briefMode=2,byte detailMode=2,Exception ex=null)
+		protected void SetErrorDetail(string method,int errCode,string errBrief="",string errDetail="",byte briefMode=2,byte detailMode=2,Exception ex=null,bool alwaysShow=false)
 		{
 			if ( errCode == 0 )
 				return;
 
 			if ( errCode <  0 )
 			{
-				lblError.Text    = "";
-				lblErrorDtl.Text = "";
-				lblError.Visible = false;
-				btnError.Visible = false;
+				if ( lblError != null )
+				{
+					lblError.Text    = "";
+					lblError.Visible = false;
+				}
+				if ( lblErrorDtl != null ) lblErrorDtl.Text    = "";
+				if ( btnErrorDtl != null ) btnErrorDtl.Visible = false;
 				return;
 			}
 
@@ -258,11 +270,14 @@ namespace PCIWebFinAid
 				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
 			else
 				lblError.Text = errBrief;
+			lblError.Visible = ( lblError.Text.Length    > 0 );
+
+			if ( lblErrorDtl == null )
+				return;
 
 			if ( errDetail.Length < 1 )
 				errDetail = errBrief;
 			errDetail = "[" + errCode.ToString() + "] " + errDetail;
-
 			errDetail = errDetail.Replace(",","<br />,").Replace(";","<br />;").Trim();
 			if ( detailMode == 2 ) // Append
 				errDetail = lblErrorDtl.Text + ( lblErrorDtl.Text.Length > 0 ? "<br /><br />" : "" ) + errDetail;
@@ -270,8 +285,7 @@ namespace PCIWebFinAid
 			if ( ! lblErrorDtl.Text.StartsWith("<div") )
 				lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
 
-			lblError.Visible = ( lblError.Text.Length    > 0 );
-			btnError.Visible = ( lblErrorDtl.Text.Length > 0 ) && ! PCIBusiness.Tools.SystemIsLive();
+			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && ( ! Tools.SystemIsLive() || alwaysShow );
 		}
 	}
 }

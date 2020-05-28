@@ -26,10 +26,10 @@ namespace PCIWebFinAid
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			if ( SessionCheck()    != 0 )
+			if ( SessionCheck(19)  != 0 )
 				return;
-			if ( SecurityCheck(19) != 0 )
-				return;
+//			if ( SecurityCheck(19) != 0 )
+//				return;
 
 			dataOK     = "<span style='color:green'>&nbsp;&nbsp;&nbsp;&nbsp;";
 			dataErr    = "<span style='color:red'>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -56,8 +56,8 @@ namespace PCIWebFinAid
 				txtStock.Text    = pageParms.stockList;
 				txtForex.Text    = pageParms.forexList;
 				lblData.Text     = pageParms.result;
-				rdoTick1.Checked = ( pageParms.ticker == 1 );
-				rdoTick2.Checked = ( pageParms.ticker == 2 );
+				rdoTick1.Checked = ( pageParms.ticker == (int)Constants.TickerType.StockPrices );
+				rdoTick2.Checked = ( pageParms.ticker == (int)Constants.TickerType.ExchangeRates );
 				if ( pageParms.status != 22 )
 					lblJS.Text    = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
 			}
@@ -92,9 +92,8 @@ namespace PCIWebFinAid
 				pageParms.apiKey    = txtKey.Text;
 				pageParms.stockList = txtStock.Text;
 				pageParms.forexList = txtForex.Text;
-				pageParms.ticker    = (byte)( rdoTick1.Checked ? 1 : ( rdoTick2.Checked ? 2 : 0 ) );
-//				lblJS.Text          = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
-//				pageParms.result    = lblData.Text;
+				pageParms.ticker    = (byte)( rdoTick1.Checked ? (int)Constants.TickerType.StockPrices
+				                          : ( rdoTick2.Checked ? (int)Constants.TickerType.ExchangeRates : 0 ) );
 				FetchData();
 			}
 			else
@@ -132,7 +131,6 @@ namespace PCIWebFinAid
 				show    = "Currency";
 				curr    = lstCurr.SelectedValue.Trim().ToUpper();
 				symbols = txtForex.Text.Split(',');
-//				url     = "https://finnhub.io/api/v1/forex/candle?resolution=D&token=" + txtKey.Text;
 				url     = "https://finnhub.io/api/v1/forex/candle?resolution=D&token=" + txtKey.Text
 					     + "&from=" + DateTimeOffset.Now.Subtract(new TimeSpan(1,0,0,0)).ToUnixTimeSeconds().ToString()
 						  + "&to="   + DateTimeOffset.Now.ToUnixTimeSeconds().ToString() + "&symbol=OANDA:";
@@ -155,8 +153,8 @@ namespace PCIWebFinAid
 					}
 					else
 					{
-						result = result + "&nbsp;- " + show + " " + curr + "->" + symb + "<br />";
 						urlX   = "";
+						result = result + "&nbsp;- " + show + " " + curr + "->" + symb + "<br />";
 						if ( symb == curr )
 							result = result + dataErr + "Cannot convert";
 						else

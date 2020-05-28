@@ -39,9 +39,9 @@ To Date<br />
 <asp:TextBox runat="server" ID="txtDate2" Width="80px" MaxLength="10" placeholder="dd/mm/yyyy"></asp:TextBox>
 <a href="JavaScript:showCalendar(frmLookup.txtDate2)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a>
 </p><p>
-<input type="button"                     value="Home"   onclick="JavaScript:location.href='LAdmin.aspx'" />&nbsp;
-<asp:Button runat="server" ID="btnSearch" Text="Search" OnClick="btnSearch_Click" />&nbsp;
-<asp:Button runat="server" ID="btnError"  Text="Error ...?" OnClientClick="JavaScript:ShowElt('lblErrorDtl',true);return false" />
+<input type="button" value="Home"   onclick="JavaScript:location.href='LAdmin.aspx'" />&nbsp;
+<asp:Button runat="server" ID="btnSearch"   Text="Search" OnClick="btnSearch_Click" />&nbsp;
+<asp:Button runat="server" ID="btnErrorDtl" Text="Error ...?" OnClientClick="JavaScript:ShowElt('lblErrorDtl',true);return false" />
 </p>
 <asp:Literal runat="server" ID="lblTransactions"></asp:Literal>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>

@@ -37,11 +37,11 @@ Contract Code<br />
 <asp:RadioButton runat="server" ID="rdoView1" GroupName="rdoView" />Original view (as per the customer Confirmation page)<br />
 <asp:RadioButton runat="server" ID="rdoView2" GroupName="rdoView" />Summary view
 </p><p>
-<input type="button"                     value="Home"   onclick="JavaScript:location.href='LAdmin.aspx'" />&nbsp;
-<asp:Button runat="server" ID="btnSearch" Text="Search" OnClick="btnSearch_Click" />&nbsp;
-<asp:Button runat="server" ID="btnPrint"  Text="Print"  OnClientClick="JavaScript:window.print();return false" />&nbsp;
-<asp:Button runat="server" ID="btnMail"   Text="EMail"  OnClientClick="JavaScript:ShowElt('pnlMail',true);GetElt('txtTo').focus();return false" />&nbsp;
-<asp:Button runat="server" ID="btnError"  Text="Error ...?" OnClientClick="JavaScript:ShowElt('lblErrorDtl',true);return false" />
+<input type="button"                       value="Home"   onclick="JavaScript:location.href='LAdmin.aspx'" />&nbsp;
+<asp:Button runat="server" ID="btnSearch"   Text="Search" OnClick="btnSearch_Click" />&nbsp;
+<asp:Button runat="server" ID="btnPrint"    Text="Print"  OnClientClick="JavaScript:window.print();return false" />&nbsp;
+<asp:Button runat="server" ID="btnMail"     Text="EMail"  OnClientClick="JavaScript:ShowElt('pnlMail',true);GetElt('txtTo').focus();return false" />&nbsp;
+<asp:Button runat="server" ID="btnErrorDtl" Text="Error ...?" OnClientClick="JavaScript:ShowElt('lblErrorDtl',true);return false" />
 </p>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 

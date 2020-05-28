@@ -1516,13 +1516,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Button btnBack2;
         
         /// <summary>
-        /// btnError control.
+        /// btnErrorDtl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnError;
+        protected global::System.Web.UI.WebControls.Button btnErrorDtl;
         
         /// <summary>
         /// lblError control.

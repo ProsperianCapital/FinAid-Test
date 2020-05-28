@@ -13,8 +13,8 @@ namespace PCIWebFinAid
 
 			if ( SessionCheck()  != 0 )
 				return;
-			if ( SecurityCheck() != 0 )
-				return;
+//			if ( SecurityCheck() != 0 )
+//				return;
 			if ( PageCheck()     != 0 )
 				return;
 			if ( Page.IsPostBack )

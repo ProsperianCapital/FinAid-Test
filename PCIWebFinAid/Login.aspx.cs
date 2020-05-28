@@ -47,7 +47,7 @@ namespace PCIWebFinAid
 
 			if ( txtID.Text.ToUpper() == "XADMIN" && txtPW.Text.ToUpper() == "X8Y3Z7" )
 			{
-				SessionSave("Prosperian","Admin","A");
+				SessionSave(txtID.Text,"Prosperian Admin","A");
 				WebTools.Redirect(Response,sessionGeneral.StartPage);
 				return;
 			}
@@ -67,10 +67,10 @@ namespace PCIWebFinAid
 					SetErrorDetail("btnLogin_Click",10040,"Invalid login and/or PIN","SP_ClientCRMValidateLoginC, Status = '" + mList.GetColumn("Status") + "'",1,1);
 				else
 				{
-					string clientCode   = mList.GetColumn("ClientCode");
+					string userCode     = mList.GetColumn("ClientCode");
 					string contractCode = mList.GetColumn("ContractCode");
 					string access       = mList.GetColumn("Access");
-					SessionSave(clientCode,contractCode,access);
+					SessionSave(userCode,"",access,contractCode);
 					WebTools.Redirect(Response,sessionGeneral.StartPage);
 				}
 			}
