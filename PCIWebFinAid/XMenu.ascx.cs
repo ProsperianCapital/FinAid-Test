@@ -128,7 +128,7 @@ namespace PCIWebFinAid
 			string T = "<a title='" + mx.Description + "' ";
 			if ( string.IsNullOrWhiteSpace(mx.URL) )
 				return T + "href=\"JavaScript:alert('You do not have access to this functionality')\"> " + mx.Name + " </a>";
-			if ( mx.URL.ToUpper().StartsWith("HTTP") ) 
+			if ( mx.URL.ToUpper().StartsWith("HTTP") || mx.URL.ToUpper().StartsWith("WWW") ) 
 				return T + "href='" + mx.URL + "' target='_blank'> " + mx.Name + " </a>";
 			return T + "href='" + mx.URL + "' onclick=\"JavaScript:ShowBusy('Loading ...',null,0)\"> " + mx.Name + " </a>";
 		}
