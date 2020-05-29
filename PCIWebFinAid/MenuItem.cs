@@ -36,7 +36,13 @@ namespace PCIWebFinAid
 		}
 		public string   URL
 		{
-			get { return Tools.NullToString(url); }
+			get
+			{
+				url = Tools.NullToString(url);
+				if ( url.ToUpper() == "TBA" )
+					url = "XHome.aspx";
+				return url;
+			}
 			set { url = value.Trim(); }
 		}
 		public List<MenuItem> SubItems
