@@ -23,16 +23,16 @@ namespace PCIWebFinAid
 
 			using (MiscList mList = new MiscList())
 			{
-				int ret = mList.ExecQuery("exec sp_Get_BackOfficeMenu " + Tools.DBString(userCode),0);
+				int ret = mList.ExecQuery("exec sp_Get_BackOfficeMenu @UserCode=" + Tools.DBString(userCode),0);
 				if ( ret != 0 )
 					return 20;
 				if ( mList.EOF )
 					return 30;
 
-				int      level1 = 0;
-				int      level2 = 0;
-				int      level3 = 0;
-				int      level4 = 0;
+				string   level1 = "X";
+				string   level2 = "X";
+				string   level3 = "X";
+				string   level4 = "X";
 				MenuItem menu1  = null;
 				MenuItem menu2  = null;
 				MenuItem menu3  = null;
@@ -41,29 +41,29 @@ namespace PCIWebFinAid
 
 				while ( ! mList.EOF )
 				{
-					if ( mList.GetColumnInt("Level1ItemCode") != level1 )
+					if ( mList.GetColumn("Level1ItemCode") != level1 )
 					{
-						level1 = mList.GetColumnInt("Level1ItemCode");
-						level2 = 0;
-						level3 = 0;
-						level4 = 0;
+						level1 = mList.GetColumn("Level1ItemCode");
+						level2 = "X";
+						level3 = "X";
+						level4 = "X";
 						menu1  = new MenuItem();
 						menu1.Setup(1,mList);
 						menuList.Add(menu1);
 					}
-					if ( mList.GetColumnInt("Level2ItemCode") != level2 )
+					if ( mList.GetColumn("Level2ItemCode") != level2 )
 					{
-						level2 = mList.GetColumnInt("Level2ItemCode");
-						level3 = 0;
-						level4 = 0;
+						level2 = mList.GetColumn("Level2ItemCode");
+						level3 = "X";
+						level4 = "X";
 						menu2  = new MenuItem();
 						menu2.Setup(2,mList);
 						menu1.SubItems.Add(menu2);
 					}
-					if ( mList.GetColumnInt("Level3ItemCode") != level3 )
+					if ( mList.GetColumn("Level3ItemCode") != level3 )
 					{
-						level3 = mList.GetColumnInt("Level3ItemCode");
-						level4 = 0;
+						level3 = mList.GetColumn("Level3ItemCode");
+						level4 = "X";
 						menu3  = new MenuItem();
 						menu3.Setup(3,mList);
 						menu2.SubItems.Add(menu3);
