@@ -33,12 +33,12 @@ namespace PCIWebFinAid
 //			pnlSecurity.Visible = true;
 //			pnlSecure.Visible   = true;
 			ShowSecure(true);
-			SetErrorDetail("btnOK_Click",11010,"Invalid security code","The security code cannot be blank/empty",2,2,null,true);
+			SetErrorDetail("btnOK_Click",11010,"Invalid security code","The security code must be exactly 6 digits",2,2,null,true);
 
 //			string xSecure = txtSecurity.Text.Trim();
 			string xSecure = (txtS1.Text+txtS2.Text+txtS3.Text+txtS4.Text+txtS5.Text+txtS6.Text).Trim().Replace(" ","");
 
-			if ( xSecure.Length < 1 )
+			if ( xSecure.Length != 6 )
 				return;
 
 //	Testing
