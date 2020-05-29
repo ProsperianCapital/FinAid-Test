@@ -74,6 +74,21 @@ namespace PCIBusiness
 			{ }
 			return "";
 		}
+		public int GetColumnInt(string colName,byte errorMode=1)
+		{
+			try
+			{
+				if ( dbConn != null )
+				{
+					int x = dbConn.ColNumber(colName,errorMode);
+					if ( x >= 0 )
+						return dbConn.ColLong(x);
+				}
+			}
+			catch
+			{ }
+			return 0;
+		}
 		public string NextColumn
 		{
 			get
