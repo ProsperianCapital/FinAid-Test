@@ -2,20 +2,22 @@
 <%@ Register TagPrefix="ascx" TagName="XHeader" Src="XHeader.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="XMenu"   Src="XMenu.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="XFooter" Src="XFooter.ascx" %>
+<%@ Register TagPrefix="ascx" TagName="ShowBusy" Src="ShowBusy.ascx" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 	<!--#include file="IncludeMainAdmin.htm" -->
-	<title>Prosperian Back Office</title>
+	<title>Prosperian BackOffice</title>
 	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
 	<link rel="stylesheet" href="CSS/Calendar.css" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
 </head>
 <body>
-<ascx:XHeader runat="server" ID="ascxXHeader" />
+<ascx:XHeader  runat="server" ID="ascxXHeader" />
+<ascx:ShowBusy runat="server" ID="ascxShowBusy" />
 <form id="frmLookup" runat="server">
 	<script type="text/javascript" src="JS/Calendar.js"></script>
 
@@ -38,7 +40,7 @@
 	<asp:TextBox runat="server" ID="txtDate2" Width="80px" MaxLength="10" placeholder="dd/mm/yyyy"></asp:TextBox>
 	<a href="JavaScript:showCalendar(frmLookup.txtDate2)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a>
 	</p><p>
-	<asp:Button runat="server" ID="btnSearch"   Text="Search" OnClick="btnSearch_Click" />&nbsp;
+	<asp:Button runat="server" ID="btnSearch" Text="Search" OnClientClick="JavaScript:ShowBusy('Searching ... Please be patient',null,0)" OnClick="btnSearch_Click" />&nbsp;
 	</p>
 
 	<asp:Literal runat="server" ID="lblTransactions"></asp:Literal>

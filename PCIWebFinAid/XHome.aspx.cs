@@ -13,7 +13,8 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			ascxXMenu.LoadMenu(sessionGeneral.UserCode);
+			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode) != 0 )
+				StartOver(10999);
 		}
 	}
 }

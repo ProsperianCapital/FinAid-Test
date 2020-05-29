@@ -8,7 +8,9 @@ namespace PCIWebFinAid
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
 			lblErr2.Text        = "";
-			pnlSecurity.Visible = false;
+//			pnlSecurity.Visible = false;
+//			pnlSecure.Visible   = false;
+			ShowSecure(false);
 			SetErrorDetail("",-888);
 
 			if ( Page.IsPostBack )
@@ -21,15 +23,26 @@ namespace PCIWebFinAid
 			}
 		}
 
+		protected void btnCancel_Click(Object sender, EventArgs e)
+		{
+			ShowSecure(false);
+		}
+
 		protected void btnOK_Click(Object sender, EventArgs e)
 		{
-			pnlSecurity.Visible = true;
-			SetErrorDetail("btnOK_Click",11010,"Invalid security code","The security code cannot be blank/empty",23,2,null,true);
-			if ( txtSecurity.Text.Trim().Length < 1 )
+//			pnlSecurity.Visible = true;
+//			pnlSecure.Visible   = true;
+			ShowSecure(true);
+			SetErrorDetail("btnOK_Click",11010,"Invalid security code","The security code cannot be blank/empty",2,2,null,true);
+
+//			string xSecure = txtSecurity.Text.Trim();
+			string xSecure = (txtS1.Text+txtS2.Text+txtS3.Text+txtS4.Text+txtS5.Text+txtS6.Text).Trim().Replace(" ","");
+
+			if ( xSecure.Length < 1 )
 				return;
 
 //	Testing
-			if ( txtSecurity.Text == "901317" )
+			if ( xSecure == "901317" )
 			{
 				SessionSave(null,null,"P");
 				WebTools.Redirect(Response,sessionGeneral.StartPage);
@@ -41,17 +54,17 @@ namespace PCIWebFinAid
 			{
 				sql = "exec sp_Verify_BackOfficeSecurityCode"
 				    + " @UserCode = "     + Tools.DBString(sessionGeneral.UserCode)
-				    + ",@SecurityCode = " + Tools.DBString(txtSecurity.Text);
+				    + ",@SecurityCode = " + Tools.DBString(xSecure);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("btnOK_Click",11020,"Internal database error (sp_Verify_BackOfficeSecurityCode)",sql,23,1,null,true);
+					SetErrorDetail("btnOK_Click",11020,"Internal database error (sp_Verify_BackOfficeSecurityCode)",sql,1,1,null,true);
 				else if ( mList.EOF )
-					SetErrorDetail("btnOK_Click",11030,"Invalid security code",sql + " (no data returned)",23,1,null,true);
+					SetErrorDetail("btnOK_Click",11030,"Invalid security code",sql + " (no data returned)",1,1,null,true);
 				else
 				{
 					string status  = mList.GetColumn("Status").ToUpper();
 					string message = mList.GetColumn("Message");
 					if ( status != "S" )
-						SetErrorDetail("btnOK_Click",11040,message,sql + " (Status = '" + status + "')",23,1,null,true);
+						SetErrorDetail("btnOK_Click",11040,message,sql + " (Status = '" + status + "')",1,1,null,true);
 					else
 					{
 						SessionSave(null,null,"P");
@@ -102,11 +115,34 @@ namespace PCIWebFinAid
 					{
 						SetErrorDetail("",-777);
 						SessionSave(userCode,userName,"X");
-						pnlSecurity.Visible = true;
-						txtSecurity.Text    = "";
-						txtSecurity.Focus();
+						ShowSecure(true,true);
+//						pnlSecurity.Visible = true;
+//						pnlSecure.Visible   = true;
+//						txtSecurity.Text    = "";
+//						txtSecurity.Focus();
 					}
 				}
+			}
+		}
+
+		private void ShowSecure(bool onOff,bool clearSecurity=false)
+		{
+			pnlSecure.Visible =   onOff;
+			btnLogin.Visible  = ! onOff;
+			txtID.Enabled     = ! onOff;
+			txtPW.Enabled     = ! onOff;
+			if ( onOff )
+				txtS1.Focus();
+			else
+				txtID.Focus();
+			if ( clearSecurity )
+			{
+				txtS1.Text = "";
+				txtS2.Text = "";
+				txtS3.Text = "";
+				txtS4.Text = "";
+				txtS5.Text = "";
+				txtS6.Text = "";
 			}
 		}
 	}
