@@ -68,6 +68,7 @@
   <ItemGroup>
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
+    <Content Include="Images\Busy.gif" />
     <Content Include="Images\PCapital.png" />
     <Content Include="Images\PFintech.png" />
     <Content Include="Images\PKnab.png" />
