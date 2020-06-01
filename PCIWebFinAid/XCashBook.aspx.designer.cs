@@ -184,6 +184,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.DataGrid grdData;
         
         /// <summary>
+        /// pnlGridBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlGridBtn;
+        
+        /// <summary>
         /// btnNew control.
         /// </summary>
         /// <remarks>

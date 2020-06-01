@@ -89,9 +89,11 @@
 		</Columns>
 	</asp:DataGrid>
 
+	<asp:PlaceHolder runat="server" ID="pnlGridBtn" Visible="false">
 	<asp:Button runat="server" ID="btnNew" Text="New" title="Capture a new transaction" />&nbsp;
 	<asp:Button runat="server" ID="btnPDF" Text="PDF" title="Download in PDF format" />&nbsp;
 	<asp:Button runat="server" ID="btnCSV" Text="CSV" title="Download in CSV (Excel) format" />
+	</asp:PlaceHolder>
 
 	<!--#include file="IncludeErrorDtl.htm" -->
 	<ascx:XFooter runat="server" ID="ascxXFooter" />

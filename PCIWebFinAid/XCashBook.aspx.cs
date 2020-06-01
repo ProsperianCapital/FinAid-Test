@@ -66,7 +66,8 @@ namespace PCIWebFinAid
 
 		protected void btnSearch_Click(Object sender, EventArgs e)
 		{
-			grdData.Visible = false;
+			grdData.Visible    = false;
+			pnlGridBtn.Visible = false;
 
 			if ( ValidateData() > 0 )
 				return;
@@ -79,6 +80,7 @@ namespace PCIWebFinAid
 				else
 				{
 					grdData.Visible    = true;
+					pnlGridBtn.Visible = true;
 					grdData.DataSource = miscList;
 					grdData.DataBind();
 				}
