@@ -9,7 +9,7 @@
 <head runat="server">
 	<!--#include file="IncludeMainAdmin.htm" -->
 	<title>Prosperian BackOffice</title>
-	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
+	<link rel="stylesheet" href="CSS/BackOffice.css?v=1" type="text/css" />
 	<link rel="stylesheet" href="CSS/Calendar.css" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
