@@ -16,7 +16,8 @@ namespace PCIWebFinAid
 				return;
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode) != 0 )
 				StartOver(10888);
-			SetErrorDetail("",-888);
+			else
+				SetErrorDetail("",-888);
 		}
 
 		private int ValidateData()
@@ -54,10 +55,10 @@ namespace PCIWebFinAid
 			if ( ValidateData() > 0 )
 				return;
 
-			string sql = "exec sp_Fin_GetPayments"
-			           + " @MaskedCardNumber = " + Tools.DBString(txtCard1.Text+"******"+txtCard3.Text)
-			           + ",@BeginDate = "        + Tools.DateToSQL(Tools.StringToDate(txtDate1.Text,1),11)  // Time = 00:00:00
-			           + ",@EndDate = "          + Tools.DateToSQL(Tools.StringToDate(txtDate2.Text,1),12); // Time = 23:59:59
+			sql = "exec sp_Fin_GetPayments"
+			    + " @MaskedCardNumber = " + Tools.DBString(txtCard1.Text+"******"+txtCard3.Text)
+			    + ",@BeginDate = "        + Tools.DateToSQL(Tools.StringToDate(txtDate1.Text,1),11)  // Time = 00:00:00
+			    + ",@EndDate = "          + Tools.DateToSQL(Tools.StringToDate(txtDate2.Text,1),12); // Time = 23:59:59
 	
 			using ( MiscList miscList = new MiscList() )
 				if ( miscList.ExecQuery(sql,0,"",false) != 0 )
@@ -68,15 +69,20 @@ namespace PCIWebFinAid
 				{
 					StringBuilder data = new StringBuilder();
 					bool          odd  = false;
-					data.Append("<table><tr class='Header5'><td>Card Number</td><td>Client Code</td><td>Contract Code</td><td>Date/Time</td><td>Transaction Number</td><td>Currency</td><td style='text-align:right'>Amount</td></tr>");
+					data.Append("<table border='1'><tr class='tRowHead'><td>Card Number</td><td>Client Code</td><td>Contract Code</td><td>Date/Time</td><td>Transaction Number</td><td>Currency</td><td style='text-align:right'>Amount</td></tr>");
 					while ( ! miscList.EOF )
 					{
 						odd = ! odd;
-						data.Append("<tr onmouseover='JavaScript:this.style.backgroundColor=\"aqua\"' onmouseout='JavaScript:this.style.backgroundColor=");
+						data.Append("<tr class='");
 						if (odd)
-							data.Append("\"\"'>");
+							data.Append("tRow'>");
 						else
-							data.Append("\"#E0D0C0\"' style='background-color:#E0D0C0'>");
+							data.Append("tRowAlt'>");
+//						data.Append("<tr onmouseover='JavaScript:this.style.backgroundColor=\"aqua\"' onmouseout='JavaScript:this.style.backgroundColor=");
+//						if (odd)
+//							data.Append("\"\"'>");
+//						else
+//							data.Append("\"#E0D0C0\"' style='background-color:#E0D0C0'>");
 						data.Append("<td>" + miscList.GetColumn("MaskedCardNumber") + "</td>");
 						data.Append("<td>" + miscList.GetColumn("ClientCode") + "</td>");
 						data.Append("<td>" + miscList.GetColumn("ContractCode") + "</td>");

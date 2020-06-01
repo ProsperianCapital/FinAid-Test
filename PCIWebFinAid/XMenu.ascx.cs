@@ -68,12 +68,22 @@ namespace PCIWebFinAid
 						menu3.Setup(3,mList);
 						menu2.SubItems.Add(menu3);
 					}
+					if ( mList.GetColumn("Level4ItemCode") != level4 )
+					{
+						level4 = mList.GetColumn("Level4ItemCode");
+//						level5 = "X"; // We don't have 5 levels
+						menu4  = new MenuItem();
+						menu4.Setup(4,mList);
+						menu3.SubItems.Add(menu4);
+					}
 					mList.NextRow();
 				}
 			}
 	
 			StringBuilder str     = new StringBuilder();
+			StringBuilder sub     = new StringBuilder();
 			byte          menuNum = 0;
+			byte          subNum  = 0;
 			string        menuID  = "";
 			string        menuImg = "";
 			string        tRowEnd = "</td></tr>" + Environment.NewLine;
@@ -92,7 +102,7 @@ namespace PCIWebFinAid
 
 				foreach ( MenuItem m2 in m1.SubItems )
 				{
-					str.Append("<tr><td class='VMenu'>");
+					str.Append("<tr><td class='VMenu' onmouseover='XSubMenu(null)'>");
 					if ( m2.SubItems.Count < 2 )
 						str.Append(URLTag(m2) + tRowEnd);
 					else
@@ -100,11 +110,19 @@ namespace PCIWebFinAid
 						str.Append(" " + m2.Name + " " + tRowEnd);
 						foreach ( MenuItem m3 in m2.SubItems )
 						{
-							str.Append("<tr><td class='VMenu'>&nbsp;&nbsp;->");
+							str.Append("<tr><td class='VMenu'");
 							if ( m3.SubItems.Count < 2 )
-								str.Append(URLTag(m3) + tRowEnd);
+								str.Append(" onmouseover='XSubMenu(null)'>&nbsp;&nbsp;->" + URLTag(m3) + tRowEnd);
 							else
+							{
+								string mID = "vx" + (++subNum).ToString();
+								str.Append(" onmouseover=\"XSubMenu('"+mID+"',this)\">&nbsp;&nbsp;->");
 								str.Append(" " + m3.Name + " " + tRowEnd);
+								sub.Append(Environment.NewLine+"<table id='"+mID+"' style='border:1px solid #000000;position:absolute;visibility:hidden;display:none' onmouseleave='JavaScript:XSubMenu(null)'>");
+								foreach ( MenuItem m4 in m3.SubItems )
+									sub.Append("<tr><td class='VMenu'>" + URLTag(m4) + tRowEnd);
+								sub.Append("</table>");
+							}
 						}
 					}
 				}
@@ -117,7 +135,8 @@ namespace PCIWebFinAid
 			             + str.ToString()
 			             + "<br /><div style='text-align:center'>"
 					       + "<a href='XLogin.aspx' style='font-size:20px;font-weight:bold;text-decoration:none;color:white' onmouseover=\"JavaScript:XMenu('',0)\" title='Close all resources and log out'>Log Off</a>"
-					       + "</div><br /></div>";
+					       + "</div><br /></div>" + Environment.NewLine
+			             + sub.ToString();
 			menuList     = null;
 			str          = null;
 			return 0;
@@ -125,7 +144,7 @@ namespace PCIWebFinAid
 
 		private string URLTag(MenuItem mx)
 		{
-			string T = "<a title='" + mx.Description + "' ";
+			string T = "<a " + ( mx.Description.Length > 0 ? "title='" + mx.Description.Replace("'","&#39;") + "' " : "" );
 			if ( string.IsNullOrWhiteSpace(mx.URL) )
 				return T + "href=\"JavaScript:alert('You do not have access to this functionality')\"> " + mx.Name + " </a>";
 			if ( mx.URL.ToUpper().StartsWith("HTTP") || mx.URL.ToUpper().StartsWith("WWW") ) 

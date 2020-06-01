@@ -14,12 +14,7 @@ namespace PCIWebFinAid
 			this.Load += new System.EventHandler(this.PageLoad);
 		}
 
-		protected void StartOver(int errNo)
-		{
-			StartOver(errNo,"");
-		}
-
-		protected void StartOver(int errNo,string pageName)
+		protected void StartOver(int errNo,string pageName="")
 		{
 			if ( pageName.Length < 6 )
 				pageName = "XLogin.aspx";

@@ -22,15 +22,6 @@ namespace PCIWebFinAid {
         protected global::PCIWebFinAid.XHeader ascxXHeader;
         
         /// <summary>
-        /// ascxShowBusy control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::PCIWebFinAid.ShowBusy ascxShowBusy;
-        
-        /// <summary>
         /// frmLookup control.
         /// </summary>
         /// <remarks>

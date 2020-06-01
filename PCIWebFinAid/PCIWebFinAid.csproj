@@ -68,17 +68,18 @@
   <ItemGroup>
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
+    <Content Include="Images\Bell1.png" />
     <Content Include="Images\Busy.gif" />
     <Content Include="Images\PCapital.png" />
     <Content Include="Images\PFintech.png" />
     <Content Include="Images\PKnab.png" />
     <Content Include="Images\PlaNet.png" />
     <Content Include="Images\PWealth.png" />
+    <Content Include="IncludeBusy.htm" />
     <Content Include="IncludeErrorDtl.htm" />
     <Content Include="IncludeMainAdmin.htm" />
     <Content Include="JS\Timeout.js" />
     <Content Include="Register.aspx" />
-    <Content Include="ShowBusy.ascx" />
     <Content Include="TransLookup.aspx" />
     <Content Include="ContractLookup.aspx" />
     <Content Include="IncludeLogin1.htm" />
@@ -95,6 +96,8 @@
     <Content Include="LWelcome.aspx" />
     <Content Include="Menu.ascx" />
     <Content Include="packages.config" />
+    <Content Include="XCashBook.aspx" />
+    <Content Include="XContractLookup.aspx" />
     <Content Include="XFooter.ascx" />
     <Content Include="XHeader.ascx" />
     <Content Include="XHome.aspx" />
@@ -250,13 +253,6 @@
       <DependentUpon>Footer.ascx</DependentUpon>
     </Compile>
     <Compile Include="SessionGeneral.cs" />
-    <Compile Include="ShowBusy.ascx.cs">
-      <DependentUpon>ShowBusy.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ShowBusy.ascx.designer.cs">
-      <DependentUpon>ShowBusy.ascx</DependentUpon>
-    </Compile>
     <Compile Include="StdDisposable.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -268,6 +264,20 @@
       <DependentUpon>TransLookup.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebTools.cs" />
+    <Compile Include="XCashBook.aspx.cs">
+      <DependentUpon>XCashBook.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XCashBook.aspx.designer.cs">
+      <DependentUpon>XCashBook.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="XContractLookup.aspx.cs">
+      <DependentUpon>XContractLookup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XContractLookup.aspx.designer.cs">
+      <DependentUpon>XContractLookup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="XFooter.ascx.cs">
       <DependentUpon>XFooter.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

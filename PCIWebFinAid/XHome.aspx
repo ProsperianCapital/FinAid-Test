@@ -15,6 +15,7 @@
 </head>
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
+<!--#include file="IncludeBusy.htm" -->
 <form id="frmMain" runat="server">
 	<ascx:XMenu runat="server" ID="ascxXMenu" />
 	<div class="Header3" style="margin-top:2px">

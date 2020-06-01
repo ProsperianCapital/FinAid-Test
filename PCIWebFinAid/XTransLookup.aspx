@@ -2,7 +2,6 @@
 <%@ Register TagPrefix="ascx" TagName="XHeader" Src="XHeader.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="XMenu"   Src="XMenu.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="XFooter" Src="XFooter.ascx" %>
-<%@ Register TagPrefix="ascx" TagName="ShowBusy" Src="ShowBusy.ascx" %>
 
 <!DOCTYPE html>
 
@@ -16,8 +15,8 @@
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
 </head>
 <body>
-<ascx:XHeader  runat="server" ID="ascxXHeader" />
-<ascx:ShowBusy runat="server" ID="ascxShowBusy" />
+<ascx:XHeader runat="server" ID="ascxXHeader" />
+<!--#include file="IncludeBusy.htm" -->
 <form id="frmLookup" runat="server">
 	<script type="text/javascript" src="JS/Calendar.js"></script>
 
