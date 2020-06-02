@@ -57,8 +57,16 @@ namespace PCIWebFinAid
 		{
 			try
 			{
+				string       cmdName = e.CommandName.Trim().ToUpper();
+//				DataGridItem row     = e.Item;
+				string       tranID  = e.CommandArgument.ToString();
 
-
+				if ( cmdName == "EDIT" && tranID.Length > 0 )
+				{
+					txtETranID.Text    = tranID;
+					ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1,'Edit/Delete')");
+					lstECompany.Focus();
+				}
 			}
 			catch
 			{ }

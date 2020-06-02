@@ -12,12 +12,16 @@ namespace PCIWebFinAid
 		public void ShowUser(SessionGeneral sessionGeneral)
 		{
 			if ( sessionGeneral == null )
-				lblUName.Text = "";
+			{
+				lnkMessages.Visible = false;
+				lblUName.Text       = "";
+			}
 			else
 			{
-				lblUName.Text    = sessionGeneral.UserName;
-				lblUName.ToolTip = "UserCode " + sessionGeneral.UserCode;
-			//	lblURole.Text    = sessionGeneral.AccessName;
+				lnkMessages.Visible = true;
+				lblUName.Text       = sessionGeneral.UserName;
+				lblUName.ToolTip    = "UserCode " + sessionGeneral.UserCode;
+			//	lblURole.Text       = sessionGeneral.AccessName;
 			}
 		}
 	}

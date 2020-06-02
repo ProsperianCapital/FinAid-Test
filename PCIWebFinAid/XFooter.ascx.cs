@@ -6,6 +6,8 @@ namespace PCIWebFinAid
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			lblJS.Text = "";
+
 			if ( ! Page.IsPostBack )
 			{
 				hdnVer.Value   = "Version " + PCIBusiness.SystemDetails.AppVersion + " (" + PCIBusiness.SystemDetails.AppDate + ")";

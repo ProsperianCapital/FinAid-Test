@@ -17,6 +17,30 @@
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
 <!--#include file="IncludeBusy.htm" -->
+<script type="text/javascript">
+function HidePopups()
+{
+	hideCalendar();
+	ShowMessages(0);
+	ShowElt('pnlDelete',false);
+}
+function EditMode(show,descr)
+{
+//	0 : Hide
+//	1 : Show, edit
+//	2 : Show, insert
+	HidePopups();
+	SetEltValue('lblEditHead',descr+' Transaction');
+	ShowElt('pnlEdit',(show>0));
+	if ( show == 2 )
+		ShowElt('btnDel1',false);
+}
+function DeleteMode(show)
+{
+	HidePopups();
+	ShowElt('pnlDelete',(show>0));
+}
+</script>
 <form id="frmCashBook" runat="server">
 	<script type="text/javascript" src="JS/Calendar.js"></script>
 
@@ -47,17 +71,17 @@
 		<td>GL Account Dimension<br /><asp:DropDownList runat="server" ID="DropDownList4"></asp:DropDownList></td></tr>
 	<tr>
 		<td>Transaction Description<br /><asp:TextBox runat="server" ID="DropDownListX"></asp:TextBox></td>
-		<td>Transaction Start Date<br /><asp:TextBox runat="server" ID="txtDateStart" MaxLength="10" Width="80px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtDateStart)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
+		<td>Transaction Start Date<br /><asp:TextBox runat="server" ID="txtSDate1" MaxLength="10" Width="80px"></asp:TextBox>
+			<a href="JavaScript:showCalendar(frmCashBook.txtSDate1)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
 		<td style="white-space:nowrap" rowspan="2">Amount<br />
 		> <asp:TextBox runat="server" ID="DropDownList7" Width="100px"></asp:TextBox> and<br />
 		< <asp:TextBox runat="server" ID="TextBox1" Width="100px"></asp:TextBox></td>
-		<td>Transaction End Date<br /><asp:TextBox runat="server" ID="txtDateEnd" MaxLength="10" Width="80px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtDateEnd)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
+		<td>Transaction End Date<br /><asp:TextBox runat="server" ID="txtSDate2" MaxLength="10" Width="80px"></asp:TextBox>
+			<a href="JavaScript:showCalendar(frmCashBook.txtSDate2)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
-		<td>Transaction Recon Date<br /><asp:TextBox runat="server" ID="txtDateRecon" MaxLength="10" Width="80px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtDateRecon)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td>
+		<td>Transaction Recon Date<br /><asp:TextBox runat="server" ID="txtSRecon" MaxLength="10" Width="80px"></asp:TextBox>
+			<a href="JavaScript:showCalendar(frmCashBook.txtSRecon)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td>
 		<td rowspan="99">
 			<asp:Button runat="server" ID="btnSearch" Text="Filter" OnClientClick="JavaScript:ShowBusy('Searching ... Please be patient',null,0)" OnClick="btnSearch_Click" />
 		</td></tr>
@@ -89,11 +113,54 @@
 		</Columns>
 	</asp:DataGrid>
 
+	<input type="button" value="New" title="Capture a new transaction" onclick="JavaScript:EditMode(2,'New');return false" />&nbsp;
 	<asp:PlaceHolder runat="server" ID="pnlGridBtn" Visible="false">
-	<asp:Button runat="server" ID="btnNew" Text="New" title="Capture a new transaction" />&nbsp;
-	<asp:Button runat="server" ID="btnPDF" Text="PDF" title="Download in PDF format" />&nbsp;
-	<asp:Button runat="server" ID="btnCSV" Text="CSV" title="Download in CSV (Excel) format" />
+	<asp:Button runat="server" ID="btnPDF" Text="PDF" ToolTip="Download in PDF format" />&nbsp;
+	<asp:Button runat="server" ID="btnCSV" Text="CSV" ToolTip="Download in CSV (Excel) format" />
 	</asp:PlaceHolder>
+
+	<div class="Popup2" id="pnlEdit" style="visibility:hidden;display:none">
+	<div class="PopupHead" id="lblEditHead"></div>
+	<table>
+	<tr>
+		<td>Company<br /><asp:DropDownList runat="server" ID="lstECompany"></asp:DropDownList></td>
+		<td>Cashbook<br /><asp:DropDownList runat="server" ID="DropDownList9"></asp:DropDownList></td></tr>
+	<tr>
+		<td>Receipt / Payment<br /><asp:DropDownList runat="server" ID="DropDownList10"></asp:DropDownList></td>
+		<td>Transaction Type<br /><asp:DropDownList runat="server" ID="DropDownList11"></asp:DropDownList></td></tr>
+	<tr>
+		<td>OBO Company<br /><asp:DropDownList runat="server" ID="DropDownList12"></asp:DropDownList></td>
+		<td>Tax Rate<br /><asp:DropDownList runat="server" ID="DropDownList13"></asp:DropDownList></td></tr>
+	<tr>
+		<td>GL Account Code<br /><asp:TextBox runat="server" ID="TextBox2"></asp:TextBox></td>
+		<td>GL Account Dimension<br /><asp:DropDownList runat="server" ID="DropDownList14"></asp:DropDownList></td></tr>
+	<tr>
+		<td>Amount<br /><asp:TextBox runat="server" ID="TextBox3" MaxLength="10" Width="80px"></asp:TextBox></td>
+		<td>Transaction Date<br /><asp:TextBox runat="server" ID="txtEDate" MaxLength="10" Width="80px"></asp:TextBox>
+			<a href="JavaScript:showCalendar(frmCashBook.txtEDate)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
+	<tr>
+		<td>Transaction ID<br /><asp:TextBox runat="server" ID="txtETranID" readOnly="true"></asp:TextBox></td>
+		<td>Transaction Recon Date<br /><asp:TextBox runat="server" ID="txtERecon" MaxLength="10" Width="80px"></asp:TextBox>
+			<a href="JavaScript:showCalendar(frmCashBook.txtERecon)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
+	<tr>
+		<td colspan="2">Transaction Description<br /><asp:TextBox runat="server" ID="TextBox5" Width="500px"></asp:TextBox></td></tr>
+	</table>
+	<asp:Button runat="server" ID="btnSave" Text="Save" title="Save this transaction" />&nbsp;
+	<input type="button" value="Delete" id="btnDel1" title="Delete this transaction" onclick="JavaScript:DeleteMode(1)" />
+	<input type="button" value="Cancel" id="btnCancel" onclick="JavaScript:EditMode(0)" />
+	</div>
+
+	<div id="pnlDelete" class="PopupConfirm" style="visibility:hidden;display:none;width:320px">
+	<div class="HelpHead">Please confirm ...</div>
+	<p>
+	You are about to DELETE transaction id 879879.<br />
+	This action cannot be reversed.
+	</p><p class="Error"><b>
+	Are you sure you want to do this?
+   </b></p>
+	<asp:Button runat="server" ID="btnDel2" Text="Delete" title="Delete this transaction" />&nbsp;
+	<input type="button" value="Cancel" onclick="JavaScript:DeleteMode(0)" />
+	</div>
 
 	<!--#include file="IncludeErrorDtl.htm" -->
 	<ascx:XFooter runat="server" ID="ascxXFooter" />
