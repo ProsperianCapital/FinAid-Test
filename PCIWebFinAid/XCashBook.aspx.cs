@@ -9,7 +9,7 @@ namespace PCIWebFinAid
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{
-			if ( SessionCheck(99) != 0 )
+			if ( SessionCheck(19) != 0 )
 				return;
 			if ( PageCheck()      != 0 )
 				return;
