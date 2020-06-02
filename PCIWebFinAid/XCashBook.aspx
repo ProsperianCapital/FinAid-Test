@@ -9,8 +9,8 @@
 <head runat="server">
 	<!--#include file="IncludeMainAdmin.htm" -->
 	<title>Prosperian BackOffice</title>
-	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
-	<link rel="stylesheet" href="CSS/Calendar.css" type="text/css" />
+	<link rel="stylesheet" href="CSS/BackOffice.css?v=9" type="text/css" />
+	<link rel="stylesheet" href="CSS/Calendar.css?v=2" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
 </head>
@@ -42,7 +42,7 @@ function DeleteMode(show)
 }
 </script>
 <form id="frmCashBook" runat="server">
-	<script type="text/javascript" src="JS/Calendar.js"></script>
+	<script type="text/javascript" src="JS/Calendar.js?v=3"></script>
 
 	<ascx:XMenu runat="server" ID="ascxXMenu" />
 
