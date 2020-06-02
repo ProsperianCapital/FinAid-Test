@@ -2,9 +2,10 @@
 
 <div class="Header1">
 	<img src="Images/PlaNet.png" height="60" title="PlaNet Tech Limited" />
-	<div style="float:right;margin-right:20px"><br />
-		<asp:Label runat="server" ID="lblUName"></asp:Label>
-		<asp:HyperLink runat="server" ID="lnkMessages" ToolTip="You have unread message(s)" onclick="JavaScript:ShowMessages(1)" NavigateUrl="#">
+	<div style="float:right;margin-right:20px">
+		<asp:Label runat="server" ID="lblUName" style="top:12px;position:relative"></asp:Label>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<asp:HyperLink runat="server" ID="lnkMessages" ToolTip="You have unread message(s)" onclick="JavaScript:ShowMessages(1)" NavigateUrl="#" style="top:18px;position:relative">
 			<img src="Images/Bell1.png" height="24" />
 		</asp:HyperLink>
 	</div>

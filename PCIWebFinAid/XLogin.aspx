@@ -8,7 +8,7 @@
 <head runat="server">
 	<!--#include file="IncludeMainAdmin.htm" -->
 	<title>Prosperian BackOffice</title>
-	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
+	<link rel="stylesheet" href="CSS/BackOffice.css?v=6" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
 </head>
@@ -19,9 +19,9 @@
 	BackOffice
 	</div>
 	<p style="text-align:center">
-	<asp:TextBox runat="server" ID="txtID" placeholder="User Name" width="300px"></asp:TextBox>
+	<asp:TextBox runat="server" ID="txtID" placeholder="User Name" width="300px" Height="25px"></asp:TextBox>
 	</p><p style="text-align:center">
-	<asp:TextBox runat="server" ID="txtPW" placeholder="Password" TextMode="Password" Width="300px"></asp:TextBox>
+	<asp:TextBox runat="server" ID="txtPW" placeholder="Password" TextMode="Password" Width="300px" Height="25px"></asp:TextBox>
 	</p><p style="text-align:center">
 	<asp:Button runat="server" ID="btnLogin" Text="LOGIN" OnClick="btnLogin_Click" Width="310px" />
 	</p>
@@ -31,12 +31,12 @@
 	<br /><br />
 	Please capture the one-time security code that was sent to your mobile device
 	</p><p style="text-align:center">
-	<asp:TextBox runat="server" ID="txtS1" width="12px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS2').focus()"></asp:TextBox>&nbsp;
-	<asp:TextBox runat="server" ID="txtS2" width="12px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS3').focus()"></asp:TextBox>&nbsp;
-	<asp:TextBox runat="server" ID="txtS3" width="12px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS4').focus()"></asp:TextBox>&nbsp;
-	<asp:TextBox runat="server" ID="txtS4" width="12px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS5').focus()"></asp:TextBox>&nbsp;
-	<asp:TextBox runat="server" ID="txtS5" width="12px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS6').focus()"></asp:TextBox>&nbsp;
-	<asp:TextBox runat="server" ID="txtS6" width="12px" MaxLength="1" onfocus="this.select()"></asp:TextBox>
+	<asp:TextBox runat="server" ID="txtS1" width="12px" Height="20px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS2').focus()"></asp:TextBox>&nbsp;
+	<asp:TextBox runat="server" ID="txtS2" width="12px" Height="20px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS3').focus()"></asp:TextBox>&nbsp;
+	<asp:TextBox runat="server" ID="txtS3" width="12px" Height="20px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS4').focus()"></asp:TextBox>&nbsp;
+	<asp:TextBox runat="server" ID="txtS4" width="12px" Height="20px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS5').focus()"></asp:TextBox>&nbsp;
+	<asp:TextBox runat="server" ID="txtS5" width="12px" Height="20px" MaxLength="1" onfocus="this.select()" onkeyup="JavaScript:GetElt('txtS6').focus()"></asp:TextBox>&nbsp;
+	<asp:TextBox runat="server" ID="txtS6" width="12px" Height="20px" MaxLength="1" onfocus="this.select()"></asp:TextBox>
 	</p><p style="text-align:center">
 	<asp:Button runat="server" ID="btnSecure" Text="OK" OnClick="btnOK_Click" Width="310px" />
 	<br /><br />

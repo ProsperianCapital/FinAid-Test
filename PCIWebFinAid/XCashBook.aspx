@@ -9,7 +9,7 @@
 <head runat="server">
 	<!--#include file="IncludeMainAdmin.htm" -->
 	<title>Prosperian BackOffice</title>
-	<link rel="stylesheet" href="CSS/BackOffice.css?v=1" type="text/css" />
+	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
 	<link rel="stylesheet" href="CSS/Calendar.css" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
@@ -51,44 +51,53 @@ function DeleteMode(show)
 	</div>
 
 	<div id="pnlFilter" style="border:1px solid #000000">
-	<div class="PopupHead">Search/Filter
+	<div class="PopupHead" style="background-color:orange">Search/Filter
 		<span style="float:right">
 		<a href="#" onclick="JavaScript:ShowElt('tblFilter',true)">Show</a>&nbsp;&nbsp;
 		<a href="#" onclick="JavaScript:ShowElt('tblFilter',false)">Hide</a></span>
 	</div>
 	<table id="tblFilter">
 	<tr>
-		<td>Company<br /><asp:DropDownList runat="server" ID="lstCompany"></asp:DropDownList></td>
-		<td>Cashbook<br /><asp:DropDownList runat="server" ID="lstCashBook"></asp:DropDownList></td></tr>
+		<td>Company</td><td><asp:DropDownList runat="server" ID="lstSCompany"></asp:DropDownList></td>
+		<td>Cashbook</td><td><asp:DropDownList runat="server" ID="lstSCashBook"></asp:DropDownList></td></tr>
 	<tr>
-		<td>Receipt / Payment<br /><asp:DropDownList runat="server" ID="DropDownList1"></asp:DropDownList></td>
-		<td>Transaction Type<br /><asp:DropDownList runat="server" ID="DropDownList2"></asp:DropDownList></td></tr>
+		<td>Receipt / Payment</td><td><asp:DropDownList runat="server" ID="lstSReceipt"></asp:DropDownList></td>
+		<td>Transaction Type</td><td><asp:DropDownList runat="server" ID="lstSTType"></asp:DropDownList></td></tr>
 	<tr>
-		<td>OBO Company<br /><asp:DropDownList runat="server" ID="DropDownList5"></asp:DropDownList></td>
-		<td>Tax Rate<br /><asp:DropDownList runat="server" ID="DropDownList6"></asp:DropDownList></td></tr>
+		<td>OBO Company</td><td><asp:DropDownList runat="server" ID="lstSOBOCompany"></asp:DropDownList></td>
+		<td>Transaction Date</td><td><asp:TextBox runat="server" ID="txtSDate" MaxLength="10" Width="80px"></asp:TextBox>
+			<a href="JavaScript:showCalendar(frmCashBook.txtSDate)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
-		<td>GL Account Code<br /><asp:TextBox runat="server" ID="DropDownList3"></asp:TextBox></td>
-		<td>GL Account Dimension<br /><asp:DropDownList runat="server" ID="DropDownList4"></asp:DropDownList></td></tr>
+		<td>GL Account Code</td><td><asp:TextBox runat="server" ID="DropDownList3"></asp:TextBox></td>
+		<td>GL Account Dimension</td><td><asp:DropDownList runat="server" ID="lstSGLDimension"></asp:DropDownList></td></tr>
 	<tr>
-		<td>Transaction Description<br /><asp:TextBox runat="server" ID="DropDownListX"></asp:TextBox></td>
-		<td>Transaction Start Date<br /><asp:TextBox runat="server" ID="txtSDate1" MaxLength="10" Width="80px"></asp:TextBox>
+		<td>Transaction Description</td><td><asp:TextBox runat="server" ID="TextBox4"></asp:TextBox></td>
+		<td>Transaction Start Date</td><td><asp:TextBox runat="server" ID="txtSDate1" MaxLength="10" Width="80px"></asp:TextBox>
 			<a href="JavaScript:showCalendar(frmCashBook.txtSDate1)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
-		<td style="white-space:nowrap" rowspan="2">Amount<br />
-		> <asp:TextBox runat="server" ID="DropDownList7" Width="100px"></asp:TextBox> and<br />
-		< <asp:TextBox runat="server" ID="TextBox1" Width="100px"></asp:TextBox></td>
-		<td>Transaction End Date<br /><asp:TextBox runat="server" ID="txtSDate2" MaxLength="10" Width="80px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtSDate2)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
+		<td>Transaction End Date</td><td><asp:TextBox runat="server" ID="txtSDate2" MaxLength="10" Width="80px"></asp:TextBox>
+			<a href="JavaScript:showCalendar(frmCashBook.txtSDate2)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td>
+		<td>Transaction Recon Date</td><td><asp:TextBox runat="server" ID="txtSRecon" MaxLength="10" Width="80px"></asp:TextBox>
+			<a href="JavaScript:showCalendar(frmCashBook.txtSRecon)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
-		<td>Transaction Recon Date<br /><asp:TextBox runat="server" ID="txtSRecon" MaxLength="10" Width="80px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtSRecon)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td>
-		<td rowspan="99">
+		<td>Tax Rate</td><td><asp:DropDownList runat="server" ID="lstSTaxRate"></asp:DropDownList></td>
+		<td style="white-space:nowrap">Amount
+		< <asp:TextBox runat="server" ID="DropDownList7" Width="100px"></asp:TextBox></td>
+		<td>and
+		> <asp:TextBox runat="server" ID="TextBox1" Width="100px"></asp:TextBox></td>
+		<td rowspan="99" style="text-align:right">&nbsp;
 			<asp:Button runat="server" ID="btnSearch" Text="Filter" OnClientClick="JavaScript:ShowBusy('Searching ... Please be patient',null,0)" OnClick="btnSearch_Click" />
 		</td></tr>
 	</table>
 	</div>
 
-	<br />
+	<p>
+	<input type="button" value="New" title="Capture a new transaction" onclick="JavaScript:EditMode(2,'New');return false" />&nbsp;
+	<asp:PlaceHolder runat="server" ID="pnlGridBtn" Visible="false">
+	<asp:Button runat="server" ID="btnPDF" Text="PDF" ToolTip="Download in PDF format" />&nbsp;
+	<asp:Button runat="server" ID="btnCSV" Text="CSV" ToolTip="Download in CSV (Excel) format" />
+	</asp:PlaceHolder>
+	</p>
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
@@ -97,9 +106,10 @@ function DeleteMode(show)
 		<ItemStyle CssClass="tRow"></ItemStyle>
 		<AlternatingItemStyle CssClass="tRowAlt"></AlternatingItemStyle>
 		<Columns>
+			<asp:BoundColumn DataField="RowNumber" ItemStyle-BackColor="GreenYellow" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1" ItemStyle-BorderColor="Red" DataFormatString="&nbsp{0}&nbsp;"></asp:BoundColumn>
 			<asp:TemplateColumn HeaderText="Transaction<br />ID">
 				<ItemTemplate>
-					<asp:LinkButton runat="server" CommandName='Edit' CommandArgument='<%# ((PCIBusiness.MiscData)Container.DataItem).GetColumn(0) %>'><%# ((PCIBusiness.MiscData)Container.DataItem).GetColumn(0) %></asp:LinkButton>
+					<asp:LinkButton runat="server" CommandName='Edit' CommandArgument='<%# ((PCIBusiness.MiscData)Container.DataItem).GetColumn(0) %>'><%# ((PCIBusiness.MiscData)Container.DataItem).NextColumn %></asp:LinkButton>
 				</ItemTemplate>
 			</asp:TemplateColumn>
 			<asp:BoundColumn HeaderText="Transaction<br />Date" DataField="NextColumn"></asp:BoundColumn>
@@ -109,15 +119,9 @@ function DeleteMode(show)
 			<asp:BoundColumn HeaderText="GL Account<br />Dimension" DataField="NextColumn"></asp:BoundColumn>
 			<asp:BoundColumn HeaderText="Transaction<br />Description" DataField="NextColumn"></asp:BoundColumn>
 			<asp:BoundColumn HeaderText="Tax<br />Rate" DataField="NextColumn"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="Amount<br /<(Inclusive)" DataField="NextColumn" ItemStyle-HorizontalAlign="Right"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="Amount<br />(Inclusive)" DataField="NextColumn" ItemStyle-HorizontalAlign="Right"></asp:BoundColumn>
 		</Columns>
 	</asp:DataGrid>
-
-	<input type="button" value="New" title="Capture a new transaction" onclick="JavaScript:EditMode(2,'New');return false" />&nbsp;
-	<asp:PlaceHolder runat="server" ID="pnlGridBtn" Visible="false">
-	<asp:Button runat="server" ID="btnPDF" Text="PDF" ToolTip="Download in PDF format" />&nbsp;
-	<asp:Button runat="server" ID="btnCSV" Text="CSV" ToolTip="Download in CSV (Excel) format" />
-	</asp:PlaceHolder>
 
 	<div class="Popup2" id="pnlEdit" style="visibility:hidden;display:none">
 	<div class="PopupHead" id="lblEditHead"></div>

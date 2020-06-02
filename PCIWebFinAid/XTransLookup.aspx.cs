@@ -36,12 +36,12 @@ namespace PCIWebFinAid
 						err = "Invalid card number (only digits allowed)<br />";
 						break;
 					}
-			DateTime d1 = Tools.StringToDate(txtDate1.Text,1);
-			DateTime d2 = Tools.StringToDate(txtDate2.Text,1);
+			DateTime d1 = Tools.StringToDate(txtDate1.Text,7);
+			DateTime d2 = Tools.StringToDate(txtDate2.Text,7);
 			if ( d1 <= Constants.C_NULLDATE() )
-				err = err + "Invalid from date (it must be in dd/mm/yyyy format)<br />";
+				err = err + "Invalid from date (it must be in yyyy-mm-dd format)<br />";
 			if ( d2 <= Constants.C_NULLDATE() )
-				err = err + "Invalid to date (it must be in dd/mm/yyyy format)<br />";
+				err = err + "Invalid to date (it must be in yyyy-mm-dd format)<br />";
 			if ( d1 > d2 && d2 > Constants.C_NULLDATE() )
 				err = err + "From date cannot be after to date<br />";
 			if ( err.Length > 0 )

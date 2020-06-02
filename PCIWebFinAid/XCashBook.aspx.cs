@@ -9,7 +9,7 @@ namespace PCIWebFinAid
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{
-			if ( SessionCheck(19) != 0 )
+			if ( SessionCheck(99) != 0 )
 				return;
 			if ( PageCheck()      != 0 )
 				return;
@@ -18,7 +18,50 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode) != 0 )
 				StartOver(10888);
 			else
-				SetErrorDetail("",-888);
+				LoadData();
+		}
+
+		private void LoadData()
+		{
+			SetErrorDetail("",-888);
+			int errNo = 0;
+
+			try
+			{
+				sql   = "exec sp_Audit_Get_Company";
+				errNo = WebTools.ListBind(lstSCompany,sql,null,"CompanyCode","CompanyDescription","(All/any company)","");
+				SetErrorDetail("LoadData",errNo,"Unable to load company list",sql);
+				errNo = WebTools.ListBind(lstSOBOCompany,sql,null,"CompanyCode","CompanyDescription","(All/any company)","");
+				SetErrorDetail("LoadData",errNo,"Unable to load company list",sql);
+
+//				sql   = "exec sp_Audit_Get_CompanyCashbook";
+//				errNo = WebTools.ListBind(lstSCompany,sql,null,"CompanyCode","CompanyDescription","","");
+//				SetErrorDetail("LoadData",errNo,"Unable to load comapny list",sql);
+
+				sql   = "exec sp_Audit_Get_RP";
+				errNo = WebTools.ListBind(lstSReceipt,sql,null,"ReceiptCode","ReceiptDescription","(All/any receipt)","");
+				SetErrorDetail("LoadData",errNo,"Unable to load receipt/payment list",sql);
+
+				sql   = "exec sp_Audit_Get_TransactionType";
+				errNo = WebTools.ListBind(lstSTType,sql,null,"TransactionTypeCode","TransactionTypeDescription","(All/any type)","");
+				SetErrorDetail("LoadData",errNo,"Unable to load transaction type list",sql);
+
+//				sql   = "exec sp_Audit_Get_GLAccount";
+//				errNo = WebTools.ListBind(lstSGLAccount,sql,null,"CompanyCode","CompanyDescription","","");
+//				SetErrorDetail("LoadData",errNo,"Unable to load comapny list",sql);
+
+//				sql   = "exec sp_Audit_Get_GLAccountDimension";
+//				errNo = WebTools.ListBind(lstSGLDimension,sql,null,"CompanyCode","CompanyDescription","","");
+//				SetErrorDetail("LoadData",errNo,"Unable to load comapny list",sql);
+
+				sql   = "exec sp_Audit_Get_TaxRate";
+				errNo = WebTools.ListBind(lstSTaxRate,sql,null,"TaxRateCode","TaxRateDescription","","");
+				SetErrorDetail("LoadData",errNo,"Unable to load tax rate list",sql);
+			}
+			catch (Exception ex)
+			{
+				SetErrorDetail("LoadData",80010,"Internal error",sql,2,2,ex);
+			}
 		}
 
 		private int ValidateData()
@@ -84,6 +127,7 @@ namespace PCIWebFinAid
 	
 			using ( MiscList miscList = new MiscList() )
 				if ( miscList.ExecQuery(sql,1,"",false) == 0 || miscList.EOF )
+			//	if ( miscList.ExecQuery(sql,0) != 0 || miscList.EOF )
 					SetErrorDetail("btnSearch_Click",30061,"No transactions found. Refine your criteria and try again",sql,2,0);
 				else
 				{
