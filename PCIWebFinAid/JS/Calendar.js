@@ -119,12 +119,17 @@ function CalendarControl()
 	{
 		if (dateField)
 		{
+			if (year < 60)
+				year = "20" + year;
+			else if (year < 100)
+				year = "19" + year;
 			if (month < 10)
 				month = "0" + month;
 			if (day < 10)
 				day = "0" + day;
-			var dateString = day+"/"+month+"/"+year;
-			dateField.value = dateString;
+//			var dateString = day+"/"+month+"/"+year;
+//			dateField.value = dateString;
+			dateField.value = year + "-" + month + "-" + day;
 			hide();
 		}
 	}
