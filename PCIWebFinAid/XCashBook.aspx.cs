@@ -123,7 +123,7 @@ namespace PCIWebFinAid
 			if ( ValidateData() > 0 )
 				return;
 
-			sql = "exec sp_Audit_Get_CashbookExtract @CompanyCode=''";
+			sql = "exec sp_Audit_Get_CashbookExtract @CompanyCode=" + Tools.DBString(WebTools.ListValue(lstSCompany,""));
 	
 			using ( MiscList miscList = new MiscList() )
 				if ( miscList.ExecQuery(sql,1,"",false) == 0 || miscList.EOF )
