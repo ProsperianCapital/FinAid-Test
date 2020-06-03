@@ -113,6 +113,7 @@ namespace PCIWebFinAid
 			txtKey.Enabled      = ( which != 22 );
 			txtRefresh.Enabled  = ( which != 22 );
 			txtStock.Enabled    = ( which != 22 );
+			txtBase.Enabled     = ( which != 22 );
 			txtForex.Enabled    = ( which != 22 );
 			lstExchange.Enabled = ( which != 22 );
 			lstCurr.Enabled     = ( which != 22 );
@@ -344,6 +345,7 @@ namespace PCIWebFinAid
 		{
 			lblData.Text     = "";
 			txtStock.Text    = "";
+			txtBase.Text     = "";
 			txtForex.Text    = "";
 			txtRefresh.Text  = "10";
 			rdoTick1.Checked = false;
