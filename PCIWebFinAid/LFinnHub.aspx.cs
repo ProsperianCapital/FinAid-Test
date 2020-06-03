@@ -31,7 +31,7 @@ namespace PCIWebFinAid
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			if ( SessionCheck(19)  != 0 )
+			if ( SessionCheck(99)  != 0 )
 				return;
 //			if ( SecurityCheck(19) != 0 )
 //				return;
@@ -160,6 +160,7 @@ namespace PCIWebFinAid
 			string   symb    = "";
 			string   token   = "token=" + txtKey.Text.Trim();
 			string[] symbols = null;
+			sql              = "";
 
 			if ( rdoTick1.Checked )
 			{
@@ -185,7 +186,7 @@ namespace PCIWebFinAid
 				url     = fhURL + "forex/candle?resolution=D&" + token
 					             + "&from="   + DateTimeOffset.Now.Subtract(new TimeSpan(1,0,0,0)).ToUnixTimeSeconds().ToString()
 						          + "&to="     + DateTimeOffset.Now.ToUnixTimeSeconds().ToString()
-				                + "&symbol=" + WebTools.ListValue(lstExchange,"OANDA") + ":";
+				                + "&symbol=" + WebTools.ListValue(lstExchange,"OANDA").ToUpper() + ":";
 			}
 			else
 				return;
@@ -202,6 +203,7 @@ namespace PCIWebFinAid
 					{
 						urlX   = url + symb;
 						result = result + "&nbsp;- " + show + " " + symb + "<br />";
+						sql    = "exec sp_Ins_FinnHubbQuoteRaw @Symbol=" + Tools.DBString(symb);
 					}
 					else if ( rdoTick2.Checked )
 					{
@@ -222,7 +224,7 @@ namespace PCIWebFinAid
 						}
 					}
 	
-					result = result + GetWebData(urlX,7) + "</span><br />";
+					result = result + GetWebData(urlX,7,TickerType(),sql) + "</span><br />";
 				}
 				catch (Exception ex)
 				{
@@ -238,7 +240,15 @@ namespace PCIWebFinAid
 		}
 
 
-		private string GetWebData(string url,byte formatOutput=0)
+		private byte TickerType()
+		{
+			if ( rdoTick1.Checked ) return (byte)Constants.TickerType.StockPrices;
+			if ( rdoTick5.Checked ) return (byte)Constants.TickerType.ExchangeCandles;
+			if ( rdoTick2.Checked ) return (byte)Constants.TickerType.ExchangeRates;
+			return 0;
+		}
+
+		private string GetWebData(string url,byte formatOutput=0,byte ticker=0,string sqlToExec="")
 		{
 			if ( string.IsNullOrWhiteSpace(url) )
 				return "";
@@ -264,6 +274,16 @@ namespace PCIWebFinAid
 				}
 
 				webRequest = null;
+
+				if ( ticker > 0 && sqlToExec.Length > 0 && json.Length > 0 && json.StartsWith("{") )
+					if ( ticker == (byte)Constants.TickerType.StockPrices )
+						using (MiscList mList = new MiscList())
+							mList.ExecQuery(sqlToExec + ",@C="  + Tools.JSONValue(json,"c")
+						                             + ",@H="  + Tools.JSONValue(json,"h")
+						                             + ",@L="  + Tools.JSONValue(json,"l")
+						                             + ",@O="  + Tools.JSONValue(json,"o")
+						                             + ",@PC=" + Tools.JSONValue(json,"pc")
+						                             + ",@T="  + Tools.JSONValue(json,"t"),0);
 
 				if ( formatOutput == 0 )
 					return json;
