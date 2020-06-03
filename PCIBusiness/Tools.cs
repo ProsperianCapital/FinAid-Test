@@ -269,15 +269,6 @@ namespace PCIBusiness
 			return str;
 		}
 
-//		public static string JSONPair(string name,string value,byte dataType=1,bool firstPair=false,bool lastPair=false)
-//		{
-//			string quote = "\"";
-//			return ( firstPair ? "{" : "" )
-//			     + quote + name.Trim().Replace(quote,"'") + quote + " : "
-//			     + ( dataType<10 ? quote : "" ) + value.Trim().Replace(quote,"'") + ( dataType<10 ? quote : "" )
-//			     + ( lastPair  ? "}" : "," );
-//		}
-
 		public static string JSONPair(string name,string value,byte dataType=1,string prefix="",string suffix=",")
 		{
 		//	dataType =  1 means STRING
