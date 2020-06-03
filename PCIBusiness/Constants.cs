@@ -21,7 +21,7 @@ namespace PCIBusiness
 //		}
 		public static short C_MAXSQLROWS()
 		{
-			return 100;
+			return 1000;
 		}
 		public static short C_MAXPAYMENTROWS()
 		{
@@ -133,10 +133,11 @@ namespace PCIBusiness
 
 		public enum TickerType : int
 		{
-			StockPrices   = 1,
-			ExchangeRates = 2,
-			Portfolio     = 3,
-			Orders        = 4
+			StockPrices     = 1,
+			ExchangeRates   = 2,
+			Portfolio       = 3,
+			Orders          = 4,
+			ExchangeCandles = 5
 		}
 
 

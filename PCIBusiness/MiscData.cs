@@ -75,6 +75,9 @@ namespace PCIBusiness
 		{
 			dbConn.SourceInfo = "MiscData.LoadData";
 			colNo             = -88;
+			string   dataType;
+			decimal  curr;
+			DateTime dt;
 
 			try
 			{
@@ -82,7 +85,19 @@ namespace PCIBusiness
 				{
 					if ( k > theData.Length )
 						break;
-					theData[k] = dbConn.ColValue(k);
+					dataType = dbConn.ColDataType("",k).ToUpper();
+					if ( dataType.Contains("DATE") )
+					{
+						dt         = dbConn.ColDate("",k);
+						theData[k] = Tools.DateToString(dt,7,0); // yyyy-mm-dd
+					}
+					else if ( dataType.Contains("DECIMAL") || dataType.Contains("FLOAT") )
+					{
+						curr       = dbConn.ColDecimal("",k);
+						theData[k] = Tools.DecimalToString(curr,2);
+					}
+					else
+						theData[k] = dbConn.ColValue(k);
 					if ( theData[k].ToUpper().StartsWith("[FORECOLOR]") )
 						foreColor = System.Drawing.Color.FromName(theData[k].Substring(11).Trim());
 					else if ( theData[k].ToUpper().StartsWith("[BACKCOLOR]") )

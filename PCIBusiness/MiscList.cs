@@ -78,16 +78,61 @@ namespace PCIBusiness
 		{
 			try
 			{
-				if ( dbConn != null )
-				{
-					int x = dbConn.ColNumber(colName,errorMode);
-					if ( x >= 0 )
-						return dbConn.ColLong(x);
-				}
+				return dbConn.ColLong(colName,0,errorMode);
+
+//				if ( dbConn != null )
+//				{
+//					int x = dbConn.ColNumber(colName,errorMode);
+//					if ( x >= 0 )
+//						return dbConn.ColLong(x);
+//				}
 			}
 			catch
 			{ }
 			return 0;
+		}
+		public DateTime GetColumnDate(string colName,byte errorMode=1)
+		{
+			try
+			{
+				return dbConn.ColDate(colName,0,errorMode);
+
+//				if ( dbConn != null )
+//				{
+//					int x = dbConn.ColNumber(colName,errorMode);
+//					if ( x >= 0 )
+//						return dbConn.ColDate(x);
+//				}
+			}
+			catch
+			{ }
+			return Constants.C_NULLDATE();
+		}
+		public string GetColumnCurrency(string colName,byte errorMode=1)
+		{
+			try
+			{
+				if ( dbConn != null )
+				{
+					int x = dbConn.ColNumber(colName,errorMode);
+					if ( x >= 0 )
+					{
+						string y = GetColumn(x);
+						if ( string.IsNullOrWhiteSpace(y) )
+							return "0.00";
+						x = y.IndexOf(".");
+						if ( x < 0 )
+							return y + ".00";
+						y = y + "000";
+						if ( x == 0 )
+							return "0." + y.Substring(1,2);
+						return y.Substring(0,x+3);
+					}
+				}
+			}
+			catch
+			{ }
+			return "0.00";
 		}
 		public string NextColumn
 		{

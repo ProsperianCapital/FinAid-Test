@@ -127,7 +127,7 @@ namespace PCIBusiness
 				mm = theDate.Substring(3,2);	
 				yy = theDate.Substring(6,4);	
 			}
-			else if ( dateFormat == 2 && theDate.Length == 10 )
+			else if ( ( dateFormat == 2 || dateFormat == 7 ) && theDate.Length == 10 )
 			{
 				dd = theDate.Substring(8,2);	
 				mm = theDate.Substring(5,2);	
@@ -1069,7 +1069,7 @@ namespace PCIBusiness
 						if ( conn.ColStatus("",k) == Constants.DBColumnStatus.ValueIsNull )
 							str = str + "NULL";
 						else if ( colType == "NVARCHAR" || colType == "NCHAR" )
-							str = str + conn.ColUniCode("",0,k);
+							str = str + conn.ColUniCode("",k);
 						else
 							str = str + conn.ColValue(k);
 						Tools.LogInfo("Tools.SQLDebug/4",str,250);
