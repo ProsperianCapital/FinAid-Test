@@ -18,12 +18,16 @@
 <script type="text/javascript">
 function ChooseTicker(p)
 {
-	DisableElt('txtStock',(p!=1));
-	DisableElt('txtForex',(p!=2));
-	DisableElt('lstCurr' ,(p!=2));
+	DisableElt('txtStock'   ,(p!=1));
+	DisableElt('txtBase'    ,(p!=2));
+	DisableElt('txtForex'   ,(p!=5));
+	DisableElt('lstCurr'    ,(p!=5));
+	DisableElt('lstExchange',(p!=5));
 	if ( p == 1 )
 		GetElt('txtStock').focus();
 	else if ( p == 2 )
+		GetElt('txtBase').focus();
+	else if ( p == 5 )
 		GetElt('txtForex').focus();
 }
 </script>
@@ -63,6 +67,7 @@ Mauritius<br />
 	<td colspan="2"><b><asp:Label runat="server" ID="lblStatus"></asp:Label></b></td></tr>
 <tr>
 	<td colspan="3"><hr /></td></tr>
+
 <tr>
 	<td>
 		<asp:RadioButton runat="server" id="rdoTick1" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(1)" />Stock values</td>
@@ -74,9 +79,15 @@ Mauritius<br />
 		<asp:TextBox runat="server" ID="txtStock" Width="200px" TextMode="MultiLine" Rows="4"></asp:TextBox></td></tr>
 <tr>
 	<td colspan="3"><hr /></td></tr>
+
 <tr>
-	<td rowspan="2">
-		<asp:RadioButton runat="server" id="rdoTick2" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(2)" />Currency exchange rates</td>
+	<td rowspan="3">
+		<asp:RadioButton runat="server" id="rdoTick5" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(5)" />Currency exchange candles</td>
+	<td>
+		Exchange</td>
+	<td>
+		<asp:DropDownList runat="server" ID="lstExchange"></asp:DropDownList></td></tr>
+<tr>
 	<td>
 		Base currency</td>
 	<td>
@@ -86,6 +97,10 @@ Mauritius<br />
 			<asp:ListItem Value="GBP" Text="(GBP) Pounds Sterling"></asp:ListItem>
 			<asp:ListItem Value="USD" Text="(USD) US Dollars"></asp:ListItem>
 			<asp:ListItem Value="CHF" Text="(CHF) Swiss Francs"></asp:ListItem>
+			<asp:ListItem Value="AUD" Text="(AUD) Australian Dollar"></asp:ListItem>
+			<asp:ListItem Value="THB" Text="(THB) Thai Baht"></asp:ListItem>
+			<asp:ListItem Value="JPY" Text="(JPY) Japanese Yen"></asp:ListItem>
+			<asp:ListItem Value="CNY" Text="(CNY) Chinese Yuan (Renminbi)"></asp:ListItem>
 		</asp:DropDownList></td></tr>
 <tr>
 	<td>
@@ -95,10 +110,21 @@ Mauritius<br />
 	<td>
 		<asp:TextBox runat="server" ID="txtForex" Width="200px" TextMode="MultiLine" Rows="4"></asp:TextBox></td></tr>
 <tr>
+	<td colspan="3"><hr /></td></tr>
+
+<tr>
+	<td>
+		<asp:RadioButton runat="server" id="rdoTick2" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(2)" />Currency exchange rates</td>
+	<td>
+		Base currency (eg. USD,THB,ZAR)</td>
+	<td>
+		<asp:TextBox runat="server" ID="txtBase" MaxLength="3" Width="35px"></asp:TextBox></td></tr>
+
+<tr>
 	<td colspan="3"><br />
-		<asp:Button runat="server" ID="btnStart" Text="Start"  OnClick="btnStart_Click" OnClientClick="JavaScript:SetEltValue('lblStatus','<span style=\'color:orange\'>Starting</span>');return true" />
-		<asp:Button runat="server" ID="btnStop"  Text="Stop"   OnClick="btnStop_Click" />
-		<asp:Button runat="server" ID="btnClear" Text="Clear"  OnClick="btnClear_Click" /></td></tr>
+		<asp:Button runat="server" ID="btnStart" Text="Start" OnClick="btnStart_Click" OnClientClick="JavaScript:SetEltValue('lblStatus','<span style=\'color:orange\'>Starting</span>');return true" />
+		<asp:Button runat="server" ID="btnStop"  Text="Stop"  OnClick="btnStop_Click" />
+		<asp:Button runat="server" ID="btnClear" Text="Clear" OnClick="btnClear_Click" /></td></tr>
 <tr>
 	<td colspan="3" class="Error"><asp:Label ID="lblErr" runat="server"></asp:Label></td></tr>
 </table>

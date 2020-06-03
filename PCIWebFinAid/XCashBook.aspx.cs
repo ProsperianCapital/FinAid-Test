@@ -82,14 +82,14 @@ namespace PCIWebFinAid
 //						err = "Invalid card number (only digits allowed)<br />";
 //						break;
 //					}
-//			DateTime d1 = Tools.StringToDate(txtDate1.Text,1);
-//			DateTime d2 = Tools.StringToDate(txtDate2.Text,1);
+//			DateTime d1 = Tools.StringToDate(txtDate1.Text,7);
+//			DateTime d2 = Tools.StringToDate(txtDate2.Text,7);
 //			if ( d1 <= Constants.C_NULLDATE() )
-//				err = err + "Invalid from date (it must be in dd/mm/yyyy format)<br />";
+//				err = err + "Invalid from date (it must be in yyyy/mm/dd format)<br />";
 //			if ( d2 <= Constants.C_NULLDATE() )
-//				err = err + "Invalid to date (it must be in dd/mm/yyyy format)<br />";
+//				err = err + "Invalid to date (it must be in yyyy/mm/dd format)<br />";
 //			if ( d1 > d2 && d2 > Constants.C_NULLDATE() )
-//				err = err + "From date cannot be after to date<br />";
+//				err = err + "From date cannot be later than to date<br />";
 //			if ( err.Length > 0 )
 //				SetErrorDetail("ValidateData",31010,err,err);
 //			return err.Length;
@@ -100,8 +100,8 @@ namespace PCIWebFinAid
 		{
 			try
 			{
-				string       cmdName = e.CommandName.Trim().ToUpper();
 //				DataGridItem row     = e.Item;
+				string       cmdName = e.CommandName.Trim().ToUpper();
 				string       tranID  = e.CommandArgument.ToString();
 
 				if ( cmdName == "EDIT" && tranID.Length > 0 )
@@ -127,8 +127,7 @@ namespace PCIWebFinAid
 	
 			using ( MiscList miscList = new MiscList() )
 				if ( miscList.ExecQuery(sql,1,"",false) == 0 || miscList.EOF )
-			//	if ( miscList.ExecQuery(sql,0) != 0 || miscList.EOF )
-					SetErrorDetail("btnSearch_Click",30061,"No transactions found. Refine your criteria and try again",sql,2,0);
+					SetErrorDetail("btnSearch_Click",30061,"No transactions found. Refine your criteria and try again",sql,2,2);
 				else
 				{
 					grdData.Visible    = true;

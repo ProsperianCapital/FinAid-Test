@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.IO;
+using System.Web.UI.WebControls;
 using System.Text;
 using PCIBusiness;
 
@@ -17,12 +18,16 @@ namespace PCIWebFinAid
 			public string apiKey;
 			public string stockList;
 			public string forexList;
+			public string baseCurr;
+			public string exchange;
+			public string exchangeList;
 			public string result;
 		}
-		private RefreshData pageParms;
-		private int         ret;
-		private string      dataOK;
-		private string      dataErr;
+		private RefreshData  pageParms;
+		private int          ret;
+		private string       dataOK;
+		private string       dataErr;
+		private const string fhURL = "https://finnhub.io/api/v1/";
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
@@ -53,35 +58,69 @@ namespace PCIWebFinAid
 			{
 				txtKey.Text      = pageParms.apiKey;
 				txtRefresh.Text  = pageParms.interval;
+				txtBase.Text     = pageParms.baseCurr;
 				txtStock.Text    = pageParms.stockList;
 				txtForex.Text    = pageParms.forexList;
 				lblData.Text     = pageParms.result;
 				rdoTick1.Checked = ( pageParms.ticker == (int)Constants.TickerType.StockPrices );
+				rdoTick5.Checked = ( pageParms.ticker == (int)Constants.TickerType.ExchangeCandles );
 				rdoTick2.Checked = ( pageParms.ticker == (int)Constants.TickerType.ExchangeRates );
+				lstExchange.Items.Add(new ListItem(pageParms.exchange,pageParms.exchange));
 				if ( pageParms.status != 22 )
 					lblJS.Text    = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
 			}
 			else
 				lblJS.Text = WebTools.JavaScriptSource("ChooseTicker(0)");
 
+			SetupFinnHub();
 			StartStop(pageParms.status);
 			lblDate.Text = Tools.DateToString(System.DateTime.Now,7,1); // yyyy-mm-dd hh:mm:ss
 			ascxMenu.SetAdmin();
 		}
 
+		private void SetupFinnHub()
+		{
+			try
+			{
+				lstExchange.Items.Clear();
+				string exchList = Tools.NullToString(pageParms.exchangeList);
+				if ( exchList.Length == 0 )
+					exchList = GetWebData (fhURL+"forex/exchange?token=" + txtKey.Text.Trim());
+				if ( exchList.StartsWith("[") && exchList.EndsWith("]") && exchList.Length > 2 )
+					exchList = exchList.Substring(1,exchList.Length-2);
+				if ( exchList.Length > 0 )
+				{
+					pageParms.exchangeList = exchList;
+					string[] exch          = exchList.Split(',');
+					string   chgX;
+					foreach ( string chg in exch )
+					{
+						chgX = chg.Replace("\"","");
+						lstExchange.Items.Add(new ListItem(chgX,chgX));
+						if ( Tools.NullToString(pageParms.exchange) == chgX )
+							lstExchange.SelectedIndex = lstExchange.Items.Count-1;
+					}
+				}
+			}
+			catch
+			{ }
+		}
+
 		private void StartStop(byte which)
 		{
-		//	btnStart.Text      = ( which != 22 ? "Start" : "Busy ..." );
-			btnStart.Enabled   = ( which != 22 );
-			txtKey.Enabled     = ( which != 22 );
-			txtRefresh.Enabled = ( which != 22 );
-			txtStock.Enabled   = ( which != 22 );
-			txtForex.Enabled   = ( which != 22 );
-			lstCurr.Enabled    = ( which != 22 );
-			rdoTick1.Enabled   = ( which != 22 );
-			rdoTick2.Enabled   = ( which != 22 );
+		//	btnStart.Text       = ( which != 22 ? "Start" : "Busy ..." );
+			btnStart.Enabled    = ( which != 22 );
+			txtKey.Enabled      = ( which != 22 );
+			txtRefresh.Enabled  = ( which != 22 );
+			txtStock.Enabled    = ( which != 22 );
+			txtForex.Enabled    = ( which != 22 );
+			lstExchange.Enabled = ( which != 22 );
+			lstCurr.Enabled     = ( which != 22 );
+			rdoTick1.Enabled    = ( which != 22 );
+			rdoTick5.Enabled    = ( which != 22 );
+			rdoTick2.Enabled    = ( which != 22 );
 
-			btnStop.Enabled    = ( which == 22 );
+			btnStop.Enabled     = ( which == 22 );
 
 			if ( which == 22 )
 			{
@@ -90,10 +129,13 @@ namespace PCIWebFinAid
 				pageParms.status    = 22;
 				pageParms.interval  = txtRefresh.Text;
 				pageParms.apiKey    = txtKey.Text;
+				pageParms.baseCurr  = txtBase.Text;
 				pageParms.stockList = txtStock.Text;
 				pageParms.forexList = txtForex.Text;
+				pageParms.exchange  = WebTools.ListValue(lstExchange,"ZAR");
 				pageParms.ticker    = (byte)( rdoTick1.Checked ? (int)Constants.TickerType.StockPrices
-				                          : ( rdoTick2.Checked ? (int)Constants.TickerType.ExchangeRates : 0 ) );
+				                          : ( rdoTick5.Checked ? (int)Constants.TickerType.ExchangeCandles
+				                          : ( rdoTick2.Checked ? (int)Constants.TickerType.ExchangeRates : 0 ) ) );
 				FetchData();
 			}
 			else
@@ -116,6 +158,7 @@ namespace PCIWebFinAid
 			string   result  = "";
 			string   curr    = "";
 			string   symb    = "";
+			string   token   = "token=" + txtKey.Text.Trim();
 			string[] symbols = null;
 
 			if ( rdoTick1.Checked )
@@ -123,17 +166,26 @@ namespace PCIWebFinAid
 				ret     = 10;
 				show    = "Stock";
 				symbols = txtStock.Text.Split(',');
-				url     = "https://finnhub.io/api/v1/quote?token=" + txtKey.Text + "&symbol=";
+				url     = fhURL + "quote?" + token + "&symbol=";
 			}
 			else if ( rdoTick2.Checked )
 			{
-				ret     = 15;
+				ret     = 14;
 				show    = "Currency";
-				curr    = lstCurr.SelectedValue.Trim().ToUpper();
+				symbols = txtBase.Text.Split(',');
+				url     = fhURL + "forex/rates?" + token
+				                + "&base=";
+			}
+			else if ( rdoTick5.Checked )
+			{
+				ret     = 17;
+				show    = "Currency";
+				curr    = WebTools.ListValue(lstCurr,"ZAR").ToUpper();
 				symbols = txtForex.Text.Split(',');
-				url     = "https://finnhub.io/api/v1/forex/candle?resolution=D&token=" + txtKey.Text
-					     + "&from=" + DateTimeOffset.Now.Subtract(new TimeSpan(1,0,0,0)).ToUnixTimeSeconds().ToString()
-						  + "&to="   + DateTimeOffset.Now.ToUnixTimeSeconds().ToString() + "&symbol=OANDA:";
+				url     = fhURL + "forex/candle?resolution=D&" + token
+					             + "&from="   + DateTimeOffset.Now.Subtract(new TimeSpan(1,0,0,0)).ToUnixTimeSeconds().ToString()
+						          + "&to="     + DateTimeOffset.Now.ToUnixTimeSeconds().ToString()
+				                + "&symbol=" + WebTools.ListValue(lstExchange,"OANDA") + ":";
 			}
 			else
 				return;
@@ -151,6 +203,11 @@ namespace PCIWebFinAid
 						urlX   = url + symb;
 						result = result + "&nbsp;- " + show + " " + symb + "<br />";
 					}
+					else if ( rdoTick2.Checked )
+					{
+						urlX   = url + symb;
+						result = result + "&nbsp;- " + show + " " + symb + "<br />";
+					}
 					else
 					{
 						urlX   = "";
@@ -159,43 +216,13 @@ namespace PCIWebFinAid
 							result = result + dataErr + "Cannot convert";
 						else
 						{
-							result = result + GetWebData (url+curr+"_"+symb) + "</span><br />";
+							result = result + GetWebData (url+curr+"_"+symb,7) + "</span><br />";
 							urlX   = url + symb + "_" + curr;
 							result = result + "&nbsp;- " + show + " " + symb + "->" + curr + "<br />";
 						}
 					}
 	
-					result = result + GetWebData(urlX) + "</span><br />";
-
-/*
-					ret                    = 30;
-					webRequest             = (HttpWebRequest)WebRequest.Create(urlX);
-//					webRequest.Accept      = "text/xml";
-					webRequest.ContentType = "application/x-www-form-urlencoded";
-					webRequest.Method      = "GET";
-//					webRequest.KeepAlive   = false;
-					json                   = "";
-					ret                    = 40;
-
-					using (WebResponse webResponse = webRequest.GetResponse())
-					{
-						ret = 50;
-						using (StreamReader rd = new StreamReader(webResponse.GetResponseStream()))
-						{
-							ret  = 60;
-							json = rd.ReadToEnd().Trim();
-						}
-					}
-
-					if ( json.Length < 1 )
-						result = result + dataErr + "No data returned";
-					else if ( json.StartsWith("{") )
-						result = result + dataOK + json;
-					else
-						result = result + dataErr + json;
-					result = result + "</span><br />";
-					ret    = 70;
-*/
+					result = result + GetWebData(urlX,7) + "</span><br />";
 				}
 				catch (Exception ex)
 				{
@@ -211,7 +238,7 @@ namespace PCIWebFinAid
 		}
 
 
-		private string GetWebData(string url)
+		private string GetWebData(string url,byte formatOutput=0)
 		{
 			if ( string.IsNullOrWhiteSpace(url) )
 				return "";
@@ -238,9 +265,13 @@ namespace PCIWebFinAid
 
 				webRequest = null;
 
+				if ( formatOutput == 0 )
+					return json;
 				if ( json.Length < 1 )
 					return "No data returned";
-				else if ( json.StartsWith("{") )
+				if ( json.Length > 30 )
+					json = json.Replace(",\"",",<br />\"");
+				if ( json.StartsWith("{") )
 					return dataOK + json;
 				else
 					return dataErr + json;
@@ -249,7 +280,7 @@ namespace PCIWebFinAid
 			{
 				Tools.LogException("LFinnHub.GetWebData","ret="+ret.ToString()+", "+url,ex);
 			}
-			return dataErr + "Error, ret="+ret.ToString();
+			return ( formatOutput == 0 ? "" : dataErr ) + "Error, ret="+ret.ToString();
 		}
 
 		private int ValidatePage()
@@ -266,10 +297,12 @@ namespace PCIWebFinAid
 				lblErr.Text = lblErr.Text + "Invalid refresh interval (must be between 5 and 1200)<br />";
 			else
 				txtRefresh.Text = refresh.ToString();
-			if ( stocks.Length < 2 && rdoTick1.Checked )
+			if ( rdoTick1.Checked && stocks.Length < 2 )
 				lblErr.Text = lblErr.Text + "Invalid list of stock symbols<br />";
-			if ( forex.Length  < 2 && rdoTick2.Checked )
+			if ( rdoTick5.Checked && forex.Length  < 2 )
 				lblErr.Text = lblErr.Text + "Invalid list of currency symbols<br />";
+			if ( rdoTick2.Checked && txtBase.Text.Trim().Length != 3 )
+				lblErr.Text = lblErr.Text + "Invalid base currency<br />";
 
 			return lblErr.Text.Length;
 		}
@@ -278,6 +311,8 @@ namespace PCIWebFinAid
 		{
 			if ( ValidatePage() == 0 )
 				StartStop(22);
+			else
+				lblJS.Text = WebTools.JavaScriptSource("ChooseTicker("+(rdoTick1.Checked?"1)":(rdoTick5.Checked?"5)":(rdoTick2.Checked?"2)":"0)"))));
 		}
 
 		protected void btnStop_Click(Object sender, EventArgs e)
@@ -292,6 +327,7 @@ namespace PCIWebFinAid
 			txtForex.Text    = "";
 			txtRefresh.Text  = "10";
 			rdoTick1.Checked = false;
+			rdoTick5.Checked = false;
 			rdoTick2.Checked = false;
 			SessionClearData();
 			StartStop(1);

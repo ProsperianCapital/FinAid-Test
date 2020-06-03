@@ -221,10 +221,10 @@ namespace PCIWebFinAid
 				}
 				return 0;
 			}
-			catch (Exception ex)
-			{
-				return 99;
-			}
+			catch
+			{ }
+
+			return 99; 
 		}
 
 		public static void Redirect (HttpResponse response,string url)
