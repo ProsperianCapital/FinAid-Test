@@ -3,6 +3,8 @@ using System.IO;
 using System.Xml;
 using System.Globalization;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace PCIBusiness
 {
@@ -78,6 +80,18 @@ namespace PCIBusiness
 			while ( theValue.Contains("  ") )
 				theValue = theValue.Replace("  "," ");
 			return theValue;
+		}
+
+		public static decimal StringToDecimal(string theValue)
+		{
+			try
+			{
+				decimal ret = System.Convert.ToDecimal(theValue);
+				return  ret;
+			}
+			catch
+			{ }
+			return 0;
 		}
 
 		public static int StringToInt(string theValue,bool allowDecimals=false)
@@ -195,7 +209,7 @@ namespace PCIBusiness
 			else if  ( dateFormat ==  9 ) // yyMMdd
 				theDate = whatDate.ToString("yyMMdd",CultureInfo.InvariantCulture);
 			else if  ( dateFormat == 19 ) // YYYY/MM/DD (for SQL)
-				theDate = whatDate.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture);
+				theDate = whatDate.ToString("yyyy-MM-dd",CultureInfo.InvariantCulture);
 
 			if ( timeFormat == 1 && ( dateFormat == 6 || dateFormat == 8 ) )
 				theTime = "at " + whatDate.ToString("HH:mm:ss",CultureInfo.InvariantCulture);
@@ -369,6 +383,16 @@ namespace PCIBusiness
 			catch
 			{ }
 			return "";
+		}
+
+		public static string XMLCell(string tagName,string tagData,int maxLength=0)
+		{
+			string p = XMLSafe(tagData);
+			if ( p.Length < 1 )
+				p = " ";
+			else if ( maxLength > 0 && p.Length > maxLength )
+				p = p.Substring(0,maxLength);
+			return "<" + tagName + ">" + p + "</" + tagName + ">";
 		}
 
 		public static string XMLNode(XmlDocument xmlDoc,string xmlTag,string nsPrefix="",string nsURL="")
@@ -1174,6 +1198,53 @@ namespace PCIBusiness
 				LogException("Tools.CreatePDF/99","File="+fileName+"\n"+html,ex);
 			}
 			return 30;
+		}
+
+		public static string TickerName(int tickerType)
+		{
+			if ( tickerType == (int)Constants.TickerType.IBStockPrices        ) return "IB/Stock Prices";
+			if ( tickerType == (int)Constants.TickerType.IBExchangeRates      ) return "IB/Exchange Rates";
+			if ( tickerType == (int)Constants.TickerType.IBPortfolio          ) return "IB/Portfolio";
+			if ( tickerType == (int)Constants.TickerType.IBOrders             ) return "IB/Orders";
+			if ( tickerType == (int)Constants.TickerType.FinnHubStockPrices   ) return "FH/Stock Prices";
+			if ( tickerType == (int)Constants.TickerType.FinnHubStockHistory  ) return "FH/Stock History";
+			if ( tickerType == (int)Constants.TickerType.FinnHubExchangeRates ) return "FH/Exchange Rates";
+			return "";
+		}
+
+		public static JObj JSONToObject<JObj>(string jsonStr)
+		{
+			JObj                       obj;
+			MemoryStream               ms = null;
+			DataContractJsonSerializer serializer;
+
+			jsonStr = NullToString(jsonStr);
+			if ( jsonStr.Length < 1 )
+				return default(JObj);
+
+			try
+			{
+				obj        = Activator.CreateInstance<JObj>();
+				ms         = new MemoryStream(Encoding.Unicode.GetBytes(jsonStr));
+				serializer = new DataContractJsonSerializer(obj.GetType());
+				obj        = (JObj)serializer.ReadObject(ms);
+				ms.Close();
+				ms         = null;
+				return obj;
+			}
+			catch (Exception ex)
+			{
+				LogException("Tools.JSONToObject/10",jsonStr,ex);
+				LogInfo     ("Tools.JSONToObject/20",jsonStr,220);
+			}
+			finally
+			{
+				if ( ms != null )
+					ms.Close();
+				ms         = null;
+				serializer = null;
+			}
+			return default(JObj);
 		}
 	}
 }

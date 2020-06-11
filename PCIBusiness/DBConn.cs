@@ -323,7 +323,7 @@ namespace PCIBusiness
       catch (Exception ex)
       {
 			if ( errorMode == 1 )
-				Tools.LogException ( ModuleName("DBConn.ColShort"), "ColName=" + colName + ", ColNo=" + colNo.ToString(), ex );
+				Tools.LogException ( ModuleName("DBConn.ColShort"), "ColName=" + colName + ", ColNo=" + colNumber.ToString(), ex );
       }
       return 0;
    }
@@ -342,7 +342,7 @@ namespace PCIBusiness
       catch (Exception ex)
       {
 			if ( errorMode == 1 )
-				Tools.LogException ( ModuleName("DBConn.ColLong/1"), "ColName=" + colName + ", ColNo=" + colNo.ToString(), ex );
+				Tools.LogException ( ModuleName("DBConn.ColLong/1"), "ColName=" + colName + ", ColNo=" + colNumber.ToString(), ex );
       }
       return 0;
    }

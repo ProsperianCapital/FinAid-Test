@@ -13,12 +13,12 @@ namespace PCIBusiness
 			return new MiscData();
 		}
 
-		public int ExecQuery(string sqlQuery,byte loadRows,string dataClass="",bool noRowsIsError=true)
+		public int ExecQuery(string sqlQuery,byte loadRows,string dataClass="",bool noRowsIsError=true,bool alwaysClose=false)
 		{
 			sql = sqlQuery;
 
 			if ( loadRows == 0 )
-				return base.ExecuteSQL(null,false,noRowsIsError);
+				return base.ExecuteSQL(null,alwaysClose,noRowsIsError);
 
 			if ( string.IsNullOrWhiteSpace(dataClass) )
 				return base.LoadDataFromSQL();
@@ -151,7 +151,7 @@ namespace PCIBusiness
 			get
 			{
 				if ( dbConn == null )
-					return false;
+					return true;
 				return dbConn.EOF;
 			}
 		}

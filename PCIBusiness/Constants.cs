@@ -133,11 +133,15 @@ namespace PCIBusiness
 
 		public enum TickerType : int
 		{
-			StockPrices     = 1,
-			ExchangeRates   = 2,
-			Portfolio       = 3,
-			Orders          = 4,
-			ExchangeCandles = 5
+			IBStockPrices          =  1,
+			IBExchangeRates        =  2,
+			IBPortfolio            =  3,
+			IBOrders               =  4,
+			IBExchangeCandles      =  5,
+			FinnHubStockPrices     = 21,
+			FinnHubStockHistory    = 22,
+			FinnHubExchangeRates   = 23,
+			FinnHubExchangeCandles = 24 // Not implemented yet
 		}
 
 

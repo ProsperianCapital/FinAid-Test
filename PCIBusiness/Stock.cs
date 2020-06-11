@@ -10,6 +10,9 @@ namespace PCIBusiness
 		private string  currencyCode;
 		private string  exchangeCode;
 		private string  primaryExchange;
+		private string  resolution;
+		private long    fromDate;
+		private long    toDate;
 
 		private double  price;
 		private int     quantity;
@@ -69,6 +72,21 @@ namespace PCIBusiness
 			set { primaryExchange = value.Trim(); }
 		}
 
+		public  string  Resolution
+		{
+			get { return Tools.NullToString(resolution); }
+		}
+
+		public  long    FromDate
+		{
+			get { return fromDate; }
+		}
+
+		public  long    ToDate
+		{
+			get { return toDate; }
+		}
+
 		public int UpdatePrice()
 		{
 			if ( price > 0 && stockId > 0 && tickType >= 0 )
@@ -114,10 +132,13 @@ namespace PCIBusiness
 			dbConn.SourceInfo = "Stock.LoadData";
 			stockId           = dbConn.ColLong  ("StockId");
 			symbol            = dbConn.ColString("Symbol");
-			exchangeCode      = dbConn.ColString("BrokerExchangeCode");
+			exchangeCode      = dbConn.ColString("BrokerExchangeCode",0);
 			primaryExchange   = dbConn.ColString("PrimaryExchange",0);
 			securityType      = dbConn.ColString("SecType",0);
 			currencyCode      = dbConn.ColString("CUR",0);
+			resolution        = dbConn.ColString("Resolution",0);
+			fromDate          = dbConn.ColBig   ("FromDate",0);
+			toDate            = dbConn.ColBig   ("ToDate",0);
 			price             = 0;
 			quantity          = 0;
 			tickType          = 0;
