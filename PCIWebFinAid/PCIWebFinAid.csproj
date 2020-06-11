@@ -66,25 +66,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AJAXProcess.aspx" />
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
-    <Content Include="Images\Bell1.png" />
-    <Content Include="Images\Busy.gif" />
-    <Content Include="Images\PCapital.png" />
-    <Content Include="Images\PFintech.png" />
-    <Content Include="Images\PKnab.png" />
-    <Content Include="Images\PlaNet.png" />
-    <Content Include="Images\PWealth.png" />
-    <Content Include="IncludeBusy.htm" />
-    <Content Include="IncludeErrorDtl.htm" />
-    <Content Include="IncludeMainAdmin.htm" />
-    <Content Include="JS\Timeout.js" />
     <Content Include="Register.aspx" />
     <Content Include="TransLookup.aspx" />
     <Content Include="ContractLookup.aspx" />
-    <Content Include="IncludeLogin1.htm" />
-    <Content Include="IncludeLogin2.htm" />
-    <Content Include="IncludeMain.htm" />
     <Content Include="LAdmin.aspx" />
     <Content Include="LChange.aspx" />
     <Content Include="LFinnHub.aspx" />
@@ -95,7 +82,6 @@
     <Content Include="LView.aspx" />
     <Content Include="LWelcome.aspx" />
     <Content Include="Menu.ascx" />
-    <Content Include="packages.config" />
     <Content Include="XCashBook.aspx" />
     <Content Include="XContractLookup.aspx" />
     <Content Include="XFooter.ascx" />
@@ -104,17 +90,20 @@
     <Content Include="XLogin.aspx" />
     <Content Include="XMenu.ascx" />
     <Content Include="XTransLookup.aspx" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
+    <Content Include="IncludeBusy.htm" />
+    <Content Include="IncludeErrorDtl.htm" />
+    <Content Include="IncludeMainAdmin.htm" />
+    <Content Include="IncludeLogin1.htm" />
+    <Content Include="IncludeLogin2.htm" />
+    <Content Include="IncludeMain.htm" />
+    <Content Include="packages.config" />
+    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="JS\AJAXUtils.js" />
     <Content Include="JS\Utils.js" />
     <Content Include="JS\Calendar.js" />
+    <Content Include="JS\Timeout.js" />
     <Content Include="CSS\FinAid.css" />
     <Content Include="CSS\BackOffice.css" />
     <Content Include="CSS\Calendar.css" />
@@ -142,9 +131,23 @@
     <Content Include="Images\Chat.png" />
     <Content Include="Images\Close1.png" />
     <Content Include="Images\Logo-ENG.png" />
+    <Content Include="Images\Bell1.png" />
+    <Content Include="Images\Busy.gif" />
+    <Content Include="Images\PCapital.png" />
+    <Content Include="Images\PFintech.png" />
+    <Content Include="Images\PKnab.png" />
+    <Content Include="Images\PlaNet.png" />
+    <Content Include="Images\PWealth.png" />
     <Content Include="Templates\ConfirmationMail.htm" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AJAXProcess.aspx.cs">
+      <DependentUpon>AJAXProcess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AJAXProcess.aspx.designer.cs">
+      <DependentUpon>AJAXProcess.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AppDetails.cs" />
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>

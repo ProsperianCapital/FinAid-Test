@@ -62,9 +62,9 @@ namespace PCIWebFinAid
 				txtStock.Text    = pageParms.stockList;
 				txtForex.Text    = pageParms.forexList;
 				lblData.Text     = pageParms.result;
-				rdoTick1.Checked = ( pageParms.ticker == (int)Constants.TickerType.StockPrices );
-				rdoTick5.Checked = ( pageParms.ticker == (int)Constants.TickerType.ExchangeCandles );
-				rdoTick2.Checked = ( pageParms.ticker == (int)Constants.TickerType.ExchangeRates );
+				rdoTick21.Checked = ( pageParms.ticker == (int)Constants.TickerType.FinnHubStockPrices );
+				rdoTick23.Checked = ( pageParms.ticker == (int)Constants.TickerType.FinnHubExchangeRates );
+//				rdoTick24.Checked = ( pageParms.ticker == (int)Constants.TickerType.FinnHubExchangeCandles );
 				lstExchange.Items.Add(new ListItem(pageParms.exchange,pageParms.exchange));
 				if ( pageParms.status != 22 )
 					lblJS.Text    = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
@@ -108,22 +108,22 @@ namespace PCIWebFinAid
 
 		private void StartStop(byte which)
 		{
-		//	btnStart.Text       = ( which != 22 ? "Start" : "Busy ..." );
-			btnStart.Enabled    = ( which != 22 );
-			txtKey.Enabled      = ( which != 22 );
-			txtRefresh.Enabled  = ( which != 22 );
-			txtStock.Enabled    = ( which != 22 );
-			txtBase.Enabled     = ( which != 22 );
-			txtForex.Enabled    = ( which != 22 );
-			lstExchange.Enabled = ( which != 22 );
-			lstCurr.Enabled     = ( which != 22 );
-			rdoTick1.Enabled    = ( which != 22 );
-			rdoTick5.Enabled    = ( which != 22 );
-			rdoTick2.Enabled    = ( which != 22 );
+		//	btnStart.Text       = ( which != 88 ? "Start" : "Busy ..." );
+			btnStart.Enabled    = ( which != 88 );
+			txtKey.Enabled      = ( which != 88 );
+			txtRefresh.Enabled  = ( which != 88 );
+			txtStock.Enabled    = ( which != 88 );
+			txtBase.Enabled     = ( which != 88 );
+			txtForex.Enabled    = ( which != 88 );
+			lstExchange.Enabled = ( which != 88 );
+			lstCurr.Enabled     = ( which != 88 );
+			rdoTick21.Enabled   = ( which != 88 );
+			rdoTick23.Enabled   = ( which != 88 );
+//			rdoTick24.Enabled   = ( which != 88 );
 
-			btnStop.Enabled     = ( which == 22 );
+			btnStop.Enabled     = ( which == 88 );
 
-			if ( which == 22 )
+			if ( which == 88 )
 			{
 				lblStatus.Text      = "<span style='color:red'>Busy</span>";
 				lblRefresh.Text     = "<meta http-equiv='Refresh' content='" + txtRefresh.Text + "' />";
@@ -134,9 +134,9 @@ namespace PCIWebFinAid
 				pageParms.stockList = txtStock.Text;
 				pageParms.forexList = txtForex.Text;
 				pageParms.exchange  = WebTools.ListValue(lstExchange,"ZAR");
-				pageParms.ticker    = (byte)( rdoTick1.Checked ? (int)Constants.TickerType.StockPrices
-				                          : ( rdoTick5.Checked ? (int)Constants.TickerType.ExchangeCandles
-				                          : ( rdoTick2.Checked ? (int)Constants.TickerType.ExchangeRates : 0 ) ) );
+				pageParms.ticker    = (byte)( rdoTick21.Checked ? (int)Constants.TickerType.FinnHubStockPrices
+				                          : ( rdoTick24.Checked ? (int)Constants.TickerType.FinnHubExchangeCandles
+				                          : ( rdoTick23.Checked ? (int)Constants.TickerType.FinnHubExchangeRates : 0 ) ) );
 				FetchData();
 			}
 			else
@@ -144,7 +144,7 @@ namespace PCIWebFinAid
 				lblJS.Text       = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
 				lblStatus.Text   = "<span style='color:green'>Inactive</span>";
 				lblRefresh.Text  = "";
-				pageParms.status = 11;
+				pageParms.status = 77;
 			}
 		}
 
@@ -163,14 +163,14 @@ namespace PCIWebFinAid
 			string[] symbols = null;
 			sql              = "";
 
-			if ( rdoTick1.Checked )
+			if ( rdoTick21.Checked )
 			{
 				ret     = 10;
 				show    = "Stock";
 				symbols = txtStock.Text.Split(',');
 				url     = fhURL + "quote?" + token + "&symbol=";
 			}
-			else if ( rdoTick2.Checked )
+			else if ( rdoTick23.Checked )
 			{
 				ret     = 14;
 				show    = "Currency";
@@ -178,7 +178,7 @@ namespace PCIWebFinAid
 				url     = fhURL + "forex/rates?" + token
 				                + "&base=";
 			}
-			else if ( rdoTick5.Checked )
+			else if ( rdoTick24.Checked )
 			{
 				ret     = 17;
 				show    = "Currency";
@@ -200,13 +200,13 @@ namespace PCIWebFinAid
 					if ( symb.Length < 1 )
 						continue;
 
-					if ( rdoTick1.Checked )
+					if ( rdoTick21.Checked )
 					{
 						urlX   = url + symb;
 						result = result + "&nbsp;- " + show + " " + symb + "<br />";
 						sql    = "exec sp_Ins_FinnHubbQuoteRaw @Symbol=" + Tools.DBString(symb);
 					}
-					else if ( rdoTick2.Checked )
+					else if ( rdoTick23.Checked )
 					{
 						urlX   = url + symb;
 						result = result + "&nbsp;- " + show + " " + symb + "<br />";
@@ -243,9 +243,9 @@ namespace PCIWebFinAid
 
 		private byte TickerType()
 		{
-			if ( rdoTick1.Checked ) return (byte)Constants.TickerType.StockPrices;
-			if ( rdoTick5.Checked ) return (byte)Constants.TickerType.ExchangeCandles;
-			if ( rdoTick2.Checked ) return (byte)Constants.TickerType.ExchangeRates;
+			if ( rdoTick21.Checked ) return (byte)Constants.TickerType.FinnHubStockPrices;
+			if ( rdoTick23.Checked ) return (byte)Constants.TickerType.FinnHubExchangeRates;
+			if ( rdoTick24.Checked ) return (byte)Constants.TickerType.FinnHubExchangeCandles;
 			return 0;
 		}
 
@@ -277,7 +277,7 @@ namespace PCIWebFinAid
 				webRequest = null;
 
 				if ( ticker > 0 && sqlToExec.Length > 0 && json.Length > 0 && json.StartsWith("{") )
-					if ( ticker == (byte)Constants.TickerType.StockPrices )
+					if ( ticker == (byte)Constants.TickerType.FinnHubStockPrices )
 						using (MiscList mList = new MiscList())
 							mList.ExecQuery(sqlToExec + ",@C="  + Tools.JSONValue(json,"c")
 						                             + ",@H="  + Tools.JSONValue(json,"h")
@@ -318,12 +318,12 @@ namespace PCIWebFinAid
 				lblErr.Text = lblErr.Text + "Invalid refresh interval (must be between 5 and 1200)<br />";
 			else
 				txtRefresh.Text = refresh.ToString();
-			if ( rdoTick1.Checked && stocks.Length < 2 )
+			if ( rdoTick21.Checked && stocks.Length < 2 )
 				lblErr.Text = lblErr.Text + "Invalid list of stock symbols<br />";
-			if ( rdoTick5.Checked && forex.Length  < 2 )
-				lblErr.Text = lblErr.Text + "Invalid list of currency symbols<br />";
-			if ( rdoTick2.Checked && txtBase.Text.Trim().Length != 3 )
+			if ( rdoTick23.Checked && txtBase.Text.Trim().Length != 3 )
 				lblErr.Text = lblErr.Text + "Invalid base currency<br />";
+			if ( rdoTick24.Checked && forex.Length  < 2 )
+				lblErr.Text = lblErr.Text + "Invalid list of currency symbols<br />";
 
 			return lblErr.Text.Length;
 		}
@@ -331,26 +331,28 @@ namespace PCIWebFinAid
 		protected void btnStart_Click(Object sender, EventArgs e)
 		{
 			if ( ValidatePage() == 0 )
-				StartStop(22);
+				StartStop(88);
 			else
-				lblJS.Text = WebTools.JavaScriptSource("ChooseTicker("+(rdoTick1.Checked?"1)":(rdoTick5.Checked?"5)":(rdoTick2.Checked?"2)":"0)"))));
+				lblJS.Text = WebTools.JavaScriptSource("ChooseTicker("+(rdoTick21.Checked?((int)Constants.TickerType.FinnHubStockPrices).ToString()
+				                                                      :(rdoTick23.Checked?((int)Constants.TickerType.FinnHubExchangeRates).ToString()
+				                                                      :(rdoTick24.Checked?((int)Constants.TickerType.FinnHubExchangeCandles).ToString():"0")))+")");
 		}
 
 		protected void btnStop_Click(Object sender, EventArgs e)
 		{
-			StartStop(11);
+			StartStop(77);
 		}
 
 		protected void btnClear_Click(Object sender, EventArgs e)
 		{
-			lblData.Text     = "";
-			txtStock.Text    = "";
-			txtBase.Text     = "";
-			txtForex.Text    = "";
-			txtRefresh.Text  = "10";
-			rdoTick1.Checked = false;
-			rdoTick5.Checked = false;
-			rdoTick2.Checked = false;
+			lblData.Text      = "";
+			txtStock.Text     = "";
+			txtBase.Text      = "";
+			txtForex.Text     = "";
+			txtRefresh.Text   = "10";
+			rdoTick21.Checked = false;
+			rdoTick23.Checked = false;
+			rdoTick24.Checked = false;
 			SessionClearData();
 			StartStop(1);
 		}

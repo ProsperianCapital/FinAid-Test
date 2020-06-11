@@ -8,7 +8,7 @@
 <head runat="server">
 	<!--#include file="IncludeMainAdmin.htm" -->
 	<title>Prosperian BackOffice</title>
-	<link rel="stylesheet" href="CSS/BackOffice.css?v=6" type="text/css" />
+	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
 </head>

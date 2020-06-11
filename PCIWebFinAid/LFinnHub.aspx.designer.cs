@@ -103,13 +103,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Label lblStatus;
         
         /// <summary>
-        /// rdoTick1 control.
+        /// rdoTick21 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdoTick1;
+        protected global::System.Web.UI.WebControls.RadioButton rdoTick21;
         
         /// <summary>
         /// txtStock control.
@@ -121,13 +121,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txtStock;
         
         /// <summary>
-        /// rdoTick5 control.
+        /// rdoTick24 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdoTick5;
+        protected global::System.Web.UI.WebControls.RadioButton rdoTick24;
         
         /// <summary>
         /// lstExchange control.
@@ -157,13 +157,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txtForex;
         
         /// <summary>
-        /// rdoTick2 control.
+        /// rdoTick23 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdoTick2;
+        protected global::System.Web.UI.WebControls.RadioButton rdoTick23;
         
         /// <summary>
         /// txtBase control.

@@ -49,13 +49,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.DropDownList lstSCompany;
         
         /// <summary>
-        /// lstSCashBook control.
+        /// hdnSCashBook control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lstSCashBook;
+        protected global::System.Web.UI.WebControls.HiddenField hdnSCashBook;
         
         /// <summary>
         /// lstSReceipt control.
@@ -85,22 +85,22 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.DropDownList lstSOBOCompany;
         
         /// <summary>
-        /// txtSDate control.
+        /// txtSDesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSDate;
+        protected global::System.Web.UI.WebControls.TextBox txtSDesc;
         
         /// <summary>
-        /// DropDownList3 control.
+        /// lstSGLCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DropDownList3;
+        protected global::System.Web.UI.WebControls.DropDownList lstSGLCode;
         
         /// <summary>
         /// lstSGLDimension control.
@@ -110,15 +110,6 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstSGLDimension;
-        
-        /// <summary>
-        /// TextBox4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox4;
         
         /// <summary>
         /// txtSDate1 control.
@@ -139,15 +130,6 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txtSDate2;
         
         /// <summary>
-        /// txtSRecon control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSRecon;
-        
-        /// <summary>
         /// lstSTaxRate control.
         /// </summary>
         /// <remarks>
@@ -157,22 +139,22 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.DropDownList lstSTaxRate;
         
         /// <summary>
-        /// DropDownList7 control.
+        /// txtSAmt1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DropDownList7;
+        protected global::System.Web.UI.WebControls.TextBox txtSAmt1;
         
         /// <summary>
-        /// TextBox1 control.
+        /// txtSAmt2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox txtSAmt2;
         
         /// <summary>
         /// btnSearch control.
@@ -182,6 +164,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
+        
+        /// <summary>
+        /// btnNew control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNew;
         
         /// <summary>
         /// pnlGridBtn control.
@@ -220,6 +211,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.DataGrid grdData;
         
         /// <summary>
+        /// hdnEditInsert control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnEditInsert;
+        
+        /// <summary>
         /// lstECompany control.
         /// </summary>
         /// <remarks>
@@ -229,76 +229,85 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.DropDownList lstECompany;
         
         /// <summary>
-        /// DropDownList9 control.
+        /// lstECashBook control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList9;
+        protected global::System.Web.UI.WebControls.DropDownList lstECashBook;
         
         /// <summary>
-        /// DropDownList10 control.
+        /// hdnECashBook control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList10;
+        protected global::System.Web.UI.WebControls.HiddenField hdnECashBook;
         
         /// <summary>
-        /// DropDownList11 control.
+        /// lstEReceipt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList11;
+        protected global::System.Web.UI.WebControls.DropDownList lstEReceipt;
         
         /// <summary>
-        /// DropDownList12 control.
+        /// lstETType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList12;
+        protected global::System.Web.UI.WebControls.DropDownList lstETType;
         
         /// <summary>
-        /// DropDownList13 control.
+        /// lstEOBOCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList13;
+        protected global::System.Web.UI.WebControls.DropDownList lstEOBOCompany;
         
         /// <summary>
-        /// TextBox2 control.
+        /// txtETaxRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.TextBox txtETaxRate;
         
         /// <summary>
-        /// DropDownList14 control.
+        /// lstEGLCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList14;
+        protected global::System.Web.UI.WebControls.DropDownList lstEGLCode;
         
         /// <summary>
-        /// TextBox3 control.
+        /// lstEGLDimension control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox3;
+        protected global::System.Web.UI.WebControls.DropDownList lstEGLDimension;
+        
+        /// <summary>
+        /// txtEAmt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtEAmt;
         
         /// <summary>
         /// txtEDate control.
@@ -310,13 +319,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txtEDate;
         
         /// <summary>
-        /// txtETranID control.
+        /// lstECurr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtETranID;
+        protected global::System.Web.UI.WebControls.DropDownList lstECurr;
         
         /// <summary>
         /// txtERecon control.
@@ -328,13 +337,22 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txtERecon;
         
         /// <summary>
-        /// TextBox5 control.
+        /// txtEDesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox5;
+        protected global::System.Web.UI.WebControls.TextBox txtEDesc;
+        
+        /// <summary>
+        /// txtETranID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtETranID;
         
         /// <summary>
         /// btnSave control.
@@ -344,6 +362,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSave;
+        
+        /// <summary>
+        /// lblErr2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErr2;
         
         /// <summary>
         /// btnDel2 control.

@@ -189,9 +189,9 @@ function ValidatePage(ctl,seq,misc)
 			if ( p.length == 0 )
 			{
 				p = new Date();
-				if ( p.getFullYear() > GetListValue('lstCCYear') )
+				if ( p.getFullYear() > GetListValueInt('lstCCYear') )
 					p = 'Invalid card expiry date';
-				else if ( p.getFullYear() == GetListValue('lstCCYear') && p.getMonth()+1 > GetListValue('lstCCMonth') )
+				else if ( p.getFullYear() == GetListValueInt('lstCCYear') && p.getMonth()+1 > GetListValueInt('lstCCMonth') )
 					p = 'Invalid card expiry date';
 				else
 					p = '';
@@ -232,7 +232,7 @@ function OptSelect(p)
 {
 	var h = '';
 	if ( p == null || p < 2 || p > 4 )
-		p = GetListValue('lstOptions');
+		p = GetListValueInt('lstOptions');
 	h = GetEltValue('hdnOption'+p.toString());
 	if ( h.length < 1 )
 		if ( p == 2 )

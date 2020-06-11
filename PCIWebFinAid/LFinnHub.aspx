@@ -18,16 +18,16 @@
 <script type="text/javascript">
 function ChooseTicker(p)
 {
-	DisableElt('txtStock'   ,(p!=1));
-	DisableElt('txtBase'    ,(p!=2));
-	DisableElt('txtForex'   ,(p!=5));
-	DisableElt('lstCurr'    ,(p!=5));
-	DisableElt('lstExchange',(p!=5));
-	if ( p == 1 )
+	DisableElt('txtStock'   ,(p!=21));
+	DisableElt('txtBase'    ,(p!=23));
+	DisableElt('txtForex'   ,(p!=24));
+	DisableElt('lstCurr'    ,(p!=24));
+	DisableElt('lstExchange',(p!=24));
+	if ( p == 21 )
 		GetElt('txtStock').focus();
-	else if ( p == 2 )
+	else if ( p == 23 )
 		GetElt('txtBase').focus();
-	else if ( p == 5 )
+	else if ( p == 24 )
 		GetElt('txtForex').focus();
 }
 </script>
@@ -70,7 +70,7 @@ Mauritius<br />
 
 <tr>
 	<td>
-		<asp:RadioButton runat="server" id="rdoTick1" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(1)" />Stock values</td>
+		<asp:RadioButton runat="server" id="rdoTick21" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(21)" />Stock values</td>
 	<td>
 		Stock symbol(s)<br />
 		Separated by commas<br />
@@ -82,7 +82,7 @@ Mauritius<br />
 
 <tr>
 	<td rowspan="3">
-		<asp:RadioButton runat="server" id="rdoTick5" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(5)" />Currency exchange candles</td>
+		<asp:RadioButton runat="server" id="rdoTick24" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(24)" Enabled="false" />Currency exchange candles</td>
 	<td>
 		Exchange</td>
 	<td>
@@ -114,7 +114,7 @@ Mauritius<br />
 
 <tr>
 	<td>
-		<asp:RadioButton runat="server" id="rdoTick2" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(2)" />Currency exchange rates</td>
+		<asp:RadioButton runat="server" id="rdoTick23" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(23)" />Currency exchange rates</td>
 	<td>
 		Base currency (eg. USD,THB,ZAR)</td>
 	<td>

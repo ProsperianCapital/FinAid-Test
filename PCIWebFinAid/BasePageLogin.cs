@@ -277,10 +277,16 @@ namespace PCIWebFinAid
 
 			if ( briefMode == 2 ) // Append
 				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
-			else if ( briefMode == 23 ) // Use "lblErr2"
+			else if ( briefMode == 23 ) // Use "lblErr2", <p></p>
 				try
 				{
 					((Label)FindControl("lblErr2")).Text = "<p>" + errBrief + "</p>";
+				}
+				catch {}
+			else if ( briefMode == 33 ) // Use "lblErr3", <br />
+				try
+				{
+					((Label)FindControl("lblErr3")).Text = "<br />" + errBrief;
 				}
 				catch {}
 			else
