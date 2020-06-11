@@ -200,7 +200,7 @@ input[type=text]:focus, input[type=password]:focus, select:focus, textarea:focus
 
 .Popup2
 {
-	top: 20%;
+	top: 10%;
 	left: 20%;
 	position: fixed; /* absolute; */
 	z-index: 100;
