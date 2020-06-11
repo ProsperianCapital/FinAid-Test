@@ -322,17 +322,28 @@ function SetListValue(eltID,listValue)
 	{ }
 }
 
-function GetListValue(eltID)
+function GetListValueInt(eltID)
 {
 	try
 	{
-		var p = GetElt(eltID);
-		var h = p.options[p.selectedIndex].value;
+		var h = GetListValue(eltID);
 		return ToInteger(h);
 	}
 	catch (x)
 	{ }
 	return 0;
+}
+
+function GetListValue(eltID)
+{
+	try
+	{
+		var p = GetElt(eltID);
+		return Trim(p.options[p.selectedIndex].value);
+	}
+	catch (x)
+	{ }
+	return '';
 }
 
 function ListAdd(eltID,code,text)
