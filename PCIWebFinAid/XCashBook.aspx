@@ -203,12 +203,7 @@ function DeleteMode(show)
 			<a href="JavaScript:showCalendar(frmCashBook.txtEDate)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
 		<td>Currency<br />
-			<asp:DropDownList runat="server" ID="lstECurr">
-				<asp:ListItem Value="USD" Text="US Dollars"></asp:ListItem>
-				<asp:ListItem Value="EUR" Text="Euros"></asp:ListItem>
-				<asp:ListItem Value="ZAR" Text="SA Rands"></asp:ListItem>
-				<asp:ListItem Value="THB" Text="Thai Bhats"></asp:ListItem>
-			</asp:DropDownList></td>
+			<asp:DropDownList runat="server" ID="lstECurr"></asp:DropDownList></td>
 		<td>Recon Date<br /><asp:TextBox runat="server" ID="txtERecon" MaxLength="10" Width="80px"></asp:TextBox>
 			<a href="JavaScript:showCalendar(frmCashBook.txtERecon)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>

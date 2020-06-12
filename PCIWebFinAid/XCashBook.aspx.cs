@@ -42,8 +42,8 @@ namespace PCIWebFinAid
 //				This is done via an AJAX call
 
 				sql   = "exec sp_Audit_Get_RP";
-				errNo = WebTools.ListBind(lstSReceipt,sql,null,"ReceiptCode","ReceiptDescription","(All/any receipt)","");
-				errNo = WebTools.ListBind(lstEReceipt,sql,null,"ReceiptCode","ReceiptDescription","","");
+				errNo = WebTools.ListBind(lstSReceipt,sql,null,"RP","RP","(All/any receipt)","");
+				errNo = WebTools.ListBind(lstEReceipt,sql,null,"RP","RP","","");
 				SetErrorDetail("LoadData",errNo,"Unable to load receipt/payment list",sql);
 
 				if ( lstSTType.Enabled )
@@ -55,19 +55,23 @@ namespace PCIWebFinAid
 				}
 
 				sql   = "exec sp_Audit_Get_GLAccount";
-				errNo = WebTools.ListBind(lstSGLCode,sql,null,"AccountCode","AccountDescription","(All/any account)","");
-				errNo = WebTools.ListBind(lstEGLCode,sql,null,"AccountCode","AccountDescription","","");
+				errNo = WebTools.ListBind(lstSGLCode,sql,null,"GLAccount","GLAcountDescription","(All/any account)","");
+				errNo = WebTools.ListBind(lstEGLCode,sql,null,"GLAccount","GLAccountDescription","","");
 				SetErrorDetail("LoadData",errNo,"Unable to load GL account codes",sql);
 
 				sql   = "exec sp_Audit_Get_GLAccountDimension";
-				errNo = WebTools.ListBind(lstSGLDimension,sql,null,"DimensionCode","DimensionDescription","(All/any dimension)","");
-				errNo = WebTools.ListBind(lstEGLDimension,sql,null,"DimensionCode","DimensionDescription","","");
+				errNo = WebTools.ListBind(lstSGLDimension,sql,null,"CompanyCode","CompanyDescription","(All/any dimension)","");
+				errNo = WebTools.ListBind(lstEGLDimension,sql,null,"CompanyCode","CompanyDescription","","");
 				SetErrorDetail("LoadData",errNo,"Unable to load GL account dimensions",sql);
 
 				sql   = "exec sp_Audit_Get_TaxRate";
-				errNo = WebTools.ListBind(lstSTaxRate,sql,null,"TaxRateCode","TaxRateDescription","(All/any tax rate)","");
-//				errNo = WebTools.ListBind(lstETaxRate,sql,null,"TaxRateCode","TaxRateDescription","","");
+				errNo = WebTools.ListBind(lstSTaxRate,sql,null,"VatRateCode","VatRateDescription","(All/any tax rate)","");
+//				errNo = WebTools.ListBind(lstETaxRate,sql,null,"VatRateCode","VatRateDescription","","");
 				SetErrorDetail("LoadData",errNo,"Unable to load tax rate list",sql);
+
+				sql   = "exec sp_Audit_Get_CUR";
+				errNo = WebTools.ListBind(lstECurr,sql,null,"CUR","CUR","","");
+				SetErrorDetail("LoadData",errNo,"Unable to currency list",sql);
 			}
 			catch (Exception ex)
 			{
