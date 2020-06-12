@@ -71,7 +71,7 @@ namespace PCIWebFinAid
 
 				sql   = "exec sp_Audit_Get_CUR";
 				errNo = WebTools.ListBind(lstECurr,sql,null,"CUR","CUR","","");
-				SetErrorDetail("LoadData",errNo,"Unable to currency list",sql);
+				SetErrorDetail("LoadData",errNo,"Unable to load currency list",sql);
 			}
 			catch (Exception ex)
 			{

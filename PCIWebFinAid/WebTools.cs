@@ -206,7 +206,7 @@ namespace PCIWebFinAid
 					return 10;
 
 				if ( addZeroRow.Length > 0 )
-					listBox.Items.Insert(0,(new ListItem(addZeroRow,"0")));
+					listBox.Items.Insert(0,(new ListItem(addZeroRow,"")));
 
 				if ( listBox.Items.Count > 0 )
 				{
