@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 
 namespace PCIBusiness
 {
@@ -21,15 +20,23 @@ namespace PCIBusiness
 			{ }
 			return "";
 		}
+		public string NextColumnSubstring(int maxLength=0,string suffix="")
+		{
+			string h = NextColumn;
+			if ( maxLength > 0 && h.Length > maxLength )
+				return h.Substring(0,maxLength) + suffix;
+			return h;
+		}
+
 
 		public string NextColumnStr
 		{
 //			Return an empty string if the value is zero
 			get
 			{
-				string x = NextColumn;
-				if ( x == "0" ) return "";
-				return x;
+				string h = NextColumn;
+				if ( h == "0" ) return "";
+				return h;
 			}
 		}
 

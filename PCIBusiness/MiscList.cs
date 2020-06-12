@@ -6,11 +6,56 @@ namespace PCIBusiness
 {
 	public class MiscList : BaseList
 	{
-		private int colNo;
+		private int     colNo;
+		private int     returnCode;
+		private string  returnMessage;
+		private string  returnData;
+
+		public  int     ReturnCode
+		{
+			get { return returnCode; }
+		}
+		public  string  ReturnMessage
+		{
+			get { return Tools.NullToString(returnMessage); }
+		}
+		public  string  ReturnData
+		{
+			get { return Tools.NullToString(returnData); }
+		}
 
 		public override BaseData NewItem()
 		{
 			return new MiscData();
+		}
+
+		public int UpdateQuery(string sqlQuery)
+		{
+			returnData    = "";
+			returnMessage = "Internal SQL error";
+			try
+			{
+				sql        = sqlQuery;
+				returnCode = base.ExecuteSQL(null);
+				if ( returnCode == 0 )
+				{
+					returnCode    = GetColumnInt("ReturnCode");
+					returnMessage = GetColumn   ("ReturnMessage",0);
+					returnData    = GetColumn   ("ReturnData",0);
+				}
+			}
+			catch (Exception ex)
+			{
+				returnCode = 39999;
+				if ( returnMessage.Length < 1 )
+					returnMessage = "Internal SQL error";
+				Tools.LogException("MiscList.UpdateQuery",sql,ex);
+			}
+			finally
+			{
+				Tools.CloseDB(ref dbConn);
+			}
+			return returnCode;
 		}
 
 		public int ExecQuery(string sqlQuery,byte loadRows,string dataClass="",bool noRowsIsError=true,bool alwaysClose=false)
@@ -145,7 +190,6 @@ namespace PCIBusiness
 				return GetColumn(colNo);
 			}
 		}
-
 		public bool EOF
 		{
 			get
