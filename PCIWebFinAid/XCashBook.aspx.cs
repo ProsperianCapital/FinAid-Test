@@ -129,30 +129,6 @@ namespace PCIWebFinAid
 			{ }
 		}
 
-//		private int ValidateSearch()
-//		{
-//			DateTime d1   = Tools.StringToDate(txtSDate1.Text,7);
-//			DateTime d2   = Tools.StringToDate(txtSDate2.Text,7);
-//			decimal  a1   = Tools.StringToDecimal(txtSAmt1.Text);
-//			decimal  a2   = Tools.StringToDecimal(txtSAmt2.Text);
-//			lblError.Text = "";
-//
-//			if ( d1 > Constants.C_NULLDATE() && d2 <= Constants.C_NULLDATE() )
-//				SetErrorDetail("ValidateData",43400,"If you specify a start date you must also specify an end date");
-//			else if ( d2 > Constants.C_NULLDATE() && d1 <= Constants.C_NULLDATE() )
-//				SetErrorDetail("ValidateData",43400,"If you specify an end date you must also specify a start date");
-//			else if ( d1 > Constants.C_NULLDATE() && d2 > Constants.C_NULLDATE() && d1 > d2 )
-//				SetErrorDetail("ValidateData",43400,"The start date cannot be after the end date");
-//			if ( a1 > 0 && a2 <= (decimal)0.01 )
-//				SetErrorDetail("ValidateData",43430,"If you specify a from amount you must also specify a to amount");
-//			else if ( a2 > 0 && a1 <= (decimal)0.01 )
-//				SetErrorDetail("ValidateData",43430,"If you specify a to amount you must also specify a from amount");
-//			else if ( a1 > 0 && a2 > 0 && a1 > a2 )
-//				SetErrorDetail("ValidateData",43430,"The from amount cannot be greater than the to amount");
-//
-//			return lblError.Text.Length;
-//		}
-
 		protected void btnNew_Click(Object sender, EventArgs e)
 		{
 			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(2)");
@@ -273,8 +249,7 @@ namespace PCIWebFinAid
 			string coy       = WebTools.ListValue(lstSCompany,"");
 			string coyOBO    = WebTools.ListValue(lstSOBOCompany,"");
 			string receipt   = WebTools.ListValue(lstSReceipt,"");
-			string transType = WebTools.ListValue(lstSTType,"");
-//			string taxType   = WebTools.ListValue(lstSTaxRate,"");
+//			string transType = WebTools.ListValue(lstSTType,"");
 			string glAcc     = WebTools.ListValue(lstSGLCode,"");
 			string glDim     = WebTools.ListValue(lstSGLDimension,"");
 			string taxRate   = WebTools.ListValue(lstSTaxRate,"");
@@ -294,7 +269,7 @@ namespace PCIWebFinAid
 			    +     ",@MinAmount="              + a1.ToString()
 			    +     ",@MaxAmount="              + a2.ToString();
 
-			Tools.LogInfo("XCashBook.btnSearch_Click",sql,222);
+//			Tools.LogInfo("XCashBook.btnSearch_Click",sql,222);
 	
 			using ( MiscList miscList = new MiscList() )
 				if ( miscList.ExecQuery(sql,1,"",false,true) < 1 )
