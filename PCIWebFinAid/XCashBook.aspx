@@ -173,7 +173,11 @@ function DeleteMode(show)
 			<asp:BoundColumn HeaderText="Transaction<br />Type" DataField="NextColumn"></asp:BoundColumn>
 			<asp:BoundColumn HeaderText="GL Main<br />Account" DataField="NextColumn"></asp:BoundColumn>
 			<asp:BoundColumn HeaderText="GL Account<br />Dimension" DataField="NextColumn"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="Transaction<br />Description" DataField="NextColumn"></asp:BoundColumn>
+			<asp:TemplateColumn HeaderText="Transaction<br />Description">
+				<ItemTemplate>
+				<%# ((PCIBusiness.MiscData)Container.DataItem).NextColumnSubstring(50,"...") %>
+				</ItemTemplate>
+			</asp:TemplateColumn>
 			<asp:BoundColumn HeaderText="Tax<br />Rate" DataField="NextColumn"></asp:BoundColumn>
 			<asp:BoundColumn HeaderText="Amount<br />(Inclusive)" DataField="NextColumn" ItemStyle-HorizontalAlign="Right"></asp:BoundColumn>
 		</Columns>

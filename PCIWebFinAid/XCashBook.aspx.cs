@@ -146,35 +146,41 @@ namespace PCIWebFinAid
 
 		protected void btnDelete_Click(Object sender, EventArgs e)
 		{
+			string msg = "Failed to delete cash book transaction";
 			try
 			{
 				cashBook = Tools.NullToString(hdnECashBook.Value);
 				sql      = "exec sp_Audit_Del_Cashbook @TransactionID=" + txtETranID.Text;
 				if ( Tools.StringToInt(txtETranID.Text) > 0 )
 					using ( MiscList miscList = new MiscList() )
-						if ( miscList.ExecQuery(sql,0,"",false,true) == 0 )
+						if ( miscList.UpdateQuery(sql) == 0 )
 							return;
+						else
+							msg = miscList.ReturnMessage;
 			}
 			catch (Exception ex)
 			{
-				SetErrorDetail("btnDelete_Click",30371,"Internal error deleting cash book transaction",sql,23,2,ex);
-				return;
+				msg = "Internal error deleting cash book transaction";
+				Tools.LogException("XCashBook.btnDelete_Click",sql,ex);
 			}	
-			SetErrorDetail("btnDelete_Click",30377,"Failed to delete cash book transaction",sql,23,2);
+			SetErrorDetail("btnDelete_Click",30377,msg,sql,23,2);
 			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1);LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'E')");
 		}
 
 		protected void btnUpdate_Click(Object sender, EventArgs e)
 		{
+			string   msg        = "Failed to update cash book transaction";
 			int      editInsert = Tools.StringToInt(hdnEditInsert.Value);
 			int      taxRate    = Tools.StringToInt(txtETaxRate.Text);
 			decimal  amt        = Tools.StringToDecimal(txtEAmt.Text);
-			decimal  amtX       = 0;
+			decimal  amtX       = amt;
 			DateTime d1         = Tools.StringToDate(txtEDate.Text,7);
 			DateTime d2         = Tools.StringToDate(txtERecon.Text,7);
 			cashBook            = Tools.NullToString(hdnECashBook.Value);
 
-			if ( amt > 0 && taxRate > 0 )
+			if ( taxRate < 1 )
+				taxRate = 0;
+			else if ( amt > 0 )
 				amtX = amt / ( 1 + ( (decimal)taxRate / (decimal)100.00 ) );
 
 			try
@@ -191,6 +197,7 @@ namespace PCIWebFinAid
 				    + ",@CUR="                        + Tools.DBString(WebTools.ListValue(lstECurr,""))
 				    + ",@TaxRate="                    + taxRate.ToString()
 					 + ",@TransactionAmountExclusive=" + amtX.ToString();
+
 				if ( editInsert == 1 && Tools.StringToInt(txtETranID.Text) > 0 )
 					sql = "exec sp_Audit_Upd_Cashbook @TransactionID=" + txtETranID.Text
 					                              + ",@TransactionAmountTax=" + ( amtX * (decimal)taxRate / (decimal)100.00 ).ToString()
@@ -201,15 +208,17 @@ namespace PCIWebFinAid
 					return;
 	
 				using ( MiscList miscList = new MiscList() )
-					if ( miscList.ExecQuery(sql,0,"",false,true) == 0 )
+					if ( miscList.UpdateQuery(sql) == 0 )
 						return;
+					else
+						msg = miscList.ReturnMessage;
 			}
 			catch (Exception ex)
 			{
-				SetErrorDetail("btnUpdate_Click",30171,"Internal error updating cash book transaction",sql,23,2,ex);
-				return;
+				msg = "Internal error updating cash book transaction";
+				Tools.LogException("XCashBook.btnUpdate_Click",sql,ex);
 			}	
-			SetErrorDetail("btnUpdate_Click",30177,"Failed to update cash book transaction",sql,23,2);
+			SetErrorDetail("btnUpdate_Click",30177,msg,sql,23,2);
 			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode("+editInsert.ToString()+");LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'E')");
 		}
 
