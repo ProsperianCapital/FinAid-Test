@@ -1,4 +1,4 @@
-//	Misc JavaScript functions
+//	JavaScript utilities
 
 //	(c)Paul Kilfoil
 //		Software Development & IT Consulting
