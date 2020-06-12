@@ -10,7 +10,7 @@ namespace PCIWebFinAid
 {
 	public partial class Register : BasePage
 	{
-		private   byte   logDebug = 240;
+		private   byte   logDebug = 40; // 240;
 		private   string productCode;
 		private   string languageCode;
 		private   string languageDialectCode;

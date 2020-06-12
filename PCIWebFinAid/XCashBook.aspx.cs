@@ -293,6 +293,8 @@ namespace PCIWebFinAid
 			    +     ",@TaxRate="                + Tools.DBString(taxRate)
 			    +     ",@MinAmount="              + a1.ToString()
 			    +     ",@MaxAmount="              + a2.ToString();
+
+			Tools.LogInfo("XCashBook.btnSearch_Click",sql,222);
 	
 			using ( MiscList miscList = new MiscList() )
 				if ( miscList.ExecQuery(sql,1,"",false,true) < 1 )
