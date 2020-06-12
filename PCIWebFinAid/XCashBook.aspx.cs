@@ -55,7 +55,7 @@ namespace PCIWebFinAid
 				}
 
 				sql   = "exec sp_Audit_Get_GLAccount";
-				errNo = WebTools.ListBind(lstSGLCode,sql,null,"GLAccount","GLAcountDescription","(All/any account)","");
+				errNo = WebTools.ListBind(lstSGLCode,sql,null,"GLAccount","GLAccountDescription","(All/any account)","");
 				errNo = WebTools.ListBind(lstEGLCode,sql,null,"GLAccount","GLAccountDescription","","");
 				SetErrorDetail("LoadData",errNo,"Unable to load GL account codes",sql);
 
