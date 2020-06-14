@@ -162,6 +162,9 @@
     <Compile Include="ContractLookup.aspx.designer.cs">
       <DependentUpon>ContractLookup.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DownLoad.ashx.cs">
+      <DependentUpon>DownLoad.ashx</DependentUpon>
+    </Compile>
     <Compile Include="LAdmin.aspx.cs">
       <DependentUpon>LAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -329,6 +332,9 @@
       <Project>{24be56c3-fd48-4d4f-abb5-9d78b3aff620}</Project>
       <Name>PCIBusiness</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DownLoad.ashx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

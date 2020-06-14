@@ -85,7 +85,7 @@ namespace PCIWebFinAid
 			{
 				string       cmdName = e.CommandName.Trim().ToUpper();
 				int          tranID  = Tools.StringToInt(e.CommandArgument.ToString());
-//				DataGridItem row1    = grdData.Items[e.Item.ItemIndex];
+//				DataGridItem row     = grdData.Items[e.Item.ItemIndex];
 				DataGridItem row     = e.Item;
 				sql                  = "exec sp_Audit_Get_CashbookExtractAllFields @TransactionID=" + tranID.ToString();
 				lblErr2.Text         = "";
@@ -94,16 +94,17 @@ namespace PCIWebFinAid
 					using (MiscList cbTran = new MiscList())
 						if ( cbTran.ExecQuery(sql,0) == 0 )
 						{
-							ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1)");
 							txtETranID.Text    = tranID.ToString();
 							txtEDate.Text      = Tools.DateToString(cbTran.GetColumnDate("TransactionDate"),7);
 							txtERecon.Text     = Tools.DateToString(cbTran.GetColumnDate("ReconDate"),7);
 							txtEAmt.Text       = cbTran.GetColumnCurrency("TransactionAmountInclusive");
 							txtEDesc.Text      = cbTran.GetColumn("TransactionDescription");
 							txtETaxRate.Text   = cbTran.GetColumn("TaxRate");
-							hdnECashBook.Value = cbTran.GetColumn("CashbookCode");
+							cashBook           = cbTran.GetColumn("CashbookCode");
+							hdnECashBook.Value = cashBook;
+							ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1);LoadCashBooks('"+cashBook+"','E')");
 							lstECashBook.Items.Clear();
-							WebTools.ListAdd(lstECashBook,0,hdnECashBook.Value,hdnECashBook.Value);
+//							WebTools.ListAdd(lstECashBook,0,hdnECashBook.Value,hdnECashBook.Value);
 							WebTools.ListSelect(lstECompany    ,cbTran.GetColumn("CompanyCode"));
 							WebTools.ListSelect(lstEOBOCompany ,cbTran.GetColumn("OBOCompanyCode"));
 							WebTools.ListSelect(lstEReceipt    ,cbTran.GetColumn("RP"));
@@ -114,16 +115,6 @@ namespace PCIWebFinAid
 //							WebTools.ListSelect(lstETaxRate    ,cbTran.GetColumn("TaxRate"));
 							lstECompany.Focus();
 						}
-
-//					txtETranID.Text    = tranID;
-//					txtEDate.Text      = row.Cells[2].Text;
-//					txtEDesc.Text      = row.Cells[7].Text;
-//					txtEAmt.Text       = row.Cells[9].Text;
-//					WebTools.ListSelect(lstEReceipt    ,row.Cells[3].Text);
-//					WebTools.ListSelect(lstETType      ,row.Cells[4].Text);
-//					WebTools.ListSelect(lstEGLCode     ,row.Cells[5].Text);
-//					WebTools.ListSelect(lstEGLDimension,row.Cells[6].Text);
-//					WebTools.ListSelect(lstETaxRate    ,row.Cells[8].Text);
 			}
 			catch
 			{ }
@@ -169,13 +160,14 @@ namespace PCIWebFinAid
 
 		protected void btnUpdate_Click(Object sender, EventArgs e)
 		{
-			string   msg        = "Failed to update cash book transaction";
 			int      editInsert = Tools.StringToInt(hdnEditInsert.Value);
 			int      taxRate    = Tools.StringToInt(txtETaxRate.Text);
 			decimal  amt        = Tools.StringToDecimal(txtEAmt.Text);
 			decimal  amtX       = amt;
 			DateTime d1         = Tools.StringToDate(txtEDate.Text,7);
 			DateTime d2         = Tools.StringToDate(txtERecon.Text,7);
+			string   action     = ( editInsert == 1 ? "update" : "insert" );
+			string   msg        = "Failed to " + action + " cash book transaction";
 			cashBook            = Tools.NullToString(hdnECashBook.Value);
 
 			if ( taxRate < 1 )
@@ -215,14 +207,14 @@ namespace PCIWebFinAid
 			}
 			catch (Exception ex)
 			{
-				msg = "Internal error updating cash book transaction";
+				msg = "Internal error trying to " + action + " cash book transaction";
 				Tools.LogException("XCashBook.btnUpdate_Click",sql,ex);
 			}	
 			SetErrorDetail("btnUpdate_Click",30177,msg,sql,23,2);
 			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode("+editInsert.ToString()+");LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'E')");
 		}
 
-		protected void btnSearch_Click(Object sender, EventArgs e)
+		private void RetrieveData(int mode)
 		{
 			string   cashBook  = Tools.NullToString(hdnSCashBook.Value);
 			DateTime d1        = Tools.StringToDate(txtSDate1.Text,7);
@@ -281,6 +273,91 @@ namespace PCIWebFinAid
 //			Tools.LogInfo("XCashBook.btnSearch_Click",sql,222);
 	
 			using ( MiscList miscList = new MiscList() )
+				if ( mode > 30 ) // Download
+				{
+					if ( miscList.ExecQuery(sql,0) > 0 ) // Do not load rows
+						SetErrorDetail("RetrieveData",30061,"No transactions found. Refine your criteria and try again",sql,2,2);
+					else if ( miscList.Download(mode, "CashBook", sessionGeneral.UserCode) == 0 )
+						Response.Redirect("Download.ashx?File=" + miscList.FileName);
+				}
+				else // Search on screen
+					if ( miscList.ExecQuery(sql,1,"",false,true) < 1 ) // Load rows into a list of "MiscData" objects
+						SetErrorDetail("RetrieveData",30064,"No transactions found. Refine your criteria and try again",sql,2,2);
+					else
+					{
+						grdData.Visible    = true;
+						pnlGridBtn.Visible = true;
+						grdData.DataSource = miscList;
+						grdData.DataBind();
+					}
+		}
+
+		protected void btnCSV_Click(Object sender, EventArgs e)
+		{
+			RetrieveData((int)Constants.DataFormat.CSV);
+		}
+
+		protected void btnPDF_Click(Object sender, EventArgs e)
+		{
+			RetrieveData((int)Constants.DataFormat.PDF);
+		}
+
+		protected void btnSearch_Click(Object sender, EventArgs e)
+		{
+			RetrieveData(0);
+		}
+
+/*
+		protected void btnSearch_Click(Object sender, EventArgs e)
+		{
+			string   cashBook  = Tools.NullToString(hdnSCashBook.Value);
+			DateTime d1        = Tools.StringToDate(txtSDate1.Text,7);
+			DateTime d2        = Tools.StringToDate(txtSDate2.Text,7);
+			decimal  a1        = Tools.StringToDecimal(txtSAmt1.Text);
+			decimal  a2        = Tools.StringToDecimal(txtSAmt2.Text);
+			lblError.Text      = "";
+			ascxXFooter.JSText = WebTools.JavaScriptSource("LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'S')");
+			grdData.Visible    = false;
+			pnlGridBtn.Visible = false;
+
+			if ( d1 > Constants.C_NULLDATE() && d2 <= Constants.C_NULLDATE() )
+				SetErrorDetail("ValidateData",43400,"If you specify a start date you must also specify an end date");
+			else if ( d2 > Constants.C_NULLDATE() && d1 <= Constants.C_NULLDATE() )
+				SetErrorDetail("ValidateData",43410,"If you specify an end date you must also specify a start date");
+			else if ( d1 > Constants.C_NULLDATE() && d2 > Constants.C_NULLDATE() && d1 > d2 )
+				SetErrorDetail("ValidateData",43420,"The start date cannot be after the end date");
+			if ( a1 > 0 && a2 <= (decimal)0.01 )
+				SetErrorDetail("ValidateData",43450,"If you specify a from amount you must also specify a to amount");
+			else if ( a2 > 0 && a1 <= (decimal)0.01 )
+				SetErrorDetail("ValidateData",43460,"If you specify a to amount you must also specify a from amount");
+			else if ( a1 > 0 && a2 > 0 && a1 > a2 )
+				SetErrorDetail("ValidateData",43470,"The from amount cannot be greater than the to amount");
+
+			if ( lblError.Text.Length > 0 )
+				return;
+
+			string coy       = WebTools.ListValue(lstSCompany,"");
+			string coyOBO    = WebTools.ListValue(lstSOBOCompany,"");
+			string receipt   = WebTools.ListValue(lstSReceipt,"");
+			string glAcc     = WebTools.ListValue(lstSGLCode,"");
+			string glDim     = WebTools.ListValue(lstSGLDimension,"");
+			string taxRate   = WebTools.ListValue(lstSTaxRate,"");
+
+			sql = "exec sp_Audit_Get_CashbookExtractA"
+			    +     " @CompanyCode="            + Tools.DBString(coy)
+			    +     ",@CashbookCode="           + Tools.DBString(cashBook)
+			    +     ",@RP="                     + Tools.DBString(receipt)
+			    +     ",@OBOCompanyCode="         + Tools.DBString(coyOBO)
+			    +     ",@GLAccountCode="          + Tools.DBString(glAcc)
+			    +     ",@GLAccountDimension="     + Tools.DBString(glDim)
+			    +     ",@TransactionDescription=" + Tools.DBString(txtSDesc.Text)
+			    +     ",@StartDate="              + Tools.DateToSQL(d1,0)
+			    +     ",@EndDate="                + Tools.DateToSQL(d2,0)
+			    +     ",@TaxRate="                + Tools.DBString(taxRate)
+			    +     ",@MinAmount="              + a1.ToString()
+			    +     ",@MaxAmount="              + a2.ToString();
+	
+			using ( MiscList miscList = new MiscList() )
 				if ( miscList.ExecQuery(sql,1,"",false,true) < 1 )
 					SetErrorDetail("btnSearch_Click",30061,"No transactions found. Refine your criteria and try again",sql,2,2);
 				else
@@ -291,5 +368,6 @@ namespace PCIWebFinAid
 					grdData.DataBind();
 				}
 		}
+*/
 	}
 }

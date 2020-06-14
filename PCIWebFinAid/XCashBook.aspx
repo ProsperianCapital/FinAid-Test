@@ -150,8 +150,8 @@ function DeleteMode(show)
 	<p>
 	<asp:Button runat="server" ID="btnNew" Text="New" ToolTip="Capture a new transaction" OnClick="btnNew_Click" />&nbsp;
 	<asp:PlaceHolder runat="server" ID="pnlGridBtn" Visible="false">
-	<asp:Button runat="server" ID="btnPDF" Text="PDF" ToolTip="Download in PDF format" />&nbsp;
-	<asp:Button runat="server" ID="btnCSV" Text="CSV" ToolTip="Download in CSV (Excel) format" />
+	<asp:Button runat="server" ID="btnPDF" Text="PDF" ToolTip="Download in PDF format" OnClick="btnPDF_Click" />&nbsp;
+	<asp:Button runat="server" ID="btnCSV" Text="CSV" ToolTip="Download in CSV (Excel) format" OnClick="btnCSV_Click" />
 	</asp:PlaceHolder>
 	</p>
 
