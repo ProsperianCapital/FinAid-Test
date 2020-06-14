@@ -890,7 +890,7 @@ namespace PCIBusiness
 				if ( afterHour  > 0 && afterHour  < 24 && System.DateTime.Now.Hour <  afterHour )
 					return -10;
 
-				string folder = Tools.ConfigValue("TempFiles");
+				string folder = Tools.SystemFolder("TempFiles");
 
 				if ( ! Directory.Exists(folder) )
 					return -15;
@@ -940,7 +940,7 @@ namespace PCIBusiness
 					fileName = DateToString(DateTime.Now,5);
 
 				fileStream    = null;
-				fileNameFixed = Tools.FixFolderName(ConfigValue("TempFiles")) + fileName + "-";
+				fileNameFixed = Tools.SystemFolder("TempFiles") + fileName + "-";
 
 				for ( int k = 1 ; k < 999999 ; k++ )
 				{

@@ -144,6 +144,11 @@ namespace PCIBusiness
 			FinnHubExchangeCandles = 24 // Not implemented yet
 		}
 
+		public enum DataFormat : int
+		{
+			CSV = 31,
+			PDF = 32			
+		}
 
 //		public enum PaymentType : byte
 //		{

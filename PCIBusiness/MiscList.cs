@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace PCIBusiness
 		private int     returnCode;
 		private string  returnMessage;
 		private string  returnData;
+		private string  fileName;
 
 		public  int     ReturnCode
 		{
@@ -23,6 +25,10 @@ namespace PCIBusiness
 		{
 			get { return Tools.NullToString(returnData); }
 		}
+		public  string  FileName
+		{
+			get { return Tools.NullToString(fileName); }
+		}
 
 		public override BaseData NewItem()
 		{
@@ -32,7 +38,7 @@ namespace PCIBusiness
 		public int UpdateQuery(string sqlQuery)
 		{
 			returnData    = "";
-			returnMessage = "Internal SQL error";
+			returnMessage = "Internal SQL error/1";
 			try
 			{
 				sql        = sqlQuery;
@@ -48,7 +54,7 @@ namespace PCIBusiness
 			{
 				returnCode = 39999;
 				if ( returnMessage.Length < 1 )
-					returnMessage = "Internal SQL error";
+					returnMessage = "Internal SQL error/2";
 				Tools.LogException("MiscList.UpdateQuery",sql,ex);
 			}
 			finally
@@ -205,6 +211,86 @@ namespace PCIBusiness
 			if ( dbConn == null )
 				return false;
 			return dbConn.NextRow();
+		}
+
+		public int Download(int format,string dataName,string userCode,string sql="")
+		{
+			fileName = "";
+
+			if ( format != (int)Constants.DataFormat.CSV )
+				return 10;
+
+			byte         severity = 222;
+			StreamWriter fileOut  = null;
+
+			try
+			{
+				Tools.LogInfo("MiscList.Download/10","Create CSV file",severity);
+
+				if ( sql.Length > 0 )
+					if ( ExecQuery(sql,0) != 0 )
+						return 20;
+				if ( dbConn == null )
+					return 30;
+				if ( dbConn.EOF )
+					return 40;
+
+				fileName = Tools.CreateFile(ref fileOut,userCode+"-"+dataName,(format==(int)Constants.DataFormat.CSV?"csv":"pdf"));
+				if ( fileName.Length == 0 || fileOut == null )
+				{
+					Tools.LogException("MiscList.Download/50","Cannot create output file (" + userCode+"-"+dataName + ")");
+					return 50;
+				}
+
+				Tools.DeleteFiles((format==(int)Constants.DataFormat.CSV?"*.csv":"*.pdf"),7);
+
+				StringBuilder row      = new StringBuilder();
+				string        delim    = ",";
+				string        delimRep = ";";
+				string        col;
+				int           k;
+
+				for ( k = 0 ; k < dbConn.ColumnCount ; k++ )
+					row.Append(dbConn.ColName(k).Replace(delim,delimRep)+delim);
+
+				if ( row.Length > delim.Length )
+					row.Remove(row.Length-delim.Length,delim.Length);
+
+				fileOut.WriteLine(row.ToString());
+//				savedFileSize = savedFileSize + row.ToString().Length + 2;
+	
+				while ( !dbConn.EOF )
+				{
+					row.Length = 0; // Much faster than "new StringBuilder()" ...
+
+					for ( k = 0 ; k < dbConn.ColumnCount ; k++ )
+					{
+						col = dbConn.ColValue(k);
+						col = col.Replace("\r"," ");
+						col = col.Replace("\n"," ");
+						row.Append(col.Replace(delim,delimRep)+delim);
+					}
+					if ( row.Length > delim.Length )
+						row.Remove(row.Length-delim.Length,delim.Length);
+					fileOut.WriteLine(row.ToString());
+//					savedFileSize = savedFileSize + row.ToString().Length + 2;
+					dbConn.NextRow();
+				}
+				row = null;
+				return 0;
+			}
+			catch (Exception ex)
+			{
+				Tools.LogException("MiscList.Download/90","",ex);
+			}
+			finally
+			{
+				Tools.CloseDB(ref dbConn);
+				if ( fileOut != null )
+					fileOut.Close();
+				fileOut = null;
+			}
+			return 199;
 		}
 	}
 }
