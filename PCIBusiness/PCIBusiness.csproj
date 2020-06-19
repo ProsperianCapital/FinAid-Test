@@ -99,6 +99,7 @@
     <Compile Include="TransactionPayGate.cs" />
     <Compile Include="TransactionPayGenius.cs" />
     <Compile Include="TransactionPayU.cs" />
+    <Compile Include="TransactionPeach.cs" />
     <Compile Include="TransactionT24.cs" />
     <Compile Include="Web References\IkajoService\Reference.cs">
       <AutoGen>True</AutoGen>

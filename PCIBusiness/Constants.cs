@@ -57,8 +57,8 @@ namespace PCIBusiness
 			Peach      = 21
 
 //	Not implemented yet
-//			DinersClub = 21
-//			PayFast    = 22
+//			DinersClub = 22
+//			PayFast    = 23
 		}
 
 		public enum CreditCardType : byte
