@@ -1,10 +1,15 @@
-﻿using System;
+﻿// Developed by Paul Kilfoil
+// www.PaulKilfoil.co.za
+
+using System;
 using System.Text;
 using PCIBusiness;
 
+// Error codes 30000-30099
+
 namespace PCIWebFinAid
 {
-	public partial class XTransLookup : BasePageLogin
+	public partial class XTransLookup : BasePageBackOffice
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{
@@ -45,7 +50,7 @@ namespace PCIWebFinAid
 			if ( d1 > d2 && d2 > Constants.C_NULLDATE() )
 				err = err + "From date cannot be after to date<br />";
 			if ( err.Length > 0 )
-				SetErrorDetail("ValidateData",31010,err,err);
+				SetErrorDetail("ValidateData",30010,err,err);
 			return err.Length;
 		}
 
@@ -64,7 +69,7 @@ namespace PCIWebFinAid
 				if ( miscList.ExecQuery(sql,0,"",false) != 0 )
 					SetErrorDetail("btnSearch_Click",30060,"Internal database error (sp_Fin_GetPayments)",sql,2,2);
 				else if ( miscList.EOF )
-					SetErrorDetail("btnSearch_Click",30061,"No transactions found. Refine your criteria and try again",sql,2,0);
+					SetErrorDetail("btnSearch_Click",30070,"No transactions found. Refine your criteria and try again",sql,2,0);
 				else
 				{
 					StringBuilder data = new StringBuilder();

@@ -1,9 +1,14 @@
-﻿using System;
+﻿// Developed by Paul Kilfoil
+// www.PaulKilfoil.co.za
+
+using System;
 using PCIBusiness;
+
+// Error codes 11000-11099
 
 namespace PCIWebFinAid
 {
-	public partial class XLogin : BasePageLogin
+	public partial class XLogin : BasePageBackOffice
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
@@ -76,7 +81,7 @@ namespace PCIWebFinAid
 
 		protected void btnLogin_Click(Object sender, EventArgs e)
 		{
-			SetErrorDetail("btnLogin_Click",10010,"Invalid user name and/or password","One or both of user name/password is blank",2,2,null,true);
+			SetErrorDetail("btnLogin_Click",11050,"Invalid user name and/or password","One or both of user name/password is blank",2,2,null,true);
 			txtID.Text = txtID.Text.Trim();
 			txtPW.Text = txtPW.Text.Trim();
 
@@ -104,9 +109,9 @@ namespace PCIWebFinAid
 				    + " @UserName = " + Tools.DBString(txtID.Text)
 				    + ",@Password = " + Tools.DBString(txtPW.Text);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("btnLogin_Click",10020,"Internal database error (sp_Check_BackOfficeUser)",sql,1,1,null,true);
+					SetErrorDetail("btnLogin_Click",11060,"Internal database error (sp_Check_BackOfficeUser)",sql,1,1,null,true);
 				else if ( mList.EOF )
-					SetErrorDetail("btnLogin_Click",10030,"Invalid user name and/or password",sql + " (no data returned)",1,1,null,true);
+					SetErrorDetail("btnLogin_Click",11065,"Invalid user name and/or password",sql + " (no data returned)",1,1,null,true);
 				else
 				{
 					string userCode = mList.GetColumn("UserCode");
@@ -114,9 +119,9 @@ namespace PCIWebFinAid
 					string status   = mList.GetColumn("Status").ToUpper();
 					string message  = mList.GetColumn("Message");
 					if ( status != "S" )
-						SetErrorDetail("btnLogin_Click",10040,message,sql + " (Status = '" + status + "')",1,1,null,true);
+						SetErrorDetail("btnLogin_Click",11070,message,sql + " (Status = '" + status + "')",1,1,null,true);
 					else if ( userCode.Length < 1 || userName.Length < 2 )
-						SetErrorDetail("btnLogin_Click",10050,"User details corrupted",sql + " (UserCode/UserDisplayName empty/invalid)",1,1,null,true);
+						SetErrorDetail("btnLogin_Click",11075,"User details corrupted",sql + " (UserCode/UserDisplayName empty/invalid)",1,1,null,true);
 					else
 					{
 						SetErrorDetail("",-777);

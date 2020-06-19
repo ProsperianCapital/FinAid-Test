@@ -7,12 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMainAdmin.htm" -->
-	<title>Prosperian BackOffice</title>
-	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
-	<link rel="stylesheet" href="CSS/Calendar.css" type="text/css" />
-	<link rel="shortcut icon" href="Images/favicon.ico" />
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
+<!--#include file="IncludeMainAdmin.htm" -->
 </head>
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />

@@ -70,6 +70,7 @@
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Register.aspx" />
+    <Content Include="RegisterEx.aspx" />
     <Content Include="TransLookup.aspx" />
     <Content Include="ContractLookup.aspx" />
     <Content Include="LAdmin.aspx" />
@@ -89,6 +90,7 @@
     <Content Include="XHome.aspx" />
     <Content Include="XLogin.aspx" />
     <Content Include="XMenu.ascx" />
+    <Content Include="XRecurring.aspx" />
     <Content Include="XTransLookup.aspx" />
     <Content Include="IncludeBusy.htm" />
     <Content Include="IncludeErrorDtl.htm" />
@@ -139,6 +141,7 @@
     <Content Include="Images\PlaNet.png" />
     <Content Include="Images\PWealth.png" />
     <Content Include="Templates\ConfirmationMail.htm" />
+    <Content Include="Bin\PCIUnattended.EXE" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AJAXProcess.aspx.cs">
@@ -150,6 +153,9 @@
     </Compile>
     <Compile Include="AppDetails.cs" />
     <Compile Include="BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BasePageBackOffice.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BasePageLogin.cs">
@@ -258,6 +264,13 @@
     <Compile Include="Footer.ascx.designer.cs">
       <DependentUpon>Footer.ascx</DependentUpon>
     </Compile>
+    <Compile Include="RegisterEx.aspx.cs">
+      <DependentUpon>RegisterEx.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterEx.aspx.designer.cs">
+      <DependentUpon>RegisterEx.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SessionGeneral.cs" />
     <Compile Include="StdDisposable.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -318,6 +331,13 @@
     </Compile>
     <Compile Include="XMenu.ascx.designer.cs">
       <DependentUpon>XMenu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="XRecurring.aspx.cs">
+      <DependentUpon>XRecurring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XRecurring.aspx.designer.cs">
+      <DependentUpon>XRecurring.aspx</DependentUpon>
     </Compile>
     <Compile Include="XTransLookup.aspx.cs">
       <DependentUpon>XTransLookup.aspx</DependentUpon>

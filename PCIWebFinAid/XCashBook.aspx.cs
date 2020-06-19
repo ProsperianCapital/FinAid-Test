@@ -1,11 +1,16 @@
-﻿using System;
+﻿// Developed by Paul Kilfoil
+// www.PaulKilfoil.co.za
+
+using System;
 using System.Text;
 using System.Web.UI.WebControls;
 using PCIBusiness;
 
+// Error codes 80000-80099
+
 namespace PCIWebFinAid
 {
-	public partial class XCashBook : BasePageLogin
+	public partial class XCashBook : BasePageBackOffice
 	{
 		string cashBook;
 		protected override void PageLoad(object sender, EventArgs e)
@@ -154,7 +159,7 @@ namespace PCIWebFinAid
 				msg = "Internal error deleting cash book transaction";
 				Tools.LogException("XCashBook.btnDelete_Click",sql,ex);
 			}	
-			SetErrorDetail("btnDelete_Click",30377,msg,sql,23,2);
+			SetErrorDetail("btnDelete_Click",80020,msg,sql,23,2);
 			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1);LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'E')");
 		}
 
@@ -210,7 +215,7 @@ namespace PCIWebFinAid
 				msg = "Internal error trying to " + action + " cash book transaction";
 				Tools.LogException("XCashBook.btnUpdate_Click",sql,ex);
 			}	
-			SetErrorDetail("btnUpdate_Click",30177,msg,sql,23,2);
+			SetErrorDetail("btnUpdate_Click",80030,msg,sql,23,2);
 			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode("+editInsert.ToString()+");LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'E')");
 		}
 
@@ -228,21 +233,21 @@ namespace PCIWebFinAid
 			pnlGridBtn.Visible = false;
 
 			if ( d1 > Constants.C_NULLDATE() && d2 <= Constants.C_NULLDATE() )
-				SetErrorDetail("ValidateData",43400,"If you specify a start date you must also specify an end date");
+				SetErrorDetail("ValidateData",80050,"If you specify a start date you must also specify an end date");
 			else if ( d2 > Constants.C_NULLDATE() && d1 <= Constants.C_NULLDATE() )
-				SetErrorDetail("ValidateData",43410,"If you specify an end date you must also specify a start date");
+				SetErrorDetail("ValidateData",80053,"If you specify an end date you must also specify a start date");
 			else if ( d1 > Constants.C_NULLDATE() && d2 > Constants.C_NULLDATE() && d1 > d2 )
-				SetErrorDetail("ValidateData",43420,"The start date cannot be after the end date");
+				SetErrorDetail("ValidateData",80056,"The start date cannot be after the end date");
 //			if ( d1 > Constants.C_NULLDATE() && dR > Constants.C_NULLDATE() && dR < d1 )
-//				SetErrorDetail("ValidateData",43430,"The recon date cannot be before the start date");
+//				SetErrorDetail("ValidateData",80059,"The recon date cannot be before the start date");
 //			if ( d2 > Constants.C_NULLDATE() && dR > Constants.C_NULLDATE() && dR > d2 )
-//				SetErrorDetail("ValidateData",43440,"The recon date cannot be after the end date");
+//				SetErrorDetail("ValidateData",80062,"The recon date cannot be after the end date");
 			if ( a1 > 0 && a2 <= (decimal)0.01 )
-				SetErrorDetail("ValidateData",43450,"If you specify a from amount you must also specify a to amount");
+				SetErrorDetail("ValidateData",80065,"If you specify a from amount you must also specify a to amount");
 			else if ( a2 > 0 && a1 <= (decimal)0.01 )
-				SetErrorDetail("ValidateData",43460,"If you specify a to amount you must also specify a from amount");
+				SetErrorDetail("ValidateData",80068,"If you specify a to amount you must also specify a from amount");
 			else if ( a1 > 0 && a2 > 0 && a1 > a2 )
-				SetErrorDetail("ValidateData",43470,"The from amount cannot be greater than the to amount");
+				SetErrorDetail("ValidateData",80071,"The from amount cannot be greater than the to amount");
 
 			if ( lblError.Text.Length > 0 )
 				return;
@@ -276,13 +281,13 @@ namespace PCIWebFinAid
 				if ( mode > 30 ) // Download
 				{
 					if ( miscList.ExecQuery(sql,0) > 0 ) // Do not load rows
-						SetErrorDetail("RetrieveData",30061,"No transactions found. Refine your criteria and try again",sql,2,2);
+						SetErrorDetail("RetrieveData",80080,"No transactions found. Refine your criteria and try again",sql,2,2);
 					else if ( miscList.Download(mode, "CashBook", sessionGeneral.UserCode) == 0 )
 						Response.Redirect("Download.ashx?File=" + miscList.FileName);
 				}
 				else // Search on screen
 					if ( miscList.ExecQuery(sql,1,"",false,true) < 1 ) // Load rows into a list of "MiscData" objects
-						SetErrorDetail("RetrieveData",30064,"No transactions found. Refine your criteria and try again",sql,2,2);
+						SetErrorDetail("RetrieveData",80085,"No transactions found. Refine your criteria and try again",sql,2,2);
 					else
 					{
 						grdData.Visible    = true;
@@ -306,68 +311,5 @@ namespace PCIWebFinAid
 		{
 			RetrieveData(0);
 		}
-
-/*
-		protected void btnSearch_Click(Object sender, EventArgs e)
-		{
-			string   cashBook  = Tools.NullToString(hdnSCashBook.Value);
-			DateTime d1        = Tools.StringToDate(txtSDate1.Text,7);
-			DateTime d2        = Tools.StringToDate(txtSDate2.Text,7);
-			decimal  a1        = Tools.StringToDecimal(txtSAmt1.Text);
-			decimal  a2        = Tools.StringToDecimal(txtSAmt2.Text);
-			lblError.Text      = "";
-			ascxXFooter.JSText = WebTools.JavaScriptSource("LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'S')");
-			grdData.Visible    = false;
-			pnlGridBtn.Visible = false;
-
-			if ( d1 > Constants.C_NULLDATE() && d2 <= Constants.C_NULLDATE() )
-				SetErrorDetail("ValidateData",43400,"If you specify a start date you must also specify an end date");
-			else if ( d2 > Constants.C_NULLDATE() && d1 <= Constants.C_NULLDATE() )
-				SetErrorDetail("ValidateData",43410,"If you specify an end date you must also specify a start date");
-			else if ( d1 > Constants.C_NULLDATE() && d2 > Constants.C_NULLDATE() && d1 > d2 )
-				SetErrorDetail("ValidateData",43420,"The start date cannot be after the end date");
-			if ( a1 > 0 && a2 <= (decimal)0.01 )
-				SetErrorDetail("ValidateData",43450,"If you specify a from amount you must also specify a to amount");
-			else if ( a2 > 0 && a1 <= (decimal)0.01 )
-				SetErrorDetail("ValidateData",43460,"If you specify a to amount you must also specify a from amount");
-			else if ( a1 > 0 && a2 > 0 && a1 > a2 )
-				SetErrorDetail("ValidateData",43470,"The from amount cannot be greater than the to amount");
-
-			if ( lblError.Text.Length > 0 )
-				return;
-
-			string coy       = WebTools.ListValue(lstSCompany,"");
-			string coyOBO    = WebTools.ListValue(lstSOBOCompany,"");
-			string receipt   = WebTools.ListValue(lstSReceipt,"");
-			string glAcc     = WebTools.ListValue(lstSGLCode,"");
-			string glDim     = WebTools.ListValue(lstSGLDimension,"");
-			string taxRate   = WebTools.ListValue(lstSTaxRate,"");
-
-			sql = "exec sp_Audit_Get_CashbookExtractA"
-			    +     " @CompanyCode="            + Tools.DBString(coy)
-			    +     ",@CashbookCode="           + Tools.DBString(cashBook)
-			    +     ",@RP="                     + Tools.DBString(receipt)
-			    +     ",@OBOCompanyCode="         + Tools.DBString(coyOBO)
-			    +     ",@GLAccountCode="          + Tools.DBString(glAcc)
-			    +     ",@GLAccountDimension="     + Tools.DBString(glDim)
-			    +     ",@TransactionDescription=" + Tools.DBString(txtSDesc.Text)
-			    +     ",@StartDate="              + Tools.DateToSQL(d1,0)
-			    +     ",@EndDate="                + Tools.DateToSQL(d2,0)
-			    +     ",@TaxRate="                + Tools.DBString(taxRate)
-			    +     ",@MinAmount="              + a1.ToString()
-			    +     ",@MaxAmount="              + a2.ToString();
-	
-			using ( MiscList miscList = new MiscList() )
-				if ( miscList.ExecQuery(sql,1,"",false,true) < 1 )
-					SetErrorDetail("btnSearch_Click",30061,"No transactions found. Refine your criteria and try again",sql,2,2);
-				else
-				{
-					grdData.Visible    = true;
-					pnlGridBtn.Visible = true;
-					grdData.DataSource = miscList;
-					grdData.DataBind();
-				}
-		}
-*/
 	}
 }

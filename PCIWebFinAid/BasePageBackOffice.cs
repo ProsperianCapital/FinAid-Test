@@ -7,24 +7,18 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using PCIBusiness;
 
-// Error codes 10000-10099
+// Error codes 19000-19099
 
 namespace PCIWebFinAid
 {
-	public abstract class BasePageLogin : BasePage
+	public abstract class BasePageBackOffice : BasePage
 	{
 		protected SessionGeneral sessionGeneral;
 		protected Literal        lblJS;
-		protected HiddenField    hdnTabNo;
 		protected Label          lblError;
-		protected int            tabNo;
-		protected int            maxTab;
-		protected string         sql;
-
-//		IncludeErrorDtl.htm
-//		protected Panel          pnlErrorDtl;
 		protected Button         btnErrorDtl;
 		protected Label          lblErrorDtl;
+		protected string         sql;
 
 		protected void SessionSave(string userCode=null,string userName=null,string accessType=null,string contractCode=null)
 		{
@@ -36,8 +30,6 @@ namespace PCIWebFinAid
 				sessionGeneral.UserName     = Tools.NullToString(userName);
 			if ( accessType   != null )
 				sessionGeneral.AccessType   = Tools.NullToString(accessType);
-			if ( contractCode != null )
-				sessionGeneral.ContractCode = Tools.NullToString(contractCode);
 			Session["SessionGeneral"]      = sessionGeneral;
 		}
 
@@ -158,13 +150,7 @@ namespace PCIWebFinAid
 
 		protected byte PageCheck()
 		{
-			if ( maxTab > 0 )
-			{
-				tabNo = PCIBusiness.Tools.StringToInt(hdnTabNo.Value);
-				if ( tabNo < 1 || tabNo > maxTab )
-					tabNo = 1;
-				lblJS.Text = WebTools.JavaScriptSource("SetTab("+tabNo.ToString()+","+maxTab.ToString()+")");
-			}
+		//	Check whether user has access to this page here
 			return 0;
 		}
 
@@ -172,80 +158,14 @@ namespace PCIWebFinAid
 		{
 			try
 			{
-				XHeader head1 = (XHeader)FindControl("ascxXHeader");
-				if ( head1   != null )
-					head1.ShowUser(sessionGeneral);
-				Header  head2 = (Header) FindControl("ascxHeader");
-				if ( head2   != null )
-					head2.ShowUser(sessionGeneral);
+				XHeader head = (XHeader)FindControl("ascxXHeader");
+				if ( head   != null )
+					head.ShowUser(sessionGeneral);
 			}
 			catch
 			{ }
 		}
 
-
-		protected int LoadLabelText(Control subCtl)
-		{
-			if ( sessionGeneral == null )
-				return 10010;
-
-			int    ret = 10020;
-			string fieldCode;
-			string fieldValue;
-
-			using (MiscList mList = new MiscList())
-				try	
-				{
-					sql = "exec sp_WP_Get_ProductWebsiteRegContent @ProductCode=" + Tools.DBString(sessionGeneral.ProductCode)
-					                                           + ",@LanguageCode=" + Tools.DBString(sessionGeneral.LanguageCode)
-					                                           + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
-					                                           + ",@Page='L'";
-					if ( mList.ExecQuery(sql, 0) != 0 )
-						SetErrorDetail("LoadLabelText", 10010, "Internal database error (sp_WP_Get_ProductWebsiteRegContent failed)", sql, 1, 1);
-					else if ( mList.EOF )
-						SetErrorDetail("LoadLabelText", 10020, "Internal database error (sp_WP_Get_ProductWebsiteRegContent no data returned)", sql, 1, 1);
-					else
-						while ( ! mList.EOF )
-						{
-							ret        = 10050;
-							fieldCode  = mList.GetColumn("WebsiteFieldCode");
-							fieldValue = mList.GetColumn("WebsiteFieldValue").Replace(Environment.NewLine,"<br />");
-							ret        = 10060;
-							ReplaceControlText("X"+fieldCode,fieldValue,subCtl);
-							ReplaceControlText("Y"+fieldCode,fieldValue);
-							ReplaceControlText("Z"+fieldCode,fieldValue);
-							mList.NextRow();
-						}
-				}
-				catch (Exception ex)
-				{
-					SetErrorDetail("LoadLabelText", ret, "Internal error (sp_WP_Get_ProductWebsiteRegContent)", "", 2, 2, ex);
-					return ret;
-				}
-				return 0;
-			}
-
-
-		private void ReplaceControlText(string ctlID,string fieldValue,Control subControl=null)
-		{
-			Control ctl = FindControl(ctlID);
-			if ( ctl == null && subControl != null )
-				ctl    = subControl.FindControl(ctlID);
-			if ( ctl == null )
-				return;
-			else if (ctl.GetType()  == typeof(Literal))
-				((Literal)ctl).Text   = fieldValue;
-			else if (ctl.GetType()  == typeof(Label))
-				((Label)ctl).Text     = fieldValue;
-			else if (ctl.GetType()  == typeof(TableCell))
-				((TableCell)ctl).Text = fieldValue;
-			else if (ctl.GetType()  == typeof(Button))
-				((Button)ctl).Text    = fieldValue;
-			else if (ctl.GetType()  == typeof(CheckBox))
-				((CheckBox)ctl).Text  = fieldValue;
-			else
-				SetErrorDetail("ReplaceControlText", 10030, "Unrecognized HTML control (" + ctlID.ToString() + "/" + fieldValue.ToString() + ")",ctlID.ToString() + ", control type="+ctl.GetType().ToString());
-		}
 
 		protected void SetErrorDetail(string method,int errCode,string errBrief="",string errDetail="",byte briefMode=2,byte detailMode=2,Exception ex=null,bool alwaysShow=false)
 		{
@@ -266,7 +186,7 @@ namespace PCIWebFinAid
 
 			string pageName = System.IO.Path.GetFileNameWithoutExtension(Page.AppRelativeVirtualPath);
 			if ( Tools.NullToString(pageName).Length < 1 )
-				pageName = "BasePageLogin";
+				pageName = "BasePageBackOffice";
 			method      = ( Tools.NullToString(method).Length > 0 ? method+"[SetErrorDetail]." : "SetErrorDetail/" ) + errCode.ToString();
 			Tools.LogInfo(pageName+"."+method,errBrief+" ("+errDetail+")",10);
 

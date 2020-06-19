@@ -16,7 +16,7 @@ namespace PCIWebFinAid
 //			if ( SecurityCheck(19) != 0 ) // Admin only
 //				return;
 
-			SetErrorDetail(-88,0,"","");
+			SetErrorDetail(-888,0,"","");
 
 			if ( ! Page.IsPostBack )
 			{

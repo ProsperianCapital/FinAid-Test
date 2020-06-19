@@ -7,12 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMainAdmin.htm" -->
-	<title>Prosperian BackOffice</title>
-	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
-	<link rel="stylesheet" href="CSS/Calendar.css" type="text/css" />
-	<link rel="shortcut icon" href="Images/favicon.ico" />
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
+<!--#include file="IncludeMainAdmin.htm" -->
 </head>
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
@@ -109,7 +104,7 @@ function DeleteMode(show)
 	</div>
 
 	<div id="pnlFilter" style="border:1px solid #000000">
-	<div class="PopupHead" style="background-color:orange">Search/Filter
+	<div class="Header6">Search/Filter
 		<span style="float:right">
 		<a href="#" onclick="JavaScript:ShowElt('tblFilter',true)">Show</a>&nbsp;&nbsp;
 		<a href="#" onclick="JavaScript:ShowElt('tblFilter',false)">Hide</a></span>
