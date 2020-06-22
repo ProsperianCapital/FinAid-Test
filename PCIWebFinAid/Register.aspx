@@ -655,7 +655,7 @@ Disabled
 <asp:Panel runat="server" ID="pnlWarning" Visible="false" CssClass="Popup2">
 <div class="PopupHead">Warning</div>
 <p>
-Your IP address is not listed as from the country this product is sold.
+<asp:Literal runat="server" id="lblWarnX"></asp:Literal>
 </p><p>
 <asp:Literal runat="server" ID="lblWarnP">But you may continue anyway. Press "OK" to proceed.</asp:Literal>
 <asp:Literal runat="server" ID="lblWarnB">We're sorry, but you cannot continue.</asp:Literal>

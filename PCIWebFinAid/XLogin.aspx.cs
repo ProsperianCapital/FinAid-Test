@@ -47,7 +47,7 @@ namespace PCIWebFinAid
 				return;
 
 //	Testing
-			if ( xSecure == "901317" )
+			if ( xSecure == "901317" ) // Tools.ConfigValue("Access/BackDoor")
 			{
 				SessionSave(null,null,"P");
 				WebTools.Redirect(Response,sessionGeneral.StartPage);

@@ -48,15 +48,25 @@ namespace PCIWebFinAid
 				languageCode        = WebTools.RequestValueString(Request,"LC");  // LanguageCode");
 				languageDialectCode = WebTools.RequestValueString(Request,"LDC"); // LanguageDialectCode");
 
+				if ( ! Tools.SystemIsLive() )
+				{
 //	Testing 1 (English)
-				if ( productCode.Length         < 1 ) productCode         = "10278";
-				if ( languageCode.Length        < 1 ) languageCode        = "ENG";
-				if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
-
+					if ( productCode.Length         < 1 ) productCode         = "10278";
+					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
+					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
 //	Testing 2 (Thai)
-//				if ( productCode.Length         < 1 ) productCode         = "10024";
-//				if ( languageCode.Length        < 1 ) languageCode        = "THA";
-//				if ( languageDialectCode.Length < 1 ) languageDialectCode = "0001";
+//					if ( productCode.Length         < 1 ) productCode         = "10024";
+//					if ( languageCode.Length        < 1 ) languageCode        = "THA";
+//					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0001";
+				}
+				else if ( productCode.Length         < 1 ||
+				          languageCode.Length        < 1 ||
+					       languageDialectCode.Length < 1 )
+				{
+					SetErrorDetail(88,33088,"Invalid startup values ... system cannot continue","");
+					SetWarning("B","Invalid startup values.");
+					return;
+				}
 
 				ViewState["ProductCode"]         = productCode;
 				ViewState["LanguageCode"]        = languageCode;
@@ -94,13 +104,19 @@ namespace PCIWebFinAid
 			}
 		}
 
-		private void SetWarning(string action="")
+		private void SetWarning(string action="",string msg="")
 		{
 			action                = Tools.NullToString(action).ToUpper();
 			pnlWarning.Visible    = ( action.Length > 0 );
 			lblWarnP.Visible      = ( action == "P" );
 			lblWarnB.Visible      = ( action == "B" );
 			pnlDisabled.Visible   = ( action == "B" );
+
+			if ( msg.Length > 0 )
+				lblWarnX.Text      = msg;
+			else
+				lblWarnX.Text      = "Your IP address is not listed as from the country this product is sold.";
+
 			if ( action == "B" )
 			{
 				btnBack1.Visible   = false;
@@ -669,7 +685,7 @@ namespace PCIWebFinAid
 			}
 
 			if ( err.Length > 0 )
-				SetErrorDetail(20022,20022,err,err,1,1);
+				SetErrorDetail(20022,20022,err,err,1,1,50);
 			return err.Length;
 		}
 
@@ -1123,7 +1139,7 @@ namespace PCIWebFinAid
 			}
 		}
 
-		private void SetErrorDetail(int errCode,int logNo,string errBrief,string errDetail,byte briefMode=2,byte detailMode=1)
+		private void SetErrorDetail(int errCode,int logNo,string errBrief,string errDetail,byte briefMode=2,byte detailMode=1,byte errPriority=248)
 		{
 			if ( errCode == 0 )
 				return;
@@ -1137,7 +1153,7 @@ namespace PCIWebFinAid
 				return;
 			}
 
-			Tools.LogInfo("Register.SetErrorDetail","(errCode="+errCode.ToString()+", logNo="+logNo.ToString()+") "+errDetail,244);
+			Tools.LogInfo("Register.SetErrorDetail","(errCode="+errCode.ToString()+", logNo="+logNo.ToString()+") "+errDetail,errPriority);
 
 			if ( briefMode == 2 ) // Append
 				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;

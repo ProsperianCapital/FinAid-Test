@@ -1561,6 +1561,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Panel pnlWarning;
         
         /// <summary>
+        /// lblWarnX control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lblWarnX;
+        
+        /// <summary>
         /// lblWarnP control.
         /// </summary>
         /// <remarks>

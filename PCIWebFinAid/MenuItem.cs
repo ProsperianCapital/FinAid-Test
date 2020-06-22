@@ -21,8 +21,8 @@ namespace PCIWebFinAid
 		}
 		public  string  Code
 		{
-			get { return menuCode; }
-			set { menuCode = value; }
+			get { return Tools.NullToString(menuCode); }
+			set { menuCode = value.Trim(); }
 		}
 		public string   Name
 		{
@@ -63,6 +63,8 @@ namespace PCIWebFinAid
 			menuName        = mList.GetColumn(x+"ItemDescription");
 			menuDescription = mList.GetColumn(x+"ItemDescription");
 			url             = mList.GetColumn("URL");
+//	Testing
+//			url             = mList.GetColumn("URL") + "?UserCode={UserCode}";
 		}
 
 	}

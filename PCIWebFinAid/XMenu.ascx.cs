@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Collections;
 using System.Collections.Generic;
 using PCIBusiness;
 
@@ -8,14 +7,16 @@ namespace PCIWebFinAid
 {
 	public partial class XMenu : System.Web.UI.UserControl
 	{
+		private string userCode;
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
-
+			userCode = "";
 		}
 
-		public int LoadMenu(string userCode)
+		public int LoadMenu(string sessionUserCode)
 		{
-			userCode = Tools.NullToString(userCode);
+			userCode = Tools.NullToString(sessionUserCode);
 			if ( userCode.Length < 1 )
 				return 10;
 
@@ -147,9 +148,18 @@ namespace PCIWebFinAid
 			string T = "<a " + ( mx.Description.Length > 0 ? "title='" + mx.Description.Replace("'","&#39;") + "' " : "" );
 			if ( string.IsNullOrWhiteSpace(mx.URL) )
 				return T + "href=\"JavaScript:alert('You do not have access to this functionality')\"> " + mx.Name + " </a>";
-			if ( mx.URL.ToUpper().StartsWith("HTTP") || mx.URL.ToUpper().StartsWith("WWW") ) 
-				return T + "href='" + mx.URL + "' target='_blank'> " + mx.Name + " </a>";
-			return T + "href='" + mx.URL + "' onclick=\"JavaScript:ShowBusy('Loading ...',null,0)\"> " + mx.Name + " </a>";
+
+			mx.URL = mx.URL.Replace("{UserCode}",userCode);
+			mx.URL = mx.URL.Replace("{USERCODE}",userCode);
+			T      = T + "href='" + mx.URL + "'";
+
+			if ( mx.URL.ToUpper().StartsWith("HTTP") || mx.URL.ToUpper().StartsWith("WWW") )
+				if ( mx.Code.Length > 0 )
+					return T + " target='" + mx.Code.Replace(" ","") + "'> " + mx.Name + " </a>";
+				else
+					return T + " target='_blank'> " + mx.Name + " </a>";
+
+			return T + " onclick=\"JavaScript:ShowBusy('Loading ...',null,0)\"> " + mx.Name + " </a>";
 		}
 	}
 }
