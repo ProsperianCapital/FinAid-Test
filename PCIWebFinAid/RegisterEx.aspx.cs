@@ -719,7 +719,7 @@ namespace PCIWebFinAid
 					else if ( pageNo == 2 )
 						sql = sql + ",@FirstName    =" + Tools.DBString(txtFirstName.Text,47)
 					             + ",@EMailAddress =" + Tools.DBString(txtEMail.Text,47)
-					             + ",@ClientCode   =" + Tools.DBString(txtID.Text);
+					             + ",@ClientCode   =" + Tools.DBString(txtID.Text,47);
 					else if ( pageNo == 3 )
 						sql = sql + ",@DisposableIncome           =" + Tools.DBString(txtIncome.Text,47)
 					             + ",@ClientEmploymentStatusCode =" + Tools.DBString(WebTools.ListValue(lstStatus,""))

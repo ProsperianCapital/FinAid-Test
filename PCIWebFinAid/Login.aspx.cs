@@ -56,7 +56,7 @@ namespace PCIWebFinAid
 			{
 				sql = "exec SP_ClientCRMValidateLoginC"
 				    + " @IPAddress = "   + Tools.DBString(WebTools.ClientIPAddress(Request))
-				    + ",@ClientCode = "  + Tools.DBString(txtID.Text)
+				    + ",@ClientCode = "  + Tools.DBString(txtID.Text,47)
 				    + ",@ContractPin = " + Tools.DBString(txtPW.Text)
 				    + ",@ProductCode = " + Tools.DBString(sessionGeneral.ProductCode);
 				if ( mList.ExecQuery(sql,0) != 0 )

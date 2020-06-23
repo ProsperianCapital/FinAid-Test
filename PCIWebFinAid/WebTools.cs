@@ -343,6 +343,15 @@ namespace PCIWebFinAid
 			return h;
 		}
 
+		public static string ClientReferringURL(HttpRequest req)
+		{
+			string refer = PCIBusiness.Tools.ObjectToString(req.UrlReferrer);
+			if ( refer.Length < 5 )
+				refer = PCIBusiness.Tools.ObjectToString(req.Headers["Referer"]); // Yes, this is spelt CORRECTLY! Do not change
+			return refer;
+		}
+
+
 /* Not complete
 
 		public static int EMailContractConfirmation(string contractCode,string cardNumber,ControlCollection controls)

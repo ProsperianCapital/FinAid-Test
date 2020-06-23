@@ -72,6 +72,7 @@ namespace PCIWebFinAid
 				ViewState["LanguageCode"]        = languageCode;
 				ViewState["LanguageDialectCode"] = languageDialectCode;
 
+				hdnReferURL.Value  = WebTools.ClientReferringURL(Request);
 				hdnVer.Value       = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
 				lblVer.Text        = "Version " + SystemDetails.AppVersion;
 				lblVer.Visible     = ! Tools.SystemIsLive();
@@ -90,17 +91,18 @@ namespace PCIWebFinAid
 				}
 
 //	Testing 2
-				if ( hdn100137.Value.Length < 1 ) hdn100137.Value = "PRIME" + Environment.NewLine + "ASSIST";
-				if ( hdn100002.Value.Length < 1 ) hdn100002.Value = "Emergency Mobile, Legal & Financial Assistance";
-				if ( lblReg.Text.Length     < 1 ) lblReg.Text     = "Registration";
-				if ( lblRegConf.Text.Length < 1 ) lblRegConf.Text = "Registration Confirmation";
+//				if ( hdn100137.Value.Length < 1 ) hdn100137.Value = "PRIME" + Environment.NewLine + "ASSIST";
+//				if ( hdn100002.Value.Length < 1 ) hdn100002.Value = "Emergency Mobile, Legal & Financial Assistance";
+//				if ( lblReg.Text.Length     < 1 ) lblReg.Text     = "Registration";
+//				if ( lblRegConf.Text.Length < 1 ) lblRegConf.Text = "Registration Confirmation";
 
 //	Testing 3
-				if ( WebTools.RequestValueInt(Request,"PageNoX") > 0 )
-				{
-					hdnPageNo.Value = WebTools.RequestValueString(Request,"PageNoX");
-					btnNext_Click(null,null);
-				}
+//				if ( WebTools.RequestValueInt(Request,"PageNoX") > 0 )
+//				{
+//					hdnPageNo.Value = WebTools.RequestValueString(Request,"PageNoX");
+//					btnNext_Click(null,null);
+//				}
+
 			}
 		}
 
@@ -564,6 +566,7 @@ namespace PCIWebFinAid
 					    +     ",@AdvertCode         =" + Tools.DBString(WebTools.RequestValueString(Request,"AC"))
 					    +     ",@ClientIPAddress    =" + Tools.DBString(WebTools.ClientIPAddress(Request,1))
 					    +     ",@ClientDevice       =" + Tools.DBString(WebTools.ClientBrowser(Request,hdnBrowser.Value))
+//					    +     ",@ReferringURL       =" + Tools.DBString(hdnReferURL.Value)
 					    +     ",@WebsiteVisitorCode =" + Tools.DBString(WebTools.RequestValueString(Request,"WVC"))
 					    +     ",@WebsiteVisitorSessionCode =" + Tools.DBString(WebTools.RequestValueString(Request,"WVSC"));
 					if ( miscList.ExecQuery(sql,0) != 0 )
@@ -724,6 +727,7 @@ namespace PCIWebFinAid
 					    +     ",@ContractCode     =" + Tools.DBString(contractCode)
 					    +     ",@ClientIPAddress  =" + Tools.DBString(WebTools.ClientIPAddress(Request,1))
 					    +     ",@ClientDevice     =" + Tools.DBString(WebTools.ClientBrowser(Request,hdnBrowser.Value));
+//					    +     ",@ReferringURL     =" + Tools.DBString(hdnReferURL.Value)
 
 					if ( Tools.LiveTestOrDev() == Constants.SystemMode.Development )
 					{ }
@@ -735,7 +739,7 @@ namespace PCIWebFinAid
 					else if ( pageNo == 2 )
 						sql = sql + ",@FirstName    =" + Tools.DBString(txtFirstName.Text,47)
 					             + ",@EMailAddress =" + Tools.DBString(txtEMail.Text,47)
-					             + ",@ClientCode   =" + Tools.DBString(txtID.Text);
+					             + ",@ClientCode   =" + Tools.DBString(txtID.Text,47);
 					else if ( pageNo == 3 )
 						sql = sql + ",@DisposableIncome           =" + Tools.DBString(txtIncome.Text,47)
 					             + ",@ClientEmploymentStatusCode =" + Tools.DBString(WebTools.ListValue(lstStatus,""))
