@@ -47,8 +47,6 @@ To Date<br />
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 <asp:Label runat="server" ID="lblErrorDtl" style="border:1px solid #000000;position:fixed;bottom:20px;right:5px;visibility:hidden;display:none;padding:5px;font-family:Verdana;background-color:pink"></asp:Label>
 
-<asp:Literal runat="server" ID="lblJS"></asp:Literal>
-
 </form>
 </body>
 </html>

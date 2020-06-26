@@ -31,14 +31,13 @@ namespace PCIWebFinAid
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			if ( SessionCheck(99)  != 0 )
+			if ( SessionCheck(19) != 0 ) // Admin only
 				return;
-//			if ( SecurityCheck(19) != 0 )
-//				return;
 
-			dataOK     = "<span style='color:green'>&nbsp;&nbsp;&nbsp;&nbsp;";
-			dataErr    = "<span style='color:red'>&nbsp;&nbsp;&nbsp;&nbsp;";
-			lblJS.Text = "";
+			dataOK            = "<span style='color:green'>&nbsp;&nbsp;&nbsp;&nbsp;";
+			dataErr           = "<span style='color:red'>&nbsp;&nbsp;&nbsp;&nbsp;";
+			ascxFooter.JSText = "";
+//			lblJS.Text        = "";
 
 			try
 			{
@@ -67,10 +66,12 @@ namespace PCIWebFinAid
 //				rdoTick24.Checked = ( pageParms.ticker == (int)Constants.TickerType.FinnHubExchangeCandles );
 				lstExchange.Items.Add(new ListItem(pageParms.exchange,pageParms.exchange));
 				if ( pageParms.status != 22 )
-					lblJS.Text    = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
+//					lblJS.Text        = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
+					ascxFooter.JSText = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
 			}
 			else
-				lblJS.Text = WebTools.JavaScriptSource("ChooseTicker(0)");
+//				lblJS.Text        = WebTools.JavaScriptSource("ChooseTicker(0)");
+				ascxFooter.JSText = WebTools.JavaScriptSource("ChooseTicker(0)");
 
 			SetupFinnHub();
 			StartStop(pageParms.status);
@@ -141,10 +142,11 @@ namespace PCIWebFinAid
 			}
 			else
 			{
-				lblJS.Text       = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
-				lblStatus.Text   = "<span style='color:green'>Inactive</span>";
-				lblRefresh.Text  = "";
-				pageParms.status = 77;
+			//	lblJS.Text        = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
+				ascxFooter.JSText = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
+				lblStatus.Text    = "<span style='color:green'>Inactive</span>";
+				lblRefresh.Text   = "";
+				pageParms.status  = 77;
 			}
 		}
 
@@ -333,9 +335,12 @@ namespace PCIWebFinAid
 			if ( ValidatePage() == 0 )
 				StartStop(88);
 			else
-				lblJS.Text = WebTools.JavaScriptSource("ChooseTicker("+(rdoTick21.Checked?((int)Constants.TickerType.FinnHubStockPrices).ToString()
-				                                                      :(rdoTick23.Checked?((int)Constants.TickerType.FinnHubExchangeRates).ToString()
-				                                                      :(rdoTick24.Checked?((int)Constants.TickerType.FinnHubExchangeCandles).ToString():"0")))+")");
+//				lblJS.Text = WebTools.JavaScriptSource("ChooseTicker("+(rdoTick21.Checked?((int)Constants.TickerType.FinnHubStockPrices).ToString()
+//				                                                      :(rdoTick23.Checked?((int)Constants.TickerType.FinnHubExchangeRates).ToString()
+//				                                                      :(rdoTick24.Checked?((int)Constants.TickerType.FinnHubExchangeCandles).ToString():"0")))+")");
+				ascxFooter.JSText = WebTools.JavaScriptSource("ChooseTicker("+(rdoTick21.Checked?((int)Constants.TickerType.FinnHubStockPrices).ToString()
+				                                                             :(rdoTick23.Checked?((int)Constants.TickerType.FinnHubExchangeRates).ToString()
+				                                                             :(rdoTick24.Checked?((int)Constants.TickerType.FinnHubExchangeCandles).ToString():"0")))+")");
 		}
 
 		protected void btnStop_Click(Object sender, EventArgs e)

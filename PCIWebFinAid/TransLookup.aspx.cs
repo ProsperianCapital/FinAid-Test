@@ -14,7 +14,7 @@ namespace PCIWebFinAid
 //			if ( SecurityCheck(19) != 0 ) // Admin only
 //				return;
 
-			SetErrorDetail(-88,0,"","");
+			SetErrorDetail("",-888);
 		}
 
 		private int ValidateData()
@@ -40,7 +40,7 @@ namespace PCIWebFinAid
 				err = err + "Invalid to date (it must be in dd/mm/yyyy format)<br />";
 			if ( d1 > d2 && d2 > Constants.C_NULLDATE() )
 				err = err + "From date cannot be after to date<br />";
-			SetErrorDetail(err.Length,100,err,err);
+			SetErrorDetail("ValidateData",err.Length,err,err);
 			return err.Length;
 		}
 
@@ -57,9 +57,9 @@ namespace PCIWebFinAid
 	
 			using ( MiscList miscList = new MiscList() )
 				if ( miscList.ExecQuery(sql,0,"",false) != 0 )
-					SetErrorDetail(30060,30060,"Internal database error (sp_Fin_GetPayments)",sql,2,2);
+					SetErrorDetail("btnSearch_Click",30060,"Internal database error (sp_Fin_GetPayments)",sql,2,2);
 				else if ( miscList.EOF )
-					SetErrorDetail(30061,30061,"No transactions found. Refine your criteria and try again","",2,0);
+					SetErrorDetail("btnSearch_Click",30061,"No transactions found. Refine your criteria and try again","",2,0);
 				else
 				{
 					StringBuilder data = new StringBuilder();
@@ -87,44 +87,6 @@ namespace PCIWebFinAid
 					lblTransactions.Text = data.ToString();
 					data                 = null;
 				}
-
-//			if ( lblError.Text.Length == 0 && errNo > 0 )
-//				SetErrorDetail(99,30330,"Internal error ; please try again later","errNo=" + errNo.ToString());
-		}
-
-		private void SetErrorDetail(int errCode,int logNo,string errBrief,string errDetail,byte briefMode=2,byte detailMode=1)
-		{
-			if ( errCode == 0 )
-				return;
-
-			if ( errCode <  0 )
-			{
-				lblTransactions.Text = "";
-				lblError.Text        = "";
-				lblErrorDtl.Text     = "";
-				lblError.Visible     = false;
-				btnErrorDtl.Visible  = false;
-				return;
-			}
-
-			Tools.LogInfo("TransLookup.SetErrorDetail","(errCode="+errCode.ToString()+", logNo="+logNo.ToString()+") "+errDetail,244);
-
-			if ( briefMode == 2 ) // Append
-				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
-			else
-				lblError.Text = errBrief;
-			lblError.Visible = ( lblError.Text.Length > 0 );
-
-			if ( detailMode > 0 )
-			{
-				errDetail = errDetail.Replace(",","<br />,").Replace(";","<br />;").Trim();
-				if ( detailMode == 2 ) // Append
-					errDetail = lblErrorDtl.Text + ( lblErrorDtl.Text.Length > 0 ? "<br /><br />" : "" ) + errDetail;
-				lblErrorDtl.Text = errDetail;
-				if ( ! lblErrorDtl.Text.StartsWith("<div") )
-					lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
-			}
-			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && lblError.Visible && ! Tools.SystemIsLive();
 		}
 	}
 }

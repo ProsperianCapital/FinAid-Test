@@ -709,7 +709,8 @@ namespace PCIWebFinAid
 					    +     ",@ClientIPAddress  =" + Tools.DBString(WebTools.ClientIPAddress(Request,1))
 					    +     ",@ClientDevice     =" + Tools.DBString(WebTools.ClientBrowser(Request,hdnBrowser.Value));
 
-					if ( Tools.LiveTestOrDev() == Constants.SystemMode.Development )
+//					if ( Tools.LiveTestOrDev() == Constants.SystemMode.Development )
+					if ( Tools.SystemViaBackDoor() )
 					{ }
 
 					else if ( pageNo == 1 )
@@ -1098,11 +1099,17 @@ namespace PCIWebFinAid
 												{
 													smtp.Send(mailMsg);
 													errNo         = 0;
-													lblError.Text = "";
+			//										lblError.Text = "";
 													break;
 												}
 												catch (Exception ex3)
 												{
+													if ( Tools.SystemViaBackDoor() ) // Email fails, no problem
+													{
+														errNo         = 0;
+			//											lblError.Text = "";
+														break;
+													}
 													if ( k > 1 ) // After 2 failed attempts
 														smtp.UseDefaultCredentials = false;
 													if ( k > 2 ) // After 3 failed attempts

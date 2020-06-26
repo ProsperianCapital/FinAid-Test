@@ -14,10 +14,6 @@ namespace PCIWebFinAid
 	public abstract class BasePageBackOffice : BasePage
 	{
 		protected SessionGeneral sessionGeneral;
-		protected Literal        lblJS;
-		protected Label          lblError;
-		protected Button         btnErrorDtl;
-		protected Label          lblErrorDtl;
 		protected string         sql;
 
 		protected void SessionSave(string userCode=null,string userName=null,string accessType=null,string contractCode=null)
@@ -118,7 +114,7 @@ namespace PCIWebFinAid
 				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
 				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
 					backDoor = Session["BackDoor"].ToString();
-				if ( backDoor != "9999" )
+				if ( backDoor != "901317" )
 				{
 					StartOver(10);
 					return 10;
@@ -164,71 +160,6 @@ namespace PCIWebFinAid
 			}
 			catch
 			{ }
-		}
-
-
-		protected void SetErrorDetail(string method,int errCode,string errBrief="",string errDetail="",byte briefMode=2,byte detailMode=2,Exception ex=null,bool alwaysShow=false)
-		{
-			if ( errCode == 0 )
-				return;
-
-			if ( errCode <  0 )
-			{
-				if ( lblError != null )
-				{
-					lblError.Text    = "";
-					lblError.Visible = false;
-				}
-				if ( lblErrorDtl != null ) lblErrorDtl.Text    = "";
-				if ( btnErrorDtl != null ) btnErrorDtl.Visible = false;
-				return;
-			}
-
-			string pageName = System.IO.Path.GetFileNameWithoutExtension(Page.AppRelativeVirtualPath);
-			if ( Tools.NullToString(pageName).Length < 1 )
-				pageName = "BasePageBackOffice";
-			method      = ( Tools.NullToString(method).Length > 0 ? method+"[SetErrorDetail]." : "SetErrorDetail/" ) + errCode.ToString();
-			Tools.LogInfo(pageName+"."+method,errBrief+" ("+errDetail+")",10);
-
-			if ( ex != null )
-			{
-				Tools.LogException(pageName+"."+method,errBrief,ex);
-				if ( Tools.NullToString(errDetail).Length < 1 )
-					errDetail = ex.Message;
-			}
-
-			if ( briefMode == 2 ) // Append
-				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
-			else if ( briefMode == 23 ) // Use "lblErr2", <p></p>
-				try
-				{
-					((Label)FindControl("lblErr2")).Text = "<p>" + errBrief + "</p>";
-				}
-				catch {}
-			else if ( briefMode == 33 ) // Use "lblErr3", <br />
-				try
-				{
-					((Label)FindControl("lblErr3")).Text = "<br />" + errBrief;
-				}
-				catch {}
-			else
-				lblError.Text = errBrief;
-			lblError.Visible = ( lblError.Text.Length > 0 );
-
-			if ( lblErrorDtl == null )
-				return;
-
-			if ( errDetail.Length < 1 )
-				errDetail = errBrief;
-			errDetail = "[" + errCode.ToString() + "] " + errDetail;
-			errDetail = errDetail.Replace(",","<br />,").Replace(";","<br />;").Trim();
-			if ( detailMode == 2 ) // Append
-				errDetail = lblErrorDtl.Text + ( lblErrorDtl.Text.Length > 0 ? "<br /><br />" : "" ) + errDetail;
-			lblErrorDtl.Text = errDetail;
-			if ( ! lblErrorDtl.Text.StartsWith("<div") )
-				lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
-
-			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && ( ! Tools.SystemIsLive() || alwaysShow );
 		}
 	}
 }

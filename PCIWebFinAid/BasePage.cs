@@ -1,5 +1,6 @@
 using System;
-using System.Web;
+using System.Web.UI.WebControls;
+using PCIBusiness;
 
 // Developed by Paul Kilfoil
 // http://www.PaulKilfoil.co.za
@@ -8,13 +9,18 @@ namespace PCIWebFinAid
 {
 	public abstract class BasePage : StdDisposable
 	{
+		protected Label   lblError;
+		protected Label   lblErrorDtl;
+		protected Button  btnErrorDtl;
+	//	protected Literal lblJS;
+
 		override protected void OnInit(EventArgs e) // You must set AutoEventWireup="false" in the ASPX page
 		{
 			base.OnInit(e);
 			this.Load += new System.EventHandler(this.PageLoad);
 		}
 
-		protected void StartOver(int errNo,string pageName="")
+		protected virtual void StartOver(int errNo,string pageName="")
 		{
 			if ( pageName.Length < 6 )
 				pageName = "XLogin.aspx";
@@ -46,5 +52,70 @@ namespace PCIWebFinAid
 		//	Put this in the derived class:
 		//	protected override void PageLoad(object sender, EventArgs e)
 
+		protected void SetErrorDetail(string method,int errCode,string errBrief="",string errDetail="",byte briefMode=2,byte detailMode=2,Exception ex=null,bool alwaysShow=false,byte errPriority=0)
+		{
+			if ( errCode == 0 )
+				return;
+
+			if ( errCode <  0 )
+			{
+				if ( lblError != null )
+				{
+					lblError.Text    = "";
+					lblError.Visible = false;
+				}
+				if ( lblErrorDtl != null ) lblErrorDtl.Text    = "";
+				if ( btnErrorDtl != null ) btnErrorDtl.Visible = false;
+				return;
+			}
+
+			string pageName = System.IO.Path.GetFileNameWithoutExtension(Page.AppRelativeVirtualPath);
+			if ( Tools.NullToString(pageName).Length < 1 )
+				pageName = "BasePage";
+			method      = ( Tools.NullToString(method).Length > 0 ? method+"[SetErrorDetail]." : "SetErrorDetail/" ) + errCode.ToString();
+			if ( errPriority < 10 )
+				errPriority = 10;
+			Tools.LogInfo(pageName+"."+method,errBrief+" ("+errDetail+")",errPriority);
+
+			if ( ex != null )
+			{
+				Tools.LogException(pageName+"."+method,errBrief,ex);
+				if ( Tools.NullToString(errDetail).Length < 1 )
+					errDetail = ex.Message;
+			}
+
+			if ( briefMode == 2 ) // Append
+				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
+			else if ( briefMode == 23 ) // Use "lblErr2", <p></p>
+				try
+				{
+					((Label)FindControl("lblErr2")).Text = "<p>" + errBrief + "</p>";
+				}
+				catch {}
+			else if ( briefMode == 33 ) // Use "lblErr3", <br />
+				try
+				{
+					((Label)FindControl("lblErr3")).Text = "<br />" + errBrief;
+				}
+				catch {}
+			else
+				lblError.Text = errBrief;
+			lblError.Visible = ( lblError.Text.Length > 0 );
+
+			if ( lblErrorDtl == null )
+				return;
+
+			if ( errDetail.Length < 1 )
+				errDetail = errBrief;
+			errDetail = "[" + errCode.ToString() + "] " + errDetail;
+			errDetail = errDetail.Replace(",","<br />,").Replace(";","<br />;").Trim();
+			if ( detailMode == 2 ) // Append
+				errDetail = lblErrorDtl.Text + ( lblErrorDtl.Text.Length > 0 ? "<br /><br />" : "" ) + errDetail;
+			lblErrorDtl.Text = errDetail;
+			if ( ! lblErrorDtl.Text.StartsWith("<div") )
+				lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
+
+			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && ( ! Tools.SystemIsLive() || alwaysShow );
+		}
 	}
 }

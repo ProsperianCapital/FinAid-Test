@@ -14,17 +14,14 @@ namespace PCIWebFinAid
 	public abstract class BasePageLogin : BasePage
 	{
 		protected SessionGeneral sessionGeneral;
-		protected Literal        lblJS;
 		protected HiddenField    hdnTabNo;
-		protected Label          lblError;
 		protected int            tabNo;
 		protected int            maxTab;
 		protected string         sql;
 
-//		IncludeErrorDtl.htm
-//		protected Panel          pnlErrorDtl;
-		protected Button         btnErrorDtl;
-		protected Label          lblErrorDtl;
+//		protected Button         btnErrorDtl;
+//		protected Label          lblErrorDtl;
+//		protected Label          lblError;
 
 		protected void SessionSave(string userCode=null,string userName=null,string accessType=null,string contractCode=null)
 		{
@@ -126,7 +123,7 @@ namespace PCIWebFinAid
 				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
 				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
 					backDoor = Session["BackDoor"].ToString();
-				if ( backDoor != "9999" )
+				if ( backDoor != "901317" )
 				{
 					StartOver(10);
 					return 10;
@@ -156,6 +153,13 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
+		protected override void StartOver(int errNo,string pageName="")
+		{
+			if ( pageName.Length < 6 )
+				pageName = "Login.aspx";
+			Response.Redirect ( pageName + ( errNo > 0 ? "?ErrNo=" + errNo.ToString() : "" ) , true );
+		}
+
 		protected byte PageCheck()
 		{
 			if ( maxTab > 0 )
@@ -163,7 +167,16 @@ namespace PCIWebFinAid
 				tabNo = PCIBusiness.Tools.StringToInt(hdnTabNo.Value);
 				if ( tabNo < 1 || tabNo > maxTab )
 					tabNo = 1;
-				lblJS.Text = WebTools.JavaScriptSource("SetTab("+tabNo.ToString()+","+maxTab.ToString()+")");
+				try
+				{
+					Footer foot = (Footer)FindControl("ascxFooter");
+					foot.JSText = WebTools.JavaScriptSource("SetTab("+tabNo.ToString()+","+maxTab.ToString()+")");
+				}
+				catch
+				{
+					if ( FindControl("lblJS") != null )
+						((Literal)FindControl("lblJS")).Text = WebTools.JavaScriptSource("SetTab("+tabNo.ToString()+","+maxTab.ToString()+")");
+				}
 			}
 			return 0;
 		}
@@ -245,70 +258,6 @@ namespace PCIWebFinAid
 				((CheckBox)ctl).Text  = fieldValue;
 			else
 				SetErrorDetail("ReplaceControlText", 10030, "Unrecognized HTML control (" + ctlID.ToString() + "/" + fieldValue.ToString() + ")",ctlID.ToString() + ", control type="+ctl.GetType().ToString());
-		}
-
-		protected void SetErrorDetail(string method,int errCode,string errBrief="",string errDetail="",byte briefMode=2,byte detailMode=2,Exception ex=null,bool alwaysShow=false)
-		{
-			if ( errCode == 0 )
-				return;
-
-			if ( errCode <  0 )
-			{
-				if ( lblError != null )
-				{
-					lblError.Text    = "";
-					lblError.Visible = false;
-				}
-				if ( lblErrorDtl != null ) lblErrorDtl.Text    = "";
-				if ( btnErrorDtl != null ) btnErrorDtl.Visible = false;
-				return;
-			}
-
-			string pageName = System.IO.Path.GetFileNameWithoutExtension(Page.AppRelativeVirtualPath);
-			if ( Tools.NullToString(pageName).Length < 1 )
-				pageName = "BasePageLogin";
-			method      = ( Tools.NullToString(method).Length > 0 ? method+"[SetErrorDetail]." : "SetErrorDetail/" ) + errCode.ToString();
-			Tools.LogInfo(pageName+"."+method,errBrief+" ("+errDetail+")",10);
-
-			if ( ex != null )
-			{
-				Tools.LogException(pageName+"."+method,errBrief,ex);
-				if ( Tools.NullToString(errDetail).Length < 1 )
-					errDetail = ex.Message;
-			}
-
-			if ( briefMode == 2 ) // Append
-				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
-			else if ( briefMode == 23 ) // Use "lblErr2", <p></p>
-				try
-				{
-					((Label)FindControl("lblErr2")).Text = "<p>" + errBrief + "</p>";
-				}
-				catch {}
-			else if ( briefMode == 33 ) // Use "lblErr3", <br />
-				try
-				{
-					((Label)FindControl("lblErr3")).Text = "<br />" + errBrief;
-				}
-				catch {}
-			else
-				lblError.Text = errBrief;
-			lblError.Visible = ( lblError.Text.Length > 0 );
-
-			if ( lblErrorDtl == null )
-				return;
-
-			if ( errDetail.Length < 1 )
-				errDetail = errBrief;
-			errDetail = "[" + errCode.ToString() + "] " + errDetail;
-			errDetail = errDetail.Replace(",","<br />,").Replace(";","<br />;").Trim();
-			if ( detailMode == 2 ) // Append
-				errDetail = lblErrorDtl.Text + ( lblErrorDtl.Text.Length > 0 ? "<br /><br />" : "" ) + errDetail;
-			lblErrorDtl.Text = errDetail;
-			if ( ! lblErrorDtl.Text.StartsWith("<div") )
-				lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
-
-			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && ( ! Tools.SystemIsLive() || alwaysShow );
 		}
 	}
 }

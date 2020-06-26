@@ -75,45 +75,5 @@ namespace PCIWebFinAid
 				}
 			}
 		}
-
-/*
-Moved to BasePageLogin
-
-		private void SetErrorDetail(int errCode,string errBrief="",string errDetail="",byte briefMode=2,byte detailMode=2)
-		{
-			if ( errCode == 0 )
-				return;
-
-			if ( errCode <  0 )
-			{
-				lblError.Text    = "";
-				lblErrorDtl.Text = "";
-				lblError.Visible = false;
-				btnError.Visible = false;
-				return;
-			}
-			Tools.LogInfo("Login.SetErrorDetail","(errCode="+errCode.ToString()+") "+errDetail,244);
-
-			if ( briefMode == 2 ) // Append
-				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
-			else
-				lblError.Text = errBrief;
-
-			if ( errDetail.Length < 1 )
-				errDetail = errBrief;
-			errDetail = "[" + errCode.ToString() + "] " + errDetail;
-
-			errDetail = errDetail.Replace(",","<br />,").Replace(";","<br />;").Trim();
-			if ( detailMode == 2 ) // Append
-				errDetail = lblErrorDtl.Text + ( lblErrorDtl.Text.Length > 0 ? "<br /><br />" : "" ) + errDetail;
-			lblErrorDtl.Text = errDetail;
-			if ( ! lblErrorDtl.Text.StartsWith("<div") )
-				lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
-
-			lblError.Visible = ( lblError.Text.Length    > 0 );
-			btnError.Visible = ( lblErrorDtl.Text.Length > 0 ) && lblError.Visible && ! Tools.SystemIsLive();
-		}
-*/
-
 	}
 }

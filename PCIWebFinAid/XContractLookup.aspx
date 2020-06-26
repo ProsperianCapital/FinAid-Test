@@ -57,7 +57,7 @@ Contract Code<br />
 	<hr />
 	<asp:Button runat="server" ID="btnSend" Text="Send"  OnClick="btnSend_Click" />&nbsp;
 	<input type="button" value="Cancel" onclick="JavaScript:ShowElt('pnlMail',false)" />
-	<asp:Label runat="server" ID="lblError2" CssClass="Error"></asp:Label>
+	<asp:Label runat="server" ID="lblErr2" CssClass="Error"></asp:Label>
 </div>
 
 <asp:PlaceHolder runat="server" ID="pnlView1">

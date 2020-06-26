@@ -72,8 +72,9 @@ namespace PCIWebFinAid
 
 			if ( ! Tools.CheckEMail(txtTo.Text,2) || ! Tools.CheckEMail(txtCC.Text,3) || ! Tools.CheckEMail(txtBCC.Text,3) )
 			{
-				lblError2.Text = "Invalid email address(es)";
-				lblJS.Text     = WebTools.JavaScriptSource("ShowElt('pnlMail',true)");
+				lblErr2.Text       = "Invalid email address(es)";
+//				lblJS.Text         = WebTools.JavaScriptSource("ShowElt('pnlMail',true)");
+				ascxXFooter.JSText = WebTools.JavaScriptSource("ShowElt('pnlMail',true)");
 				return;
 			}
 

@@ -643,7 +643,7 @@ Disabled
 
 <asp:Button runat="server" ID="btnBack1" UseSubmitBehavior="false" OnClientClick="JavaScript:if (!NextPage(-1,this)) return false" Text="BACK" />
 <asp:Button runat="server" ID="btnNext"  UseSubmitBehavior="false" OnClientClick="JavaScript:if (!NextPage( 1,this)) return false" OnClick="btnNext_Click" />
-<asp:Button runat="server" ID="btnAgree" UseSubmitBehavior="false" OnClientClick="JavaScript:if (!NextPage( 1,this)) return false" OnClick="btnNext_Click" />
+<asp:Button runat="server" ID="btnAgree" UseSubmitBehavior="false" OnClientClick="JavaScript:if (!GetTokenTokenEx()) return false;;if (!NextPage( 1,this)) return false" OnClick="btnNext_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;
 <asp:Button runat="server" ID="btnBack2" UseSubmitBehavior="false" OnClientClick="JavaScript:if (!NextPage(-1,this)) return false" Width="200px" />
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -686,7 +686,36 @@ SetEltValue('hdnBrowser',navigator.userAgent.toString());
 <asp:HiddenField runat="server" ID="txTokenScheme" />
 <asp:HiddenField runat="server" ID="txConcatenatedString" />
 
+Tx Token : <input type="text" id="txToken" />
+
 <script type="text/javascript">
+var txFrame;
+var txCard;
+var txCVV;
+var txEncrypt;
+
+function GetTokenTokenEx()
+{
+	txEncrypt = '';
+	if ( txFrame != null )
+		try
+		{
+			txFrame.validate();
+			if ( txCard.isValid ) // && txCVV.isValid )
+			{
+				txFrame.tokenize();
+				if ( txEncrypt.length > 0 )
+					return true;
+			}
+			else
+				alert(txCard.isValid);
+		}
+		catch (x)
+		{
+			alert(x.message);
+		}
+	return false;
+}
 function GetCardNoTokenEx()
 {
 //	alert('GetCardNoTokenEx');
@@ -714,16 +743,16 @@ function GetCardNoTokenEx()
 
 	try
 	{
-		var iframe = new TokenEx.Iframe("txIFrame", txConfig);
-		iframe.on("load", function() { alert('load'); util.log("Iframe Loaded") });
-		iframe.on("focus", function () { util.log("Iframe focus") });
-		iframe.on("blur", function () { util.log("Iframe blur") });
-		iframe.on("change", function () { alert('change'); util.log("Iframe Change") });
-		iframe.on("validate", function (data) { util.log("Iframe validate:" + JSON.stringify(data)) });
-		iframe.on("cardTypeChange", function (data) { util.log("Iframe cardTypeChange:" + JSON.stringify(data)) });
-		iframe.on("tokenize", function (data) { util.log("Iframe Tokenize:" + JSON.stringify(data)); util.postBack(data); });
-		iframe.on("error", function (data) { util.log("Iframe error:" + JSON.stringify(data)); }); //major error occured
-		iframe.load();
+		txFrame = new TokenEx.Iframe("txIFrame", txConfig);
+//		txFrame.on("load", function() { txCard = null; });
+//		txFrame.on("focus", function () { util.log("Iframe focus") });
+//		txFrame.on("blur", function () { util.log("Iframe blur") });
+//		txFrame.on("change", function () { txCard = null; });
+		txFrame.on("validate", function (data) { txCard = data; });
+//		txFrame.on("cardTypeChange", function (data) { util.log("Iframe cardTypeChange:" + JSON.stringify(data)); });
+		txFrame.on("tokenize", function (data) { alert('tokenize/1'); txEncrypt = data.token; SetEltValue('txToken',txEncrypt); alert(txEncrypt); });
+		txFrame.on("error", function (data) { util.log("Iframe error:" + JSON.stringify(data)); }); //major error occured
+		txFrame.load();
 	}
 	catch (ex)
 	{
