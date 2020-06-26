@@ -13,14 +13,14 @@ namespace PCIWebFinAid
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{
-			if ( SessionCheck(19) != 0 )
+			if ( SessionCheck(99) != 0 )
 				return;
 			if ( PageCheck()      != 0 )
 				return;
 			if ( Page.IsPostBack )
 				return;
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode) != 0 )
-				StartOver(10888);
+				StartOver(77088);
 			else
 			{
 				SetErrorDetail("",-888);
@@ -35,6 +35,8 @@ namespace PCIWebFinAid
 			Label   tStatus;
 			Button  tButton;
 			string  tickerName;
+
+//	Set them all to STOPPED
 
 			for ( int k = 1; k < 100; k++ )
 			{
@@ -54,47 +56,44 @@ namespace PCIWebFinAid
 				}
 			}
 
-			try
-			{
-				using (MiscList tickStatus = new MiscList())
+//	Now see if one is RUNNING
+
+			using (TickerState tickerState = new TickerState())
+				try
 				{
-					sql = "exec sp_TickerState";
+					int ret                  = 0;
+					tickerState.UserCode     = sessionGeneral.UserCode;
+					tickerState.Origin       = "BackOffice.XTradingGateway.aspx";
+					tickerState.DBConnection = "DBConnTrade";
+	
 					if ( chgStatus > 0 )
-						sql = sql + " @TickerStatus='" + chgStatus.ToString() + "',";
-					if ( chgCode > 0 )
-						sql = sql + " @TickerCode='" + chgCode.ToString().PadLeft(3,'0') + "',";
-					if ( sql.EndsWith(",") )
-						sql = sql + " @UserCode=" + Tools.DBString(sessionGeneral.UserCode)
-						          + ",@ActionOrigin='BackOffice.XTradingGateway.aspx'";
-
-//	Use a different DB connection, called "DBConnTrade"
-
-					if ( tickStatus.ExecQuery(sql,0,"",true,false,"DBConnTrade") != 0 )
-						SetErrorDetail("LoadTickers",77010,"Unable to load ticker status (SQL error)",sql);
-					else if ( tickStatus.EOF )
-						SetErrorDetail("LoadTickers",77020,"Unable to load ticker status (no data returned)",sql);
-					else
 					{
-						int tickerCode   = Tools.StringToInt(tickStatus.GetColumn("TickerCode"));
-						int tickerStatus = Tools.StringToInt(tickStatus.GetColumn("TickerStatus"));
-						if ( tickerCode > 0 && tickerStatus == (int)Constants.TickerAction.Run )
-						{
-							tImg          = (Image)  FindControl("img"+tickerCode.ToString());
-							if ( tImg    != null )   tImg.ImageUrl = "Images/LightG.png";
-							tStatus       = (Label)  FindControl("lblStatus"+tickerCode.ToString());
-							if ( tStatus != null )   tStatus.Text = "Running&nbsp;";
-							tButton       = (Button) FindControl("btnStart"+tickerCode.ToString());
-							if ( tButton != null )   tButton.Enabled = false;
-							tButton       = (Button) FindControl("btnStop"+tickerCode.ToString());
-							if ( tButton != null )   tButton.Enabled = true;
-						}
+						tickerState.TickerStatus = chgStatus.ToString();
+						tickerState.TickerCode   = chgCode.ToString().PadLeft(3,'0');
+						ret = tickerState.Update();
+					}
+					else
+						ret = tickerState.Enquire();
+
+					if ( ret != 0 )
+						SetErrorDetail("LoadTickers", 77010, "Unable to load ticker status", tickerState.SQL);
+					else if ( tickerState.TickerCode.Length > 0 && Tools.StringToInt(tickerState.TickerStatus) == (int)Constants.TickerAction.Run )
+					{
+						int tCode    = Tools.StringToInt(tickerState.TickerCode);
+						tImg         = (Image)FindControl("img"       + tCode.ToString());
+						if (tImg    != null) tImg.ImageUrl   = "Images/LightG.png";
+						tStatus      = (Label)FindControl("lblStatus" + tCode.ToString());
+						if (tStatus != null) tStatus.Text    = "Running&nbsp;";
+						tButton      = (Button)FindControl("btnStart" + tCode.ToString());
+						if (tButton != null) tButton.Enabled = false;
+						tButton      = (Button)FindControl("btnStop"  + tCode.ToString());
+						if (tButton != null) tButton.Enabled = true;
 					}
 				}
-			}
-			catch (Exception ex)
-			{
-				SetErrorDetail("LoadTickers",77030,"Unable to load ticker status (internal error)",sql,2,2,ex);
-			}
+				catch (Exception ex)
+				{
+					SetErrorDetail("LoadTickers",77030,"Unable to load ticker status (internal error)",sql,2,2,ex);
+				}
 		}
 
 		protected void btnRefresh_Click(Object sender, EventArgs e)
