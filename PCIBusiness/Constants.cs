@@ -55,10 +55,15 @@ namespace PCIBusiness
 			Ecentric   = 19,
 			eNETS      = 20,
 			Peach      = 21
-
 //	Not implemented yet
 //			DinersClub = 22
 //			PayFast    = 23
+		}
+
+		public enum TradingProvider : int
+		{
+			InteractiveBrokers = 1,
+			FinnHub            = 2
 		}
 
 		public enum CreditCardType : byte
@@ -136,12 +141,29 @@ namespace PCIBusiness
 			IBStockPrices          =  1,
 			IBExchangeRates        =  2,
 			IBPortfolio            =  3,
-			IBOrders               =  4,
+			IBOrders               =  4, // Not implemented yet
 			IBExchangeCandles      =  5,
 			FinnHubStockPrices     = 21,
 			FinnHubStockHistory    = 22,
 			FinnHubExchangeRates   = 23,
-			FinnHubExchangeCandles = 24 // Not implemented yet
+			FinnHubExchangeCandles = 24  // Not implemented yet
+		}
+
+		public enum TickerStatus : byte
+		{
+			Stopped  = 11,
+			Stopping = 21,
+			Starting = 31,
+			Running  = 41,
+			Disabled = 88,
+			Unused   = 99
+		}
+
+		public enum TickerAction : byte
+		{
+			ShutDown = 1,
+			Stop     = 2,
+			Run      = 3
 		}
 
 		public enum DataFormat : int

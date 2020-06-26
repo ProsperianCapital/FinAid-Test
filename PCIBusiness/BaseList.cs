@@ -146,13 +146,13 @@ namespace PCIBusiness
 			Tools.CloseDB(ref dbConn);
 			return objList.Count;
 		}
-		protected int ExecuteSQL(object[][] parms,bool alwaysClose=false,bool noRowsIsError=true)
+		protected int ExecuteSQL(object[][] parms,bool alwaysClose=false,bool noRowsIsError=true,string connectionName="")
 		{
 			int ret = 0;
 
 //			Tools.LogInfo("BaseList.ExecuteSQL",sql,199);
 
-			if ( ! Tools.OpenDB(ref dbConn) )
+			if ( ! Tools.OpenDB(ref dbConn,connectionName) )
 				ret = 1;
 			else if ( ! dbConn.Execute(sql,true,parms) )
 				ret = 2;

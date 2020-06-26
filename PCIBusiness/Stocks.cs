@@ -17,18 +17,10 @@
 			return null;
 		}
 
-		public int LoadAll(string secType="")
+		public int LoadAll(Constants.TradingProvider tradeProvider,string secType="")
 		{
-//			if ( secType.ToUpper() == "CASH" )
-//				sql = "select 1 as StockId,'USD' as Symbol,'FH' as BrokerExchangeCode,'CASH' as SecType,'' as CUR"
-//				    +     " union select 2,'EUR','FH','CASH',''"
-//				    +     " union select 3,'ZAR','FH','CASH',''";
-//			else
-//				sql = "exec sp_Get_StockListB"
-//				    + ( secType.Length > 0 ? " @SecType = " + Tools.DBString(secType) : "" );
-
 			if ( secType.ToUpper() == "STK-HISTORY" )
-				sql = "exec sp_Get_StockCandles";
+				sql = "exec sp_Get_StockCandles @ProviderCode=" + Tools.DBString(Tools.TradingProviderCode(tradeProvider));
 			else
 				sql = "exec sp_Get_StockListB"
 				    + ( secType.Length > 0 ? " @SecType = " + Tools.DBString(secType) : "" );

@@ -4,51 +4,55 @@ namespace PCIBusiness
 {
 	public class Stock : BaseData
 	{
-		private int     stockId;
-		private string  symbol;
-		private string  securityType;
-		private string  currencyCode;
-		private string  exchangeCode;
-		private string  primaryExchange;
-		private string  resolution;
-		private long    fromDate;
-		private long    toDate;
+		private int      stockId;
+		private string   symbol;
+		private string   securityType;
+		private string   currencyCode;
+		private string   exchangeCode;
+		private string   primaryExchange;
+		private string   resolution;
+		private long     fromDate;
+		private long     toDate;
+//		private int      fromDate;
+//		private int      toDate;
+//		private DateTime fromDate;
+//		private DateTime toDate;
 
-		private double  price;
-		private int     quantity;
-		private int     tickType;
+		private double   price;
+		private int      quantity;
+		private int      tickType;
 
-		public  int     StockId
+		public  int      StockId
 		{
-			get { return stockId; }
+			get { return  stockId; }
 			set { stockId = value; }
 		}
-		public  int     TickType
+		public  int      TickType
 		{
-			get { return tickType; }
+			get { return  tickType; }
 			set { tickType = value; }
 		}
-		public  double  Price
+		public  double   Price
 		{
-			get { return price; }
+			get { return  price; }
 			set { price = value; }
 		}
-		public  int     Quantity
+		public  int      Quantity
 		{
-			get { return quantity; }
+			get { return  quantity; }
 			set { quantity = value; }
 		}
-		public  string  Symbol
+		public  string   Symbol
 		{
-			get { return Tools.NullToString(symbol); }
+			get { return  Tools.NullToString(symbol); }
 			set { symbol = value.Trim(); }
 		}
-		public  string  CurrencyCode
+		public  string   CurrencyCode
 		{
-			get { return Tools.NullToString(currencyCode).ToUpper(); }
+			get { return  Tools.NullToString(currencyCode).ToUpper(); }
 			set { currencyCode = value.Trim(); }
 		}
-		public  string  SecurityType
+		public  string   SecurityType
 		{
 			get
 			{
@@ -77,14 +81,32 @@ namespace PCIBusiness
 			get { return Tools.NullToString(resolution); }
 		}
 
+//		public  int     FromDateUNIX
+//		{
+//			get
+//			{
+//				if ( fromDate <= System.Convert.ToDateTime("1970/01/01 00:00:00") )
+//					return 0;
+//		}
+
 		public  long    FromDate
 		{
-			get { return fromDate; }
+			get
+			{
+				if ( fromDate < 1 )
+					return 0;
+				return    fromDate;
+			}
 		}
 
 		public  long    ToDate
 		{
-			get { return toDate; }
+			get
+			{
+				if ( toDate < 1 )
+					return 0;
+				return    toDate;
+			}
 		}
 
 		public int UpdatePrice()
@@ -130,15 +152,22 @@ namespace PCIBusiness
 		public override void LoadData(DBConn dbConn)
 		{
 			dbConn.SourceInfo = "Stock.LoadData";
-			stockId           = dbConn.ColLong  ("StockId");
+			stockId           = dbConn.ColLong  ("StockId",0,0);
 			symbol            = dbConn.ColString("Symbol");
-			exchangeCode      = dbConn.ColString("BrokerExchangeCode",0);
-			primaryExchange   = dbConn.ColString("PrimaryExchange",0);
-			securityType      = dbConn.ColString("SecType",0);
-			currencyCode      = dbConn.ColString("CUR",0);
-			resolution        = dbConn.ColString("Resolution",0);
-			fromDate          = dbConn.ColBig   ("FromDate",0);
-			toDate            = dbConn.ColBig   ("ToDate",0);
+			exchangeCode      = dbConn.ColString("BrokerExchangeCode",0,0);
+			primaryExchange   = dbConn.ColString("PrimaryExchange",0,0);
+			securityType      = dbConn.ColString("SecType",0,0);
+			currencyCode      = dbConn.ColString("CUR",0,0);
+			resolution        = dbConn.ColString("Resolution",0,0);
+//	UNIX timestamps, BigInt (64-bit)
+			fromDate          = dbConn.ColBig   ("FromDate",0,0);
+			toDate            = dbConn.ColBig   ("ToDate",0,0);
+//	UNIX timestamps, Int (32-bit)
+//			fromDate          = dbConn.ColLong  ("FromDate",0,0);
+//			toDate            = dbConn.ColLong  ("ToDate",0,0);
+//	Date format
+//			fromDate          = dbConn.ColDate  ("FromDate",0,0);
+//			toDate            = dbConn.ColDate  ("ToDate",0,0);
 			price             = 0;
 			quantity          = 0;
 			tickType          = 0;

@@ -3,7 +3,6 @@ using System.IO;
 using System.Xml;
 using System.Globalization;
 using System.Text;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 
 namespace PCIBusiness
@@ -30,12 +29,6 @@ namespace PCIBusiness
 //		12  HH:mm:ss                  Hard-code to 23:59:59
 
 		static byte logSeverity;
-
-		public static bool SystemIsLive()
-		{
-			string mode = ConfigValue("SystemMode").ToUpper();
-			return ( mode.Length >= 4 && ( mode.Contains("PROD") || mode.Contains("LIVE") ) );
-		}
 
 		public static string DecimalToString(decimal theValue,byte decimalPlaces=2)
 		{
@@ -231,11 +224,11 @@ namespace PCIBusiness
 			return ( quotes ? "'" : "" ) + (theDate + " " + theTime).Trim() + ( quotes ? "'" : "" );
 		}
 
-		public static bool OpenDB(ref DBConn dbConn)
+		public static bool OpenDB(ref DBConn dbConn,string connectionName="")
 		{
 			if ( dbConn == null )
 				dbConn = new DBConn();
-			return dbConn.Open();
+			return dbConn.Open(connectionName);
 		}
 
 		public static void CloseDB(ref DBConn dbConn)
@@ -788,9 +781,8 @@ namespace PCIBusiness
 		//	Calling routines must supply a severity between 0-255 (default 10)
 		//	If severity == 255 then do NOT log for LIVE
 
-			if ( severity == 255 )
-				if ( LiveTestOrDev() == Constants.SystemMode.Live )
-					return;
+			if ( severity == 255 && SystemIsLive() )
+				return;
 
 			if ( logSeverity < 1 )
 			{
@@ -1100,7 +1092,20 @@ namespace PCIBusiness
 			return ret + str;
 		}
 
-		public static Constants.SystemMode LiveTestOrDev()
+		public static bool SystemViaBackDoor()
+		{
+			return ( Tools.ConfigValue("Access/BackDoor") == "901317" );
+		}
+
+		public static bool SystemIsLive()
+		{
+			return SystemLiveTestOrDev() == Constants.SystemMode.Live;
+
+//			string mode = ConfigValue("SystemMode").ToUpper();
+//			return ( mode.Length >= 4 && ( mode.Contains("PROD") || mode.Contains("LIVE") ) );
+		}
+
+		public static Constants.SystemMode SystemLiveTestOrDev()
 		{
 			string mode = Tools.ConfigValue("SystemMode").ToUpper();
 			if ( mode.StartsWith("LIVE") || mode.StartsWith("PROD") )
@@ -1111,6 +1116,11 @@ namespace PCIBusiness
 		}
 
 		public static string BureauCode(Constants.PaymentProvider providerCode)
+		{
+			return ((short)providerCode).ToString().PadLeft(3,'0');
+		}
+
+		public static string TradingProviderCode(Constants.TradingProvider providerCode)
 		{
 			return ((short)providerCode).ToString().PadLeft(3,'0');
 		}
@@ -1268,13 +1278,14 @@ namespace PCIBusiness
 
 		public static string TickerName(int tickerType)
 		{
-			if ( tickerType == (int)Constants.TickerType.IBStockPrices        ) return "IB/Stock Prices";
-			if ( tickerType == (int)Constants.TickerType.IBExchangeRates      ) return "IB/Exchange Rates";
-			if ( tickerType == (int)Constants.TickerType.IBPortfolio          ) return "IB/Portfolio";
-			if ( tickerType == (int)Constants.TickerType.IBOrders             ) return "IB/Orders";
-			if ( tickerType == (int)Constants.TickerType.FinnHubStockPrices   ) return "FH/Stock Prices";
-			if ( tickerType == (int)Constants.TickerType.FinnHubStockHistory  ) return "FH/Stock History";
-			if ( tickerType == (int)Constants.TickerType.FinnHubExchangeRates ) return "FH/Exchange Rates";
+			if ( tickerType == (int)Constants.TickerType.IBStockPrices          ) return "IB/Stock Prices";
+			if ( tickerType == (int)Constants.TickerType.IBExchangeRates        ) return "IB/Exchange Rates";
+			if ( tickerType == (int)Constants.TickerType.IBPortfolio            ) return "IB/Portfolio";
+//			if ( tickerType == (int)Constants.TickerType.IBOrders               ) return "IB/Orders";
+			if ( tickerType == (int)Constants.TickerType.FinnHubStockPrices     ) return "FH/Stock Prices";
+			if ( tickerType == (int)Constants.TickerType.FinnHubStockHistory    ) return "FH/Stock History";
+			if ( tickerType == (int)Constants.TickerType.FinnHubExchangeRates   ) return "FH/Exchange Rates";
+//			if ( tickerType == (int)Constants.TickerType.FinnHubExchangeCandles ) return "FH/Exchange Candles";
 			return "";
 		}
 

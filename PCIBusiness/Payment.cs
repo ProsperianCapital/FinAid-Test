@@ -628,9 +628,9 @@ namespace PCIBusiness
 		//	Payment Provider
 			providerKey      = dbConn.ColString ("Safekey");
 			providerURL      = dbConn.ColString ("url");
-			providerAccount  = dbConn.ColString ("MerchantAccount",0);
-			providerUserID   = dbConn.ColString ("MerchantUserId",0);
-			providerPassword = dbConn.ColString ("MerchantUserPassword",0);
+			providerAccount  = dbConn.ColString ("MerchantAccount",0,0);
+			providerUserID   = dbConn.ColString ("MerchantUserId",0,0);
+			providerPassword = dbConn.ColString ("MerchantUserPassword",0,0);
 
 		//	Customer
 			if ( dbConn.ColStatus("lastName") == Constants.DBColumnStatus.ColumnOK )
@@ -649,22 +649,22 @@ namespace PCIBusiness
 			}
 
 		//	Payment
-			merchantReference         = dbConn.ColString("merchantReference",0);
-			merchantReferenceOriginal = dbConn.ColString("merchantReferenceOriginal",0); // Only really for Ikajo, don't log error
-			paymentAmount             = dbConn.ColLong  ("amountInCents",0);
-			currencyCode              = dbConn.ColString("currencyCode",0);
-			paymentDescription        = dbConn.ColString("description",0);
+			merchantReference         = dbConn.ColString("merchantReference",0,0);
+			merchantReferenceOriginal = dbConn.ColString("merchantReferenceOriginal",0,0); // Only really for Ikajo, don't log error
+			paymentAmount             = dbConn.ColLong  ("amountInCents",0,0);
+			currencyCode              = dbConn.ColString("currencyCode",0,0);
+			paymentDescription        = dbConn.ColString("description",0,0);
 
 		//	Card/token/transaction details, not always present, don't log errors
-			ccName        = dbConn.ColString("nameOnCard",0);
-			ccNumber      = dbConn.ColString("cardNumber",0);
-			ccExpiryMonth = dbConn.ColString("cardExpiryMonth",0);
-			ccExpiryYear  = dbConn.ColString("cardExpiryYear",0);
-			ccType        = dbConn.ColString("cardType",0);
-			ccCVV         = dbConn.ColString("cvv",0);
-			ccToken       = dbConn.ColString("token",0);
-			ccPIN         = dbConn.ColString("PIN",0);
-			transactionID = dbConn.ColString("transactionId",0);
+			ccName        = dbConn.ColString("nameOnCard",0,0);
+			ccNumber      = dbConn.ColString("cardNumber",0,0);
+			ccExpiryMonth = dbConn.ColString("cardExpiryMonth",0,0);
+			ccExpiryYear  = dbConn.ColString("cardExpiryYear",0,0);
+			ccType        = dbConn.ColString("cardType",0,0);
+			ccCVV         = dbConn.ColString("cvv",0,0);
+			ccToken       = dbConn.ColString("token",0,0);
+			ccPIN         = dbConn.ColString("PIN",0,0);
+			transactionID = dbConn.ColString("transactionId",0,0);
 		}
 
 		public override void CleanUp()
