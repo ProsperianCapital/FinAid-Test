@@ -122,6 +122,9 @@
     <Content Include="CSS\raleway-bold-webfont.svg" />
     <Content Include="CSS\raleway-semibold-webfont.svg" />
     <Content Include="CSS\raleway-medium-webfont.svg" />
+    <Content Include="Images\LightG.png" />
+    <Content Include="Images\LightR.png" />
+    <Content Include="Images\LightY.png" />
     <Content Include="Images\FinAid.png" />
     <Content Include="Images\Phone.png" />
     <Content Include="Images\VeriSign.png" />
