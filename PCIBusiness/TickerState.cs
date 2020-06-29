@@ -9,7 +9,7 @@ namespace PCIBusiness
 		private string    tickerStatus;
 		private string    userCode;
 		private string    origin;
-		private DateTime  dateUpdated;
+//		private DateTime  dateUpdated;
 
 		public  string    DBConnection
 		{
@@ -42,17 +42,20 @@ namespace PCIBusiness
 			try
 			{
 				Tools.LogInfo("TickerState.DoSQL/1",sql,222);
-				int ret = ExecuteSQL(null,1,false,DBConnection);
+				int  ret = ExecuteSQL(null,1,false,DBConnection);
 				if ( ret == 0 )
+				{
+					Tools.LogInfo("TickerState.DoSQL/2","Success, data returned",222);
 					LoadData(dbConn);
+				}
 				else
-					Tools.LogInfo("TickerState.DoSQL/2","Error, ret="+ret.ToString(),222);
+					Tools.LogInfo("TickerState.DoSQL/3","Error, ret="+ret.ToString() + " (" + ReturnMessage + ")",222);
 				return ret;
 			}
 			catch (Exception ex)
 			{
-				Tools.LogInfo     ("TickerState.DoSQL/3",ex.Message,222);
-				Tools.LogException("TickerState.DoSQL/4",sql,ex);
+				Tools.LogInfo     ("TickerState.DoSQL/8",ex.Message,222);
+				Tools.LogException("TickerState.DoSQL/9",sql,ex);
 			}
 			finally
 			{
@@ -84,8 +87,12 @@ namespace PCIBusiness
 			dbConn.SourceInfo = "TickerState.LoadData";
 			tickerCode        = dbConn.ColString("TickerCode");
 			tickerStatus      = dbConn.ColString("TickerStatus");
-			userCode          = dbConn.ColString("UserCode");
-			origin            = dbConn.ColString("ActionOrigin");
+//	May not be returned, so don't log errors
+			userCode          = dbConn.ColString("UserCode",0,0);
+			origin            = dbConn.ColString("ActionOrigin",0,0);
+//			dateUpdated       = dbConn.ColDate  ("ActionDate",0,0);
+
+			Tools.LogInfo("TickerState.LoadData","tickerCode="+tickerCode+", tickerStatus="+tickerStatus,222);
 		}
 	}
 }
