@@ -102,7 +102,7 @@ namespace PCIBusiness
 			else if ( execMode == 2 && dbConn.ReturnValue < 0 )
 			{
 				returnCode    = 4;
-				returnMessage = "[BaseData.ExecuteSQL/4 SQL successfully executed, but the return code was invalid/missing";
+				returnMessage = "[BaseData.ExecuteSQL/4] SQL successfully executed, but the return code was invalid/missing";
 			}
 			return returnCode;
 		}

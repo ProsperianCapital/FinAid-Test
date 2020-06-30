@@ -87,6 +87,7 @@
     <Compile Include="Stock.cs" />
     <Compile Include="StockHistory.cs" />
     <Compile Include="Stocks.cs" />
+    <Compile Include="StockTick.cs" />
     <Compile Include="SystemDetails.cs" />
     <Compile Include="TickerState.cs" />
     <Compile Include="Tools.cs" />

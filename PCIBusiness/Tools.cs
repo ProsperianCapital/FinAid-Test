@@ -1285,7 +1285,7 @@ namespace PCIBusiness
 			if ( tickerType == (int)Constants.TickerType.FinnHubStockPrices     ) return "FH/Stock Prices";
 			if ( tickerType == (int)Constants.TickerType.FinnHubStockHistory    ) return "FH/Stock History";
 			if ( tickerType == (int)Constants.TickerType.FinnHubExchangeRates   ) return "FH/Exchange Rates";
-//			if ( tickerType == (int)Constants.TickerType.FinnHubExchangeCandles ) return "FH/Exchange Candles";
+			if ( tickerType == (int)Constants.TickerType.FinnHubStockTicks      ) return "FH/Stock Tick Data";
 			return "";
 		}
 

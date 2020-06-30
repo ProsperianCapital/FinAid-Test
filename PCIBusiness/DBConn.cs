@@ -83,7 +83,7 @@ namespace PCIBusiness
 				{
 				//	ConnectionStringSettings db = ConfigurationManager.ConnectionStrings["DBConn"];
 					ConnectionStringSettings db = ConfigurationManager.ConnectionStrings[connectionName];
-					connString = db.ConnectionString;
+					connString                  = db.ConnectionString;
 					if ( connString == null || connString.Length < 5 )
 						return false;
 					dbConn = new SqlConnection(connString);
@@ -202,7 +202,7 @@ namespace PCIBusiness
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException ( ModuleName("DBConn.Execute"), sql, ex );
+				Tools.LogException ( ModuleName("DBConn.Execute"), DatabaseDetails + ". SQL = " + sql, ex );
 				return false;
 			}
 			return true;
@@ -228,7 +228,7 @@ namespace PCIBusiness
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("DBConn.NextResultSet","",ex);
+				Tools.LogException(ModuleName("DBConn.NextResultSet"),DatabaseDetails,ex);
 			}
 			return false;
 		}
@@ -552,6 +552,33 @@ namespace PCIBusiness
 			return -8;
 		}
 
+		public string DatabaseDetails
+		{
+			get
+			{
+				string ret = "";
+				try
+				{
+					string[] connStr = dbConn.ConnectionString.Split(';');
+					foreach (string piece in connStr) // NOT "passsword"
+						if ( piece.ToUpper().StartsWith("SERVE") ||
+						     piece.ToUpper().StartsWith("DATA")  ||
+						     piece.ToUpper().StartsWith("UID")   ||
+						     piece.ToUpper().StartsWith("USER")  ||
+						     piece.ToUpper().StartsWith("DB") )
+							ret = ret + ", " + piece;
+				}
+				catch
+				{
+					ret = "Error";
+				}		
+				if ( ret.Length < 1 )
+					ret = "Not connected";
+				else if ( ret.StartsWith(",") )			
+					ret = ret.Substring(1).Trim();
+				return "DBConnection : " + ret;
+			}
+		}
 
 	// Routines for cleaning up
 	// ------------------------

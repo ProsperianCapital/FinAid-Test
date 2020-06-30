@@ -13,6 +13,8 @@ namespace PCIBusiness
 		private string   resolution;
 		private long     fromDate;
 		private long     toDate;
+		private DateTime theDate;
+		private int      ticks;
 //		private int      fromDate;
 //		private int      toDate;
 //		private DateTime fromDate;
@@ -31,6 +33,11 @@ namespace PCIBusiness
 		{
 			get { return  tickType; }
 			set { tickType = value; }
+		}
+		public  int      Ticks
+		{
+			get { return  ticks; }
+			set { ticks = value; }
 		}
 		public  double   Price
 		{
@@ -109,16 +116,21 @@ namespace PCIBusiness
 			}
 		}
 
+		public  DateTime Date
+		{
+			get { return theDate; }
+		}
+
 		public int UpdatePrice()
 		{
 			if ( price > 0 && stockId > 0 && tickType >= 0 )
 				try
 				{
 					sql = "exec sp_Ins_TickerCurrentRaw"
-						 + " @StockID  = " + stockId.ToString()
+						 + " @StockID = "  + stockId.ToString()
 					    + ",@DateTime = " + Tools.DateToSQL(System.DateTime.Now,5)
 					    + ",@TickType = " + tickType.ToString()
-					    + ",@Value    = " + price.ToString();
+					    + ",@Value = "    + price.ToString();
 					Tools.LogInfo("Stock.UpdatePrice/1",sql,222);
 					return ExecuteSQL(null,2);
 				}
@@ -135,10 +147,10 @@ namespace PCIBusiness
 				try
 				{
 					sql = "exec sp_Ins_TickerCurrentRaw"
-						 + " @StockID  = " + stockId.ToString()
+						 + " @StockID = "  + stockId.ToString()
 					    + ",@DateTime = " + Tools.DateToSQL(System.DateTime.Now,5)
 					    + ",@TickType = " + tickType.ToString()
-					    + ",@Value    = " + quantity.ToString();
+					    + ",@Value = "    + quantity.ToString();
 					Tools.LogInfo("Stock.UpdateQuantity/1",sql,222);
 					return ExecuteSQL(null,2);
 				}
@@ -159,6 +171,8 @@ namespace PCIBusiness
 			securityType      = dbConn.ColString("SecType",0,0);
 			currencyCode      = dbConn.ColString("CUR",0,0);
 			resolution        = dbConn.ColString("Resolution",0,0);
+			theDate           = dbConn.ColDate  ("Date",0,0);
+			ticks             = dbConn.ColLong  ("Ticks",0,0);
 //	UNIX timestamps, BigInt (64-bit)
 			fromDate          = dbConn.ColBig   ("FromDate",0,0);
 			toDate            = dbConn.ColBig   ("ToDate",0,0);
