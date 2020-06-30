@@ -47,6 +47,7 @@ namespace PCIWebFinAid
 				productCode         = WebTools.RequestValueString(Request,"PC");  // ProductCode");
 				languageCode        = WebTools.RequestValueString(Request,"LC");  // LanguageCode");
 				languageDialectCode = WebTools.RequestValueString(Request,"LDC"); // LanguageDialectCode");
+				hdnReferURL.Value   = WebTools.ClientReferringURL(Request,11);
 
 				if ( ! Tools.SystemIsLive() )
 				{
@@ -72,7 +73,6 @@ namespace PCIWebFinAid
 				ViewState["LanguageCode"]        = languageCode;
 				ViewState["LanguageDialectCode"] = languageDialectCode;
 
-				hdnReferURL.Value  = WebTools.ClientReferringURL(Request);
 				hdnVer.Value       = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
 				lblVer.Text        = "Version " + SystemDetails.AppVersion;
 				lblVer.Visible     = ! Tools.SystemIsLive();

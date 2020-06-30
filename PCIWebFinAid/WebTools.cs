@@ -343,11 +343,18 @@ namespace PCIWebFinAid
 			return h;
 		}
 
-		public static string ClientReferringURL(HttpRequest req)
+		public static string ClientReferringURL(HttpRequest req,byte logInfo=0,string logSource="")
 		{
 			string refer = PCIBusiness.Tools.ObjectToString(req.UrlReferrer);
 			if ( refer.Length < 5 )
 				refer = PCIBusiness.Tools.ObjectToString(req.Headers["Referer"]); // Yes, this is spelt CORRECTLY! Do not change
+
+			if ( logInfo > 0 )
+			{
+				if ( logSource.Length < 1 )
+					logSource = req.Url.AbsoluteUri;
+				PCIBusiness.Tools.LogInfo ( "WebTools.ClientReferringURL", logSource + " (" + logInfo.ToString() + "), Referring URL=" + refer, 244 );
+			}
 			return refer;
 		}
 
