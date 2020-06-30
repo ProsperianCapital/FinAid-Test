@@ -20,14 +20,14 @@ function ChooseTicker(p)
 {
 	DisableElt('txtStock'   ,(p!=21));
 	DisableElt('txtBase'    ,(p!=23));
-	DisableElt('txtForex'   ,(p!=24));
-	DisableElt('lstCurr'    ,(p!=24));
-	DisableElt('lstExchange',(p!=24));
+	DisableElt('txtForex'   ,(p!=29));
+	DisableElt('lstCurr'    ,(p!=29));
+	DisableElt('lstExchange',(p!=29));
 	if ( p == 21 )
 		GetElt('txtStock').focus();
 	else if ( p == 23 )
 		GetElt('txtBase').focus();
-	else if ( p == 24 )
+	else if ( p == 29 )
 		GetElt('txtForex').focus();
 }
 </script>
@@ -82,7 +82,7 @@ Mauritius<br />
 
 <tr>
 	<td rowspan="3">
-		<asp:RadioButton runat="server" id="rdoTick24" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(24)" Enabled="false" />Currency exchange candles</td>
+		<asp:RadioButton runat="server" id="rdoTick29" GroupName="rdoTick" onclick="JavaScript:ChooseTicker(29)" Enabled="false" />Currency exchange candles</td>
 	<td>
 		Exchange</td>
 	<td>

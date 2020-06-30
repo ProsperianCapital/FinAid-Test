@@ -56,6 +56,12 @@
 		<td style="vertical-align:middle"><asp:Label   runat="server" ID="lblStatus23" CssClass="Red"></asp:Label></td>
 		<td style="vertical-align:middle"><asp:Button  runat="server" ID="btnStart23" ToolTip="23" Text="Start" OnClick="btnStart_Click"></asp:Button></td>
 		<td style="vertical-align:middle"><asp:Button  runat="server" ID="btnStop23"  ToolTip="23" Text="Stop" OnClick="btnStop_Click"></asp:Button></td></tr>
+	<tr>
+		<td><asp:Image runat="server" ID="img24" /></td>
+		<td style="vertical-align:middle"><asp:Literal runat="server" ID="lblName24"></asp:Literal></td>
+		<td style="vertical-align:middle"><asp:Label   runat="server" ID="lblStatus24" CssClass="Red"></asp:Label></td>
+		<td style="vertical-align:middle"><asp:Button  runat="server" ID="btnStart24" ToolTip="24" Text="Start" OnClick="btnStart_Click"></asp:Button></td>
+		<td style="vertical-align:middle"><asp:Button  runat="server" ID="btnStop24"  ToolTip="24" Text="Stop" OnClick="btnStop_Click"></asp:Button></td></tr>
 	</table>
 
 	<div style="border-top:1px solid #000000">

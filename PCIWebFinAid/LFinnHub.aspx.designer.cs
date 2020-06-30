@@ -121,13 +121,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txtStock;
         
         /// <summary>
-        /// rdoTick24 control.
+        /// rdoTick29 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rdoTick24;
+        protected global::System.Web.UI.WebControls.RadioButton rdoTick29;
         
         /// <summary>
         /// lstExchange control.

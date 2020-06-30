@@ -63,7 +63,7 @@ namespace PCIWebFinAid
 				lblData.Text     = pageParms.result;
 				rdoTick21.Checked = ( pageParms.ticker == (int)Constants.TickerType.FinnHubStockPrices );
 				rdoTick23.Checked = ( pageParms.ticker == (int)Constants.TickerType.FinnHubExchangeRates );
-//				rdoTick24.Checked = ( pageParms.ticker == (int)Constants.TickerType.FinnHubExchangeCandles );
+//				rdoTick29.Checked = ( pageParms.ticker == (int)Constants.TickerType.FinnHubExchangeCandles );
 				lstExchange.Items.Add(new ListItem(pageParms.exchange,pageParms.exchange));
 				if ( pageParms.status != 22 )
 //					lblJS.Text        = WebTools.JavaScriptSource("ChooseTicker("+pageParms.ticker.ToString()+")");
@@ -120,7 +120,7 @@ namespace PCIWebFinAid
 			lstCurr.Enabled     = ( which != 88 );
 			rdoTick21.Enabled   = ( which != 88 );
 			rdoTick23.Enabled   = ( which != 88 );
-//			rdoTick24.Enabled   = ( which != 88 );
+//			rdoTick29.Enabled   = ( which != 88 );
 
 			btnStop.Enabled     = ( which == 88 );
 
@@ -136,7 +136,7 @@ namespace PCIWebFinAid
 				pageParms.forexList = txtForex.Text;
 				pageParms.exchange  = WebTools.ListValue(lstExchange,"ZAR");
 				pageParms.ticker    = (byte)( rdoTick21.Checked ? (int)Constants.TickerType.FinnHubStockPrices
-				                          : ( rdoTick24.Checked ? (int)Constants.TickerType.FinnHubExchangeCandles
+				                          : ( rdoTick29.Checked ? (int)Constants.TickerType.FinnHubExchangeCandles
 				                          : ( rdoTick23.Checked ? (int)Constants.TickerType.FinnHubExchangeRates : 0 ) ) );
 				FetchData();
 			}
@@ -180,7 +180,7 @@ namespace PCIWebFinAid
 				url     = fhURL + "forex/rates?" + token
 				                + "&base=";
 			}
-			else if ( rdoTick24.Checked )
+			else if ( rdoTick29.Checked )
 			{
 				ret     = 17;
 				show    = "Currency";
@@ -247,7 +247,7 @@ namespace PCIWebFinAid
 		{
 			if ( rdoTick21.Checked ) return (byte)Constants.TickerType.FinnHubStockPrices;
 			if ( rdoTick23.Checked ) return (byte)Constants.TickerType.FinnHubExchangeRates;
-			if ( rdoTick24.Checked ) return (byte)Constants.TickerType.FinnHubExchangeCandles;
+			if ( rdoTick29.Checked ) return (byte)Constants.TickerType.FinnHubExchangeCandles;
 			return 0;
 		}
 
@@ -324,7 +324,7 @@ namespace PCIWebFinAid
 				lblErr.Text = lblErr.Text + "Invalid list of stock symbols<br />";
 			if ( rdoTick23.Checked && txtBase.Text.Trim().Length != 3 )
 				lblErr.Text = lblErr.Text + "Invalid base currency<br />";
-			if ( rdoTick24.Checked && forex.Length  < 2 )
+			if ( rdoTick29.Checked && forex.Length  < 2 )
 				lblErr.Text = lblErr.Text + "Invalid list of currency symbols<br />";
 
 			return lblErr.Text.Length;
@@ -337,10 +337,10 @@ namespace PCIWebFinAid
 			else
 //				lblJS.Text = WebTools.JavaScriptSource("ChooseTicker("+(rdoTick21.Checked?((int)Constants.TickerType.FinnHubStockPrices).ToString()
 //				                                                      :(rdoTick23.Checked?((int)Constants.TickerType.FinnHubExchangeRates).ToString()
-//				                                                      :(rdoTick24.Checked?((int)Constants.TickerType.FinnHubExchangeCandles).ToString():"0")))+")");
+//				                                                      :(rdoTick29.Checked?((int)Constants.TickerType.FinnHubExchangeCandles).ToString():"0")))+")");
 				ascxFooter.JSText = WebTools.JavaScriptSource("ChooseTicker("+(rdoTick21.Checked?((int)Constants.TickerType.FinnHubStockPrices).ToString()
 				                                                             :(rdoTick23.Checked?((int)Constants.TickerType.FinnHubExchangeRates).ToString()
-				                                                             :(rdoTick24.Checked?((int)Constants.TickerType.FinnHubExchangeCandles).ToString():"0")))+")");
+				                                                             :(rdoTick29.Checked?((int)Constants.TickerType.FinnHubExchangeCandles).ToString():"0")))+")");
 		}
 
 		protected void btnStop_Click(Object sender, EventArgs e)
@@ -357,7 +357,7 @@ namespace PCIWebFinAid
 			txtRefresh.Text   = "10";
 			rdoTick21.Checked = false;
 			rdoTick23.Checked = false;
-			rdoTick24.Checked = false;
+			rdoTick29.Checked = false;
 			SessionClearData();
 			StartStop(1);
 		}
