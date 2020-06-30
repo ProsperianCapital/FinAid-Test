@@ -146,7 +146,8 @@ namespace PCIBusiness
 			FinnHubStockPrices     = 21,
 			FinnHubStockHistory    = 22,
 			FinnHubExchangeRates   = 23,
-			FinnHubStockTicks      = 24
+			FinnHubStockTicks      = 24,
+			FinnHubExchangeCandles = 29
 		}
 
 		public enum TickerStatus : byte
