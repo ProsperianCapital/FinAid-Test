@@ -102,7 +102,7 @@ namespace PCIWebFinAid
 				lblError.Text = errBrief;
 			lblError.Visible = ( lblError.Text.Length > 0 );
 
-			if ( lblErrorDtl == null )
+			if ( lblErrorDtl == null || detailMode == 0 ) // Do not log a detailed message at all
 				return;
 
 			if ( errDetail.Length < 1 )

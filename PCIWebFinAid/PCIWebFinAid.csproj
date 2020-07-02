@@ -69,6 +69,7 @@
     <Content Include="AJAXProcess.aspx" />
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
+    <Content Include="Home.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx.aspx" />
     <Content Include="TransLookup.aspx" />
@@ -174,6 +175,13 @@
     </Compile>
     <Compile Include="DownLoad.ashx.cs">
       <DependentUpon>DownLoad.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="LAdmin.aspx.cs">
       <DependentUpon>LAdmin.aspx</DependentUpon>

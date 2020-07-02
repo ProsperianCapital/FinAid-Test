@@ -220,6 +220,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.HiddenField hdnEditInsert;
         
         /// <summary>
+        /// hdnETranID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnETranID;
+        
+        /// <summary>
         /// lstECompany control.
         /// </summary>
         /// <remarks>
@@ -274,13 +283,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.DropDownList lstEOBOCompany;
         
         /// <summary>
-        /// txtETaxRate control.
+        /// txtEDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtETaxRate;
+        protected global::System.Web.UI.WebControls.TextBox txtEDate;
         
         /// <summary>
         /// lstEGLCode control.
@@ -310,13 +319,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txtEAmt;
         
         /// <summary>
-        /// txtEDate control.
+        /// txtETaxRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEDate;
+        protected global::System.Web.UI.WebControls.TextBox txtETaxRate;
         
         /// <summary>
         /// lstECurr control.
@@ -344,15 +353,6 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEDesc;
-        
-        /// <summary>
-        /// txtETranID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtETranID;
         
         /// <summary>
         /// btnSave control.

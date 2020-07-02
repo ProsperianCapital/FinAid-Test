@@ -84,13 +84,17 @@ namespace PCIWebFinAid
 			}
 		}
 
+		protected void grdData_Sort(Object sender, DataGridSortCommandEventArgs e)
+		{
+		//	string h = e.SortExpression;
+		}
+
 		protected void grdData_ItemCommand(Object sender, DataGridCommandEventArgs e)
 		{
 			try
 			{
 				string       cmdName = e.CommandName.Trim().ToUpper();
 				int          tranID  = Tools.StringToInt(e.CommandArgument.ToString());
-//				DataGridItem row     = grdData.Items[e.Item.ItemIndex];
 				DataGridItem row     = e.Item;
 				sql                  = "exec sp_Audit_Get_CashbookExtractAllFields @TransactionID=" + tranID.ToString();
 				lblErr2.Text         = "";
@@ -99,7 +103,8 @@ namespace PCIWebFinAid
 					using (MiscList cbTran = new MiscList())
 						if ( cbTran.ExecQuery(sql,0) == 0 )
 						{
-							txtETranID.Text    = tranID.ToString();
+						//	txtETranID.Text    = tranID.ToString();
+							hdnETranID.Value   = tranID.ToString();
 							txtEDate.Text      = Tools.DateToString(cbTran.GetColumnDate("TransactionDate"),7);
 							txtERecon.Text     = Tools.DateToString(cbTran.GetColumnDate("ReconDate"),7);
 							txtEAmt.Text       = cbTran.GetColumnCurrency("TransactionAmountInclusive");
@@ -128,7 +133,8 @@ namespace PCIWebFinAid
 		protected void btnNew_Click(Object sender, EventArgs e)
 		{
 			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(2)");
-			txtETranID.Text    = "";
+			hdnETranID.Value   = "";
+//			txtETranID.Text    = "";
 			txtEDate.Text      = "";
 			txtERecon.Text     = "";
 			txtEAmt.Text       = "";
@@ -136,18 +142,24 @@ namespace PCIWebFinAid
 			txtETaxRate.Text   = "";
 			hdnECashBook.Value = "";
 			lblErr2.Text       = "";
-			lstECashBook.Items.Clear();
+//			WebTools.ListSelect(lstECurr       ,"");
+//			WebTools.ListSelect(lstEGLCode     ,"");
+//			WebTools.ListSelect(lstEGLDimension,"");
+//			WebTools.ListSelect(lstETType      ,"");
+//			WebTools.ListSelect(lstEReceipt    ,"");
+//			WebTools.ListSelect(lstEOBOCompany ,"");
+		//	lstECashBook.Items.Clear();
 			lstECompany.Focus();
 		}
 
 		protected void btnDelete_Click(Object sender, EventArgs e)
 		{
-			string msg = "Failed to delete cash book transaction";
+			string msg = "Failed to delete cashbook transaction";
 			try
 			{
 				cashBook = Tools.NullToString(hdnECashBook.Value);
-				sql      = "exec sp_Audit_Del_Cashbook @TransactionID=" + txtETranID.Text;
-				if ( Tools.StringToInt(txtETranID.Text) > 0 )
+				sql      = "exec sp_Audit_Del_Cashbook @TransactionID=" + hdnETranID.Value;
+				if ( Tools.StringToInt(hdnETranID.Value) > 0 )
 					using ( MiscList miscList = new MiscList() )
 						if ( miscList.UpdateQuery(sql) == 0 )
 							return;
@@ -156,7 +168,7 @@ namespace PCIWebFinAid
 			}
 			catch (Exception ex)
 			{
-				msg = "Internal error deleting cash book transaction";
+				msg = "Internal error deleting cashbook transaction";
 				Tools.LogException("XCashBook.btnDelete_Click",sql,ex);
 			}	
 			SetErrorDetail("btnDelete_Click",80020,msg,sql,23,2);
@@ -172,7 +184,7 @@ namespace PCIWebFinAid
 			DateTime d1         = Tools.StringToDate(txtEDate.Text,7);
 			DateTime d2         = Tools.StringToDate(txtERecon.Text,7);
 			string   action     = ( editInsert == 1 ? "update" : "insert" );
-			string   msg        = "Failed to " + action + " cash book transaction";
+			string   msg        = "Failed to " + action + " cashbook transaction";
 			cashBook            = Tools.NullToString(hdnECashBook.Value);
 
 			if ( taxRate < 1 )
@@ -195,8 +207,8 @@ namespace PCIWebFinAid
 				    + ",@TaxRate="                    + taxRate.ToString()
 					 + ",@TransactionAmountExclusive=" + amtX.ToString();
 
-				if ( editInsert == 1 && Tools.StringToInt(txtETranID.Text) > 0 )
-					sql = "exec sp_Audit_Upd_Cashbook @TransactionID=" + txtETranID.Text
+				if ( editInsert == 1 && Tools.StringToInt(hdnETranID.Value) > 0 )
+					sql = "exec sp_Audit_Upd_Cashbook @TransactionID=" + hdnETranID.Value
 					                              + ",@TransactionAmountTax=" + ( amtX * (decimal)taxRate / (decimal)100.00 ).ToString()
 					                              + ",@TransactionAmountInclusive=" + amt.ToString() + "," + sql;
 				else if ( editInsert == 2 )
@@ -205,17 +217,23 @@ namespace PCIWebFinAid
 					return;
 	
 				using ( MiscList miscList = new MiscList() )
-					if ( miscList.UpdateQuery(sql) == 0 )
-						return;
-					else
+					if ( miscList.UpdateQuery(sql) != 0 ) // Failed
 						msg = miscList.ReturnMessage;
+					else if ( editInsert == 1 )           // Update, close window
+						return;
+					else                                  // Insert, keep window open
+					{
+						msg = "Transaction successfully inserted";
+						sql = "";
+						btnNew_Click(null,null);
+					}
 			}
 			catch (Exception ex)
 			{
-				msg = "Internal error trying to " + action + " cash book transaction";
+				msg = "Internal error trying to " + action + " cashbook transaction";
 				Tools.LogException("XCashBook.btnUpdate_Click",sql,ex);
 			}	
-			SetErrorDetail("btnUpdate_Click",80030,msg,sql,23,2);
+			SetErrorDetail("btnUpdate_Click",80030,msg,sql,23,(byte)(sql.Length==0?0:2));
 			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode("+editInsert.ToString()+");LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'E')");
 		}
 
@@ -274,8 +292,6 @@ namespace PCIWebFinAid
 			    +     ",@TaxRate="                + Tools.DBString(taxRate)
 			    +     ",@MinAmount="              + a1.ToString()
 			    +     ",@MaxAmount="              + a2.ToString();
-
-//			Tools.LogInfo("XCashBook.btnSearch_Click",sql,222);
 	
 			using ( MiscList miscList = new MiscList() )
 				if ( mode > 30 ) // Download
@@ -285,16 +301,15 @@ namespace PCIWebFinAid
 					else if ( miscList.Download(mode, "CashBook", sessionGeneral.UserCode) == 0 )
 						Response.Redirect("Download.ashx?File=" + miscList.FileName);
 				}
-				else // Search on screen
-					if ( miscList.ExecQuery(sql,1,"",false,true) < 1 ) // Load rows into a list of "MiscData" objects
-						SetErrorDetail("RetrieveData",80085,"No transactions found. Refine your criteria and try again",sql,2,2);
-					else
-					{
-						grdData.Visible    = true;
-						pnlGridBtn.Visible = true;
-						grdData.DataSource = miscList;
-						grdData.DataBind();
-					}
+				else if ( miscList.ExecQuery(sql,1,"",false,true) < 1 ) // Load rows into a list of "MiscData" objects
+					SetErrorDetail("RetrieveData",80085,"No transactions found. Refine your criteria and try again",sql,2,2);
+				else
+				{
+					grdData.Visible    = true;
+					pnlGridBtn.Visible = true;
+					grdData.DataSource = miscList;
+					grdData.DataBind();
+				}
 		}
 
 		protected void btnCSV_Click(Object sender, EventArgs e)

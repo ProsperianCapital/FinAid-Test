@@ -80,7 +80,7 @@ function EditMode(editInsert)
 //	2 : Show, insert
 	HidePopups();
 	if ( editInsert == 1 )
-		SetEltValue('lblEditHead','Edit/Delete Transaction');
+		SetEltValue('lblEditHead','Edit/Delete Transaction (ID '+GetEltValue('hdnETranID')+')');
 	else
 		SetEltValue('lblEditHead','New Transaction');
 	ShowElt('pnlEdit',(editInsert> 0));
@@ -90,7 +90,7 @@ function EditMode(editInsert)
 function DeleteMode(show)
 {
 	HidePopups();
-	SetEltValue('lblDTranID',GetEltValue('txtETranID'));
+	SetEltValue('lblDTranID',GetEltValue('hdnETranID'));
 	ShowElt('pnlDelete',(show>0));
 }
 </script>
@@ -100,7 +100,7 @@ function DeleteMode(show)
 	<ascx:XMenu runat="server" ID="ascxXMenu" />
 
 	<div class="Header3">
-	Cash Book
+	CashBook
 	</div>
 
 	<div id="pnlFilter" style="border:1px solid #000000">
@@ -152,35 +152,38 @@ function DeleteMode(show)
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
-	<asp:DataGrid id="grdData" runat="server" AutoGenerateColumns="False" CellSpacing="5" OnItemCommand="grdData_ItemCommand">
+	<asp:DataGrid id="grdData" runat="server" AutoGenerateColumns="False" CellSpacing="5"
+			OnItemCommand="grdData_ItemCommand" OnSortCommand="grdData_Sort" AllowSorting="true">
 		<HeaderStyle CssClass="tRowHead"></HeaderStyle>
 		<ItemStyle CssClass="tRow"></ItemStyle>
 		<AlternatingItemStyle CssClass="tRowAlt"></AlternatingItemStyle>
 		<Columns>
 			<asp:BoundColumn DataField="RowNumber" ItemStyle-BackColor="GreenYellow" ItemStyle-BorderStyle="Solid" ItemStyle-BorderWidth="1" ItemStyle-BorderColor="Red" DataFormatString="&nbsp{0}&nbsp;"></asp:BoundColumn>
-			<asp:TemplateColumn HeaderText="Transaction<br />ID">
+			<asp:TemplateColumn HeaderText="Transaction<br />ID" SortExpression="TransactionID">
 				<ItemTemplate>
 					<asp:LinkButton runat="server" CommandName='Edit' CommandArgument='<%# ((PCIBusiness.MiscData)Container.DataItem).GetColumn(0) %>'><%# ((PCIBusiness.MiscData)Container.DataItem).NextColumn %></asp:LinkButton>
 				</ItemTemplate>
 			</asp:TemplateColumn>
-			<asp:BoundColumn HeaderText="Transaction<br />Date" DataField="NextColumn"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="Receipt or<br />Payment" DataField="NextColumn"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="Transaction<br />Type" DataField="NextColumn"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="GL Main<br />Account" DataField="NextColumn"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="GL Account<br />Dimension" DataField="NextColumn"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="Transaction<br />Date" DataField="NextColumn" SortExpression="TransactionDate"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="Receipt or<br />Payment" DataField="NextColumn" SortExpression="ReceiptOrPayment"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="Transaction<br />Type" DataField="NextColumn" SortExpression="TransactionType"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="GL Main<br />Account" DataField="NextColumn" SortExpression="GLAccount"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="GL Account<br />Dimension" DataField="NextColumn" SortExpression="GLDimension"></asp:BoundColumn>
 			<asp:TemplateColumn HeaderText="Transaction<br />Description">
 				<ItemTemplate>
 				<%# ((PCIBusiness.MiscData)Container.DataItem).NextColumnSubstring(50,"...") %>
 				</ItemTemplate>
 			</asp:TemplateColumn>
-			<asp:BoundColumn HeaderText="Tax<br />Rate" DataField="NextColumn"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="Amount<br />(Inclusive)" DataField="NextColumn" ItemStyle-HorizontalAlign="Right"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="Tax<br />Rate" DataField="NextColumn" SortExpression="TaxRate"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="Amount<br />(Inclusive)" DataField="NextColumn" SortExpression="Amount" ItemStyle-HorizontalAlign="Right"></asp:BoundColumn>
 		</Columns>
 	</asp:DataGrid>
 
 	<div class="Popup2" id="pnlEdit" style="visibility:hidden;display:none">
 	<asp:HiddenField runat="server" ID="hdnEditInsert" Value="0" />
-	<div class="PopupHead" id="lblEditHead"></div>
+	<asp:HiddenField runat="server" ID="hdnETranID" Value="0" />
+	<!-- asp:TextBox run@t="server" ID="txtETranID" visible="false" readOnly="true" -->
+	<div class="Header6" id="lblEditHead"></div>
 	<table>
 	<tr>
 		<td>Company<br /><asp:DropDownList runat="server" ID="lstECompany" onchange="JavaScript:LoadCashBooks(null,'E')"></asp:DropDownList></td>
@@ -192,22 +195,21 @@ function DeleteMode(show)
 		<td>Transaction Type<br /><asp:DropDownList runat="server" ID="lstETType" Enabled="false"></asp:DropDownList></td></tr>
 	<tr>
 		<td>OBO Company<br /><asp:DropDownList runat="server" ID="lstEOBOCompany"></asp:DropDownList></td>
-		<td>Tax Rate<br /><asp:TextBox runat="server" ID="txtETaxRate" Width="40px"></asp:TextBox></td></tr>
+		<td>Transaction Date<br /><asp:TextBox runat="server" ID="txtEDate" MaxLength="10" Width="80px"></asp:TextBox>
+			<a href="JavaScript:showCalendar(frmCashBook.txtEDate)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
 		<td>GL Account Code<br /><asp:DropDownList runat="server" ID="lstEGLCode"></asp:DropDownList></td>
 		<td>GL Account Dimension<br /><asp:DropDownList runat="server" ID="lstEGLDimension"></asp:DropDownList></td></tr>
 	<tr>
 		<td>Amount<br /><asp:TextBox runat="server" ID="txtEAmt" MaxLength="10" Width="80px"></asp:TextBox></td>
-		<td>Transaction Date<br /><asp:TextBox runat="server" ID="txtEDate" MaxLength="10" Width="80px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtEDate)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
+		<td>Tax Rate<br /><asp:TextBox runat="server" ID="txtETaxRate" Width="40px"></asp:TextBox></td></tr>
 	<tr>
 		<td>Currency<br />
 			<asp:DropDownList runat="server" ID="lstECurr"></asp:DropDownList></td>
 		<td>Recon Date<br /><asp:TextBox runat="server" ID="txtERecon" MaxLength="10" Width="80px"></asp:TextBox>
 			<a href="JavaScript:showCalendar(frmCashBook.txtERecon)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
-		<td>Transaction Description<br /><asp:TextBox runat="server" ID="txtEDesc" Width="250px" TextMode="MultiLine" Rows="3"></asp:TextBox></td>
-		<td>Transaction ID<br /><asp:TextBox runat="server" ID="txtETranID" readOnly="true"></asp:TextBox></td></tr>
+		<td colspan="2">Transaction Description<br /><asp:TextBox runat="server" ID="txtEDesc" Width="485px"></asp:TextBox></td></tr>
 	</table>
 	<asp:Button runat="server" ID="btnSave" Text="Save" title="Save this transaction" OnClick="btnUpdate_Click" />&nbsp;
 	<input type="button" value="Delete" id="btnDel1" title="Delete this transaction" onclick="JavaScript:DeleteMode(1)" />
