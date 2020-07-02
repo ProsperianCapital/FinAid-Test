@@ -17,7 +17,7 @@
 			return null;
 		}
 
-		public int LoadAll(Constants.TradingProvider tradeProvider,int tickerType=0,string secType="")
+		public int LoadAll(Constants.TradingProvider tradeProvider,int tickerType=0,string secType="",int counter=0)
 		{
 		//	if ( secType.ToUpper() == "STK-HISTORY" )
 
@@ -25,7 +25,8 @@
 				sql = "exec sp_Get_StockCandles @ProviderCode=" + Tools.DBString(Tools.TradingProviderCode(tradeProvider));
 
 			else if ( tickerType == (int)Constants.TickerType.FinnHubStockTicks )
-				sql = "exec sp_GetTickList @ProviderCode=" + Tools.DBString(Tools.TradingProviderCode(tradeProvider));
+				sql = "exec sp_GetTickList @ProviderCode=" + Tools.DBString(Tools.TradingProviderCode(tradeProvider))
+				    + ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development ? ",@Test="+counter.ToString() : "" );
 
 			else if ( secType.Length > 0 )
 				sql = "exec sp_Get_StockListB @SecType = " + Tools.DBString(secType);

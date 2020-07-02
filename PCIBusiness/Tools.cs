@@ -1100,9 +1100,6 @@ namespace PCIBusiness
 		public static bool SystemIsLive()
 		{
 			return SystemLiveTestOrDev() == Constants.SystemMode.Live;
-
-//			string mode = ConfigValue("SystemMode").ToUpper();
-//			return ( mode.Length >= 4 && ( mode.Contains("PROD") || mode.Contains("LIVE") ) );
 		}
 
 		public static Constants.SystemMode SystemLiveTestOrDev()

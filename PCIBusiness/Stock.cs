@@ -14,7 +14,8 @@ namespace PCIBusiness
 		private long     fromDate;
 		private long     toDate;
 		private DateTime theDate;
-		private int      ticks;
+		private int      ticksMax;
+		private int      ticksSkip;
 //		private int      fromDate;
 //		private int      toDate;
 //		private DateTime fromDate;
@@ -36,8 +37,13 @@ namespace PCIBusiness
 		}
 		public  int      Ticks
 		{
-			get { return  ticks; }
-			set { ticks = value; }
+			get { return  ticksMax; }
+			set { ticksMax = value; }
+		}
+		public  int      TicksSkip
+		{
+			get { return  ticksSkip; }
+			set { ticksSkip = value; }
 		}
 		public  double   Price
 		{
@@ -172,7 +178,8 @@ namespace PCIBusiness
 			currencyCode      = dbConn.ColString("CUR",0,0);
 			resolution        = dbConn.ColString("Resolution",0,0);
 			theDate           = dbConn.ColDate  ("Date",0,0);
-			ticks             = dbConn.ColLong  ("Ticks",0,0);
+			ticksMax          = dbConn.ColLong  ("Ticks",0,0);
+			ticksSkip         = dbConn.ColLong  ("Skip",0,0);
 //	UNIX timestamps, BigInt (64-bit)
 			fromDate          = dbConn.ColBig   ("FromDate",0,0);
 			toDate            = dbConn.ColBig   ("ToDate",0,0);

@@ -45,8 +45,8 @@ namespace PCIBusiness
 				int  ret = ExecuteSQL(null,1,false,DBConnection);
 				if ( ret == 0 )
 				{
-					Tools.LogInfo("TickerState.DoSQL/2","Success, data returned",222);
 					LoadData(dbConn);
+					Tools.LogInfo("TickerState.DoSQL/2","Success, tickerCode="+tickerCode + " / tickerStatus=" + tickerStatus,222);
 				}
 				else
 					Tools.LogInfo("TickerState.DoSQL/3","Error, ret="+ret.ToString() + " (" + ReturnMessage + ")",222);
