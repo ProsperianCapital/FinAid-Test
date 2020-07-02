@@ -23,12 +23,17 @@ input[type=button]:hover, input[type=submit]:hover
 	background-color: #FF1A1A !important;
 }
 
-/*
-input[type=text], input[type=password]
+input[type=text], input[type=password], textarea
 {
-	height: 25px;
+	height: 21px;
 }
-*/
+
+select
+{
+	height: 27px;
+	width: 240px;
+}
+
 input[type=text]:focus, input[type=password]:focus, select:focus, textarea:focus
 {
 	box-shadow: 0 0 2px rgba(11, 203, 238, 1);
