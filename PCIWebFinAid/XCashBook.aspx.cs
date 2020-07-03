@@ -117,7 +117,7 @@ namespace PCIWebFinAid
 							txtETaxRate.Text   = cbTran.GetColumn("TaxRate");
 							cashBook           = cbTran.GetColumn("CashbookCode");
 							hdnECashBook.Value = cashBook;
-							ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1);LoadCashBooks('"+cashBook+"','E')");
+							ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1);LoadCashBooks('"+cashBook+"','S');LoadCashBooks('"+cashBook+"','E')");
 							lstECashBook.Items.Clear();
 //							WebTools.ListAdd(lstECashBook,0,hdnECashBook.Value,hdnECashBook.Value);
 							WebTools.ListSelect(lstECompany    ,cbTran.GetColumn("CompanyCode"));
@@ -137,7 +137,9 @@ namespace PCIWebFinAid
 
 		protected void btnNew_Click(Object sender, EventArgs e)
 		{
-			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(2)");
+			cashBook           = Tools.NullToString(hdnSCashBook.Value);
+			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(2);LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'S')");
+//			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(2)");
 			hdnETranID.Value   = "";
 //			txtETranID.Text    = "";
 			txtEDate.Text      = "";
