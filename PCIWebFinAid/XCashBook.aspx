@@ -165,17 +165,17 @@ function DeleteMode(show)
 				</ItemTemplate>
 			</asp:TemplateColumn>
 			<asp:BoundColumn HeaderText="Transaction<br />Date" DataField="NextColumn" SortExpression="TransactionDate"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="Receipt or<br />Payment" DataField="NextColumn" SortExpression="ReceiptOrPayment"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="Receipt or<br />Payment" DataField="NextColumn" SortExpression="RP"></asp:BoundColumn>
 			<asp:BoundColumn HeaderText="Transaction<br />Type" DataField="NextColumn" SortExpression="TransactionType"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="GL Main<br />Account" DataField="NextColumn" SortExpression="GLAccount"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="GL Account<br />Dimension" DataField="NextColumn" SortExpression="GLDimension"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="GL Main<br />Account" DataField="NextColumn" SortExpression="GLAccountCode"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="GL Account<br />Dimension" DataField="NextColumn" SortExpression="GLAccountDimension"></asp:BoundColumn>
 			<asp:TemplateColumn HeaderText="Transaction<br />Description">
 				<ItemTemplate>
 				<%# ((PCIBusiness.MiscData)Container.DataItem).NextColumnSubstring(50,"...") %>
 				</ItemTemplate>
 			</asp:TemplateColumn>
 			<asp:BoundColumn HeaderText="Tax<br />Rate" DataField="NextColumn" SortExpression="TaxRate"></asp:BoundColumn>
-			<asp:BoundColumn HeaderText="Amount<br />(Inclusive)" DataField="NextColumn" SortExpression="Amount" ItemStyle-HorizontalAlign="Right"></asp:BoundColumn>
+			<asp:BoundColumn HeaderText="Amount<br />(Inclusive)" DataField="NextColumn" SortExpression="TransactionAmountInclusive" ItemStyle-HorizontalAlign="Right"></asp:BoundColumn>
 		</Columns>
 	</asp:DataGrid>
 
