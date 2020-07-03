@@ -112,30 +112,29 @@ function DeleteMode(show)
 	<table id="tblFilter">
 	<tr>
 		<td>Company</td><td><asp:DropDownList runat="server" ID="lstSCompany" onchange="JavaScript:LoadCashBooks(null,'S')"></asp:DropDownList></td>
-		<td>Cashbook</td>
+		<td colspan="2">Cashbook</td>
 		<td>
 			<select id="lstSCashBook" onchange="JavaScript:SetEltValue('hdnSCashBook',GetListValue(this))"></select>
 			<asp:HiddenField runat="server" ID="hdnSCashBook" value="" /></td></tr>
 	<tr>
 		<td>Receipt / Payment</td><td><asp:DropDownList runat="server" ID="lstSReceipt"></asp:DropDownList></td>
-		<td>Transaction Type</td><td><asp:DropDownList runat="server" ID="lstSTType" Enabled="false"></asp:DropDownList></td></tr>
+		<td colspan="2">Transaction Type</td><td><asp:DropDownList runat="server" ID="lstSTType" Enabled="false"></asp:DropDownList></td></tr>
 	<tr>
 		<td>OBO Company</td><td><asp:DropDownList runat="server" ID="lstSOBOCompany"></asp:DropDownList></td>
-		<td>Transaction Description</td><td><asp:TextBox runat="server" ID="txtSDesc"></asp:TextBox></td></tr>
+		<td colspan="2">Transaction Description</td><td><asp:TextBox runat="server" ID="txtSDesc" Width="234px"></asp:TextBox></td></tr>
 	<tr>
 		<td>GL Account Code</td><td><asp:DropDownList runat="server" ID="lstSGLCode"></asp:DropDownList></td>
-		<td>GL Account Dimension</td><td><asp:DropDownList runat="server" ID="lstSGLDimension"></asp:DropDownList></td></tr>
+		<td colspan="2">GL Account Dimension</td><td><asp:DropDownList runat="server" ID="lstSGLDimension"></asp:DropDownList></td></tr>
 	<tr>
-		<td>Transaction Start Date</td><td><asp:TextBox runat="server" ID="txtSDate1" MaxLength="10" Width="80px"></asp:TextBox>
+		<td>Transaction Start Date</td><td><asp:TextBox runat="server" ID="txtSDate1" MaxLength="10" Width="100px"></asp:TextBox>
 			<a href="JavaScript:showCalendar(frmCashBook.txtSDate1)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td>
-		<td>Transaction End Date</td><td><asp:TextBox runat="server" ID="txtSDate2" MaxLength="10" Width="80px"></asp:TextBox>
+		<td colspan="2">Transaction End Date</td><td><asp:TextBox runat="server" ID="txtSDate2" MaxLength="10" Width="100px"></asp:TextBox>
 			<a href="JavaScript:showCalendar(frmCashBook.txtSDate2)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
 		<td>Tax Rate</td><td><asp:DropDownList runat="server" ID="lstSTaxRate"></asp:DropDownList></td>
-		<td style="white-space:nowrap">Amount
-		> <asp:TextBox runat="server" ID="txtSAmt1" Width="100px"></asp:TextBox></td>
-		<td>and
-		< <asp:TextBox runat="server" ID="txtSAmt2" Width="100px"></asp:TextBox></td>
+		<td style="white-space:nowrap">Amount</td><td>&gt;<br /><br />&lt;</td><td>
+		<asp:TextBox runat="server" ID="txtSAmt1" Width="100px"></asp:TextBox><br />
+		<asp:TextBox runat="server" ID="txtSAmt2" Width="100px"></asp:TextBox></td>
 		<td rowspan="99" style="text-align:right">&nbsp;
 			<asp:Button runat="server" ID="btnSearch" Text="Filter" OnClientClick="JavaScript:ShowBusy('Searching ... Please be patient',null,0)" OnClick="btnSearch_Click" />
 		</td></tr>
@@ -143,17 +142,18 @@ function DeleteMode(show)
 	</div>
 
 	<p>
-	<asp:Button runat="server" ID="btnNew" Text="New" ToolTip="Capture a new transaction" OnClick="btnNew_Click" />&nbsp;
+	<asp:Button runat="server" ID="btnNew1" Text="New (Inline)" ToolTip="Capture a new transaction" OnClick="btnNew_Click" />&nbsp;
+	<asp:Button runat="server" ID="btnNew2" Text="New (New)"    ToolTip="Capture a new transaction" OnClientClick="JavaScript:window.open('XCashBook.aspx?Mode=213','New');return false" />&nbsp;
 	<asp:PlaceHolder runat="server" ID="pnlGridBtn" Visible="false">
-	<asp:Button runat="server" ID="btnPDF" Text="PDF" ToolTip="Download in PDF format" OnClick="btnPDF_Click" />&nbsp;
-	<asp:Button runat="server" ID="btnCSV" Text="CSV" ToolTip="Download in CSV (Excel) format" OnClick="btnCSV_Click" />
+	<asp:Button runat="server" ID="btnPDF"  Text="PDF" ToolTip="Download in PDF format" OnClick="btnPDF_Click" />&nbsp;
+	<asp:Button runat="server" ID="btnCSV"  Text="CSV" ToolTip="Download in CSV (Excel) format" OnClick="btnCSV_Click" />
 	</asp:PlaceHolder>
 	</p>
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 	<asp:DataGrid id="grdData" runat="server" AutoGenerateColumns="False" CellSpacing="5"
-			OnItemCommand="grdData_ItemCommand" OnSortCommand="grdData_Sort" AllowSorting="true">
+			OnItemCommand="grdData_Click" OnSortCommand="grdData_Sort" AllowSorting="true">
 		<HeaderStyle CssClass="tRowHead"></HeaderStyle>
 		<ItemStyle CssClass="tRow"></ItemStyle>
 		<AlternatingItemStyle CssClass="tRowAlt"></AlternatingItemStyle>

@@ -4,9 +4,11 @@ namespace PCIWebFinAid
 {
 	public partial class XFooter : System.Web.UI.UserControl
 	{
+		private byte clearJS;
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			lblJS.Text = "";
+			if ( clearJS != 77 )
+				lblJS.Text = "";
 
 			if ( ! Page.IsPostBack )
 			{
@@ -20,7 +22,11 @@ namespace PCIWebFinAid
 		public string JSText
 		{
 			get { return lblJS.Text.Trim(); }
-			set { lblJS.Text = PCIBusiness.Tools.NullToString(value); }
+			set
+			{
+				lblJS.Text = PCIBusiness.Tools.NullToString(value);
+				clearJS    = 77; // This is because the "Page_Load" event occurs AFTER this call, so the JS is overwritten
+			}
 		}
 	}
 }

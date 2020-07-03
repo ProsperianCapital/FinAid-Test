@@ -24,7 +24,11 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode) != 0 )
 				StartOver(10888);
 			else
+			{
 				LoadData();
+				if ( WebTools.RequestValueInt(Request,"Mode") == 213 )
+					ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(2)");
+			}
 		}
 
 		private void LoadData()
@@ -90,7 +94,7 @@ namespace PCIWebFinAid
 			RetrieveData(0,orderBy);
 		}
 
-		protected void grdData_ItemCommand(Object sender, DataGridCommandEventArgs e)
+		protected void grdData_Click(Object sender, DataGridCommandEventArgs e)
 		{
 			try
 			{
