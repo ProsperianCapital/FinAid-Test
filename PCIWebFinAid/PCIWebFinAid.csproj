@@ -92,6 +92,7 @@
     <Content Include="XLogin.aspx" />
     <Content Include="XMenu.ascx" />
     <Content Include="XRecurring.aspx" />
+    <Content Include="XTechnical.aspx" />
     <Content Include="XTradingGateway.aspx" />
     <Content Include="XTransLookup.aspx" />
     <Content Include="IncludeBusy.htm" />
@@ -350,6 +351,13 @@
     </Compile>
     <Compile Include="XRecurring.aspx.designer.cs">
       <DependentUpon>XRecurring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="XTechnical.aspx.cs">
+      <DependentUpon>XTechnical.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="XTechnical.aspx.designer.cs">
+      <DependentUpon>XTechnical.aspx</DependentUpon>
     </Compile>
     <Compile Include="XTradingGateway.aspx.cs">
       <DependentUpon>XTradingGateway.aspx</DependentUpon>

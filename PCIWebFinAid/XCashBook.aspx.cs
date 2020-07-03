@@ -86,7 +86,8 @@ namespace PCIWebFinAid
 
 		protected void grdData_Sort(Object sender, DataGridSortCommandEventArgs e)
 		{
-		//	string h = e.SortExpression;
+			string orderBy = e.SortExpression;
+			RetrieveData(0,orderBy);
 		}
 
 		protected void grdData_ItemCommand(Object sender, DataGridCommandEventArgs e)
@@ -237,7 +238,7 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode("+editInsert.ToString()+");LoadCashBooks(" + (cashBook.Length > 0 ? "'" + cashBook + "'" : "null") + ",'E')");
 		}
 
-		private void RetrieveData(int mode)
+		private void RetrieveData(int mode,string orderBy="")
 		{
 			string   cashBook  = Tools.NullToString(hdnSCashBook.Value);
 			DateTime d1        = Tools.StringToDate(txtSDate1.Text,7);
@@ -292,6 +293,8 @@ namespace PCIWebFinAid
 			    +     ",@TaxRate="                + Tools.DBString(taxRate)
 			    +     ",@MinAmount="              + a1.ToString()
 			    +     ",@MaxAmount="              + a2.ToString();
+			if ( orderBy.Length > 0 )
+				sql = sql + ",@OrderBy="           + Tools.DBString(orderBy);
 	
 			using ( MiscList miscList = new MiscList() )
 				if ( mode > 30 ) // Download
