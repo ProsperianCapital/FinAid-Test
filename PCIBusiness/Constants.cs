@@ -173,6 +173,25 @@ namespace PCIBusiness
 			PDF = 32			
 		}
 
+		public enum TechnicalQuery : byte
+		{
+		//	Values greater than 99 need the system password
+			SQLStatus       =   1,
+			SQLObject       = 102,
+			SQLExecute      = 103,
+			ConfigNet       =   4,
+			ConfigSoftware  =   5,
+			ConfigApp       = 106,
+			ErrorLogView    =   7,
+			InfoLogView     =   8,
+			ErrorLogWrite   = 109,
+			InfoLogWrite    = 110,
+			EMailSend       = 111,
+			ClientDetails   =  12,
+			CertDetails     =  13,
+			ServerVariables =  14
+		}
+
 //		public enum PaymentType : byte
 //		{
 //			Tokens      = 10,

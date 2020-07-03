@@ -608,35 +608,49 @@ namespace PCIBusiness
 			return ""; 
 		}
 
+		public static string LogFileName(string settingName, DateTime fileDate)
+		{
+			try
+			{
+				string fName = Tools.ConfigValue(settingName);
+				if ( fName.Length < 1 )
+				{
+					fName = SystemFolder("");
+					if ( fName.Length > 0 )
+						fName = fName + "Logs";
+					else
+						fName = "C:\\Temp";
+					fName = fName + "\\PCILogFile.txt";
+				}
+
+				int k = fName.LastIndexOf(".");
+				if ( k < 1 )
+				{
+					fName = fName + ".txt";
+					k     = fName.LastIndexOf(".");
+				}
+				if ( fileDate <= Constants.C_NULLDATE() )
+					fileDate = System.DateTime.Now;
+				fName = fName.Substring(0,k) + "-" + DateToString(fileDate,7) + fName.Substring(k);
+				return fName;
+			}
+			catch (Exception ex)
+			{
+			}
+			return "C:\\Temp\\Error-X.txt";
+		}
+
 		private static void LogWrite(string settingName, string component, string msg)
 		{
 		// Use this routine to log internal errors ...
-			int          k      = 0;
-			string       fName1 = "";
+			int          k       = 0;
+			string       fName1  = "";
 			FileStream   fHandle = null;
 			StreamWriter fOut    = null;
 
 			try
 			{
-				fName1 = Tools.ConfigValue(settingName);
-				if ( fName1.Length < 1 )
-				{
-					fName1 = SystemFolder("");
-					if ( fName1.Length > 0 )
-						fName1 = fName1 + "Logs";
-					else
-						fName1 = "C:\\Temp";
-					fName1 = fName1 + "\\PCILogFile.txt";
-				}
-
-				k = fName1.LastIndexOf(".");
-				if ( k < 1 )
-				{
-					fName1 = fName1 + ".txt";
-					k      = fName1.LastIndexOf(".");
-				}
-				fName1 = fName1.Substring(0,k) + "-" + DateToString(System.DateTime.Now,7) + fName1.Substring(k);
-
+				fName1 = Tools.LogFileName(settingName,System.DateTime.Now);
 				if ( File.Exists(fName1) )
 					fHandle = File.Open(fName1, FileMode.Append);
 				else
