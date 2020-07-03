@@ -28,7 +28,7 @@ function ShowData(err)
 			SetEltValue('tdData','SQL statement');
 		else if ( k == 7 || k == 8 )
 		{
-			SetEltValue('tdData','Log date (dd/mm/yyyy). Default is TODAY');
+			SetEltValue('tdData','Log date (yyyy-mm-dd). Default is TODAY');
 			w = "100px";
 		}
 		else if ( k == 111 )

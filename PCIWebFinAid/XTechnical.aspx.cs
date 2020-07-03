@@ -16,7 +16,7 @@ namespace PCIWebFinAid
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			if ( SessionCheck(19) != 0 )
+			if ( SessionCheck(99) != 0 )
 				return;
 			if ( PageCheck()      != 0 )
 				return;
@@ -26,8 +26,25 @@ namespace PCIWebFinAid
 				StartOver(10999);
 		}
 
+		private string ReplacePassword(string connStr)
+		{
+			int j;
+			int k = connStr.ToUpper().IndexOf("PWD=");
+			while ( k >= 0 )
+			{
+				j = connStr.ToUpper().IndexOf(";",k+1);
+				if ( j > k )
+					connStr = connStr.Substring(0,k+4) + "******" + connStr.Substring(j);
+				else
+					connStr = connStr.Substring(0,k+4) + "******";
+				k = connStr.ToUpper().IndexOf("PWD=",k+3);
+			}
+			return connStr;
+		}
+
 		protected void btnOK_Click(Object sender, EventArgs e)
 		{
+			lblError.Visible   = true;
 			lblError.Text      = "";
 			lblResult.Text     = "";
 			ascxXFooter.JSText = WebTools.JavaScriptSource("ShowData(4)");
@@ -99,8 +116,8 @@ namespace PCIWebFinAid
 				   + PCIBusiness.Tools.ConfigValue("SMTP-User")     + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("SMTP-Password") + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("SMTP-Port")     + "<br />"
-				   + db1.ConnectionString                           + "<br />"
-				   + db2.ConnectionString;
+				   + ReplacePassword(db1.ConnectionString)          + "<br />"
+				   + ReplacePassword(db2.ConnectionString);
 				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td><td><u>Value</u><br />" + x2 + "</td></tr></table>";
 			}
 
@@ -221,14 +238,8 @@ namespace PCIWebFinAid
 				{
 					db = System.Configuration.ConfigurationManager.ConnectionStrings["DBConn"];
 					x1 = "Connection<br />Read connection string<br />";
-					x3 = "DBConn<br />" + db.ConnectionString;
-					int k = x3.ToUpper().IndexOf("PWD=");
-					int j = x3.ToUpper().IndexOf(";",k+1);
-					if ( j > k )
-						x3 = x3.Substring(0,k+4) + "******" + x3.Substring(j);
-					else
-						x3 = x3.Substring(0,k+4) + "******";
 					x2 = "OK<br />OK<br />";
+					x3 = "DBConn<br />" + db.ConnectionString;
 					x1 = x1 + "Try to open DB<br />";
 					if ( PCIBusiness.Tools.OpenDB(ref conn) )
 					{
@@ -276,16 +287,10 @@ namespace PCIWebFinAid
 					x2 = x2 + "<br /><br /><br />";
 					x3 = x3 + "<br /><br /><br /><br /><br />";
 
-					x1 = x1 + "Connection<br />Read connection string<br />";
 					db = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnTrade"];
-					x3 = x3 + "DBConnTrade<br />" + db.ConnectionString;
-					int k = x3.ToUpper().IndexOf("PWD=");
-					int j = x3.ToUpper().IndexOf(";",k+1);
-					if ( j > k )
-						x3 = x3.Substring(0,k+4) + "******" + x3.Substring(j);
-					else
-						x3 = x3.Substring(0,k+4) + "******";
+					x1 = x1 + "Connection<br />Read connection string<br />";
 					x2 = x2 + "OK<br />OK<br />";
+					x3 = x3 + "DBConnTrade<br />" + db.ConnectionString;
 					x1 = x1 + "Try to open DB<br />";
 					if ( PCIBusiness.Tools.OpenDB(ref conn) )
 					{
@@ -316,7 +321,7 @@ namespace PCIWebFinAid
 				lblResult.Text = "<table><tr>"
 				               + "<td><u>Check</u><br />" + x1 + "</td>"
 				               + "<td><u>Result</u><br />" + x2 + "</td>"
-				               + "<td><u>Value</u><br />" + x3 + "</td>"
+				               + "<td><u>Value</u><br />" + ReplacePassword(x3) + "</td>"
 				               + "</tr></table>";
 			}
 
@@ -325,7 +330,7 @@ namespace PCIWebFinAid
 			{
 				DateTime fDate = System.DateTime.Now;
 				if ( txtData.Text.Length > 0 )
-					fDate = PCIBusiness.Tools.StringToDate(txtData.Text,1);
+					fDate = PCIBusiness.Tools.StringToDate(txtData.Text,7); // yyyy-mm-dd
 				if ( fDate <= PCIBusiness.Constants.C_NULLDATE() )
 				{
 					lblError.Text = "Invalid date";
