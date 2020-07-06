@@ -103,8 +103,10 @@ namespace PCIWebFinAid
 				   + "SMTP-Mode<br />"
 				   + "SMTP-Server<br />"
 				   + "SMTP-User<br />"
+				   + "SMTP-From<br />"
 				   + "SMTP-Password<br />"
 				   + "SMTP-Port<br />"
+				   + "SMTP-BCC<br />"
 				   + "DBConn<br />"
 				   + "DBConnTrade";
 				x2 = PCIBusiness.Tools.ConfigValue("LogFileErrors") + "<br />"
@@ -114,8 +116,10 @@ namespace PCIWebFinAid
 				   + PCIBusiness.Tools.ConfigValue("SMTP-Mode")     + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("SMTP-Server")   + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("SMTP-User")     + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SMTP-From")     + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("SMTP-Password") + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("SMTP-Port")     + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SMTP-BCC")      + "<br />"
 				   + ReplacePassword(db1.ConnectionString)          + "<br />"
 				   + ReplacePassword(db2.ConnectionString);
 				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td><td><u>Value</u><br />" + x2 + "</td></tr></table>";
@@ -183,39 +187,38 @@ namespace PCIWebFinAid
 				}
 				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td><td><u>Value</u><br />" + x2 + "</td></tr></table>";
 			}
-/*
+
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.EMailSend && txtData.Text.Length > 0 )
 				using (PCIBusiness.Mail mail = new PCIBusiness.Mail())
 				{
-					x1               = Request.Url.GetLeftPart(UriPartial.Authority);
+					x1           = Request.Url.GetLeftPart(UriPartial.Authority);
 					if ( x1.EndsWith("/") )
-						x1            = x1.Substring(0,x1.Length-1);
-//	Test
-//					x1 = "http://www.cmr-members.co.za";
-//	Test
-					mail.AddressTo   = txtData.Text.Trim();
-					mail.HeadingText = "CMR Test Message";
-					mail.BodyText    = "<html><head><title>Test</title></head>"
-					                 + "<body><img src='" + x1 + "/Images/CMR.png' title='Cape Medical Response' style='float:right' />"
-					                 + "<p>Good day, this is a test message from CMR user " + sessionGeneral.PersonName
-					                 + ".</p><table>"
-					                 + "<tr><td> <b>SMTP Server</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-Server") + "</td></tr>"
-					                 + "<tr><td> <b>SMTP User ID</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-UserID") + "</td></tr>"
-					                 + "<tr><td> <b>SMTP Port</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-Port") + "</td></tr>"
-					                 + "<tr><td> <b>From Address</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-From") + "</td></tr>"
-					                 + "<tr><td> <b>Date/Time</b></td><td>: #MAIL-DATE# #MAIL-TIME#</td></tr></table>"
-					                 + "<p>Best regards"
-					                 + "<br />- " + PCIBusiness.SystemDetails.AppName
-					                 + "<br />&nbsp;&nbsp;Version " + PCIBusiness.SystemDetails.AppVersion
-					                 + "<br />&nbsp;&nbsp;<a href='" + x1 + "'>" + x1 + "</a></p></body></html>";
+						x1        = x1.Substring(0,x1.Length-1);
+					mail.To      = txtData.Text.Trim();
+					mail.Heading = "Prosperian Test Message";
+					mail.Body    = "<html><head><title>Test</title></head>"
+					             + "<body><img src='" + x1 + "/Images/PCapital.png' title='Prosperian' style='float:right' />"
+					             + "<p>Good day, this is a test message from PlaNet (Prosperian) user " + sessionGeneral.UserName
+					             + " (" + sessionGeneral.UserCode + ").</p><table>"
+					             + "<tr><td> <b>SMTP Server</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-Server") + "</td></tr>"
+					             + "<tr><td> <b>SMTP User</b></td><td>: "   + PCIBusiness.Tools.ConfigValue("SMTP-User") + "</td></tr>"
+					             + "<tr><td> <b>SMTP From</b></td><td>: "   + PCIBusiness.Tools.ConfigValue("SMTP-From") + "</td></tr>"
+					             + "<tr><td> <b>SMTP Port</b></td><td>: "   + PCIBusiness.Tools.ConfigValue("SMTP-Port") + "</td></tr>"
+					             + "<tr><td> <b>BCC Address</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-BCC") + "</td></tr>"
+					             + "<tr><td> <b>Date/Time</b></td><td>: "   + PCIBusiness.Tools.DateToString(System.DateTime.Now,7,1) + "</td></tr></table>"
+					             + "<p>Best regards"
+					             + "<br />- PlaNet Admin System"
+					             + "<br />&nbsp;&nbsp;Version " + PCIBusiness.SystemDetails.AppVersion
+					             + "<br />&nbsp;&nbsp;(c) Prosperian Capital International"
+					             + "<br />&nbsp;&nbsp;<a href='" + x1 + "'>" + x1 + "</a></p></body></html>";
 					byte k = mail.Send();
 					if ( k == 0 )
-						lblError.Text = "Email successfully sent to " + mail.AddressTo;
+						lblError.Text = "Email successfully sent to " + txtData.Text.Trim();
 					else
-						lblError.Text = "Email to " + mail.AddressTo + " failed (error code " + k.ToString() + ")";
+						lblError.Text = "Email to " + txtData.Text.Trim() + " failed (error code " + k.ToString() + ")";
 					PCIBusiness.Tools.LogException("XTechnical.btnOK_Click", "Send email : " + txtData.Text.Trim() + ", error code = "  + k.ToString() );
 				}
-*/
+
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.ErrorLogWrite && txtData.Text.Length > 0 )
 			{
 				PCIBusiness.Tools.LogException("XTechnical.btnOK_Click","Diagnostic message : " + txtData.Text.Trim());

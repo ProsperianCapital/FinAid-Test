@@ -20,7 +20,10 @@ namespace PCIWebFinAid
 			if ( PageCheck()      != 0 )
 				return;
 			if ( Page.IsPostBack )
+			{
+				ascxXFooter.JSText = WebTools.JavaScriptSource("LoadCashBooks(GetEltValue('hdnSCashBook'),'S')");
 				return;
+			}
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode) != 0 )
 				StartOver(10888);
 			else
@@ -117,7 +120,7 @@ namespace PCIWebFinAid
 							txtETaxRate.Text   = cbTran.GetColumn("TaxRate");
 							cashBook           = cbTran.GetColumn("CashbookCode");
 							hdnECashBook.Value = cashBook;
-							ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1);LoadCashBooks('"+cashBook+"','S');LoadCashBooks('"+cashBook+"','E')");
+							ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1);LoadCashBooks('"+cashBook+"','E')");
 							lstECashBook.Items.Clear();
 //							WebTools.ListAdd(lstECashBook,0,hdnECashBook.Value,hdnECashBook.Value);
 							WebTools.ListSelect(lstECompany    ,cbTran.GetColumn("CompanyCode"));

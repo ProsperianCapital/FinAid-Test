@@ -22,31 +22,30 @@ function AJAXFinalize(typeCode)
 		var names      = xmlDOM.getElementsByTagName("CBName");
 		var sel        = xmlDOM.getElementsByTagName("CBSel");
 		var searchEdit = XMLValue('SearchEdit');
-		var lstCB      = GetElt("lst"+searchEdit+"CashBook");
+		var lstCB1     = GetElt("lst"+searchEdit+"CashBook");
+		var lstCB2     = null;
 		var k;
-		var item;
 
-		while (lstCB.length > 0)
-			lstCB.remove(0);
+		if ( searchEdit == 'E' )
+			var lstCB2   = GetElt("lstSCashBook");
+
+		while (lstCB1.length > 0)
+			lstCB1.remove(0);
+
+		if ( lstCB2 != null )
+		{
+			while (lstCB2.length > 0)
+				lstCB2.remove(0);
+			ListAdd(lstCB2,GetEltValue('hdnSCashBook'),GetEltValue('hdnSCashBookName'),true);
+		}
 
 		SetEltValue('hdn'+searchEdit+'CashBook','');
 
 		for (k = 0; k < codes.length; k++)
 		{
-			item          = document.createElement('option');
-			item.value    = codes[k].firstChild.nodeValue;
-			item.text     = names[k].firstChild.nodeValue;
-			item.selected = ( sel[k].firstChild.nodeValue == "Y" );
-			if ( k == 0 )
-				SetEltValue('hdn'+searchEdit+'CashBook',item.value);
-			try
-			{
-				lstCB.add(item,null);
-			}
-			catch (x) // MS
-			{
-				lstCB.add(item);
-			}
+			ListAdd(lstCB1,codes[k].firstChild.nodeValue,names[k].firstChild.nodeValue,(sel[k].firstChild.nodeValue=="Y"));
+			if ( k == 0 || sel[k].firstChild.nodeValue=="Y" )
+				SetEltValue('hdn'+searchEdit+'CashBook',codes[k].firstChild.nodeValue);
 		}
 	}
 	HideBusy();
@@ -114,8 +113,9 @@ function DeleteMode(show)
 		<td>Company</td><td><asp:DropDownList runat="server" ID="lstSCompany" onchange="JavaScript:LoadCashBooks(null,'S')"></asp:DropDownList></td>
 		<td colspan="2">Cashbook</td>
 		<td>
-			<select id="lstSCashBook" onchange="JavaScript:SetEltValue('hdnSCashBook',GetListValue(this))"></select>
-			<asp:HiddenField runat="server" ID="hdnSCashBook" value="" /></td></tr>
+			<select id="lstSCashBook" onchange="JavaScript:SetEltValue('hdnSCashBook',GetListValue(this));SetEltValue('hdnSCashBookName',this.options[this.selectedIndex].text)"></select>
+			<asp:HiddenField runat="server" ID="hdnSCashBook" value="" />
+			<asp:HiddenField runat="server" ID="hdnSCashBookName" value="" /></td></tr>
 	<tr>
 		<td>Receipt / Payment</td><td><asp:DropDownList runat="server" ID="lstSReceipt"></asp:DropDownList></td>
 		<td colspan="2">Transaction Type</td><td><asp:DropDownList runat="server" ID="lstSTType" Enabled="false"></asp:DropDownList></td></tr>
