@@ -42,8 +42,8 @@ namespace PCIBusiness
 				Tools.LogInfo("TransactionPeach.PostHTML/10","URL=" + url + ", URL data=" + xmlSent,221);
 
 				ret                              = 20;
-				byte[]         buffer            = Encoding.ASCII.GetBytes(xmlSent);
-//				byte[]         buffer            = Encoding.UTF8.GetBytes(xmlSent);
+//				byte[]         buffer            = Encoding.ASCII.GetBytes(xmlSent);
+				byte[]         buffer            = Encoding.UTF8.GetBytes(xmlSent);
 				HttpWebRequest request           = (HttpWebRequest)HttpWebRequest.Create(url);
 				ret                              = 30;
 				request.Method                   = "POST";
@@ -135,7 +135,7 @@ namespace PCIBusiness
 				        + "&card.cvv="         + Tools.URLString(payment.CardCVV)
 				        + "&amount="           + Tools.URLString(payment.PaymentAmountDecimal)
 				        + "&currency="         + Tools.URLString(payment.CurrencyCode)
-				        + "&paymentType=DB"; // DB = Instant, PA = Pre-authorize
+				        + "&paymentType=DB"; // DB = Instant, PA = Pre-authorize, CP =
 
 				Tools.LogInfo("TransactionPeach.CardPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
@@ -185,8 +185,9 @@ namespace PCIBusiness
 
 		public TransactionPeach() : base()
 		{
-			bureauCode                           = Tools.BureauCode(Constants.PaymentProvider.Peach);
-			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+			bureauCode                            = Tools.BureauCode(Constants.PaymentProvider.Peach);
+			ServicePointManager.Expect100Continue = true;
+			ServicePointManager.SecurityProtocol  = SecurityProtocolType.Tls12;
 		}
 	}
 }
