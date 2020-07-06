@@ -346,12 +346,14 @@ function GetListValue(eltID)
 	return '';
 }
 
-function ListAdd(eltID,code,text)
+function ListAdd(eltID,code,text,selected)
 {
 	var p   = GetElt(eltID);
 	var h   = document.createElement('option');
 	h.value = code.toString();
 	h.text  = text.toString();
+	if ( selected )
+		h.selected = true;
 
 	try
 	{
