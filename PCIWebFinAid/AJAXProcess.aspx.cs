@@ -41,6 +41,25 @@ namespace PCIWebFinAid
 					Response.Write ("</CashBooks>");
 				}
 
+				else if ( procType == 2 ) // GL Codes
+				{
+					string glCode     = PCIBusiness.Tools.NullToString(Request.QueryString["GLCode"]);
+					string selCode    = PCIBusiness.Tools.NullToString(Request.QueryString["Selected"]);
+					string searchEdit = PCIBusiness.Tools.NullToString(Request.QueryString["SearchEdit"]);
+					string cCode;
+					Response.Write ("<GL><SearchEdit>"+searchEdit.ToUpper()+"</SearchEdit>");
+					using (PCIBusiness.MiscList gls = new PCIBusiness.MiscList())
+						if ( gls.ExecQuery("exec sp_Audit_Get_GLAccount @GLAccount="+PCIBusiness.Tools.DBString(glCode),1,"",true,true) > 0 )
+							foreach ( PCIBusiness.MiscData gl in gls )
+							{
+								cCode = gl.NextColumn;
+								Response.Write(PCIBusiness.Tools.XMLCell("GLCode",cCode));
+								Response.Write(PCIBusiness.Tools.XMLCell("GLName",gl.NextColumn));
+								Response.Write(PCIBusiness.Tools.XMLCell("GLSel",( selCode.Length > 0 && selCode == cCode ? "Y" : "N" )));
+							}
+					Response.Write ("</GL>");
+				}
+
 			}
 			catch (Exception ex)
 			{

@@ -19,7 +19,7 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode) != 0 )
+			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,sessionGeneral.ApplicationCode) != 0 )
 				StartOver(10888);
 			else
 				SetErrorDetail("",-888);
@@ -43,11 +43,11 @@ namespace PCIWebFinAid
 					}
 			DateTime d1 = Tools.StringToDate(txtDate1.Text,7);
 			DateTime d2 = Tools.StringToDate(txtDate2.Text,7);
-			if ( d1 <= Constants.C_NULLDATE() )
+			if ( d1 <= Constants.DateNull )
 				err = err + "Invalid from date (it must be in yyyy-mm-dd format)<br />";
-			if ( d2 <= Constants.C_NULLDATE() )
+			if ( d2 <= Constants.DateNull )
 				err = err + "Invalid to date (it must be in yyyy-mm-dd format)<br />";
-			if ( d1 > d2 && d2 > Constants.C_NULLDATE() )
+			if ( d1 > d2 && d2 > Constants.DateNull )
 				err = err + "From date cannot be after to date<br />";
 			if ( err.Length > 0 )
 				SetErrorDetail("ValidateData",30010,err,err);

@@ -103,7 +103,8 @@ namespace PCIWebFinAid
 		}
 
 		public static string ListValue ( ListControl listBox,
-		                                 string      defaultValue )
+		                                 string      defaultValue,
+		                                 byte        codeColumn = 0 )
 		{
 			string sel = "";
 			try
@@ -111,6 +112,12 @@ namespace PCIWebFinAid
 				sel = listBox.SelectedValue;
 				if ( sel == null || sel.Length < 1 )
 					sel = defaultValue;
+				else if ( codeColumn > 1 ) // Means the "code" contains more than 1 column and we we want the x'th one
+				{
+					string[] codes   = sel.Split('/');
+					if ( codeColumn <= codes.Length )
+						sel = codes[codeColumn-1];
+				}
 			}
 			catch
 			{
@@ -175,35 +182,65 @@ namespace PCIWebFinAid
 		                              string      selectValue = "",
 		                              short       selectIndex = -888 )
 		{
+			if ( PCIBusiness.Tools.NullToString(sql).Length > 0 )
+				return ListBind ( listBox,
+				                  sql,
+				                  new string[] {dataFieldKey},
+				                  dataFieldShow,
+				                  addZeroRow,
+				                  selectValue,
+				                  selectIndex );
+
+			else if ( dataSource != null )
+			{
+				listBox.DataSource     = dataSource;
+				listBox.DataValueField = dataFieldKey;
+				listBox.DataTextField  = dataFieldShow;
+				listBox.DataBind();
+				return 0;
+			}
+			return 99;
+		}
+
+		public static byte ListBind ( ListControl listBox,
+		                              string      sql,
+		                              string[]    dataFieldKey,
+		                              string      dataFieldShow,
+		                              string      addZeroRow  = "",
+		                              string      selectValue = "",
+		                              short       selectIndex = -888 )
+		{
 			listBox.Items.Clear();
 
 			try
 			{
-				if ( PCIBusiness.Tools.NullToString(sql).Length > 0 )
-				{
-					string dataValue;
-					string keyValue;
-					using (PCIBusiness.MiscList dList = new PCIBusiness.MiscList())
-						if ( dList.ExecQuery(sql,0) == 0 )
-							while ( ! dList.EOF )
+				if ( PCIBusiness.Tools.NullToString(sql).Length < 5 )
+					return 22;
+
+				string dataValue;
+				string keyValue;
+				int    k;
+
+				using (PCIBusiness.MiscList dList = new PCIBusiness.MiscList())
+					if ( dList.ExecQuery(sql,0) == 0 )
+						while ( ! dList.EOF )
+						{
+							if ( dataFieldKey.Length == 1 )
+								keyValue = dList.GetColumn(dataFieldKey[0]);
+							else
 							{
-								dataValue = dList.GetColumn(dataFieldShow);
-								keyValue  = dList.GetColumn(dataFieldKey);
-								listBox.Items.Add(new ListItem(dataValue,keyValue));
-								dList.NextRow();
+								keyValue = "";
+								for ( k = 0 ; k < dataFieldKey.Length ; k++ )
+									keyValue = keyValue + "/" + dList.GetColumn(dataFieldKey[k]);
+								if ( keyValue.StartsWith("/") )
+									keyValue = keyValue.Substring(1);
 							}
-						else
-							return 5;
-				}
-				else if ( dataSource != null )
-				{
-					listBox.DataSource     = dataSource;
-					listBox.DataValueField = dataFieldKey;
-					listBox.DataTextField  = dataFieldShow;
-					listBox.DataBind();
-				}
-				else
-					return 10;
+							dataValue = dList.GetColumn(dataFieldShow);
+							listBox.Items.Add(new ListItem(dataValue,keyValue));
+							dList.NextRow();
+						}
+					else
+						return 5;
 
 				if ( addZeroRow.Length > 0 )
 					listBox.Items.Insert(0,(new ListItem(addZeroRow,"")));
@@ -212,8 +249,6 @@ namespace PCIWebFinAid
 				{
 					if ( selectValue.Length > 0 )
 						ListSelect(listBox,selectValue,"0");
-				//	else if ( selectIndex == 0 )
-				//		listBox.SelectedIndex = 0;
 					else if ( selectIndex >= listBox.Items.Count )
 						listBox.SelectedIndex = listBox.Items.Count - 1;
 					else if ( selectIndex >= 0 )

@@ -5,6 +5,8 @@ namespace PCIWebFinAid
 {
 	public partial class Login : BasePageLogin
 	{
+		const string ApplicationCode = "002";
+
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
 			SessionCheck(3);
@@ -48,7 +50,7 @@ namespace PCIWebFinAid
 
 			if ( txtID.Text.ToUpper() == "XADMIN" && txtPW.Text.ToUpper() == "X8Y3Z7" )
 			{
-				SessionSave(txtID.Text,"Prosperian Admin","A");
+				SessionSave(ApplicationCode,txtID.Text,"Prosperian Admin","A");
 				WebTools.Redirect(Response,sessionGeneral.StartPage);
 				return;
 			}
@@ -71,7 +73,7 @@ namespace PCIWebFinAid
 					string userCode     = mList.GetColumn("ClientCode");
 					string contractCode = mList.GetColumn("ContractCode");
 					string access       = mList.GetColumn("Access");
-					SessionSave(userCode,"",access,contractCode);
+					SessionSave(ApplicationCode,userCode,"",access,contractCode);
 					WebTools.Redirect(Response,sessionGeneral.StartPage);
 				}
 			}

@@ -16,17 +16,19 @@ namespace PCIWebFinAid
 		protected SessionGeneral sessionGeneral;
 		protected string         sql;
 
-		protected void SessionSave(string userCode=null,string userName=null,string accessType=null,string contractCode=null)
+		protected void SessionSave(string applicationCode=null,string userCode=null,string userName=null,string accessType=null)
 		{
-			if ( sessionGeneral == null )
-				sessionGeneral  = new SessionGeneral();
-			if ( userCode     != null )
-				sessionGeneral.UserCode     = Tools.NullToString(userCode);
-			if ( userName     != null )
-				sessionGeneral.UserName     = Tools.NullToString(userName);
-			if ( accessType   != null )
-				sessionGeneral.AccessType   = Tools.NullToString(accessType);
-			Session["SessionGeneral"]      = sessionGeneral;
+			if ( sessionGeneral  == null )
+				sessionGeneral     = new SessionGeneral();
+			if ( applicationCode != null )
+				sessionGeneral.ApplicationCode = Tools.NullToString(applicationCode);
+			if ( userCode        != null )
+				sessionGeneral.UserCode        = Tools.NullToString(userCode);
+			if ( userName        != null )
+				sessionGeneral.UserName        = Tools.NullToString(userName);
+			if ( accessType      != null )
+				sessionGeneral.AccessType      = Tools.NullToString(accessType);
+			Session["SessionGeneral"]         = sessionGeneral;
 		}
 
 		protected void SessionClearLogin()
@@ -51,7 +53,7 @@ namespace PCIWebFinAid
 //			return 0;
 //		}
 
-		protected byte SessionCheck(byte sessionMode=43)
+		protected byte SessionCheck(byte sessionMode=43,string applicationCode="")
 		{
 			Response.Cache.SetExpires(DateTime.Now);
 			Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -97,16 +99,17 @@ namespace PCIWebFinAid
 					sessionGeneral = new SessionGeneral();
 				else
 					sessionGeneral.Clear();
-				SessionSave();
+				SessionSave(applicationCode);
 				return 0;
 			}
 
 			if ( sessionMode == 99 && sessionGeneral == null )
 			{
-				sessionGeneral            = new SessionGeneral();
-				sessionGeneral.UserCode   = "653";
-				sessionGeneral.UserName   = "Samual Briggs";
-				sessionGeneral.AccessType = "P";
+				sessionGeneral                 = new SessionGeneral();
+				sessionGeneral.UserCode        = "653";
+				sessionGeneral.UserName        = "Samual Briggs";
+				sessionGeneral.AccessType      = "P";
+				sessionGeneral.ApplicationCode = "001";
 			}
 
 			else if ( sessionMode == 4 && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )
@@ -114,7 +117,7 @@ namespace PCIWebFinAid
 				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
 				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
 					backDoor = Session["BackDoor"].ToString();
-				if ( backDoor != "901317" )
+				if ( backDoor != ((int)PCIBusiness.Constants.SystemPassword.BackDoor).ToString() )
 				{
 					StartOver(10);
 					return 10;
@@ -140,7 +143,10 @@ namespace PCIWebFinAid
 			}
 
 			ShowUserDetails();
-			SessionSave();
+			if ( applicationCode.Length > 0 )
+				SessionSave(applicationCode);
+			else
+				SessionSave();
 			return 0;
 		}
 

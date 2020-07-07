@@ -10,6 +10,8 @@ namespace PCIWebFinAid
 {
 	public partial class XLogin : BasePageBackOffice
 	{
+		const string ApplicationCode = "001";
+
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
 			lblErr2.Text        = "";
@@ -19,13 +21,14 @@ namespace PCIWebFinAid
 			SetErrorDetail("",-888);
 
 			if ( Page.IsPostBack )
-				SessionCheck(5);
+				SessionCheck(5,ApplicationCode);
 			else
 			{
-				SessionCheck(2);
+				SessionCheck(2,ApplicationCode);
 				ascxXHeader.ShowUser(null);
 				txtID.Focus();
-				WebTools.ClientReferringURL(Request,14);
+				if ( WebTools.RequestValueInt(Request,"ErrNo") == 0 )
+					WebTools.ClientReferringURL(Request,14);
 			}
 		}
 
@@ -48,9 +51,9 @@ namespace PCIWebFinAid
 				return;
 
 //	Testing
-			if ( xSecure == "901317" ) // Tools.ConfigValue("Access/BackDoor")
+			if ( xSecure == ((int)Constants.SystemPassword.Login).ToString() )
 			{
-				SessionSave(null,null,"P");
+				SessionSave(ApplicationCode,null,null,"P");
 				WebTools.Redirect(Response,sessionGeneral.StartPage);
 				return;
 			}
@@ -73,7 +76,7 @@ namespace PCIWebFinAid
 						SetErrorDetail("btnOK_Click",11040,message,sql + " (Status = '" + status + "')",1,1,null,true);
 					else
 					{
-						SessionSave(null,null,"P");
+						SessionSave(ApplicationCode,null,null,"P");
 						WebTools.Redirect(Response,sessionGeneral.StartPage);
 					}
 				}
@@ -92,13 +95,13 @@ namespace PCIWebFinAid
 //	Testing
 //			if ( ! Tools.SystemIsLive() && txtID.Text.ToUpper() == "PK" && txtPW.Text.ToUpper() == "PK" )
 //			{
-//				SessionSave("248","Paul Kilfoil","P");
+//				SessionSave(ApplicationCode,"248","Paul Kilfoil","P");
 //				WebTools.Redirect(Response,sessionGeneral.StartPage);
 //				return;
 //			}
 			if ( txtID.Text.ToUpper() == "XADMIN" && txtPW.Text.ToUpper() == "X8Y3Z7" )
 			{
-				SessionSave("256","Paul Kilfoil","P");
+				SessionSave(ApplicationCode,"256","Paul Kilfoil","P");
 				WebTools.Redirect(Response,sessionGeneral.StartPage);
 				return;
 			}
@@ -126,7 +129,7 @@ namespace PCIWebFinAid
 					else
 					{
 						SetErrorDetail("",-777);
-						SessionSave(userCode,userName,"X");
+						SessionSave(ApplicationCode,userCode,userName,"X");
 						ShowSecure(true,true);
 //						pnlSecurity.Visible = true;
 //						pnlSecure.Visible   = true;

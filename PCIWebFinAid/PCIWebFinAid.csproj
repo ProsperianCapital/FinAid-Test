@@ -102,7 +102,9 @@
     <Content Include="IncludeLogin2.htm" />
     <Content Include="IncludeMain.htm" />
     <Content Include="packages.config" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="JS\AJAXUtils.js" />

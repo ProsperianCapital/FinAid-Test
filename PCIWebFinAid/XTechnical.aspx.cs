@@ -22,7 +22,7 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode) != 0 )
+			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,sessionGeneral.ApplicationCode) != 0 )
 				StartOver(10999);
 		}
 
@@ -50,7 +50,7 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = WebTools.JavaScriptSource("ShowData(4)");
 			int action         = WebTools.ListValue(lstAction);
 
-			if ( action > 99 && txtPwd.Text != "901317" )
+			if ( action > 99 && txtPwd.Text != ((int)PCIBusiness.Constants.SystemPassword.Technical).ToString() )
 			{
 				lblError.Text       = "Invalid password";
 				ascxXFooter.JSText  = WebTools.JavaScriptSource("ShowData(9)");
@@ -334,7 +334,7 @@ namespace PCIWebFinAid
 				DateTime fDate = System.DateTime.Now;
 				if ( txtData.Text.Length > 0 )
 					fDate = PCIBusiness.Tools.StringToDate(txtData.Text,7); // yyyy-mm-dd
-				if ( fDate <= PCIBusiness.Constants.C_NULLDATE() )
+				if ( fDate <= PCIBusiness.Constants.DateNull )
 				{
 					lblError.Text = "Invalid date";
 					return;

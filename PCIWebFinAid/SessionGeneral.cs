@@ -17,6 +17,7 @@
 
 //		System details
 		private string  startPage;
+		private string  applicationCode;
 
 		public  string  UserCode
 		{
@@ -32,6 +33,11 @@
 		{
 			get { return PCIBusiness.Tools.NullToString(contractCode); }
 			set { contractCode = value.Trim(); }
+		}
+		public  string  ApplicationCode
+		{
+			get { return PCIBusiness.Tools.NullToString(applicationCode); }
+			set { applicationCode = value.Trim(); }
 		}
 		public  bool    AdminUser
 		{

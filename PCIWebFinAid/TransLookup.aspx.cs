@@ -34,11 +34,11 @@ namespace PCIWebFinAid
 					}
 			DateTime d1 = Tools.StringToDate(txtDate1.Text,1);
 			DateTime d2 = Tools.StringToDate(txtDate2.Text,1);
-			if ( d1 <= Constants.C_NULLDATE() )
+			if ( d1 <= Constants.DateNull )
 				err = err + "Invalid from date (it must be in dd/mm/yyyy format)<br />";
-			if ( d2 <= Constants.C_NULLDATE() )
+			if ( d2 <= Constants.DateNull )
 				err = err + "Invalid to date (it must be in dd/mm/yyyy format)<br />";
-			if ( d1 > d2 && d2 > Constants.C_NULLDATE() )
+			if ( d1 > d2 && d2 > Constants.DateNull )
 				err = err + "From date cannot be after to date<br />";
 			SetErrorDetail("ValidateData",err.Length,err,err);
 			return err.Length;

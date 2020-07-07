@@ -13,6 +13,7 @@ namespace PCIWebFinAid
 	public partial class XCashBook : BasePageBackOffice
 	{
 		string cashBook;
+		int    errNo;
 		protected override void PageLoad(object sender, EventArgs e)
 		{
 			if ( SessionCheck(19) != 0 )
@@ -21,24 +22,69 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 			{
-				ascxXFooter.JSText = WebTools.JavaScriptSource("LoadCashBooks(GetEltValue('hdnSCashBook'),'S')");
+			//	ascxXFooter.JSText = WebTools.JavaScriptSource("LoadCashBooks(GetEltValue('hdnSCashBook'),'S')");
+				LoadDataAJAX("S");
 				return;
 			}
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode) != 0 )
+			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,sessionGeneral.ApplicationCode) != 0 )
 				StartOver(10888);
 			else
 			{
-				LoadData();
+				LoadDataInitial();
 				if ( WebTools.RequestValueInt(Request,"Mode") == 213 )
 					ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(2)");
 			}
 		}
 
-		private void LoadData()
+		private void LoadDataAJAX(string dType)
 		{
+//		Called after every postback to load data that was loaded via AJAX
+//		Each AJAX list is based on the value of another list. So
+//		(1)	lstXCashBook uses the value from lstXCompany
+//				hdnXCashBook is the previously selected cash book
+//		(2)	lstXGLCode uses the value from lstXTType
+//				hdnXGLCode is the previously selected GL code
+
+			errNo = 0;
+
+			try
+			{
+				DropDownList lstX     = (DropDownList)FindControl("lst"+dType+"Company");
+				DropDownList lstY     = (DropDownList)FindControl("lst"+dType+"CashBook");
+				HiddenField  hdnX     = (HiddenField) FindControl("hdn"+dType+"CashBook");
+				string       codeMain = WebTools.ListValue(lstX,"");
+				string       codeSel  = Tools.NullToString(hdnX.Value);
+				if ( codeMain.Length > 0 && codeMain != "0" )
+				{
+					sql   = "exec sp_Audit_Get_CompanyCashbook @CompanyCode=" + Tools.DBString(codeMain);
+					errNo = WebTools.ListBind(lstY,sql,null,"CashBookCode","CashBookDescription","(All/any cashbook)",codeSel);
+					SetErrorDetail("LoadData",errNo,"Unable to load cash book list",sql);
+				}
+
+				lstX     = (DropDownList)FindControl("lst"+dType+"TType");
+				lstY     = (DropDownList)FindControl("lst"+dType+"GLCode");
+				hdnX     = (HiddenField) FindControl("hdn"+dType+"GLCode");
+				codeMain = WebTools.ListValue(lstX,"",2);
+				codeSel  = Tools.NullToString(hdnX.Value);
+				if ( codeMain.Length == 0 || codeMain == "0" )
+					codeMain = "00000";
+				sql   = "exec sp_Audit_Get_GLAccount @GLAccount=" + Tools.DBString(codeMain);
+				errNo = WebTools.ListBind(lstY,sql,null,"GLAccount","GLAccountDescription","","");
+				SetErrorDetail("LoadData",errNo,"Unable to load GL account list",sql);
+			}
+			catch (Exception ex)
+			{
+				SetErrorDetail("LoadData",80080,"Internal error",sql,2,2,ex);
+			}
+		}
+
+		private void LoadDataInitial()
+		{
+//		Called once in the beginning
+
 			SetErrorDetail("",-888);
 			ascxXFooter.JSText = WebTools.JavaScriptSource("HidePopups()");
-			int errNo          = 0;
+			errNo              = 0;
 
 			try
 			{
@@ -53,23 +99,21 @@ namespace PCIWebFinAid
 //				sql   = "exec sp_Audit_Get_CompanyCashbook";
 //				This is done via an AJAX call
 
-				sql   = "exec sp_Audit_Get_RP";
-				errNo = WebTools.ListBind(lstSReceipt,sql,null,"RP","RP","(All/any receipt)","");
-				errNo = WebTools.ListBind(lstEReceipt,sql,null,"RP","RP","","");
+				sql   = "exec sp_Audit_Get_RPA";
+				errNo = WebTools.ListBind(lstSReceipt,sql,null,"RPCode","Description","(All/any receipt)","");
+				errNo = WebTools.ListBind(lstEReceipt,sql,null,"RPCode","Description","","");
 				SetErrorDetail("LoadData",errNo,"Unable to load receipt/payment list",sql);
 
-				if ( lstSTType.Enabled )
-				{
-					sql   = "exec sp_Audit_Get_TransactionType";
-					errNo = WebTools.ListBind(lstSTType,sql,null,"TransactionTypeCode","TransactionTypeDescription","(All/any type)","");
-					errNo = WebTools.ListBind(lstETType,sql,null,"TransactionTypeCode","TransactionTypeDescription","","");
-					SetErrorDetail("LoadData",errNo,"Unable to load transaction type list",sql);
-				}
+				sql   = "exec sp_Audit_Get_TransactionType";
+				errNo = WebTools.ListBind(lstSTType,sql,new string[]{"TransactionTypeCode","GLAccount"},"TransactionTypeDescription","(All/any type)","");
+				errNo = WebTools.ListBind(lstETType,sql,new string[]{"TransactionTypeCode","GLAccount"},"TransactionTypeDescription","","");
+				SetErrorDetail("LoadData",errNo,"Unable to load transaction type list",sql);
 
-				sql   = "exec sp_Audit_Get_GLAccount";
-				errNo = WebTools.ListBind(lstSGLCode,sql,null,"GLAccount","GLAccountDescription","(All/any account)","");
-				errNo = WebTools.ListBind(lstEGLCode,sql,null,"GLAccount","GLAccountDescription","","");
-				SetErrorDetail("LoadData",errNo,"Unable to load GL account codes",sql);
+//				sql   = "exec sp_Audit_Get_GLAccount";
+//				This is done via an AJAX call
+//				errNo = WebTools.ListBind(lstSGLCode,sql,null,"GLAccount","GLAccountDescription","(All/any account)","");
+//				errNo = WebTools.ListBind(lstEGLCode,sql,null,"GLAccount","GLAccountDescription","","");
+//				SetErrorDetail("LoadData",errNo,"Unable to load GL account codes",sql);
 
 				sql   = "exec sp_Audit_Get_GLAccountDimension";
 				errNo = WebTools.ListBind(lstSGLDimension,sql,null,"CompanyCode","CompanyDescription","(All/any dimension)","");
@@ -122,15 +166,17 @@ namespace PCIWebFinAid
 							hdnECashBook.Value = cashBook;
 							ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(1);LoadCashBooks('"+cashBook+"','E')");
 							lstECashBook.Items.Clear();
+//	AJAX calls
 //							WebTools.ListAdd(lstECashBook,0,hdnECashBook.Value,hdnECashBook.Value);
+//							WebTools.ListSelect(lstEGLCode     ,cbTran.GetColumn("GLAccountCode"));
 							WebTools.ListSelect(lstECompany    ,cbTran.GetColumn("CompanyCode"));
 							WebTools.ListSelect(lstEOBOCompany ,cbTran.GetColumn("OBOCompanyCode"));
 							WebTools.ListSelect(lstEReceipt    ,cbTran.GetColumn("RP"));
 							WebTools.ListSelect(lstECurr       ,cbTran.GetColumn("CUR"));
 							WebTools.ListSelect(lstETType      ,cbTran.GetColumn("TransactionDescription"));
-							WebTools.ListSelect(lstEGLCode     ,cbTran.GetColumn("GLAccountCode"));
 							WebTools.ListSelect(lstEGLDimension,cbTran.GetColumn("GLAccountDimension"));
 //							WebTools.ListSelect(lstETaxRate    ,cbTran.GetColumn("TaxRate"));
+							LoadDataAJAX("E");
 							lstECompany.Focus();
 						}
 			}
@@ -260,15 +306,15 @@ namespace PCIWebFinAid
 			grdData.Visible    = false;
 			pnlGridBtn.Visible = false;
 
-			if ( d1 > Constants.C_NULLDATE() && d2 <= Constants.C_NULLDATE() )
+			if ( d1 > Constants.DateNull && d2 <= Constants.DateNull )
 				SetErrorDetail("ValidateData",80050,"If you specify a start date you must also specify an end date");
-			else if ( d2 > Constants.C_NULLDATE() && d1 <= Constants.C_NULLDATE() )
+			else if ( d2 > Constants.DateNull && d1 <= Constants.DateNull )
 				SetErrorDetail("ValidateData",80053,"If you specify an end date you must also specify a start date");
-			else if ( d1 > Constants.C_NULLDATE() && d2 > Constants.C_NULLDATE() && d1 > d2 )
+			else if ( d1 > Constants.DateNull && d2 > Constants.DateNull && d1 > d2 )
 				SetErrorDetail("ValidateData",80056,"The start date cannot be after the end date");
-//			if ( d1 > Constants.C_NULLDATE() && dR > Constants.C_NULLDATE() && dR < d1 )
+//			if ( d1 > Constants.DateNull && dR > Constants.DateNull && dR < d1 )
 //				SetErrorDetail("ValidateData",80059,"The recon date cannot be before the start date");
-//			if ( d2 > Constants.C_NULLDATE() && dR > Constants.C_NULLDATE() && dR > d2 )
+//			if ( d2 > Constants.DateNull && dR > Constants.DateNull && dR > d2 )
 //				SetErrorDetail("ValidateData",80062,"The recon date cannot be after the end date");
 			if ( a1 > 0 && a2 <= (decimal)0.01 )
 				SetErrorDetail("ValidateData",80065,"If you specify a from amount you must also specify a to amount");

@@ -21,6 +21,12 @@
 	color: white;
 	text-decoration: none;
 }
+.VText {
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+}
 </style>
 <script type="text/javascript">
 var xActive    = null;

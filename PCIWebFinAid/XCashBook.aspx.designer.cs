@@ -49,6 +49,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.DropDownList lstSCompany;
         
         /// <summary>
+        /// lstSCashBook control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstSCashBook;
+        
+        /// <summary>
         /// hdnSCashBook control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstSGLCode;
+        
+        /// <summary>
+        /// hdnSGLCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnSGLCode;
         
         /// <summary>
         /// lstSGLDimension control.
@@ -317,6 +335,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstEGLCode;
+        
+        /// <summary>
+        /// hdnEGLCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnEGLCode;
         
         /// <summary>
         /// lstEGLDimension control.
