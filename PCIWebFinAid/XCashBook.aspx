@@ -169,7 +169,7 @@ function DeleteMode(show)
 	<tr>
 		<td>GL Account Code</td>
 		<td>
-			<asp:DropDownList runat="server" ID="lstSGLCode"></asp:DropDownList>
+			<asp:DropDownList runat="server" ID="lstSGLCode" onchange="JavaScript:SetEltValue('hdnSGLCode',GetListValue(this))"></asp:DropDownList>
 			<asp:HiddenField runat="server"  ID="hdnSGLCode" value="" /></td>
 		<td colspan="2">GL Account Dimension</td><td><asp:DropDownList runat="server" ID="lstSGLDimension"></asp:DropDownList></td></tr>
 	<tr>
@@ -245,8 +245,8 @@ function DeleteMode(show)
 		<td>Transaction Date<br /><asp:TextBox runat="server" ID="txtEDate" MaxLength="10" Width="80px"></asp:TextBox>
 			<a href="JavaScript:showCalendar(frmCashBook.txtEDate)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
-		<td>GL Account Code<br /><asp:DropDownList runat="server" ID="lstEGLCode"></asp:DropDownList>
-			<asp:HiddenField runat="server"  ID="hdnEGLCode" value="" /></td>
+		<td>GL Account Code<br /><asp:DropDownList runat="server" ID="lstEGLCode" onchange="JavaScript:SetEltValue('hdnEGLCode',GetListValue(this))"></asp:DropDownList>
+			<asp:HiddenField runat="server" ID="hdnEGLCode" value="" /></td>
 		<td>GL Account Dimension<br /><asp:DropDownList runat="server" ID="lstEGLDimension"></asp:DropDownList></td></tr>
 	<tr>
 		<td>Amount<br /><asp:TextBox runat="server" ID="txtEAmt" MaxLength="10" Width="80px"></asp:TextBox></td>
