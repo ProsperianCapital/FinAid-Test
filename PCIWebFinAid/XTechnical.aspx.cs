@@ -365,7 +365,7 @@ namespace PCIWebFinAid
 
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.SQLObject )
 			{
-				lblError.Text = "Invalid SQL object name";
+				lblError.Text = "Internal error interrogating SQL";
 				x3            = txtData.Text.Trim().ToUpper();
 				if ( x3.Length < 3 )
 					return;
@@ -375,40 +375,43 @@ namespace PCIWebFinAid
 
 				try
 				{
-					if ( PCIBusiness.Tools.OpenDB(ref conn) )
-						if ( conn.Execute("sp_help " + PCIBusiness.Tools.DBString(x3),false) )
-						{
-							int k;
-							for ( k = 0 ; k < conn.ColumnCount ; k++ )
-							{
-								x1 = x1 + conn.ColName(k) + "<br />";
-								if ( conn.ColStatus("",k) == PCIBusiness.Constants.DBColumnStatus.ValueIsNull )
-									x2 = x2 + "NULL<br />";
-								else
-									x2 = x2 + conn.ColValue(k) + "<br />";
-							}
-							if ( conn.NextResultSet() )
-							{
-								for ( k = 0 ; k < conn.ColumnCount ; k++ )
-									x4 = x4 + "<td><u>" + conn.ColName(k) + "</u></td>";
-								x4 = "<hr /><table><tr>" + x4 + "</tr>";
-								while ( ! conn.EOF )
-								{
-									x4 = x4 + "<tr>";
-									for ( k = 0 ; k < conn.ColumnCount ; k++ )
-										if ( conn.ColStatus("",k) == PCIBusiness.Constants.DBColumnStatus.ValueIsNull )
-											x4 = x4 + "<td>NULL</td>";
-										else
-											x4 = x4 + "<td>" + conn.ColValue(k) + "</td>";
-									x4 = x4 + "</tr>";
-									conn.NextRow();
-								}
-								x4 = x4 + "</table>";
-							}
-							lblError.Text = "";
-						}
-					else
+					if ( ! PCIBusiness.Tools.OpenDB(ref conn) )
 						lblError.Text = "Cannot connect to SQL database";
+
+					else if ( ! conn.Execute("sp_help " + PCIBusiness.Tools.DBString(x3),false) )
+						lblError.Text = "Invalid SQL object name";
+					
+					else
+					{
+						int k;
+						for ( k = 0 ; k < conn.ColumnCount ; k++ )
+						{
+							x1 = x1 + conn.ColName(k) + "<br />";
+							if ( conn.ColStatus("",k) == PCIBusiness.Constants.DBColumnStatus.ValueIsNull )
+								x2 = x2 + "NULL<br />";
+							else
+								x2 = x2 + conn.ColValue(k) + "<br />";
+						}
+						if ( conn.NextResultSet() )
+						{
+							for ( k = 0 ; k < conn.ColumnCount ; k++ )
+								x4 = x4 + "<td><u>" + conn.ColName(k) + "</u></td>";
+							x4 = "<hr /><table><tr>" + x4 + "</tr>";
+							while ( ! conn.EOF )
+							{
+								x4 = x4 + "<tr>";
+								for ( k = 0 ; k < conn.ColumnCount ; k++ )
+									if ( conn.ColStatus("",k) == PCIBusiness.Constants.DBColumnStatus.ValueIsNull )
+										x4 = x4 + "<td>NULL</td>";
+									else
+										x4 = x4 + "<td>" + conn.ColValue(k) + "</td>";
+								x4 = x4 + "</tr>";
+								conn.NextRow();
+							}
+							x4 = x4 + "</table>";
+						}
+						lblError.Text = "";
+					}
 				}
 				catch (Exception ex)
 				{
