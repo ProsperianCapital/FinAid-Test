@@ -69,7 +69,7 @@ namespace PCIWebFinAid
 				if ( codeMain.Length == 0 || codeMain == "0" )
 					codeMain = "00000";
 				sql   = "exec sp_Audit_Get_GLAccount @GLAccount=" + Tools.DBString(codeMain);
-				errNo = WebTools.ListBind(lstY,sql,null,"GLAccount","GLAccountDescription","","");
+				errNo = WebTools.ListBind(lstY,sql,null,"GLAccount","GLAccountDescription","",codeSel);
 				SetErrorDetail("LoadData",errNo,"Unable to load GL account list",sql);
 			}
 			catch (Exception ex)
