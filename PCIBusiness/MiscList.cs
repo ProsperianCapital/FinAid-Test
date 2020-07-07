@@ -143,7 +143,7 @@ namespace PCIBusiness
 			}
 			catch
 			{ }
-			return Constants.C_NULLDATE();
+			return Constants.DateNull;
 		}
 		public string GetColumnCurrency(string colName,byte errorMode=1)
 		{

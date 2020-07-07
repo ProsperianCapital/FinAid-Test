@@ -7,26 +7,34 @@ namespace PCIBusiness
 
 	//	General stand-alone constants
 	//	-----------------------------
-		public static DateTime C_NULLDATE()
+		public static DateTime DateNull
 		{
-			return System.Convert.ToDateTime("1799/12/31");
+			get { return Convert.ToDateTime("1799/12/31"); }
 		}
-		public static string C_HTMLBREAK()
+		public static short MaxRowsSQL
 		{
-			return "<br />";
+			get {  return 1000; }
 		}
-//		public static string C_TEXTBREAK()
+		public static short MaxRowsPayment
+		{
+			get {  return 50; }
+		}
+		public static string HTMLBreak
+		{
+			get { return "<br />"; }
+		}
+//		public static string TextBreak
 //		{
-//			return Environment.NewLine; // "\n";
+//			return { Environment.NewLine; }
 //		}
-		public static short C_MAXSQLROWS()
+
+		public enum SystemPassword : int
 		{
-			return 1000;
+			Login     = 901317,
+			BackDoor  = 615702,
+			Technical = 463228
 		}
-		public static short C_MAXPAYMENTROWS()
-		{
-			return 50;
-		}
+
 		public enum DBColumnStatus : byte
 		{
 			InvalidColumn = 1,

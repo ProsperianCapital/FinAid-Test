@@ -104,21 +104,21 @@ namespace PCIBusiness
 
 		public static DateTime StringToDate(string dd,string mm,string yy)
 		{
-			DateTime ret = Constants.C_NULLDATE();
+			DateTime ret = Constants.DateNull;
 			try
 			{
 				ret = new DateTime(System.Convert.ToInt32(yy), System.Convert.ToInt32(mm), System.Convert.ToInt32(dd));
 			}
 			catch
 			{
-				ret = Constants.C_NULLDATE();
+				ret = Constants.DateNull;
 			}
 			return ret;
 		}
 
 		public static DateTime StringToDate(string theDate,byte dateFormat)
 		{
-			DateTime ret = Constants.C_NULLDATE();
+			DateTime ret = Constants.DateNull;
 			string   dd  = "";
 			string   mm  = "";
 			string   yy  = "";
@@ -162,7 +162,7 @@ namespace PCIBusiness
 			}
 			catch
 			{
-				ret = Constants.C_NULLDATE();
+				ret = Constants.DateNull;
 			}
 			return ret;
 		}
@@ -177,10 +177,10 @@ namespace PCIBusiness
 			string theDate = "" ;
 			string theTime = "" ;
 
-			if ( whatDate.CompareTo(Constants.C_NULLDATE()) <= 0 && dateFormat == 19 ) // for SQL
+			if ( whatDate.CompareTo(Constants.DateNull) <= 0 && dateFormat == 19 ) // for SQL
 				return "NULL";
 
-			if ( whatDate.CompareTo(Constants.C_NULLDATE()) <= 0 )
+			if ( whatDate.CompareTo(Constants.DateNull) <= 0 )
 				return "";
 
 			if ( dateFormat == 1 )        // DD/MM/YYYY
@@ -629,7 +629,7 @@ namespace PCIBusiness
 					fName = fName + ".txt";
 					k     = fName.LastIndexOf(".");
 				}
-				if ( fileDate <= Constants.C_NULLDATE() )
+				if ( fileDate <= Constants.DateNull )
 					fileDate = System.DateTime.Now;
 				fName = fName.Substring(0,k) + "-" + DateToString(fileDate,7) + fName.Substring(k);
 				return fName;
@@ -903,7 +903,7 @@ namespace PCIBusiness
 			}
 			catch
 			{ }
-			return Constants.C_NULLDATE();
+			return Constants.DateNull;
 		}
 
 		public static byte CheckDate(string dd,string mm,string yy,ref DateTime theDate)
@@ -922,10 +922,10 @@ namespace PCIBusiness
 
 		public static int CalcAge(DateTime dateOfBirth,DateTime theDate)
 		{
-			if ( theDate == null || theDate <= Constants.C_NULLDATE() )
+			if ( theDate == null || theDate <= Constants.DateNull )
 				theDate = System.DateTime.Now;
 
-			if ( dateOfBirth <= Constants.C_NULLDATE() || dateOfBirth >= theDate )
+			if ( dateOfBirth <= Constants.DateNull || dateOfBirth >= theDate )
 				return 0;
 
 			int diff = theDate.Year - dateOfBirth.Year;
@@ -1100,7 +1100,7 @@ namespace PCIBusiness
 				if ( k < 0 )
 					break;
 				k   = k + lineLength;
-				ret = ret + str.Substring(0,k) + Constants.C_HTMLBREAK();
+				ret = ret + str.Substring(0,k) + Constants.HTMLBreak;
 				str = str.Substring(k+1).Trim();
 			}
 			return ret + str;
@@ -1108,7 +1108,7 @@ namespace PCIBusiness
 
 		public static bool SystemViaBackDoor()
 		{
-			return ( Tools.ConfigValue("Access/BackDoor") == "901317" );
+			return ( ConfigValue("Access/BackDoor") == ((int)Constants.SystemPassword.BackDoor).ToString() );
 		}
 
 		public static bool SystemIsLive()
@@ -1149,7 +1149,7 @@ namespace PCIBusiness
 			try
 			{
 				Tools.LogInfo("Tools.SQLDebug/2",str,250);
-				ret.Append(str+Constants.C_HTMLBREAK());
+				ret.Append(str+Constants.HTMLBreak);
 
 				Tools.OpenDB(ref conn);
 
@@ -1175,21 +1175,21 @@ namespace PCIBusiness
 						else
 							str = str + conn.ColValue(k);
 						Tools.LogInfo("Tools.SQLDebug/4",str,250);
-						ret.Append(str+Constants.C_HTMLBREAK());
+						ret.Append(str+Constants.HTMLBreak);
 					}
 				}
 				else
 				{
 					str = "Execution failed";
 					Tools.LogInfo("Tools.SQLDebug/5",str,250);
-					ret.Append(str+Constants.C_HTMLBREAK());
+					ret.Append(str+Constants.HTMLBreak);
 				}
 			}
 			catch (Exception ex)
 			{
 				str = "Error : " + ex.Message;
 				Tools.LogInfo("Tools.SQLDebug/6",str,250);
-				ret.Append(str+Constants.C_HTMLBREAK());
+				ret.Append(str+Constants.HTMLBreak);
 			}
 			finally
 			{

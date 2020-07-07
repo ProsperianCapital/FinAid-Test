@@ -507,7 +507,7 @@ namespace PCIBusiness
 			if ( errorMode == 1 )
 				Tools.LogException ( ModuleName("DBConn.ColDate"), "ColName=" + colName + ", ColNumber=" + colNumber.ToString(), ex );
       }
-      return Constants.C_NULLDATE();
+      return Constants.DateNull;
    } 
 
 		public string ColValue(int colNumber,byte errorMode=1)

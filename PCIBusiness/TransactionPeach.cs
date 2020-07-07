@@ -135,7 +135,8 @@ namespace PCIBusiness
 				        + "&card.cvv="         + Tools.URLString(payment.CardCVV)
 				        + "&amount="           + Tools.URLString(payment.PaymentAmountDecimal)
 				        + "&currency="         + Tools.URLString(payment.CurrencyCode)
-				        + "&paymentType=DB"; // DB = Instant, PA = Pre-authorize, CP =
+				        + "&paymentType=DB" // DB = Instant, PA = Pre-authorize, CP =
+				        + "&recurringType=REPEATED";
 
 				Tools.LogInfo("TransactionPeach.CardPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 

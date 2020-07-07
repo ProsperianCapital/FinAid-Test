@@ -103,7 +103,7 @@ namespace PCIBusiness
 		protected int LoadDataFromSQL(int maxRows=0,string sourceInfo="")
 		{
 			if ( maxRows < 1 )
-				maxRows = Constants.C_MAXSQLROWS();
+				maxRows = Constants.MaxRowsSQL;
 			return LoadDataFromSQL(null,maxRows,null,0,sourceInfo);
 		}
 		protected int LoadDataFromSQL(object[][] parms,int maxRows,System.Type classType=null,byte pagingMode=0,string sourceInfo="")
@@ -118,7 +118,7 @@ namespace PCIBusiness
 				if ( maxRows > short.MaxValue )
 					maxRows   = short.MaxValue;
 				else if ( maxRows < 1 )
-					maxRows   = Constants.C_MAXSQLROWS();
+					maxRows   = Constants.MaxRowsSQL;
 
 				if ( dbConn.Execute(sql,true,parms) )
 				{
