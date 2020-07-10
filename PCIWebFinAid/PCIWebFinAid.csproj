@@ -84,8 +84,6 @@
     <Content Include="LView.aspx" />
     <Content Include="LWelcome.aspx" />
     <Content Include="Menu.ascx" />
-    <Content Include="XCashBook.aspx" />
-    <Content Include="XContractLookup.aspx" />
     <Content Include="XFooter.ascx" />
     <Content Include="XHeader.ascx" />
     <Content Include="XHome.aspx" />
@@ -93,8 +91,10 @@
     <Content Include="XMenu.ascx" />
     <Content Include="XRecurring.aspx" />
     <Content Include="XTechnical.aspx" />
-    <Content Include="XTradingGateway.aspx" />
-    <Content Include="XTransLookup.aspx" />
+    <Content Include="pgAccountingCaptureCashbook.aspx" />
+    <Content Include="pgViewDashboardProsperianWealth.aspx" />
+    <Content Include="pgTransactionLookUp.aspx" />
+    <Content Include="pgContractLookUp.aspx" />
     <Content Include="IncludeBusy.htm" />
     <Content Include="IncludeErrorDtl.htm" />
     <Content Include="IncludeMainAdmin.htm" />
@@ -298,19 +298,19 @@
       <DependentUpon>TransLookup.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebTools.cs" />
-    <Compile Include="XCashBook.aspx.cs">
-      <DependentUpon>XCashBook.aspx</DependentUpon>
+    <Compile Include="pgAccountingCaptureCashbook.aspx.cs">
+      <DependentUpon>pgAccountingCaptureCashbook.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="XCashBook.aspx.designer.cs">
-      <DependentUpon>XCashBook.aspx</DependentUpon>
+    <Compile Include="pgAccountingCaptureCashbook.aspx.designer.cs">
+      <DependentUpon>pgAccountingCaptureCashbook.aspx</DependentUpon>
     </Compile>
-    <Compile Include="XContractLookup.aspx.cs">
-      <DependentUpon>XContractLookup.aspx</DependentUpon>
+    <Compile Include="pgContractLookup.aspx.cs">
+      <DependentUpon>pgContractLookup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="XContractLookup.aspx.designer.cs">
-      <DependentUpon>XContractLookup.aspx</DependentUpon>
+    <Compile Include="pgContractLookup.aspx.designer.cs">
+      <DependentUpon>pgContractLookup.aspx</DependentUpon>
     </Compile>
     <Compile Include="XFooter.ascx.cs">
       <DependentUpon>XFooter.ascx</DependentUpon>
@@ -361,19 +361,19 @@
     <Compile Include="XTechnical.aspx.designer.cs">
       <DependentUpon>XTechnical.aspx</DependentUpon>
     </Compile>
-    <Compile Include="XTradingGateway.aspx.cs">
-      <DependentUpon>XTradingGateway.aspx</DependentUpon>
+    <Compile Include="pgViewDashboardProsperianWealth.aspx.cs">
+      <DependentUpon>pgViewDashboardProsperianWealth.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="XTradingGateway.aspx.designer.cs">
-      <DependentUpon>XTradingGateway.aspx</DependentUpon>
+    <Compile Include="pgViewDashboardProsperianWealth.aspx.designer.cs">
+      <DependentUpon>pgViewDashboardProsperianWealth.aspx</DependentUpon>
     </Compile>
-    <Compile Include="XTransLookup.aspx.cs">
-      <DependentUpon>XTransLookup.aspx</DependentUpon>
+    <Compile Include="pgTransactionLookup.aspx.cs">
+      <DependentUpon>pgTransactionLookup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="XTransLookup.aspx.designer.cs">
-      <DependentUpon>XTransLookup.aspx</DependentUpon>
+    <Compile Include="pgTransactionLookup.aspx.designer.cs">
+      <DependentUpon>pgTransactionLookup.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

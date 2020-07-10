@@ -149,7 +149,7 @@ namespace PCIWebFinAid
 				   + "Environment.UserName<br />"
 				   + "Environment.UserDomainName<br />"
 				   + "Database version";
-				x2 = "PlaNet BackOffice<br />"
+				x2 = AppDetails.AppName + "<br />"
 				   + PCIBusiness.SystemDetails.AppVersion + "<br />"
 				   + PCIBusiness.SystemDetails.AppDate + "<br />"
 				   + Environment.MachineName + "<br />"
@@ -198,7 +198,7 @@ namespace PCIWebFinAid
 					mail.Heading = "Prosperian Test Message";
 					mail.Body    = "<html><head><title>Test</title></head>"
 					             + "<body><img src='" + x1 + "/Images/PCapital.png' title='Prosperian' style='float:right' />"
-					             + "<p>Good day, this is a test message from PlaNet (Prosperian) user " + sessionGeneral.UserName
+					             + "<p>Good day, this is a test message from " + AppDetails.AppName + " user " + sessionGeneral.UserName
 					             + " (" + sessionGeneral.UserCode + ").</p><table>"
 					             + "<tr><td> <b>SMTP Server</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-Server") + "</td></tr>"
 					             + "<tr><td> <b>SMTP User</b></td><td>: "   + PCIBusiness.Tools.ConfigValue("SMTP-User") + "</td></tr>"
@@ -207,7 +207,7 @@ namespace PCIWebFinAid
 					             + "<tr><td> <b>BCC Address</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-BCC") + "</td></tr>"
 					             + "<tr><td> <b>Date/Time</b></td><td>: "   + PCIBusiness.Tools.DateToString(System.DateTime.Now,7,1) + "</td></tr></table>"
 					             + "<p>Best regards"
-					             + "<br />- PlaNet Admin System"
+					             + "<br />- " + AppDetails.AppName
 					             + "<br />&nbsp;&nbsp;Version " + PCIBusiness.SystemDetails.AppVersion
 					             + "<br />&nbsp;&nbsp;(c) Prosperian Capital International"
 					             + "<br />&nbsp;&nbsp;<a href='" + x1 + "'>" + x1 + "</a></p></body></html>";

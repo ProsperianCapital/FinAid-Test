@@ -183,13 +183,13 @@ namespace PCIWebFinAid
 		                              short       selectIndex = -888 )
 		{
 			if ( PCIBusiness.Tools.NullToString(sql).Length > 0 )
-				return ListBind ( listBox,
-				                  sql,
-				                  new string[] {dataFieldKey},
-				                  dataFieldShow,
-				                  addZeroRow,
-				                  selectValue,
-				                  selectIndex );
+				return ListBindMultiKey ( listBox,
+				                          sql,
+				                          new string[] {dataFieldKey},
+				                          dataFieldShow,
+				                          addZeroRow,
+				                          selectValue,
+				                          selectIndex );
 
 			else if ( dataSource != null )
 			{
@@ -202,13 +202,13 @@ namespace PCIWebFinAid
 			return 99;
 		}
 
-		public static byte ListBind ( ListControl listBox,
-		                              string      sql,
-		                              string[]    dataFieldKey,
-		                              string      dataFieldShow,
-		                              string      addZeroRow  = "",
-		                              string      selectValue = "",
-		                              short       selectIndex = -888 )
+		public static byte ListBindMultiKey ( ListControl listBox,
+		                                      string      sql,
+		                                      string[]    dataFieldKey,
+		                                      string      dataFieldShow,
+		                                      string      addZeroRow  = "",
+		                                      string      selectValue = "",
+		                                      short       selectIndex = -888 )
 		{
 			listBox.Items.Clear();
 

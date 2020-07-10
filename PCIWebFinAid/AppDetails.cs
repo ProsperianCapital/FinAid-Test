@@ -4,8 +4,7 @@ namespace PCIWebFinAid
 {
 	public static class AppDetails
 	{
-		public static string AppName = "Financial Aid Registration";
-//		public static string AppDate = "2018/10/18 12:55:37";
+		public static string AppName = "PlaNet Technologies";
 
 		public static string Summary()
 		{
