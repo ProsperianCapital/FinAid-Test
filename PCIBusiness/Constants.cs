@@ -62,7 +62,8 @@ namespace PCIBusiness
 			PayGenius  = 18,
 			Ecentric   = 19,
 			eNETS      = 20,
-			Peach      = 21
+			Peach      = 21,
+			TokenEx    = 29
 //	Not implemented yet
 //			DinersClub = 22
 //			PayFast    = 23

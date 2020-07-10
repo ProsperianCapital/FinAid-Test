@@ -38,6 +38,7 @@ namespace PCIBusiness
 		private string   ccPIN;
 		private string   ccToken;
 
+//	Payment Provider (eg. Peach)
 		private string   bureauCode;
 		private string   providerAccount;
 		private string   providerKey;
@@ -45,12 +46,31 @@ namespace PCIBusiness
 		private string   providerPassword;
 		private string   providerURL;
 
+//	Token Provider (eg. TokenEx)
+		private string   tokenizerKey;
+		private string   tokenizerID;
+		private string   tokenizerURL;
+
 		private int      processMode;
 		private byte     transactionType;
 		private string   threeDForm;
 
 		private Transaction transaction;
 
+
+//		Token Provider stuff
+		public string    TokenizerKey
+		{
+			get { return  Tools.NullToString(tokenizerKey); }
+		}
+		public string    TokenizerID
+		{
+			get { return  Tools.NullToString(tokenizerID); }
+		}
+		public string    TokenizerURL
+		{
+			get { return  Tools.NullToString(tokenizerURL); }
+		}
 
 //		Payment Provider stuff
 		public string    BureauCode
@@ -512,6 +532,8 @@ namespace PCIBusiness
 					return retProc; // eNETS does not have tokenization ... yet
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
 					transaction = new TransactionPeach();
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+					transaction = new TransactionTokenEx();
 				else
 					return retProc;
 			}
@@ -561,6 +583,8 @@ namespace PCIBusiness
 					transaction = new TransactionENets();
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
 					transaction = new TransactionPeach();
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+					transaction = new TransactionTokenEx();
 //				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayFast) )
 //					transaction = new TransactionPayFast();
 				else
@@ -631,6 +655,11 @@ namespace PCIBusiness
 			providerAccount  = dbConn.ColString ("MerchantAccount",0,0);
 			providerUserID   = dbConn.ColString ("MerchantUserId",0,0);
 			providerPassword = dbConn.ColString ("MerchantUserPassword",0,0);
+
+		//	Token Provider (if empty, then it is the same as the payment provider)
+			tokenizerID      = dbConn.ColString ("idToken" ,0,0);
+			tokenizerKey     = dbConn.ColString ("keyToken",0,0);
+			tokenizerURL     = dbConn.ColString ("urlToken",0,0);
 
 		//	Customer
 			if ( dbConn.ColStatus("lastName") == Constants.DBColumnStatus.ColumnOK )

@@ -81,7 +81,6 @@ namespace PCIBusiness
 
 				try
 				{
-				//	ConnectionStringSettings db = ConfigurationManager.ConnectionStrings["DBConn"];
 					ConnectionStringSettings db = ConfigurationManager.ConnectionStrings[connectionName];
 					connString                  = db.ConnectionString;
 					if ( connString == null || connString.Length < 5 )

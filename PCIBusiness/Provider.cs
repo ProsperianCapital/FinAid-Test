@@ -86,6 +86,7 @@ namespace PCIBusiness
 				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Ecentric)  ) transaction = new TransactionEcentric();
 				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS)     ) transaction = new TransactionENets();
 				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach)     ) transaction = new TransactionPeach();
+				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx)   ) transaction = new TransactionTokenEx();
 				return transaction;
 			}
 		}

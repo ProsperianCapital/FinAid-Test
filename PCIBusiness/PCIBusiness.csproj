@@ -103,6 +103,7 @@
     <Compile Include="TransactionPayU.cs" />
     <Compile Include="TransactionPeach.cs" />
     <Compile Include="TransactionT24.cs" />
+    <Compile Include="TransactionTokenEx.cs" />
     <Compile Include="Web References\IkajoService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
