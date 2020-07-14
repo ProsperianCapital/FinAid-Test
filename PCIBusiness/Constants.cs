@@ -63,10 +63,10 @@ namespace PCIBusiness
 			Ecentric   = 19,
 			eNETS      = 20,
 			Peach      = 21,
-			TokenEx    = 29
+			TokenEx    = 22
 //	Not implemented yet
-//			DinersClub = 22
-//			PayFast    = 23
+//			DinersClub = 23
+//			PayFast    = 24
 		}
 
 		public enum TradingProvider : int

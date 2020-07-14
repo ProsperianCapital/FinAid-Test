@@ -126,16 +126,21 @@ namespace PCIBusiness
 
 			try
 			{
-				xmlSent = "entityId="          + Tools.URLString(payment.ProviderUserID)
-				        + "&paymentBrand="     + Tools.URLString(payment.CardType.ToUpper())
-				        + "&card.number="      + Tools.URLString(payment.CardNumber)
-				        + "&card.holder="      + Tools.URLString(payment.CardName)
-				        + "&card.expiryMonth=" + Tools.URLString(payment.CardExpiryMM)
-				        + "&card.expiryYear="  + Tools.URLString(payment.CardExpiryYYYY)
-				        + "&card.cvv="         + Tools.URLString(payment.CardCVV)
-				        + "&amount="           + Tools.URLString(payment.PaymentAmountDecimal)
-				        + "&currency="         + Tools.URLString(payment.CurrencyCode)
-				        + "&paymentType=DB" // DB = Instant, PA = Pre-authorize, CP =
+				xmlSent = "entityId="               + Tools.URLString(payment.ProviderUserID)
+				        + "&paymentBrand="          + Tools.URLString(payment.CardType.ToUpper())
+				        + "&card.number="           + Tools.URLString(payment.CardNumber)
+				        + "&card.holder="           + Tools.URLString(payment.CardName)
+				        + "&card.expiryMonth="      + Tools.URLString(payment.CardExpiryMM)
+				        + "&card.expiryYear="       + Tools.URLString(payment.CardExpiryYYYY)
+				        + "&card.cvv="              + Tools.URLString(payment.CardCVV)
+				        + "&amount="                + Tools.URLString(payment.PaymentAmountDecimal)
+				        + "&currency="              + Tools.URLString(payment.CurrencyCode)
+				        + "&merchantTransactionId=" + Tools.URLString(payment.MerchantReference)
+				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
+				        + "&merchant.name=[merchant.name]abcdefghijklmnopqrstuvwxyz"
+				        + "&merchant.city=[merchant.city]abcdefghijklmnopqrstuvwxyz"
+				        + "&merchantInvoiceId=merchantTnvoiceId"
+				        + "&paymentType=DB" // DB = Instant debit, PA = Pre-authorize, CP =
 				        + "&recurringType=REPEATED";
 
 				Tools.LogInfo("TransactionPeach.CardPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
@@ -161,9 +166,11 @@ namespace PCIBusiness
 
 			try
 			{
-				xmlSent = "entityId="  + Tools.URLString(payment.ProviderUserID)
-				        + "&amount="   + Tools.URLString(payment.PaymentAmountDecimal)
-				        + "&currency=" + Tools.URLString(payment.CurrencyCode)
+				xmlSent = "entityId="               + Tools.URLString(payment.ProviderUserID)
+				        + "&amount="                + Tools.URLString(payment.PaymentAmountDecimal)
+				        + "&currency="              + Tools.URLString(payment.CurrencyCode)
+				        + "&merchantTransactionId=" + Tools.URLString(payment.MerchantReference)
+				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
 				        + "&paymentType=DB" // DB = Instant, PA = Pre-authorize
 				        + "&recurringType=REPEATED";
 
