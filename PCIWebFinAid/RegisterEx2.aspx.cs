@@ -884,7 +884,8 @@ namespace PCIWebFinAid
 							      +     ",@CardExpieryMonth ="   + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
 							      +     ",@CardExpieryYear ="    + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
 							      +     ",@ReferenceNumber ="    + Tools.DBString(txReference.Value,63) // Long int
-							      +     ",@TransactionStatusCode = '007'";
+							      +     ",@TransactionStatusCode      = '007'"
+							      +     ",@CardTokenisationStatusCode = '007'";
 							errNo = miscList.ExecQuery(sql,0,"",false,true);
 							SetErrorDetail("btnNext_Click/30053",(errNo==0?0:30053),"Unable to update card token (sp_TokenEx_Ins_CardToken)",sql);
 
