@@ -8,7 +8,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class Register : BasePage
+	public partial class RegisterEx2 : BasePage
 	{
 		private   byte   logDebug = 40; // 240;
 		private   string productCode;
@@ -18,6 +18,7 @@ namespace PCIWebFinAid
 		private   string contractPIN;
 		private   string sql;
 		private   int    errNo;
+		private   int    pageNo;
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
@@ -40,6 +41,9 @@ namespace PCIWebFinAid
 				languageDialectCode = WebTools.ViewStateString(ViewState,"LanguageDialectCode");
 				contractCode        = WebTools.ViewStateString(ViewState,"ContractCode");
 				contractPIN         = WebTools.ViewStateString(ViewState,"ContractPIN");
+				pageNo              = Tools.StringToInt(hdnPageNo.Value);
+				if ( pageNo == 5 )
+					btnNext_Click(null,null); // Isn't called because of TokenEx
 			}
 			else
 			{
@@ -134,7 +138,7 @@ namespace PCIWebFinAid
 		private void SetPostBackURL()
 		{
 			int    pNo = Tools.StringToInt(hdnPageNo.Value);
-			string url = "Register.aspx";
+			string url = "RegisterEx2.aspx";
 			if ( pNo > 0 )
 				url = url + "?PageNo=" + (pNo+1).ToString();
 			btnNext.PostBackUrl  = url;
@@ -638,7 +642,7 @@ namespace PCIWebFinAid
 				return ( lblError.Text.Length == 0 );
 		}
 
-		private int ValidateData(int pageNo)
+		private int ValidateData()
 		{
 			string err = "";
 			if ( pageNo == 1 )
@@ -674,15 +678,27 @@ namespace PCIWebFinAid
 			{ }
 			else if ( pageNo == 5 )
 			{
-				txtCCNumber.Text = txtCCNumber.Text.Trim();
-				if ( txtCCNumber.Visible && txtCCNumber.Text.Length < 12 )
-					err = err + "Invalid credit/debit card number<br />";
+//				txtCCNumber.Text = txtCCNumber.Text.Trim();
+//				if ( txtCCNumber.Visible && txtCCNumber.Text.Length < 12 )
+//					err = err + "Invalid credit/debit card number<br />";
 				txtCCName.Text = txtCCName.Text.Trim();
 				if ( txtCCName.Visible && txtCCName.Text.Length < 3 )
 					err = err + "Invalid credit/debit card name<br />";
-				txtCCCVV.Text = txtCCCVV.Text.Trim();
-				if ( txtCCCVV.Visible && txtCCCVV.Text.Length < 3 )
-					err = err + "Invalid credit/debit card CVV code<br />";
+//				txtCCCVV.Text = txtCCCVV.Text.Trim();
+//				if ( txtCCCVV.Visible && txtCCCVV.Text.Length < 3 )
+//					err = err + "Invalid credit/debit card CVV code<br />";
+				if ( txToken.Value.Trim().Length < 10 )
+					err = err + "Invalid credit/debit card number and/or CVV<br />";
+				try
+				{
+					DateTime dt = new DateTime(WebTools.ListValue(lstCCYear),WebTools.ListValue(lstCCMonth),1,0,0,0);
+					if ( System.DateTime.Now >= dt.AddMonths(1) )
+						err = err + "Invalid credit/debit card expiry date<br />";
+				}		
+				catch
+				{
+					err = err + "Invalid credit/debit card expiry date<br />";
+				}
 			}
 
 			if ( err.Length > 0 )
@@ -692,7 +708,6 @@ namespace PCIWebFinAid
 
 		protected void btnNext_Click(Object sender, EventArgs e)
 		{
-			int pageNo = Tools.StringToInt(hdnPageNo.Value);
 			int pdfErr = 0;
 			errNo      = 0;
 
@@ -708,11 +723,12 @@ namespace PCIWebFinAid
 				txtFirstName.Text = "Peter";
 				txtEMail.Text     = "PaulKilfoil@gmail.com";
 				txtIncome.Text    = "125000";
-				txtCCNumber.Text  = "4901888877776666";
-				txtCCCVV.Text     = "789";
+				txToken.Value     = "4901628031770019";
+//				txtCCNumber.Text  = "4901888877776666";
+//				txtCCCVV.Text     = "789";
 			}
 
-			if ( ValidateData(pageNo) > 0 )
+			if ( ValidateData() > 0 )
 				return;
 
 			string mailText = "";
@@ -725,7 +741,6 @@ namespace PCIWebFinAid
 					    +     ",@ContractCode ="     + Tools.DBString(contractCode)
 					    +     ",@ClientIPAddress ="  + Tools.DBString(WebTools.ClientIPAddress(Request,1))
 					    +     ",@ClientDevice ="     + Tools.DBString(WebTools.ClientBrowser(Request,hdnBrowser.Value));
-//					    +     ",@ReferringURL ="     + Tools.DBString(hdnReferURL.Value)
 
 //					if ( Tools.LiveTestOrDev() == Constants.SystemMode.Development )
 					if ( Tools.SystemViaBackDoor() )
@@ -748,23 +763,20 @@ namespace PCIWebFinAid
 					             + ",@TsCsRead = '1'"
 					             + ",@PaymentMethodCode =" + Tools.DBString(WebTools.ListValue(lstPayment,""));
 					else if ( pageNo == 5 )
-						sql = sql + ",@CardNumber ="      + Tools.DBString(txtCCNumber.Text,47)
+						sql = sql + ",@CardNumber = ''"
+					             + ",@CardCVVCode = ''"
 					             + ",@AccountHolder ="   + Tools.DBString(txtCCName.Text,47)
 					             + ",@CardExpiryMonth =" + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
-					             + ",@CardExpiryYear ="  + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
-					             + ",@CardCVVCode ="     + Tools.DBString(txtCCCVV.Text,47);
+					             + ",@CardExpiryYear ="  + Tools.DBString(WebTools.ListValue(lstCCYear).ToString());
+//					else if ( pageNo == 5 )
+//						sql = sql + ",@CardNumber ="      + Tools.DBString(txtCCNumber.Text,47)
+//					             + ",@AccountHolder ="   + Tools.DBString(txtCCName.Text,47)
+//					             + ",@CardExpiryMonth =" + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
+//					             + ",@CardExpiryYear ="  + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
+//					             + ",@CardCVVCode ="     + Tools.DBString(txtCCCVV.Text,47);
 
 					errNo = miscList.ExecQuery(sql,0);
 					SetErrorDetail("btnNext_Click/30020",errNo,"Unable to update information (pageNo="+pageNo.ToString()+")",sql);
-
-//					if ( errNo == 0 && pageNo == 5 )
-//					{
-//						sql   = "exec WP_ContractApplicationC"
-//						      +     " @RegistrationPage = '5'"
-//						      +     ",@ContractCode     =" + Tools.DBString(contractCode);
-//						errNo = miscList.ExecQuery(sql,0);
-//						SetErrorDetail(errNo,30025,"Unable to update information",sql);
-//					}			
 
 					if ( errNo == 0 || pageNo > 180 )
 					{
@@ -783,6 +795,23 @@ namespace PCIWebFinAid
 						}
 						else if ( pageNo == 5 )
 						{
+//	TokenEx Start
+//	[TESTING]
+//	Secret key = njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I
+//	API key    = 4311038889209736
+//	[TESTING]
+							string secretKey      = Tools.ConfigValue("TokenEx/Key");
+							txID.Value            = Tools.ConfigValue("TokenEx/Id");
+							txOrigin.Value        = Request.Url.GetLeftPart(UriPartial.Authority);
+							txTimestamp.Value     = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
+//							txTokenScheme.Value   = "sixTOKENfour";
+							string data           = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
+							txHMAC.Value          = Tools.GenerateHMAC(data,secretKey);
+							lblTx.Text            = WebTools.JavaScriptSource("TokenSetup()");
+//	[TESTING]
+//							txConcatenatedString.Value = data;
+//	[TESTING]
+//	TokenEx End
 							string productOption  = WebTools.ListValue(lstOptions,"X");
 							string payMethod      = WebTools.ListValue(lstPayment,"X");
 							txtCCName.Text        = "";
@@ -843,9 +872,21 @@ namespace PCIWebFinAid
 						{
 							sql   = "exec WP_ContractApplicationC"
 							      +     " @RegistrationPage = '5'"
-							      +     ",@ContractCode     =" + Tools.DBString(contractCode);
-							errNo = miscList.ExecQuery(sql,0);
-							SetErrorDetail("btnNext_Click/30050",errNo,"Unable to update information (pageNo=6)",sql);
+							      +     ",@ContractCode =" + Tools.DBString(contractCode);
+							errNo = miscList.ExecQuery(sql,0,"",false,true);
+							SetErrorDetail("btnNext_Click/30050",(errNo==0?0:30050),"Unable to update information (WP_ContractApplicationC)",sql);
+
+							sql   = "exec sp_TokenEx_Ins_CardToken"
+							      +     " @ContractCode ="       + Tools.DBString(contractCode)
+							      +     ",@MaskedCardNumber ="   + Tools.DBString(Tools.MaskCardNumber(txToken.Value))
+							      +     ",@PaymentBureauCode ="  + Tools.DBString(Tools.BureauCode(Constants.PaymentProvider.TokenEx))
+							      +     ",@PaymentBureauToken =" + Tools.DBString(txToken.Value)
+							      +     ",@CardExpieryMonth ="   + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
+							      +     ",@CardExpieryYear ="    + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
+							      +     ",@ReferenceNumber ="    + Tools.DBString(txReference.Value,63) // Long int
+							      +     ",@TransactionStatusCode = '007'";
+							errNo = miscList.ExecQuery(sql,0,"",false,true);
+							SetErrorDetail("btnNext_Click/30053",(errNo==0?0:30053),"Unable to update card token (sp_TokenEx_Ins_CardToken)",sql);
 
 							lbl100325.Text = "";
 							sql = "exec sp_WP_Get_WebsiteProductOptionA"
@@ -910,7 +951,8 @@ namespace PCIWebFinAid
 								SetErrorDetail("btnNext_Click/30080",30080,"Unable to retrieve product policy text",sql);
 
 							lblp6CCType.Text = "";
-							sql              = txtCCNumber.Text.Trim();
+//							sql              = txtCCNumber.Text.Trim();
+							sql              = txToken.Value.Trim(); // Tokenized as SIXxxxxxxFOUR
 							if ( sql.Length > 6 )
 								sql = sql.Substring(0,6);
 							sql = "exec WP_Get_CardAssociation @BIN=" + Tools.DBString(sql);
@@ -955,21 +997,12 @@ namespace PCIWebFinAid
 							else
 								lbl100209.Text   = lbl100209.Text.Replace("[Initials]","");
 							lblp6CCName.Text    = txtCCName.Text;
-							lblp6CCNumber.Text  = Tools.MaskCardNumber(txtCCNumber.Text);
+//							lblp6CCNumber.Text  = Tools.MaskCardNumber(txtCCNumber.Text);
+							lblp6CCNumber.Text  = Tools.MaskCardNumber(txToken.Value);
 							lblp6CCExpiry.Text  = lstCCYear.SelectedValue + "/" + lstCCMonth.SelectedValue;
 							lblp6Date.Text      = Tools.DateToString(System.DateTime.Now,2,1);
 							lblp6IP.Text        = WebTools.ClientIPAddress(Request,1);
 							lblp6Browser.Text   = WebTools.ClientBrowser(Request,hdnBrowser.Value);
-
-//	Can't store or email the actual card number
-//							sql      = "******";
-//							if ( lblp6CCNumber.Text.Length > 12 )
-//								sql   = lblp6CCNumber.Text.Substring(0,6) + sql + lblp6CCNumber.Text.Substring(12);
-//							else if (  lblp6CCNumber.Text.Length > 8 )
-//								sql   = lblp6CCNumber.Text.Substring(0,4) + sql;
-//							else if (  lblp6CCNumber.Text.Length > 4 )
-//								sql   = lblp6CCNumber.Text.Substring(0,2) + sql;
-//							mailText = mailText.Replace("#lblp6CCNumber#", sql);
 
 							foreach (Control ctlOuter in Page.Controls)
 								if ( ctlOuter.GetType() == typeof(Literal) && mailText.Contains("#"+ctlOuter.ID+"#") )
@@ -1009,8 +1042,8 @@ namespace PCIWebFinAid
 
 							errNo = 30200;
 							sql   = "exec sp_WP_Get_ProductEmail"
-							      + " @ProductCode="  + Tools.DBString(productCode)
-							      + ",@LanguageCode=" + Tools.DBString(languageCode);
+							      +     " @ProductCode="  + Tools.DBString(productCode)
+							      +     ",@LanguageCode=" + Tools.DBString(languageCode);
 							if ( miscList.ExecQuery(sql,0) == 0 )
 								if ( miscList.EOF )
 									errNo = 30210;
@@ -1085,7 +1118,8 @@ namespace PCIWebFinAid
 												mailMsg.Bcc.Add(smtpBCC);
 
 											errNo                = 30245;
-											mailMsg.Sender       = new MailAddress(smtpUser);
+											if ( Tools.CheckEMail(smtpUser) )
+												mailMsg.Sender    = new MailAddress(smtpUser);
 											mailMsg.From         = new MailAddress(emailFrom);
 											mailMsg.Subject      = "Contract " + contractCode;
 											mailMsg.BodyEncoding = Encoding.UTF8;
@@ -1146,42 +1180,6 @@ namespace PCIWebFinAid
 				SetPostBackURL();
 			}
 		}
-
-//		Moved to BasePage.cs
-//
-//		private void SetErrorDetail(int errCode,int logNo,string errBrief,string errDetail,byte briefMode=2,byte detailMode=1,byte errPriority=248)
-//		{
-//			if ( errCode == 0 )
-//				return;
-//
-//			if ( errCode <  0 )
-//			{
-//				lblError.Text       = "";
-//				lblErrorDtl.Text    = "";
-//				lblError.Visible    = false;
-//				btnErrorDtl.Visible = false;
-//				return;
-//			}
-//
-//			Tools.LogInfo("Register.SetErrorDetail","(errCode="+errCode.ToString()+", logNo="+logNo.ToString()+") "+errDetail,errPriority);
-//
-//			if ( briefMode == 2 ) // Append
-//				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
-//			else
-//				lblError.Text = errBrief;
-//
-//			errDetail = errDetail.Replace(",","<br />,").Replace(";","<br />;").Trim();
-//			if ( detailMode == 2 ) // Append
-//				errDetail = lblErrorDtl.Text + ( lblErrorDtl.Text.Length > 0 ? "<br /><br />" : "" ) + errDetail;
-//			lblErrorDtl.Text = errDetail;
-//			if ( ! lblErrorDtl.Text.StartsWith("<div") )
-//			//	lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white'>Error Details</div>" + lblErrorDtl.Text;
-//				lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
-//
-//			lblError.Visible    = ( lblError.Text.Length    > 0 );
-//			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && lblError.Visible && ! Tools.SystemIsLive();
-//		}
-
 
 //	Script timeout is set to 230 seconds in MS Azure and can't be changed
 

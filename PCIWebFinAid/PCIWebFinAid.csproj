@@ -71,7 +71,8 @@
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
     <Content Include="Register.aspx" />
-    <Content Include="RegisterEx.aspx" />
+    <Content Include="RegisterEx1.aspx" />
+    <Content Include="RegisterEx2.aspx" />
     <Content Include="TransLookup.aspx" />
     <Content Include="ContractLookup.aspx" />
     <Content Include="LAdmin.aspx" />
@@ -279,12 +280,19 @@
     <Compile Include="Footer.ascx.designer.cs">
       <DependentUpon>Footer.ascx</DependentUpon>
     </Compile>
-    <Compile Include="RegisterEx.aspx.cs">
-      <DependentUpon>RegisterEx.aspx</DependentUpon>
+    <Compile Include="RegisterEx1.aspx.cs">
+      <DependentUpon>RegisterEx1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RegisterEx.aspx.designer.cs">
-      <DependentUpon>RegisterEx.aspx</DependentUpon>
+    <Compile Include="RegisterEx1.aspx.designer.cs">
+      <DependentUpon>RegisterEx1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterEx2.aspx.cs">
+      <DependentUpon>RegisterEx2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterEx2.aspx.designer.cs">
+      <DependentUpon>RegisterEx2.aspx</DependentUpon>
     </Compile>
     <Compile Include="SessionGeneral.cs" />
     <Compile Include="StdDisposable.cs">

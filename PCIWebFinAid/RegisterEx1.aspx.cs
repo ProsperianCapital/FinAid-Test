@@ -8,7 +8,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class Register : BasePage
+	public partial class RegisterEx1 : BasePage
 	{
 		private   byte   logDebug = 40; // 240;
 		private   string productCode;
@@ -18,6 +18,7 @@ namespace PCIWebFinAid
 		private   string contractPIN;
 		private   string sql;
 		private   int    errNo;
+		private   int    pageNo;
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
@@ -29,7 +30,7 @@ namespace PCIWebFinAid
 //		   + "navigator.platform : " + navigator.platform + "<br />"
 //		   + "navigator.userAgent : " + navigator.userAgent;
 
-			SetErrorDetail("",-888);
+			SetErrorDetail(-88,0,"","");
 			SetPostBackURL();
 			SetWarning("");
 
@@ -40,6 +41,9 @@ namespace PCIWebFinAid
 				languageDialectCode = WebTools.ViewStateString(ViewState,"LanguageDialectCode");
 				contractCode        = WebTools.ViewStateString(ViewState,"ContractCode");
 				contractPIN         = WebTools.ViewStateString(ViewState,"ContractPIN");
+				pageNo              = Tools.StringToInt(hdnPageNo.Value);
+				if ( pageNo == 5 )
+					btnNext_Click(null,null); // Isn't called because of TokenEx
 			}
 			else
 			{
@@ -47,27 +51,16 @@ namespace PCIWebFinAid
 				productCode         = WebTools.RequestValueString(Request,"PC");  // ProductCode");
 				languageCode        = WebTools.RequestValueString(Request,"LC");  // LanguageCode");
 				languageDialectCode = WebTools.RequestValueString(Request,"LDC"); // LanguageDialectCode");
-				hdnReferURL.Value   = WebTools.ClientReferringURL(Request,11);
 
-				if ( ! Tools.SystemIsLive() )
-				{
 //	Testing 1 (English)
-					if ( productCode.Length         < 1 ) productCode         = "10278";
-					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
-					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
+				if ( productCode.Length         < 1 ) productCode         = "10278";
+				if ( languageCode.Length        < 1 ) languageCode        = "ENG";
+				if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
+
 //	Testing 2 (Thai)
-//					if ( productCode.Length         < 1 ) productCode         = "10024";
-//					if ( languageCode.Length        < 1 ) languageCode        = "THA";
-//					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0001";
-				}
-				else if ( productCode.Length         < 1 ||
-				          languageCode.Length        < 1 ||
-					       languageDialectCode.Length < 1 )
-				{
-					SetErrorDetail("PageLoad",33088,"Invalid startup values ... system cannot continue","");
-					SetWarning("B","Invalid startup values.");
-					return;
-				}
+//				if ( productCode.Length         < 1 ) productCode         = "10024";
+//				if ( languageCode.Length        < 1 ) languageCode        = "THA";
+//				if ( languageDialectCode.Length < 1 ) languageDialectCode = "0001";
 
 				ViewState["ProductCode"]         = productCode;
 				ViewState["LanguageCode"]        = languageCode;
@@ -91,34 +84,27 @@ namespace PCIWebFinAid
 				}
 
 //	Testing 2
-//				if ( hdn100137.Value.Length < 1 ) hdn100137.Value = "PRIME" + Environment.NewLine + "ASSIST";
-//				if ( hdn100002.Value.Length < 1 ) hdn100002.Value = "Emergency Mobile, Legal & Financial Assistance";
-//				if ( lblReg.Text.Length     < 1 ) lblReg.Text     = "Registration";
-//				if ( lblRegConf.Text.Length < 1 ) lblRegConf.Text = "Registration Confirmation";
+				if ( hdn100137.Value.Length < 1 ) hdn100137.Value = "PRIME" + Environment.NewLine + "ASSIST";
+				if ( hdn100002.Value.Length < 1 ) hdn100002.Value = "Emergency Mobile, Legal & Financial Assistance";
+				if ( lblReg.Text.Length     < 1 ) lblReg.Text     = "Registration";
+				if ( lblRegConf.Text.Length < 1 ) lblRegConf.Text = "Registration Confirmation";
 
 //	Testing 3
-//				if ( WebTools.RequestValueInt(Request,"PageNoX") > 0 )
-//				{
-//					hdnPageNo.Value = WebTools.RequestValueString(Request,"PageNoX");
-//					btnNext_Click(null,null);
-//				}
-
+				if ( WebTools.RequestValueInt(Request,"PageNoX") > 0 )
+				{
+					hdnPageNo.Value = WebTools.RequestValueString(Request,"PageNoX");
+					btnNext_Click(null,null);
+				}
 			}
 		}
 
-		private void SetWarning(string action="",string msg="")
+		private void SetWarning(string action="")
 		{
 			action                = Tools.NullToString(action).ToUpper();
 			pnlWarning.Visible    = ( action.Length > 0 );
 			lblWarnP.Visible      = ( action == "P" );
 			lblWarnB.Visible      = ( action == "B" );
 			pnlDisabled.Visible   = ( action == "B" );
-
-			if ( msg.Length > 0 )
-				lblWarnX.Text      = msg;
-			else
-				lblWarnX.Text      = "Your IP address is not listed as from the country this product is sold.";
-
 			if ( action == "B" )
 			{
 				btnBack1.Visible   = false;
@@ -134,7 +120,7 @@ namespace PCIWebFinAid
 		private void SetPostBackURL()
 		{
 			int    pNo = Tools.StringToInt(hdnPageNo.Value);
-			string url = "Register.aspx";
+			string url = "RegisterEx1.aspx";
 			if ( pNo > 0 )
 				url = url + "?PageNo=" + (pNo+1).ToString();
 			btnNext.PostBackUrl  = url;
@@ -234,16 +220,16 @@ namespace PCIWebFinAid
 				{
 					sql = "exec sp_WP_Get_ChatSnip @ProductCode=" + Tools.DBString(productCode);
 					if ( miscList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadChat",90010,"Internal database error (sp_WP_Get_ChatSnip)",sql);
+						SetErrorDetail(90010,90010,"Internal database error (sp_WP_Get_ChatSnip)",sql,2,2);
 					else if ( miscList.EOF )
-						SetErrorDetail("LoadChat",90011,"Chat widget code cannot be found (sp_WP_Get_ChatSnip)",sql);
+						SetErrorDetail(90011,90011,"Chat widget code cannot be found (sp_WP_Get_ChatSnip)",sql,2,2);
 					else
 						lblChat.Text = miscList.GetColumn("ChatSnippet");
 				}
 				catch (Exception ex)
 				{
-				//	Tools.LogException("Register.LoadChat",sql,ex);
-					SetErrorDetail("LoadChat",90099,"Internal error ; please try again later",ex.Message + " (" + sql + ")",2,2,ex);
+					Tools.LogException("Register.LoadChat",sql,ex);
+					SetErrorDetail(90099,90099,"Internal error ; please try again later",ex.Message + " (" + sql + ")");
 				}
 		}	
 
@@ -258,16 +244,16 @@ namespace PCIWebFinAid
 					    + " @ProductCode=" + Tools.DBString(productCode)
 					    + ",@IPAddress="   + Tools.DBString(WebTools.ClientIPAddress(Request,1));
 					if ( miscList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("CheckIP",91010,"Internal database error (sp_Check_IPLocation)",sql);
+						SetErrorDetail(91010,91010,"Internal database error (sp_Check_IPLocation)",sql,2,2);
 					else if ( miscList.EOF )
-						SetErrorDetail("CheckIP",91011,"Country/IP address check failed (sp_Check_IPLocation)",sql);
+						SetErrorDetail(91011,91011,"Country/IP address check failed (sp_Check_IPLocation)",sql,2,2);
 					else if ( miscList.GetColumn("Result") == "1" )
 						action = miscList.GetColumn("Action");
 				}
 				catch (Exception ex)
 				{
-				//	Tools.LogException("RegisterCheckIP",sql,ex);
-					SetErrorDetail("CheckIP",91099,"Internal error ; please try again later",ex.Message + " (" + sql + ")",2,2,ex);
+					Tools.LogException("RegisterCheckIP",sql,ex);
+					SetErrorDetail(91099,91099,"Internal error ; please try again later",ex.Message + " (" + sql + ")");
 				}
 
 			SetWarning(action);
@@ -450,7 +436,7 @@ namespace PCIWebFinAid
 					else
 						lblJS.Text = WebTools.JavaScriptSource("TestSetup()",lblJS.Text,1);
 
-					SetErrorDetail("LoadLabels",errNo,"Unable to load registration page labels and data",sql);
+					SetErrorDetail(errNo,logNo,"Unable to load registration page labels and data",sql);
 
 					logNo = 37;
 
@@ -471,7 +457,7 @@ namespace PCIWebFinAid
 					      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					logNo = 40;
 					errNo =  WebTools.ListBind(lstTitle,sql,null,"TitleCode","TitleDescription","","");
-					SetErrorDetail("LoadLabels/40",errNo,"Unable to load titles",sql);
+					SetErrorDetail(errNo,logNo,"Unable to load titles",sql);
 
 //	Employment Status
 					sql   = "exec sp_WP_Get_EmploymentStatus"
@@ -479,7 +465,7 @@ namespace PCIWebFinAid
 					      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					logNo = 50;
 					errNo = WebTools.ListBind(lstStatus,sql,null,"EmploymentStatusCode","EmploymentStatusDescription");
-					SetErrorDetail("LoadLabels/50",errNo,"Unable to load employment statuses",sql);
+					SetErrorDetail(errNo,logNo,"Unable to load employment statuses",sql);
 
 //	Pay Date
 					sql   = "exec sp_WP_Get_PayDate"
@@ -487,7 +473,7 @@ namespace PCIWebFinAid
 					      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					logNo = 60;
 					errNo = WebTools.ListBind(lstPayDay,sql,null,"PayDateCode","PayDateDescription");
-					SetErrorDetail("LoadLabels/60",errNo,"Unable to load pay dates",sql);
+					SetErrorDetail(errNo,logNo,"Unable to load pay dates",sql);
 
 //	Product Option
 //	Deferred to the load of page 4
@@ -510,7 +496,7 @@ namespace PCIWebFinAid
 					string F = "";
 					logNo    = 70;
 					errNo    = miscList.ExecQuery(sql,0);
-					SetErrorDetail("LoadLabels/70",errNo,"Unable to retrieve product option descriptions",sql);
+					SetErrorDetail(errNo,logNo,"Unable to retrieve product option descriptions",sql);
 					while ( ! miscList.EOF )
 					{
 						opt = Tools.StringToInt(miscList.GetColumn("ProductOptionCode"));
@@ -527,12 +513,12 @@ namespace PCIWebFinAid
 					      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					logNo = 80;
 					errNo = WebTools.ListBind(lstPayment,sql,null,"PaymentMethodCode","PaymentMethodDescription");
-					SetErrorDetail("LoadLabels/80",errNo,"Unable to load payment methods",sql);
+					SetErrorDetail(errNo,logNo,"Unable to load payment methods",sql);
 				}
 				catch (Exception ex)
 				{
-				//	Tools.LogException("Register.LoadLabels","logNo=" + logNo.ToString(),ex);
-					SetErrorDetail("LoadLabels",logNo,"Internal error ; please try again later",ex.Message + " (" + sql + ")",2,2,ex);
+					Tools.LogException("Register.LoadLabels","logNo=" + logNo.ToString(),ex);
+					SetErrorDetail(99,logNo,"Internal error ; please try again later",ex.Message + " (" + sql + ")");
 				}
 
 			lstCCYear.Items.Clear();
@@ -548,30 +534,31 @@ namespace PCIWebFinAid
 			ViewState["ContractCode"] = null;
 			ViewState["ContractPIN"]  = null;
 
+//			SetErrorDetail(-77,0,"","");
+
 			using (MiscList miscList = new MiscList())
 				try
 				{
 					sql = "exec WP_ContractApplicationC"
-					    +     " @RegistrationPage = 'Z'"
-					    +     ",@WebsiteCode ="               + Tools.DBString(WebTools.RequestValueString(Request,"WC"))
-					    +     ",@ProductCode ="               + Tools.DBString(productCode)
-					    +     ",@LanguageCode ="              + Tools.DBString(languageCode)
-					    +     ",@GoogleUtmSource ="           + Tools.DBString(WebTools.RequestValueString(Request,"GUS"))
-					    +     ",@GoogleUtmMedium ="           + Tools.DBString(WebTools.RequestValueString(Request,"GUM"))
-					    +     ",@GoogleUtmCampaign ="         + Tools.DBString(WebTools.RequestValueString(Request,"GUC"))
-					    +     ",@GoogleUtmTerm ="             + Tools.DBString(WebTools.RequestValueString(Request,"GUT"))
-					    +     ",@GoogleUtmContent ="          + Tools.DBString(WebTools.RequestValueString(Request,"GUN"))
-					    +     ",@AdvertCode ="                + Tools.DBString(WebTools.RequestValueString(Request,"AC"))
-					    +     ",@ClientIPAddress ="           + Tools.DBString(WebTools.ClientIPAddress(Request,1))
-					    +     ",@ClientDevice ="              + Tools.DBString(WebTools.ClientBrowser(Request,hdnBrowser.Value))
-//					    +     ",@ReferringURL ="              + Tools.DBString(hdnReferURL.Value)
-					    +     ",@WebsiteVisitorCode ="        + Tools.DBString(WebTools.RequestValueString(Request,"WVC"))
+					    +     " @RegistrationPage   = 'Z'"
+					    +     ",@WebsiteCode        =" + Tools.DBString(WebTools.RequestValueString(Request,"WC"))
+					    +     ",@ProductCode        =" + Tools.DBString(productCode)
+					    +     ",@LanguageCode       =" + Tools.DBString(languageCode)
+					    +     ",@GoogleUtmSource    =" + Tools.DBString(WebTools.RequestValueString(Request,"GUS"))
+					    +     ",@GoogleUtmMedium    =" + Tools.DBString(WebTools.RequestValueString(Request,"GUM"))
+					    +     ",@GoogleUtmCampaign  =" + Tools.DBString(WebTools.RequestValueString(Request,"GUC"))
+					    +     ",@GoogleUtmTerm      =" + Tools.DBString(WebTools.RequestValueString(Request,"GUT"))
+					    +     ",@GoogleUtmContent   =" + Tools.DBString(WebTools.RequestValueString(Request,"GUN"))
+					    +     ",@AdvertCode         =" + Tools.DBString(WebTools.RequestValueString(Request,"AC"))
+					    +     ",@ClientIPAddress    =" + Tools.DBString(WebTools.ClientIPAddress(Request,1))
+					    +     ",@ClientDevice       =" + Tools.DBString(WebTools.ClientBrowser(Request,hdnBrowser.Value))
+					    +     ",@WebsiteVisitorCode =" + Tools.DBString(WebTools.RequestValueString(Request,"WVC"))
 					    +     ",@WebsiteVisitorSessionCode =" + Tools.DBString(WebTools.RequestValueString(Request,"WVSC"));
 					if ( miscList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadContractCode",10013,"Error retrieving new contract details ; please try again later",sql);
+						SetErrorDetail(10013,10013,"Error retrieving new contract details ; please try again later",sql);
 
 					else if ( miscList.EOF )
-						SetErrorDetail("LoadContractCode",10023,"Error retrieving new contract details ; please try again later",sql);
+						SetErrorDetail(10023,10023,"Error retrieving new contract details ; please try again later",sql);
 
 					else
 					{
@@ -631,14 +618,14 @@ namespace PCIWebFinAid
 				}
 				catch (Exception ex)
 				{
-				//	Tools.LogException("Register.LoadContractCode/99",sql,ex);
-					SetErrorDetail("LoadContractCode",10033,"Error retrieving new contract details ; please try again later",ex.Message + " (" + sql + ")",2,2,ex);
+					Tools.LogException("Register.LoadContractCode/99",sql,ex);
+					SetErrorDetail(10033,10033,"Error retrieving new contract details ; please try again later",ex.Message + " (" + sql + ")");
 					return false;
 				}
 				return ( lblError.Text.Length == 0 );
 		}
 
-		private int ValidateData(int pageNo)
+		private int ValidateData() // int pageNo)
 		{
 			string err = "";
 			if ( pageNo == 1 )
@@ -674,31 +661,43 @@ namespace PCIWebFinAid
 			{ }
 			else if ( pageNo == 5 )
 			{
-				txtCCNumber.Text = txtCCNumber.Text.Trim();
-				if ( txtCCNumber.Visible && txtCCNumber.Text.Length < 12 )
-					err = err + "Invalid credit/debit card number<br />";
+//				txtCCNumber.Text = txtCCNumber.Text.Trim();
+//				if ( txtCCNumber.Visible && txtCCNumber.Text.Length < 12 )
+//					err = err + "Invalid credit/debit card number<br />";
 				txtCCName.Text = txtCCName.Text.Trim();
 				if ( txtCCName.Visible && txtCCName.Text.Length < 3 )
 					err = err + "Invalid credit/debit card name<br />";
-				txtCCCVV.Text = txtCCCVV.Text.Trim();
-				if ( txtCCCVV.Visible && txtCCCVV.Text.Length < 3 )
-					err = err + "Invalid credit/debit card CVV code<br />";
+//				txtCCCVV.Text = txtCCCVV.Text.Trim();
+//				if ( txtCCCVV.Visible && txtCCCVV.Text.Length < 3 )
+//					err = err + "Invalid credit/debit card CVV code<br />";
+				if ( txToken.Value.Trim().Length < 10 )
+					err = err + "Invalid credit/debit card number and/or CVV<br />";
+				try
+				{
+					DateTime dt = new DateTime(Convert.ToInt32(WebTools.ListValue(lstCCYear)),Convert.ToInt32(WebTools.ListValue(lstCCMonth)),1,0,0,0);
+					if ( System.DateTime.Now >= dt.AddMonths(1) )
+						err = err + "Invalid credit/debit card expiry date<br />";
+				}		
+				catch
+				{
+					err = err + "Invalid credit/debit card expiry date<br />";
+				}
 			}
 
 			if ( err.Length > 0 )
-				SetErrorDetail("ValidateData",20022,err,err,1,1,null,false,50);
+				SetErrorDetail(20022,20022,err,err,1,1);
 			return err.Length;
 		}
 
 		protected void btnNext_Click(Object sender, EventArgs e)
 		{
-			int pageNo = Tools.StringToInt(hdnPageNo.Value);
+//			int pageNo = Tools.StringToInt(hdnPageNo.Value);
 			int pdfErr = 0;
 			errNo      = 0;
 
 			if ( pageNo < 1 )
 			{
-				SetErrorDetail("btnNext_Click",30010,"Page numbering error","The internal page number is " + pageNo.ToString());
+				SetErrorDetail(99,30010,"Page numbering error","The internal page number is " + pageNo.ToString());
 				return;
 			}
 			if ( pageNo > 180 ) // Testing
@@ -708,11 +707,12 @@ namespace PCIWebFinAid
 				txtFirstName.Text = "Peter";
 				txtEMail.Text     = "PaulKilfoil@gmail.com";
 				txtIncome.Text    = "125000";
-				txtCCNumber.Text  = "4901888877776666";
-				txtCCCVV.Text     = "789";
+				txToken.Value     = "4901628031770019";
+//				txtCCNumber.Text  = "4901888877776666";
+//				txtCCCVV.Text     = "789";
 			}
 
-			if ( ValidateData(pageNo) > 0 )
+			if ( ValidateData() > 0 )
 				return;
 
 			string mailText = "";
@@ -722,40 +722,44 @@ namespace PCIWebFinAid
 				{
 					sql = "exec WP_ContractApplicationC"
 					    +     " @RegistrationPage =" + Tools.DBString((pageNo-1).ToString())
-					    +     ",@ContractCode ="     + Tools.DBString(contractCode)
-					    +     ",@ClientIPAddress ="  + Tools.DBString(WebTools.ClientIPAddress(Request,1))
-					    +     ",@ClientDevice ="     + Tools.DBString(WebTools.ClientBrowser(Request,hdnBrowser.Value));
-//					    +     ",@ReferringURL ="     + Tools.DBString(hdnReferURL.Value)
+					    +     ",@ContractCode     =" + Tools.DBString(contractCode)
+					    +     ",@ClientIPAddress  =" + Tools.DBString(WebTools.ClientIPAddress(Request,1))
+					    +     ",@ClientDevice     =" + Tools.DBString(WebTools.ClientBrowser(Request,hdnBrowser.Value));
 
 //					if ( Tools.LiveTestOrDev() == Constants.SystemMode.Development )
 					if ( Tools.SystemViaBackDoor() )
 					{ }
 
 					else if ( pageNo == 1 )
-						sql = sql + ",@TitleCode ="        + Tools.DBString(WebTools.ListValue(lstTitle,""))
-					             + ",@Surname ="          + Tools.DBString(txtSurname.Text,47) // Unicode
+						sql = sql + ",@TitleCode        =" + Tools.DBString(WebTools.ListValue(lstTitle,""))
+					             + ",@Surname          =" + Tools.DBString(txtSurname.Text,47) // Unicode
 					             + ",@TelephoneNumberM =" + Tools.DBString(txtCellNo.Text,47);
 					else if ( pageNo == 2 )
-						sql = sql + ",@FirstName ="    + Tools.DBString(txtFirstName.Text,47)
+						sql = sql + ",@FirstName    =" + Tools.DBString(txtFirstName.Text,47)
 					             + ",@EMailAddress =" + Tools.DBString(txtEMail.Text,47)
-					             + ",@ClientCode ="   + Tools.DBString(txtID.Text,47);
+					             + ",@ClientCode   =" + Tools.DBString(txtID.Text,47);
 					else if ( pageNo == 3 )
-						sql = sql + ",@DisposableIncome ="           + Tools.DBString(txtIncome.Text,47)
+						sql = sql + ",@DisposableIncome           =" + Tools.DBString(txtIncome.Text,47)
 					             + ",@ClientEmploymentStatusCode =" + Tools.DBString(WebTools.ListValue(lstStatus,""))
-					             + ",@PayDateCode ="                + Tools.DBString(WebTools.ListValue(lstPayDay,""));
+					             + ",@PayDateCode                =" + Tools.DBString(WebTools.ListValue(lstPayDay,""));
 					else if ( pageNo == 4 )
 						sql = sql + ",@ProductOptionCode =" + Tools.DBString(WebTools.ListValue(lstOptions,""))
-					             + ",@TsCsRead = '1'"
+					             + ",@TsCsRead          = '1'"
 					             + ",@PaymentMethodCode =" + Tools.DBString(WebTools.ListValue(lstPayment,""));
 					else if ( pageNo == 5 )
-						sql = sql + ",@CardNumber ="      + Tools.DBString(txtCCNumber.Text,47)
-					             + ",@AccountHolder ="   + Tools.DBString(txtCCName.Text,47)
+						sql = sql + ",@CardToken       =" + Tools.DBString(txToken.Value)
+					             + ",@AccountHolder   =" + Tools.DBString(txtCCName.Text,47)
 					             + ",@CardExpiryMonth =" + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
-					             + ",@CardExpiryYear ="  + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
-					             + ",@CardCVVCode ="     + Tools.DBString(txtCCCVV.Text,47);
+					             + ",@CardExpiryYear  =" + Tools.DBString(WebTools.ListValue(lstCCYear).ToString());
+//					else if ( pageNo == 5 )
+//						sql = sql + ",@CardNumber      =" + Tools.DBString(txtCCNumber.Text,47)
+//					             + ",@AccountHolder   =" + Tools.DBString(txtCCName.Text,47)
+//					             + ",@CardExpiryMonth =" + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
+//					             + ",@CardExpiryYear  =" + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
+//					             + ",@CardCVVCode     =" + Tools.DBString(txtCCCVV.Text,47);
 
 					errNo = miscList.ExecQuery(sql,0);
-					SetErrorDetail("btnNext_Click/30020",errNo,"Unable to update information (pageNo="+pageNo.ToString()+")",sql);
+					SetErrorDetail(errNo,30020,"Unable to update information (pageNo="+pageNo.ToString()+")",sql);
 
 //					if ( errNo == 0 && pageNo == 5 )
 //					{
@@ -774,15 +778,31 @@ namespace PCIWebFinAid
 						{
 							int h = Tools.StringToInt(txtIncome.Text,true);
 							sql   = "exec sp_WP_Get_ProductOptionA"
-							      + " @ProductCode ="         + Tools.DBString(productCode)
-							      + ",@LanguageCode ="        + Tools.DBString(languageCode)
-							      + ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode)
-							      + ",@Income ="              + h.ToString();
+							      + " @ProductCode="         + Tools.DBString(productCode)
+							      + ",@LanguageCode="        + Tools.DBString(languageCode)
+							      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode)
+							      + ",@Income="              + h.ToString();
 							errNo = WebTools.ListBind(lstOptions,sql,null,"ProductOptionCode","ProductOptionDescription");
-							SetErrorDetail("btnNext_Click/30030",errNo,"Unable to obtain product options",sql);
+							SetErrorDetail(errNo,30030,"Unable to obtain product options",sql);
 						}
 						else if ( pageNo == 5 )
 						{
+//	TokenEx [TESTING]
+//	Secret key = njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I
+//	API key    = 4311038889209736
+//	TokenEx [TESTING]
+							string secretKey      = Tools.ConfigValue("TokenEx/Key");
+							txID.Value            = Tools.ConfigValue("TokenEx/Id");
+							txOrigin.Value        = Request.Url.GetLeftPart(UriPartial.Authority);
+							txTimestamp.Value     = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
+//							txTokenScheme.Value   = "sixTOKENfour";
+							string data           = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
+							txHMAC.Value          = Tools.GenerateHMAC(data,secretKey);
+							lblTx.Text            = WebTools.JavaScriptSource("TokenSetup()");
+//	TokenEx [TESTING]
+//							txConcatenatedString.Value = data;
+//	TokenEx [TESTING]
+
 							string productOption  = WebTools.ListValue(lstOptions,"X");
 							string payMethod      = WebTools.ListValue(lstPayment,"X");
 							txtCCName.Text        = "";
@@ -804,9 +824,9 @@ namespace PCIWebFinAid
 							lblCCMandateHead.Text = "";
 //							lblCCMandateHead.Text = "Collection Mandate: " + Tools.DateToString(System.DateTime.Now,2);
 							sql                   = "exec sp_WP_Get_ProductOptionMandateA"
-							                      +     " @ProductCode ="         + Tools.DBString(productCode)
-							                      +     ",@LanguageCode ="        + Tools.DBString(languageCode)
-							                      +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
+							                      + " @ProductCode="         + Tools.DBString(productCode)
+							                      + ",@LanguageCode="        + Tools.DBString(languageCode)
+							                      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 
 							string w = " (looking for ProductOption="+productOption+" and PaymentMethod="+payMethod+")";
 							Tools.LogInfo("Register.btnNext_Click/50",sql+w,logDebug);
@@ -837,7 +857,7 @@ namespace PCIWebFinAid
 								}
 
 							if ( lblCCMandate.Text.Length < 1 )
-								SetErrorDetail("btnNext_Click/30040",30040,"Unable to retrieve collection mandate",sql+" (looking for ProductOption="+productOption+" and PaymentMethod="+payMethod+"). SQL failed or returned no data or<br />the CollectionMandateText column was missing/empty/NULL");
+								SetErrorDetail(30040,30040,"Unable to retrieve collection mandate",sql+" (looking for ProductOption="+productOption+" and PaymentMethod="+payMethod+"). SQL failed or returned no data or<br />the CollectionMandateText column was missing/empty/NULL");
 						}
 						else if ( pageNo == 6 || pageNo > 180 )
 						{
@@ -845,25 +865,25 @@ namespace PCIWebFinAid
 							      +     " @RegistrationPage = '5'"
 							      +     ",@ContractCode     =" + Tools.DBString(contractCode);
 							errNo = miscList.ExecQuery(sql,0);
-							SetErrorDetail("btnNext_Click/30050",errNo,"Unable to update information (pageNo=6)",sql);
+							SetErrorDetail(errNo,30050,"Unable to update information (pageNo=6)",sql);
 
 							lbl100325.Text = "";
 							sql = "exec sp_WP_Get_WebsiteProductOptionA"
-							    +     " @ProductCode ="         + Tools.DBString(productCode)
-							    +     ",@ProductOptionCode ="   + Tools.DBString(WebTools.ListValue(lstOptions,""))
-							    +     ",@LanguageCode ="        + Tools.DBString(languageCode)
-							    +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
+							    + " @ProductCode="         + Tools.DBString(productCode)
+							    + ",@ProductOptionCode="   + Tools.DBString(WebTools.ListValue(lstOptions,""))
+							    + ",@LanguageCode="        + Tools.DBString(languageCode)
+							    + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 							if ( miscList.ExecQuery(sql,0) != 0 )
-								SetErrorDetail("btnNext_Click/30060",30060,"Internal database error (sp_WP_Get_WebsiteProductOptionA)",sql);
+								SetErrorDetail(30060,30060,"Internal database error (sp_WP_Get_WebsiteProductOptionA)",sql,2,2);
 							else if ( miscList.EOF )
-								SetErrorDetail("btnNext_Click/30061",30061,"No product option data returned (sp_WP_Get_WebsiteProductOptionA)",sql);
+								SetErrorDetail(30061,30061,"No product option data returned (sp_WP_Get_WebsiteProductOptionA)",sql,2,2);
 							else
 							{
 								lbl100325.Text = miscList.GetColumn("FieldValue");
 								if ( lbl100325.Text.Length > 0 )
 									lbl100325.Text = lbl100325.Text.Replace(Environment.NewLine,"<br />");
 								else
-									SetErrorDetail("btnNext_Click/30062",30062,"Product option data is empty/blank (sp_WP_Get_WebsiteProductOptionA, column 'FieldValue')",sql,2,2);
+									SetErrorDetail(30062,30062,"Product option data is empty/blank (sp_WP_Get_WebsiteProductOptionA, column 'FieldValue')",sql,2,2);
 							}
 
 //	Not needed any more
@@ -887,16 +907,16 @@ namespace PCIWebFinAid
 //								                    + miscList.GetColumn("ProductLegalDocumentParagraphText2").Replace(Environment.NewLine,"<br />");
 //							}
 //							if ( legalAgreementHead.Length + legalAgreementText.Length < 1 )
-//								SetErrorDetail("btnNext_Click/30070",,30070,"Unable to retrieve legal documents",sql);
+//								SetErrorDetail(30070,30070,"Unable to retrieve legal documents",sql,2,2);
 
 							string refundPolicy       = "";
 							string moneyBackPolicy    = "";
 							string cancellationPolicy = "";
 
 							sql = "exec sp_WP_Get_ProductPolicy"
-							    +     " @ProductCode ="         + Tools.DBString(productCode)
-							    +     ",@LanguageCode ="        + Tools.DBString(languageCode)
-							    +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
+							    + " @ProductCode="         + Tools.DBString(productCode)
+							    + ",@LanguageCode="        + Tools.DBString(languageCode)
+							    + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 							if ( miscList.ExecQuery(sql,0) == 0 && ! miscList.EOF )
 							{
 								refundPolicy                 = miscList.GetColumn("RefundPolicyText");
@@ -907,17 +927,18 @@ namespace PCIWebFinAid
 								lblp6CancellationPolicy.Text = cancellationPolicy.Replace(Environment.NewLine,"<br />");
 							}
 							if ( refundPolicy.Length < 1 || moneyBackPolicy.Length < 1 || cancellationPolicy.Length < 1 )
-								SetErrorDetail("btnNext_Click/30080",30080,"Unable to retrieve product policy text",sql);
+								SetErrorDetail(30080,30080,"Unable to retrieve product policy text",sql,2,2);
 
 							lblp6CCType.Text = "";
-							sql              = txtCCNumber.Text.Trim();
+//							sql              = txtCCNumber.Text.Trim();
+							sql              = txToken.Value.Trim(); // Tokenized as SIXxxxxxxFOUR
 							if ( sql.Length > 6 )
 								sql = sql.Substring(0,6);
 							sql = "exec WP_Get_CardAssociation @BIN=" + Tools.DBString(sql);
 							if ( miscList.ExecQuery(sql,0) == 0 && ! miscList.EOF )
 								lblp6CCType.Text = miscList.GetColumn("Brand");
 							if ( lblp6CCType.Text.Length < 1 )
-								SetErrorDetail("btnNext_Click/30090",30090,"Unable to retrieve card association details",sql);
+								SetErrorDetail(30090,30090,"Unable to retrieve card association details",sql,2,2);
 
 							if ( lblError.Text.Length > 0 )
 								throw new Exception("XYZ");
@@ -931,7 +952,7 @@ namespace PCIWebFinAid
 							catch (Exception ex1)
 							{
 								mailText = "";
-								SetErrorDetail("btnNext_Click/30095",30095,"Unable to open mail template (Templates/ConfirmationMail.htm)",ex1.Message);
+								SetErrorDetail(30095,30095,"Unable to open mail template (Templates/ConfirmationMail.htm)",ex1.Message);
 							}
 
 							lblReg.Visible      = false;
@@ -955,7 +976,8 @@ namespace PCIWebFinAid
 							else
 								lbl100209.Text   = lbl100209.Text.Replace("[Initials]","");
 							lblp6CCName.Text    = txtCCName.Text;
-							lblp6CCNumber.Text  = Tools.MaskCardNumber(txtCCNumber.Text);
+//							lblp6CCNumber.Text  = Tools.MaskCardNumber(txtCCNumber.Text);
+							lblp6CCNumber.Text  = Tools.MaskCardNumber(txToken.Value);
 							lblp6CCExpiry.Text  = lstCCYear.SelectedValue + "/" + lstCCMonth.SelectedValue;
 							lblp6Date.Text      = Tools.DateToString(System.DateTime.Now,2,1);
 							lblp6IP.Text        = WebTools.ClientIPAddress(Request,1);
@@ -995,7 +1017,7 @@ namespace PCIWebFinAid
 							}
 							catch (Exception ex6)
 							{
-								SetErrorDetail("btnNext_Click/30105",30105,"Unable to create confirmation file ("+contractCode+".htm)",ex6.Message);
+								SetErrorDetail(30105,30105,"Unable to create confirmation file ("+contractCode+".htm)",ex6.Message);
 							}
 
 //	Testing
@@ -1085,7 +1107,8 @@ namespace PCIWebFinAid
 												mailMsg.Bcc.Add(smtpBCC);
 
 											errNo                = 30245;
-											mailMsg.Sender       = new MailAddress(smtpUser);
+											if ( Tools.CheckEMail(smtpUser) )
+												mailMsg.Sender    = new MailAddress(smtpUser);
 											mailMsg.From         = new MailAddress(emailFrom);
 											mailMsg.Subject      = "Contract " + contractCode;
 											mailMsg.BodyEncoding = Encoding.UTF8;
@@ -1117,28 +1140,28 @@ namespace PCIWebFinAid
 														Tools.LogException("Register.aspx/84","Mail send failure, errNo=" + errNo.ToString() + " (" + txtEMail.Text+")",ex3);
 												}
 										}
-										SetErrorDetail("btnNext_Click",errNo,"Unable to send confirmation email (5 failed attempts)","");
+										SetErrorDetail(errNo,errNo,"Unable to send confirmation email (5 failed attempts)","");
 										smtp  = null;
 										errNo = 0;
 									}
 									catch (Exception ex4)
 									{
-										SetErrorDetail("btnNext_Click",errNo,"Unable to send confirmation email (SMTP error)",ex4.Message,2,2,ex4);
+										SetErrorDetail(99,errNo,"Unable to send confirmation email (SMTP error)",ex4.Message);
 										errNo = 0;
 									}
 
-							SetErrorDetail("btnNext_Click",errNo,"Unable to send confirmation email (SQL error)",sql);
+							SetErrorDetail(errNo,errNo,"Unable to send confirmation email (SQL error)",sql);
 						}
 					}
 				}
 				catch (Exception ex5)
 				{
 					if ( ex5.Message != "XYZ" )
-						SetErrorDetail("btnNext_Click",errNo,"Internal database error ; please try again later",ex5.Message,2,2,ex5);
+						SetErrorDetail(99,errNo,"Internal database error ; please try again later",ex5.Message);
 				}
 
 			if ( lblError.Text.Length == 0 && errNo + pdfErr > 0 )
-				SetErrorDetail("btnNext_Click",30330,"Internal error ; please try again later","errNo=" + errNo.ToString() + "<br />pdfErr=" + pdfErr.ToString());
+				SetErrorDetail(99,30330,"Internal error ; please try again later","errNo=" + errNo.ToString() + "<br />pdfErr=" + pdfErr.ToString());
 
 			if ( lblError.Text.Length == 0 ) // No errors, can continue
 			{
@@ -1147,41 +1170,38 @@ namespace PCIWebFinAid
 			}
 		}
 
-//		Moved to BasePage.cs
-//
-//		private void SetErrorDetail(int errCode,int logNo,string errBrief,string errDetail,byte briefMode=2,byte detailMode=1,byte errPriority=248)
-//		{
-//			if ( errCode == 0 )
-//				return;
-//
-//			if ( errCode <  0 )
-//			{
-//				lblError.Text       = "";
-//				lblErrorDtl.Text    = "";
-//				lblError.Visible    = false;
-//				btnErrorDtl.Visible = false;
-//				return;
-//			}
-//
-//			Tools.LogInfo("Register.SetErrorDetail","(errCode="+errCode.ToString()+", logNo="+logNo.ToString()+") "+errDetail,errPriority);
-//
-//			if ( briefMode == 2 ) // Append
-//				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
-//			else
-//				lblError.Text = errBrief;
-//
-//			errDetail = errDetail.Replace(",","<br />,").Replace(";","<br />;").Trim();
-//			if ( detailMode == 2 ) // Append
-//				errDetail = lblErrorDtl.Text + ( lblErrorDtl.Text.Length > 0 ? "<br /><br />" : "" ) + errDetail;
-//			lblErrorDtl.Text = errDetail;
-//			if ( ! lblErrorDtl.Text.StartsWith("<div") )
-//			//	lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white'>Error Details</div>" + lblErrorDtl.Text;
-//				lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
-//
-//			lblError.Visible    = ( lblError.Text.Length    > 0 );
-//			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && lblError.Visible && ! Tools.SystemIsLive();
-//		}
+		private void SetErrorDetail(int errCode,int logNo,string errBrief,string errDetail,byte briefMode=2,byte detailMode=1)
+		{
+			if ( errCode == 0 )
+				return;
 
+			if ( errCode <  0 )
+			{
+				lblError.Text       = "";
+				lblErrorDtl.Text    = "";
+				lblError.Visible    = false;
+				btnErrorDtl.Visible = false;
+				return;
+			}
+
+			Tools.LogInfo("Register.SetErrorDetail","(errCode="+errCode.ToString()+", logNo="+logNo.ToString()+") "+errDetail,244);
+
+			if ( briefMode == 2 ) // Append
+				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
+			else
+				lblError.Text = errBrief;
+
+			errDetail = errDetail.Replace(",","<br />,").Replace(";","<br />;").Trim();
+			if ( detailMode == 2 ) // Append
+				errDetail = lblErrorDtl.Text + ( lblErrorDtl.Text.Length > 0 ? "<br /><br />" : "" ) + errDetail;
+			lblErrorDtl.Text = errDetail;
+			if ( ! lblErrorDtl.Text.StartsWith("<div") )
+			//	lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white'>Error Details</div>" + lblErrorDtl.Text;
+				lblErrorDtl.Text = "<div style='background-color:blue;padding:3px;color:white;height:20px'>Error Details<img src='Images/Close1.png' title='Close' style='float:right' onclick=\"JavaScript:ShowElt('lblErrorDtl',false)\" /></div>" + lblErrorDtl.Text;
+
+			lblError.Visible    = ( lblError.Text.Length    > 0 );
+			btnErrorDtl.Visible = ( lblErrorDtl.Text.Length > 0 ) && lblError.Visible && ! Tools.SystemIsLive();
+		}
 
 //	Script timeout is set to 230 seconds in MS Azure and can't be changed
 
