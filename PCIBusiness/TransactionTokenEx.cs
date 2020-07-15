@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Xml;
 using System.Net;
 using System.IO;
 
@@ -7,7 +8,6 @@ namespace PCIBusiness
 {
 	public class TransactionTokenEx : Transaction
 	{
-
 		TransactionPeach tranPeach;
 
 		private int PostHTML(byte transactionType,Payment payment)
@@ -29,7 +29,7 @@ namespace PCIBusiness
 				if ( tranPeach == null )
 					tranPeach = new TransactionPeach();
 
-				Tools.LogInfo("TransactionPeach.PostHTML/10","URL=" + pURL + ", URL data=" + xmlSent,221);
+				Tools.LogInfo("TransactionTokenEx.PostHTML/10","URL=" + pURL + ", URL data=" + xmlSent,221);
 
 				ret                              = 20;
 				byte[]         buffer            = Encoding.UTF8.GetBytes(xmlSent);
@@ -89,36 +89,72 @@ namespace PCIBusiness
 
 		public override int GetToken(Payment payment)
 		{
-
-//	NOT DONE !!!!
-
-			int ret = 10;
+			int    ret = 10;
+			string url = "https://test-api.tokenex.com/TokenServices.svc/REST/Tokenize";
 
 			try
 			{
-				xmlSent = "entityId="          + Tools.URLString(payment.ProviderUserID)
-				        + "&paymentBrand="     + Tools.URLString(payment.CardType.ToUpper())
-				        + "&card.number="      + Tools.URLString(payment.CardNumber)
-				        + "&card.holder="      + Tools.URLString(payment.CardName)
-				        + "&card.expiryMonth=" + Tools.URLString(payment.CardExpiryMM)
-				        + "&card.expiryYear="  + Tools.URLString(payment.CardExpiryYYYY)
-				        + "&card.cvv="         + Tools.URLString(payment.CardCVV);
-				if ( payment.CardType.ToUpper().StartsWith("DINE") ) // Diners Club
-					xmlSent = xmlSent + "&shopperResultUrl=https://peachpayments.docs.oppwa.com/server-to-server";
+				xmlSent = "<TokenAction>"
+				        + Tools.XMLCell("APIKey",payment.ProviderKey)
+				        + Tools.XMLCell("TokenExID",payment.ProviderUserID)
+				        + Tools.XMLCell("Data",payment.CardNumber)
+				        + Tools.XMLCell("TokenScheme","sixTOKENfour")
+				        + "</TokenAction>";
 
-				Tools.LogInfo("TransactionPeach.GetToken/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
+				if ( payment.ProviderURL.Length > 0 )
+					url = payment.ProviderURL;
 
-				ret      = PostHTML((byte)Constants.TransactionType.GetToken,payment);
-				payToken = Tools.JSONValue(strResult,"id");
-				payRef   = Tools.JSONValue(strResult,"ndc");
-				if ( payToken.Length < 1 && ret == 0 )
-					ret = 247;
+				Tools.LogInfo("TransactionTokenEx.GetToken/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
-				Tools.LogInfo("TransactionTokenEx.GetToken/20","ResultCode="+ResultCode + ", payRef=" + payRef + ", payToken=" + payToken,221);
+				ret                     = 20;
+				byte[]         buffer   = Encoding.UTF8.GetBytes(xmlSent);
+				HttpWebRequest request  = (HttpWebRequest)HttpWebRequest.Create(url);
+				ret                     = 30;
+				request.Method          = "POST";
+				request.ContentType     = "text/xml"; // ;charset=\"utf-8\"";
+				ret                     = 40;
+				Stream postData         = request.GetRequestStream();
+				ret                     = 50;
+				postData.Write(buffer, 0, buffer.Length);
+				postData.Close();
+
+				using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+				{
+					ret                  = 60;
+					Stream       dStream = response.GetResponseStream();
+					ret                  = 70;
+					StreamReader sReader = new StreamReader(dStream);
+					ret                  = 80;
+					strResult            = sReader.ReadToEnd();
+					ret                  = 90;
+					sReader.Close();
+					dStream.Close();
+					sReader              = null;
+					ret                  = 100;
+					if ( xmlResult == null )
+						xmlResult         = new XmlDocument();
+					else
+						xmlResult.RemoveAll();
+					ret                  = 110;
+					xmlResult.LoadXml(strResult);
+					ret                  = 120;
+					resultCode           = Tools.XMLNode(xmlResult,"Success");
+					ret                  = 130;
+					resultMsg            = Tools.XMLNode(xmlResult,"Error");
+					ret                  = 140;
+					payRef               = Tools.XMLNode(xmlResult,"ReferenceNumber");
+					ret                  = 150;
+					payToken             = Tools.XMLNode(xmlResult,"Token");
+					ret                  = 160;
+					if ( resultCode.ToUpper() == "TRUE" )
+						ret = 0;
+					else
+						Tools.LogInfo("TransactionTokenEx.PostHTML/110","resultCode="+resultCode+", resultMsg="+resultMsg,221);
+				}
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("TransactionTokenEx.GetToken/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+				Tools.LogException("TransactionTokenEx.GetToken/199","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
 			}
 			return ret;
 		}
@@ -137,7 +173,7 @@ namespace PCIBusiness
 				        + "&card.holder="      + Tools.URLString(payment.CardName)
 				        + "&card.expiryMonth=" + Tools.URLString(payment.CardExpiryMM)
 				        + "&card.expiryYear="  + Tools.URLString(payment.CardExpiryYYYY)
-				        + "&card.cvv="         + Tools.URLString(payment.CardCVV)
+				        + "&card.cvv={{{cvv}}}"
 				        + "&amount="           + Tools.URLString(payment.PaymentAmountDecimal)
 				        + "&currency="         + Tools.URLString(payment.CurrencyCode)
 				        + "&paymentType=DB" // DB = Instant, PA = Pre-authorize, CP =
