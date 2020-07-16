@@ -1337,7 +1337,7 @@ namespace PCIBusiness
 
 		public static string GenerateHMAC(string infoToHash, string secretKey)
 		{
-//		Used for TokenEx in Register.aspx
+//		Used for TokenEx
 			var hmac = new System.Security.Cryptography.HMACSHA256();
 			hmac.Key = System.Text.Encoding.UTF8.GetBytes(secretKey);
 			var hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(infoToHash));

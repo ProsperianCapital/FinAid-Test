@@ -9,8 +9,15 @@ namespace PCIBusiness
 	public class TransactionTokenEx : Transaction
 	{
 		TransactionPeach tranPeach;
+		public bool Successful
+		{
+			get
+			{
+				return ( Tools.NullToString(resultCode).ToUpper() == "TRUE" );
+			}
+		}
 
-		private int PostHTML(byte transactionType,Payment payment)
+		private int PeachHTML(byte transactionType,Payment payment)
 		{
 			int    ret  = 10;
 			string pURL = "https://test.oppwa.com/v1/registrations";
@@ -87,24 +94,76 @@ namespace PCIBusiness
 			return ret;
 		}
 
-		public override int GetToken(Payment payment)
+		private int PostJSON(string url,Payment payment)
 		{
-			int    ret = 10;
-			string url = "https://test-api.tokenex.com/TokenServices.svc/REST/Tokenize";
+			int ret = 10;
+
+			try
+			{
+				if ( payment.ProviderURL.Length > 0 )
+					url = payment.ProviderURL;
+
+				Tools.LogInfo("TransactionTokenEx.PostJSON/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
+
+				ret                     = 20;
+				byte[]         buffer   = Encoding.UTF8.GetBytes(xmlSent);
+				HttpWebRequest request  = (HttpWebRequest)HttpWebRequest.Create(url);
+				ret                     = 30;
+				request.Method          = "POST";
+				request.ContentType     = "application/json";
+				ret                     = 40;
+				Stream postData         = request.GetRequestStream();
+				ret                     = 50;
+				postData.Write(buffer, 0, buffer.Length);
+				postData.Close();
+
+				using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+				{
+					ret                  = 60;
+					Stream       dStream = response.GetResponseStream();
+					ret                  = 70;
+					StreamReader sReader = new StreamReader(dStream);
+					ret                  = 80;
+					strResult            = sReader.ReadToEnd();
+					ret                  = 90;
+					sReader.Close();
+					dStream.Close();
+					sReader              = null;
+					ret                  = 100;
+					resultCode           = Tools.JSONValue(strResult,"Success");
+					ret                  = 130;
+					resultMsg            = Tools.JSONValue(strResult,"Error");
+					ret                  = 140;
+					payRef               = Tools.JSONValue(strResult,"ReferenceNumber");
+					if ( Successful )
+						ret = 0;
+					else
+						Tools.LogInfo("TransactionTokenEx.PostJSON/110","resultCode="+resultCode+", resultMsg="+resultMsg,221);
+				}
+			}
+			catch (Exception ex)
+			{
+				Tools.LogException("TransactionTokenEx.PostJSON/199","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+			}
+			return ret;
+		}
+
+		private int PostXML(string url,Payment payment)
+		{
+			int ret = 10;
 
 			try
 			{
 				xmlSent = "<TokenAction>"
 				        + Tools.XMLCell("APIKey",payment.ProviderKey)
 				        + Tools.XMLCell("TokenExID",payment.ProviderUserID)
-				        + Tools.XMLCell("Data",payment.CardNumber)
-				        + Tools.XMLCell("TokenScheme","sixTOKENfour")
+				        + xmlSent
 				        + "</TokenAction>";
 
 				if ( payment.ProviderURL.Length > 0 )
 					url = payment.ProviderURL;
 
-				Tools.LogInfo("TransactionTokenEx.GetToken/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
+				Tools.LogInfo("TransactionTokenEx.PostXML/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
 				ret                     = 20;
 				byte[]         buffer   = Encoding.UTF8.GetBytes(xmlSent);
@@ -143,19 +202,52 @@ namespace PCIBusiness
 					resultMsg            = Tools.XMLNode(xmlResult,"Error");
 					ret                  = 140;
 					payRef               = Tools.XMLNode(xmlResult,"ReferenceNumber");
-					ret                  = 150;
-					payToken             = Tools.XMLNode(xmlResult,"Token");
-					ret                  = 160;
-					if ( resultCode.ToUpper() == "TRUE" )
+					if ( Successful )
 						ret = 0;
 					else
-						Tools.LogInfo("TransactionTokenEx.PostHTML/110","resultCode="+resultCode+", resultMsg="+resultMsg,221);
+						Tools.LogInfo("TransactionTokenEx.PostXML/110","resultCode="+resultCode+", resultMsg="+resultMsg,221);
 				}
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("TransactionTokenEx.GetToken/199","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+				Tools.LogException("TransactionTokenEx.PostXML/199","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
 			}
+			return ret;
+		}
+
+		public override int DeleteToken(Payment payment)
+		{
+			xmlSent = Tools.XMLCell("Token",payment.CardToken);
+			return PostXML("https://test-api.tokenex.com/TokenServices.svc/REST/DeleteToken",payment);
+		}
+
+		public override int GetToken(Payment payment)
+		{
+			string txScheme  = "sixTOKENfour";
+			string timeStamp = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
+			string payLoad   = payment.ProviderUserID + "|" + timeStamp + "|" + txScheme;
+			string authKey   = Tools.GenerateHMAC(payLoad,payment.ProviderKey);
+			xmlSent          = Tools.JSONPair("tokenexid",        payment.ProviderUserID,1,"{")
+			                 + Tools.JSONPair("timestamp",        timeStamp)
+			                 + Tools.JSONPair("authenticationKey",authKey)
+			                 + Tools.JSONPair("data",             payment.CardNumber)
+			                 + Tools.JSONPair("tokenScheme",      txScheme)
+			                 + Tools.JSONPair("cvv",              payment.CardCVV,1,"","}");
+			payToken         = "";
+			int ret          = PostJSON("https://test-htp.tokenex.com/api/sdk/TokenizeWithCVV",payment);
+			if ( ret == 0 )
+				payToken = Tools.JSONValue(strResult,"Token");
+			return ret;
+		}
+
+		public int GetTokenCardOnly(Payment payment)
+		{
+			payToken = "";
+			xmlSent  = Tools.XMLCell("Data",payment.CardNumber)
+			         + Tools.XMLCell("TokenScheme","sixTOKENfour");
+			int ret  = PostXML("https://test-api.tokenex.com/TokenServices.svc/REST/Tokenize",payment);
+			if ( ret == 0 )
+				payToken = Tools.XMLNode(xmlResult,"Token");
 			return ret;
 		}
 
@@ -179,26 +271,26 @@ namespace PCIBusiness
 				        + "&paymentType=DB" // DB = Instant, PA = Pre-authorize, CP =
 				        + "&recurringType=REPEATED";
 
-				Tools.LogInfo("TransactionTokenEx.TokenPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
+				Tools.LogInfo("TransactionTokenEx.CardPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
-				ret      = PostHTML((byte)Constants.TransactionType.CardPayment,payment);
+				ret      = PeachHTML((byte)Constants.TransactionType.CardPayment,payment);
 				payToken = Tools.JSONValue(strResult,"id");
 				payRef   = Tools.JSONValue(strResult,"ndc");
 				if ( payToken.Length < 1 && ret == 0 )
 					ret = 248;
 
-				Tools.LogInfo("TransactionTokenEx.TokenPayment/20","ResultCode="+ResultCode + ", payRef=" + payRef + ", payToken=" + payToken,221);
+				Tools.LogInfo("TransactionTokenEx.CardPayment/20","ResultCode="+ResultCode + ", payRef=" + payRef + ", payToken=" + payToken,221);
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("TransactionTokenEx.TokenPayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+				Tools.LogException("TransactionTokenEx.CardPayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
 			}
 			return ret;
 		}
 
 		public override int TokenPayment(Payment payment)
 		{
-			return 0;
+			return CardPayment(payment);
 		}
 
       public override void Close()
