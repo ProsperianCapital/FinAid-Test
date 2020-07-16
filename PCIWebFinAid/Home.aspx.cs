@@ -42,6 +42,10 @@ namespace PCIWebFinAid
 
 				Response.Redirect(goTo);
 			}	
+			catch (System.Threading.ThreadAbortException)
+			{
+			//	Ignore
+			}
 			catch (Exception ex)
 			{
 				Tools.LogException("Home.PageLoad/2","url="+url,ex);
