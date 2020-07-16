@@ -10,6 +10,8 @@ namespace PCIWebFinAid
 {
 	public partial class RegisterEx2 : BasePage
 	{
+		private   const  string ApplicationCode = "000";
+
 		private   byte   logDebug = 40; // 240;
 		private   string productCode;
 		private   string languageCode;
@@ -797,17 +799,18 @@ namespace PCIWebFinAid
 						{
 //	TokenEx Start
 //	[TESTING]
-//	Secret key = njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I
-//	API key    = 4311038889209736
+//	iFrame API key = njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I
+//	Mobile API key = bDjxBnxQFfv7mrFtPJA24sGGbNBYvUF7JMnlNjwq
+//	TokenEx Id     = 4311038889209736
 //	[TESTING]
-							string secretKey      = Tools.ConfigValue("TokenEx/Key");
-							txID.Value            = Tools.ConfigValue("TokenEx/Id");
-							txOrigin.Value        = Request.Url.GetLeftPart(UriPartial.Authority);
-							txTimestamp.Value     = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
-//							txTokenScheme.Value   = "sixTOKENfour";
-							string data           = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
-							txHMAC.Value          = Tools.GenerateHMAC(data,secretKey);
-							lblTx.Text            = WebTools.JavaScriptSource("TokenSetup()");
+							string apiKey       = Tools.ConfigValue("TokenEx/Key");
+							txID.Value          = Tools.ConfigValue("TokenEx/Id");
+							txOrigin.Value      = Request.Url.GetLeftPart(UriPartial.Authority);
+							txTimestamp.Value   = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
+//							txTokenScheme.Value = "sixTOKENfour";
+							string data         = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
+							txHMAC.Value        = Tools.GenerateHMAC(data,apiKey);
+							lblTx.Text          = WebTools.JavaScriptSource("TokenSetup()");
 //	[TESTING]
 //							txConcatenatedString.Value = data;
 //	[TESTING]
@@ -874,7 +877,8 @@ namespace PCIWebFinAid
 							      +     " @RegistrationPage = '5'"
 							      +     ",@ContractCode =" + Tools.DBString(contractCode);
 							errNo = miscList.ExecQuery(sql,0,"",false,true);
-							SetErrorDetail("btnNext_Click/30050",(errNo==0?0:30050),"Unable to update information (WP_ContractApplicationC)",sql);
+//	Don't log an error for this ...
+//							SetErrorDetail("btnNext_Click/30050",(errNo==0?0:30050),"Unable to update information (WP_ContractApplicationC)",sql);
 
 							sql   = "exec sp_TokenEx_Ins_CardToken"
 							      +     " @ContractCode ="       + Tools.DBString(contractCode)

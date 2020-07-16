@@ -11,12 +11,14 @@ namespace PCIWebFinAid
 
 			try
 			{
-				int    k   = url.IndexOf("://");
-				string sql = url.Substring(k+3);
-				k          = sql.ToUpper().IndexOf("/HOME.ASPX");
+				int    k    = url.IndexOf("://");
+				string sql  = url.Substring(k+3);
+				string goTo = "XLogin.aspx";
+
+				k = sql.ToUpper().IndexOf("/HOME.ASPX");
 				if ( k > 0 )
-					sql     = sql.Substring(0,k);
-				sql        = "exec sp_Get_BackOfficeApplication " + Tools.DBString(sql);
+					sql = sql.Substring(0,k);
+				sql    = "exec sp_Get_BackOfficeApplication " + Tools.DBString(sql);
 
 				using (MiscList mList = new MiscList())
 					if ( mList.ExecQuery(sql,0) == 0 )
@@ -26,13 +28,15 @@ namespace PCIWebFinAid
 						string appStatus   = mList.GetColumn("ApplicationStatus").ToUpper();
 
 						if ( appStatus == "A" )
-							if ( appCode == "001" )
-								Response.Redirect("XLogin.aspx");
-							else if ( appCode == "002" )
-								Response.Redirect("Login.aspx");
-							else if ( appCode == "003" )
-								Response.Redirect("Register.aspx");
-					}	
+							if ( appCode == "000" )
+								goTo = "Register.aspx";
+//							else if ( appCode == "001" )
+//								Response.Redirect("Blah.aspx");
+//							else if ( appCode == "002" )
+//								Response.Redirect("Blah.aspx");
+					}
+
+				Response.Redirect(goTo);
 			}	
 			catch (Exception ex)
 			{

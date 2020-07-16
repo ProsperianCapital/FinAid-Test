@@ -10,7 +10,7 @@ namespace PCIWebFinAid
 {
 	public partial class XLogin : BasePageBackOffice
 	{
-		const string ApplicationCode = "001";
+		private const string ApplicationCode = "001";
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
