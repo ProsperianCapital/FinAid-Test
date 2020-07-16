@@ -40,7 +40,7 @@ namespace PCIWebFinAid
 //								Response.Redirect("Blah.aspx");
 					}
 
-				Tools.LogInfo("Home.PageLoad/1","url=" + url + ", domain=" + dName + ", appCode=" + appCode + ", appStatus=" + appStatus);
+				Tools.LogInfo("Home.PageLoad/1","url=" + url + ", domain=" + dName + ", appCode=" + appCode + ", appStatus=" + appStatus,233);
 
 				Response.Redirect(goTo);
 			}	
