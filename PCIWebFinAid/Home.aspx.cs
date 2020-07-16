@@ -20,10 +20,10 @@ namespace PCIWebFinAid
 
 				k = dName.ToUpper().IndexOf("/HOME.ASPX");
 				if ( k > 0 )
-				{
-					dName   = dName.Substring(0,k);
-					parms   = dName.Substring(k+10);
-				}
+					dName  = dName.Substring(0,k);
+				k = url.IndexOf("?");
+				if ( k > 0 )
+					parms = url.Substring(k);
 				string sql = "exec sp_Get_BackOfficeApplication " + Tools.DBString(dName);
 
 				using (MiscList mList = new MiscList())
