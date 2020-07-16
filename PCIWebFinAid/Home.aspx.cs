@@ -9,23 +9,27 @@ namespace PCIWebFinAid
 		{
 			string url = Request.Url.AbsoluteUri.Trim();
 
+			Tools.LogInfo("Home.PageLoad","url=" + url);
+
 			try
 			{
-				int    k    = url.IndexOf("://");
-				string sql  = url.Substring(k+3);
-				string goTo = "XLogin.aspx";
+				int    k         = url.IndexOf("://");
+				string dName     = url.Substring(k+3);
+				string goTo      = "XLogin.aspx";
+				string appCode   = "*";
+				string appStatus = "*";
 
-				k = sql.ToUpper().IndexOf("/HOME.ASPX");
+				k = dName.ToUpper().IndexOf("/HOME.ASPX");
 				if ( k > 0 )
-					sql = sql.Substring(0,k);
-				sql    = "exec sp_Get_BackOfficeApplication " + Tools.DBString(sql);
+					dName   = dName.Substring(0,k);
+				string sql = "exec sp_Get_BackOfficeApplication " + Tools.DBString(dName);
 
 				using (MiscList mList = new MiscList())
 					if ( mList.ExecQuery(sql,0) == 0 )
 					{
-						string appCode     = mList.GetColumn("ApplicationCode");
 						string appSecurity = mList.GetColumn("EnforceMenuItemSecurity");
-						string appStatus   = mList.GetColumn("ApplicationStatus").ToUpper();
+						appStatus          = mList.GetColumn("ApplicationStatus").ToUpper();
+						appCode            = mList.GetColumn("ApplicationCode");
 
 						if ( appStatus == "A" )
 							if ( appCode == "000" )
@@ -36,11 +40,13 @@ namespace PCIWebFinAid
 //								Response.Redirect("Blah.aspx");
 					}
 
+				Tools.LogInfo("Home.PageLoad/1","url=" + url + ", domain=" + dName + ", appCode=" + appCode + ", appStatus=" + appStatus);
+
 				Response.Redirect(goTo);
 			}	
 			catch (Exception ex)
 			{
-				Tools.LogException("Home.PageLoad","url="+url,ex);
+				Tools.LogException("Home.PageLoad/2","url="+url,ex);
 			}
 		}
 	}
