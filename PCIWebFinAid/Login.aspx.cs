@@ -35,7 +35,7 @@ namespace PCIWebFinAid
 				SessionClearData();
 				SessionSave();
 				txtID.Focus();
-				WebTools.ClientReferringURL(Request,19);
+//				WebTools.ClientReferringURL(Request,19);
 			}
 		}
 

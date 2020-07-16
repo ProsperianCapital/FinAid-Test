@@ -9,8 +9,6 @@ namespace PCIWebFinAid
 		{
 			string url = Request.Url.AbsoluteUri.Trim();
 
-			Tools.LogInfo("Home.PageLoad","url=" + url);
-
 			try
 			{
 				int    k         = url.IndexOf("://");
@@ -34,9 +32,9 @@ namespace PCIWebFinAid
 						if ( appStatus == "A" )
 							if ( appCode == "000" )
 								goTo = "Register.aspx";
-//							else if ( appCode == "001" )
+//							else if ( appCode == "001" || Tools.StringToInt(appCode) == 1 )
 //								Response.Redirect("Blah.aspx");
-//							else if ( appCode == "002" )
+//							else if ( appCode == "002" || Tools.StringToInt(appCode) == 2 )
 //								Response.Redirect("Blah.aspx");
 					}
 

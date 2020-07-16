@@ -27,8 +27,8 @@ namespace PCIWebFinAid
 				SessionCheck(2,ApplicationCode);
 				ascxXHeader.ShowUser(null);
 				txtID.Focus();
-				if ( WebTools.RequestValueInt(Request,"ErrNo") == 0 )
-					WebTools.ClientReferringURL(Request,14);
+//				if ( WebTools.RequestValueInt(Request,"ErrNo") == 0 )
+//					WebTools.ClientReferringURL(Request,14);
 			}
 		}
 

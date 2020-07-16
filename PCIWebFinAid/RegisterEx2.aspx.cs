@@ -53,7 +53,7 @@ namespace PCIWebFinAid
 				productCode         = WebTools.RequestValueString(Request,"PC");  // ProductCode");
 				languageCode        = WebTools.RequestValueString(Request,"LC");  // LanguageCode");
 				languageDialectCode = WebTools.RequestValueString(Request,"LDC"); // LanguageDialectCode");
-				hdnReferURL.Value   = WebTools.ClientReferringURL(Request,11);
+//				hdnReferURL.Value   = WebTools.ClientReferringURL(Request,11);
 
 				if ( ! Tools.SystemIsLive() )
 				{

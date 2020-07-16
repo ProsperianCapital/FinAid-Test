@@ -248,10 +248,10 @@ function OptSelect(p)
 
 <asp:HiddenField runat="server" id="hdnPageNo" value="1" />
 <asp:HiddenField runat="server" id="hdnBrowser" />
-<asp:HiddenField runat="server" id="hdnReferURL" />
 <asp:HiddenField runat="server" id="hdn100002" />
 <asp:HiddenField runat="server" id="hdn100137" />
 <asp:HiddenField runat="server" id="hdn100187" />
+<!-- HiddenField run@t="server" id="hdnReferURL" -->
 
 <div class="Header3">
 	<asp:Literal runat="server" ID="lblReg"></asp:Literal><asp:Literal runat="server" ID="lblRegConf"></asp:Literal>
