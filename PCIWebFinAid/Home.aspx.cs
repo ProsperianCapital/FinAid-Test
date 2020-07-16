@@ -20,7 +20,7 @@ namespace PCIWebFinAid
 
 				k = dName.ToUpper().IndexOf("/HOME.ASPX");
 				if ( k > 0 )
-					dName  = dName.Substring(0,k);
+					dName = dName.Substring(0,k);
 				k = url.IndexOf("?");
 				if ( k > 0 )
 					parms = url.Substring(k);
@@ -42,11 +42,10 @@ namespace PCIWebFinAid
 //								Response.Redirect("Blah.aspx");
 					}
 
-				Tools.LogInfo("Home.PageLoad/1","url=" + url
+				Tools.LogInfo("Home.PageLoad/1","url="       + url
 				                            + ", domain="    + dName
 				                            + ", goTo="      + goTo
 				                            + ", parms="     + parms
-				                            + ", domain="    + dName
 				                            + ", appCode="   + appCode
 				                            + ", appStatus=" + appStatus,233);
 
