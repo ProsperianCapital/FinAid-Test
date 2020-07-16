@@ -14,12 +14,16 @@ namespace PCIWebFinAid
 				int    k         = url.IndexOf("://");
 				string dName     = url.Substring(k+3);
 				string goTo      = "XLogin.aspx";
+				string parms     = "";
 				string appCode   = "*";
 				string appStatus = "*";
 
 				k = dName.ToUpper().IndexOf("/HOME.ASPX");
 				if ( k > 0 )
+				{
 					dName   = dName.Substring(0,k);
+					parms   = dName.Substring(k+10);
+				}
 				string sql = "exec sp_Get_BackOfficeApplication " + Tools.DBString(dName);
 
 				using (MiscList mList = new MiscList())
@@ -38,9 +42,15 @@ namespace PCIWebFinAid
 //								Response.Redirect("Blah.aspx");
 					}
 
-				Tools.LogInfo("Home.PageLoad/1","url=" + url + ", domain=" + dName + ", appCode=" + appCode + ", appStatus=" + appStatus,233);
+				Tools.LogInfo("Home.PageLoad/1","url=" + url
+				                            + ", domain="    + dName
+				                            + ", goTo="      + goTo
+				                            + ", parms="     + parms
+				                            + ", domain="    + dName
+				                            + ", appCode="   + appCode
+				                            + ", appStatus=" + appStatus,233);
 
-				Response.Redirect(goTo);
+				Response.Redirect(goTo+parms);
 			}	
 			catch (System.Threading.ThreadAbortException)
 			{
