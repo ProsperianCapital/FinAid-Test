@@ -157,7 +157,7 @@ namespace PCIWebFinAid
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("Register.HideControls","",ex);
+				Tools.LogException("RegisterEx1.HideControls","",ex);
 			}
 			lblJS.Text = WebTools.JavaScriptSource("ShowElt('tr"+controlID+"',false);ShowElt('trp6"+controlID+"',false)",lblJS.Text,1);
 		}
@@ -202,14 +202,14 @@ namespace PCIWebFinAid
 					}
 					else
 					{
-						Tools.LogInfo     ("Register.LoadGoogleAnalytics/1","Failed to load Google UA code");
-						Tools.LogException("Register.LoadGoogleAnalytics/2",sql,null);
+						Tools.LogInfo     ("RegisterEx1.LoadGoogleAnalytics/1","Failed to load Google UA code");
+						Tools.LogException("RegisterEx1.LoadGoogleAnalytics/2",sql,null);
 					}
 				}
 				catch (Exception ex)
 				{
-					Tools.LogInfo     ("Register.LoadGoogleAnalytics/8","Failed to load Google UA code");
-					Tools.LogException("Register.LoadGoogleAnalytics/9",sql,ex);
+					Tools.LogInfo     ("RegisterEx1.LoadGoogleAnalytics/8","Failed to load Google UA code");
+					Tools.LogException("RegisterEx1.LoadGoogleAnalytics/9",sql,ex);
 				}
 		}
 
@@ -230,7 +230,7 @@ namespace PCIWebFinAid
 				}
 				catch (Exception ex)
 				{
-					Tools.LogException("Register.LoadChat",sql,ex);
+					Tools.LogException("RegisterEx1.LoadChat",sql,ex);
 					SetErrorDetail(90099,90099,"Internal error ; please try again later",ex.Message + " (" + sql + ")");
 				}
 		}	
@@ -305,7 +305,7 @@ namespace PCIWebFinAid
 							errNo        = 0;
  
 //							if ( logNo <= 10 )
-//								Tools.LogInfo("Register.LoadLabels/15","Row 1, FieldCode="+fieldCode+", FieldValue="+fieldValue,logDebug);
+//								Tools.LogInfo("RegisterEx1.LoadLabels/15","Row 1, FieldCode="+fieldCode+", FieldValue="+fieldValue,logDebug);
 
 						//	Common
 							if ( fieldCode == "100119" )      // Next
@@ -445,7 +445,7 @@ namespace PCIWebFinAid
 //	Note : btnBack1 ("Back") is only for DEV, not LIVE. So no label data exists
 
 					if ( btnNext.Text.Length  < 1 || btnBack2.Text.Length < 1 || btnAgree.Text.Length < 1 )
-						Tools.LogInfo("Register.LoadLabels/37","Unable to load some or all button labels ("
+						Tools.LogInfo("RegisterEx1.LoadLabels/37","Unable to load some or all button labels ("
 						             + btnNext.Text + "/" + btnBack2.Text + "/" + btnAgree.Text + ")");
 
 					if ( btnNext.Text.Length  < 1 ) btnNext.Text  = "NEXT";
@@ -519,7 +519,7 @@ namespace PCIWebFinAid
 				}
 				catch (Exception ex)
 				{
-					Tools.LogException("Register.LoadLabels","logNo=" + logNo.ToString(),ex);
+					Tools.LogException("RegisterEx1.LoadLabels","logNo=" + logNo.ToString(),ex);
 					SetErrorDetail(99,logNo,"Internal error ; please try again later",ex.Message + " (" + sql + ")");
 				}
 
@@ -620,7 +620,7 @@ namespace PCIWebFinAid
 				}
 				catch (Exception ex)
 				{
-					Tools.LogException("Register.LoadContractCode/99",sql,ex);
+					Tools.LogException("RegisterEx1.LoadContractCode/99",sql,ex);
 					SetErrorDetail(10033,10033,"Error retrieving new contract details ; please try again later",ex.Message + " (" + sql + ")");
 					return false;
 				}
@@ -831,7 +831,7 @@ namespace PCIWebFinAid
 							                      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 
 							string w = " (looking for ProductOption="+productOption+" and PaymentMethod="+payMethod+")";
-							Tools.LogInfo("Register.btnNext_Click/50",sql+w,logDebug);
+							Tools.LogInfo("RegisterEx1.btnNext_Click/50",sql+w,logDebug);
 
 							if ( miscList.ExecQuery(sql,0) == 0 )
 								while ( ! miscList.EOF )
@@ -842,7 +842,7 @@ namespace PCIWebFinAid
 									       miscList.GetColumn("PaymentMethodCode").ToUpper() == payMethod.ToUpper()  )   ||
 									       miscList.GetColumn("PaymentMethodCode") == "*" )
 									{
-										Tools.LogInfo("Register.btnNext_Click/51",w+" (match)",logDebug);
+										Tools.LogInfo("RegisterEx1.btnNext_Click/51",w+" (match)",logDebug);
 										lblCCMandate.Text = miscList.GetColumn("CollectionMandateText",0);
 										int k             = lblCCMandate.Text.IndexOf("\n"); // Do NOT use Environment.NewLine here!
 										if ( k > 0 && lblCCMandate.Text.Length > k+1 )
@@ -854,7 +854,7 @@ namespace PCIWebFinAid
 										lblp6Mandate.Text     = lblCCMandate.Text;
 										break;
 									}
-									Tools.LogInfo("Register.btnNext_Click/52",w,logDebug);
+									Tools.LogInfo("RegisterEx1.btnNext_Click/52",w,logDebug);
 									miscList.NextRow();
 								}
 
@@ -1139,7 +1139,7 @@ namespace PCIWebFinAid
 													if ( k > 1 ) // After 2 failed attempts
 														smtp.UseDefaultCredentials = false;
 													if ( k > 2 ) // After 3 failed attempts
-														Tools.LogException("Register.aspx/84","Mail send failure, errNo=" + errNo.ToString() + " (" + txtEMail.Text+")",ex3);
+														Tools.LogException("RegisterEx1.aspx/84","Mail send failure, errNo=" + errNo.ToString() + " (" + txtEMail.Text+")",ex3);
 												}
 										}
 										SetErrorDetail(errNo,errNo,"Unable to send confirmation email (5 failed attempts)","");
@@ -1186,7 +1186,7 @@ namespace PCIWebFinAid
 				return;
 			}
 
-			Tools.LogInfo("Register.SetErrorDetail","(errCode="+errCode.ToString()+", logNo="+logNo.ToString()+") "+errDetail,244);
+			Tools.LogInfo("RegisterEx1.SetErrorDetail","(errCode="+errCode.ToString()+", logNo="+logNo.ToString()+") "+errDetail,244);
 
 			if ( briefMode == 2 ) // Append
 				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;

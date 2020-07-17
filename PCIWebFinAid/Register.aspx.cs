@@ -70,6 +70,9 @@ namespace PCIWebFinAid
 					SetWarning("B","Invalid startup values.");
 					return;
 				}
+ 
+				if ( WebTools.CheckProductProvider(productCode,"Register.aspx",Request,Response) == 0 )
+					return;
 
 				ViewState["ProductCode"]         = productCode;
 				ViewState["LanguageCode"]        = languageCode;

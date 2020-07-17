@@ -393,6 +393,46 @@ namespace PCIWebFinAid
 			return refer;
 		}
 
+		public static byte CheckProductProvider(string productCode,string urlOld,HttpRequest req=null,HttpResponse resp=null)
+		{
+			if ( string.IsNullOrWhiteSpace(productCode) )
+				return 10;
+
+			string urlNew     = "";
+			string sql        = "exec sp_WP_Get_ProductTokenBureau @ProductCode=" + PCIBusiness.Tools.DBString(productCode);
+			int    bureauCode = 0;
+
+			using (PCIBusiness.MiscList mList = new PCIBusiness.MiscList())
+				if ( mList.ExecQuery(sql,0) == 0 )
+					bureauCode = PCIBusiness.Tools.StringToInt(mList.GetColumn("TokenBureauCode"));
+
+			if ( bureauCode < 1 )
+				return 20;
+			else if ( bureauCode  == (int)PCIBusiness.Constants.PaymentProvider.TokenEx )				
+				urlNew = "RegisterEx2.aspx";
+			else
+				urlNew = "Register.aspx";
+
+			if ( urlOld.ToUpper() == urlNew.ToUpper() )
+				return 30;
+			if ( req == null || resp == null )
+				return 40;
+				
+			string parms = req.Url.Query;
+			try
+			{
+				if ( parms.Length == 0 )
+					resp.Redirect(urlNew);
+				else if ( parms.StartsWith("?") )
+					resp.Redirect(urlNew+parms);
+				else
+					resp.Redirect(urlNew+"?"+parms);
+			}
+			catch
+			{ }
+			return 0;
+		}
+
 
 /* Not complete
 
