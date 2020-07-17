@@ -73,6 +73,7 @@
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx1.aspx" />
     <Content Include="RegisterEx2.aspx" />
+    <Content Include="RegisterEx3.aspx" />
     <Content Include="TransLookup.aspx" />
     <Content Include="ContractLookup.aspx" />
     <Content Include="LAdmin.aspx" />
@@ -293,6 +294,13 @@
     </Compile>
     <Compile Include="RegisterEx2.aspx.designer.cs">
       <DependentUpon>RegisterEx2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterEx3.aspx.cs">
+      <DependentUpon>RegisterEx3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterEx3.aspx.designer.cs">
+      <DependentUpon>RegisterEx3.aspx</DependentUpon>
     </Compile>
     <Compile Include="SessionGeneral.cs" />
     <Compile Include="StdDisposable.cs">

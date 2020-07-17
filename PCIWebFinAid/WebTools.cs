@@ -395,7 +395,7 @@ namespace PCIWebFinAid
 
 		public static byte CheckProductProvider(string productCode,string urlOld,HttpRequest req=null,HttpResponse resp=null)
 		{
-			if ( string.IsNullOrWhiteSpace(productCode) )
+			if ( string.IsNullOrWhiteSpace(productCode) || PCIBusiness.Tools.SystemLiveTestOrDev() == PCIBusiness.Constants.SystemMode.Development )
 				return 10;
 
 			string urlNew     = "";
@@ -409,7 +409,7 @@ namespace PCIWebFinAid
 			if ( bureauCode < 1 )
 				return 20;
 			else if ( bureauCode  == (int)PCIBusiness.Constants.PaymentProvider.TokenEx )				
-				urlNew = "RegisterEx2.aspx";
+				urlNew = "RegisterEx3.aspx";
 			else
 				urlNew = "Register.aspx";
 

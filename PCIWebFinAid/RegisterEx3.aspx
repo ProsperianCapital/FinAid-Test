@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="RegisterEx2.aspx.cs" Inherits="PCIWebFinAid.RegisterEx2" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="RegisterEx3.aspx.cs" Inherits="PCIWebFinAid.RegisterEx3" ValidateRequest="false" %>
 
 <!DOCTYPE html>
 
@@ -202,12 +202,12 @@ function ValidatePage(ctl,seq,misc)
 			}
 			ShowTick(p,'CCExpiry',seq);
 		}
-	//	if ( ( pageNo == 5 && ctl == 0 ) || ctl == 100189 )
-	//	{
-	//		p   = Validate('txtCCCVV','lblInfo5',6,GetEltValue('hdnCCCVVError'),7,4);
-	//		err = err + p;
-	//		ShowTick(p,'CCCVV',seq);
-	//	}
+		if ( ( pageNo == 5 && ctl == 0 ) || ctl == 100189 )
+		{
+			p   = Validate('txtCCCVV','lblInfo5',6,GetEltValue('hdnCCCVVError'),7,4);
+			err = err + p;
+			ShowTick(p,'CCCVV',seq);
+		}
 	}
 	catch (x)
 	{
@@ -491,10 +491,10 @@ function OptSelect(p)
 	<tr id="trCCCVV">
 		<td style="white-space:nowrap">
 			<div class="DataLabel">
-			<asp:Literal runat="server" ID="lblCCCVVLabel"></asp:Literal>
-			<a href="#" onmouseover="JavaScript:Help(1,this,'CCCVV')" onmouseout="JavaScript:Help(0)" style="float:right">?</a>
-			<img id="imgCCCVV" /></div>
-			<span id="txIFrameCVV"></span>
+			<asp:Literal runat="server" ID="lblCCCVVLabel"></asp:Literal></div>
+			<asp:TextBox runat="server" CssClass="DataInput" ID="txtCCCVV" MaxLength="4" onfocus="JavaScript:ValidatePage(100189,1)" onblur="JavaScript:ValidatePage(100189,2)"></asp:TextBox>
+			<a href="#" onmouseover="JavaScript:Help(1,this,'CCCVV')" onmouseout="JavaScript:Help(0)">?</a>
+			<img id="imgCCCVV" />
 			<asp:HiddenField runat="server" ID="hdnCCCVVHelp" />
 			<asp:HiddenField runat="server" ID="hdnCCCVVError" />
 			<asp:HiddenField runat="server" ID="hdnCCCVVGuide" /></td></tr>
@@ -698,7 +698,8 @@ function TokenFinish()
 
 	try
 	{
-		if ( txCC.isValid && txCC.isCvvValid )
+		var v = GetEltValue('txtCCCVV');
+		if ( txCC.isValid && v.length >= 3 && ToInteger(v) > 0 )
 		{
 			txFrame.tokenize();
 			return true;
@@ -719,21 +720,13 @@ function TokenSetup()
 		styles: {
 			base: "background-color:#898787;width:209px;border:0;padding:2px",
 			focus: "",
-			error: "border-color:#ce0a0a",
-			cvv: {
-				base: "background-color:#898787;width:209px;border:0;padding:2px",
-				focus: "",
-				error: "border-color:#ce0a0a"
-			}
+			error: "border-color:#ce0a0a"
 		},
 		pci: true,
 		inputType: "text",
 		enablePrettyFormat: true,
 		debug: false,
 		placeholder: "Card Number",
-		cvv: true,
-		cvvContainerID: "txIFrameCVV",
-		cvvPlaceholder: "CVV",
 //	Required
 		origin: document.getElementById("txOrigin").value,
 		timestamp: document.getElementById("txTimestamp").value,
