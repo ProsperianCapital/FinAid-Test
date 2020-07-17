@@ -459,18 +459,20 @@ namespace PCIBusiness
 		{
 			get
 			{
-				if ( transactionType == (byte)Constants.TransactionType.CardPayment   ) return "Card Payment";
-				if ( transactionType == (byte)Constants.TransactionType.DeleteToken   ) return "Delete Token";
-				if ( transactionType == (byte)Constants.TransactionType.GetToken      ) return "Get Token";
-				if ( transactionType == (byte)Constants.TransactionType.ManualPayment ) return "Manual Payment (3d)";
-				if ( transactionType == (byte)Constants.TransactionType.TokenPayment  ) return "Token Payment";
+				if ( transactionType == (byte)Constants.TransactionType.CardPayment      ) return "Card Payment";
+				if ( transactionType == (byte)Constants.TransactionType.DeleteToken      ) return "Delete Token";
+				if ( transactionType == (byte)Constants.TransactionType.GetToken         ) return "Get Token";
+				if ( transactionType == (byte)Constants.TransactionType.ManualPayment    ) return "Manual Payment (3d)";
+				if ( transactionType == (byte)Constants.TransactionType.TokenPayment     ) return "Token Payment";
+				if ( transactionType == (byte)Constants.TransactionType.GetCardFromToken ) return "Get Card Number from Token";
 				return "Unknown (transactionType=" + transactionType.ToString() + ")";
 			}
 		}
-//		public Provider  Provider
-//		{
-//			get { return  provider; }
-//		}
+
+		public int Detokenize() // ToDo
+		{
+			return 0;
+		}
 
 		public int DeleteToken()
 		{

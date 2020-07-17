@@ -136,6 +136,11 @@ namespace PCIBusiness
 				sql  = "exec sp_Get_TokenToDelete " + Tools.DBString(bureauCode);
 				desc = "Delete Token";
 			}
+			else if ( transactionType == (byte)Constants.TransactionType.GetCardFromToken )
+    		{
+				sql  = "exec sp_Get_TokenToDecrypt " + Tools.DBString(bureauCode);
+				desc = "Get Card from Token";
+			}
 			else
 				return 0;
 
@@ -174,6 +179,8 @@ namespace PCIBusiness
 							err = payment.ProcessPayment();
 						else if ( transactionType == (byte)Constants.TransactionType.DeleteToken )
 							err = payment.DeleteToken();
+						else if ( transactionType == (byte)Constants.TransactionType.GetCardFromToken )
+							err = payment.Detokenize();
 						if ( err == 0 )
 							success++;
 						else
