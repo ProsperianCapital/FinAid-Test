@@ -137,11 +137,11 @@ namespace PCIBusiness
 				        + "&currency="              + Tools.URLString(payment.CurrencyCode)
 				        + "&merchantTransactionId=" + Tools.URLString(payment.MerchantReference)
 				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
-				        + "&merchant.name=[merchant.name]abcdefghijklmnopqrstuvwxyz"
-				        + "&merchant.city=[merchant.city]abcdefghijklmnopqrstuvwxyz"
-				        + "&merchantInvoiceId=merchantTnvoiceId"
+				        + "&merchantInvoiceId="     + Tools.URLString(payment.MerchantReference)
+				        + "&merchant.name=Prosperian"
 				        + "&paymentType=DB" // DB = Instant debit, PA = Pre-authorize, CP =
 				        + "&recurringType=REPEATED";
+//				        + "&merchant.city=[merchant.city]abcdefghijklmnopqrstuvwxyz"
 
 				Tools.LogInfo("TransactionPeach.CardPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
@@ -171,7 +171,7 @@ namespace PCIBusiness
 				        + "&currency="              + Tools.URLString(payment.CurrencyCode)
 				        + "&merchantTransactionId=" + Tools.URLString(payment.MerchantReference)
 				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
-				        + "&paymentType=DB" // DB = Instant, PA = Pre-authorize
+				        + "&paymentType=DB" // DB = Instant debit, PA = Pre-authorize
 				        + "&recurringType=REPEATED";
 
 				Tools.LogInfo("TransactionPeach.TokenPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);

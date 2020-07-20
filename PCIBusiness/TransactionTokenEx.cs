@@ -9,6 +9,7 @@ namespace PCIBusiness
 	public class TransactionTokenEx : Transaction
 	{
 		TransactionPeach tranPeach;
+
 		public bool Successful
 		{
 			get
@@ -221,7 +222,7 @@ namespace PCIBusiness
 			return PostXML("https://test-api.tokenex.com/TokenServices.svc/REST/DeleteToken",payment);
 		}
 
-		public override int GetToken(Payment payment)
+		public int GetTokenCardAndCVV(Payment payment)
 		{
 			string txScheme  = "sixTOKENfour";
 			string timeStamp = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
@@ -240,7 +241,7 @@ namespace PCIBusiness
 			return ret;
 		}
 
-		public int GetTokenCardOnly(Payment payment)
+		public override int GetToken(Payment payment)
 		{
 			payToken = "";
 			xmlSent  = Tools.XMLCell("Data",payment.CardNumber)
@@ -265,11 +266,12 @@ namespace PCIBusiness
 				        + "&card.holder="      + Tools.URLString(payment.CardName)
 				        + "&card.expiryMonth=" + Tools.URLString(payment.CardExpiryMM)
 				        + "&card.expiryYear="  + Tools.URLString(payment.CardExpiryYYYY)
-				        + "&card.cvv={{{cvv}}}"
+				        + "&card.cvv="         + Tools.URLString(payment.CardCVV)
 				        + "&amount="           + Tools.URLString(payment.PaymentAmountDecimal)
 				        + "&currency="         + Tools.URLString(payment.CurrencyCode)
 				        + "&paymentType=DB" // DB = Instant, PA = Pre-authorize, CP =
 				        + "&recurringType=REPEATED";
+//				        + "&card.cvv={{{cvv}}}"
 
 				Tools.LogInfo("TransactionTokenEx.CardPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
