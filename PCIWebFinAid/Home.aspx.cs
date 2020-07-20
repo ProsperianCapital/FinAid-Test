@@ -15,8 +15,9 @@ namespace PCIWebFinAid
 				string dName     = url.Substring(k+3);
 				string goTo      = "XLogin.aspx";
 				string parms     = "";
-				string appCode   = "*";
+//				string appCode   = "*";
 				string appStatus = "*";
+				ApplicationCode  = "";
 
 				k = dName.ToUpper().IndexOf("/HOME.ASPX");
 				if ( k > 0 )
@@ -31,10 +32,10 @@ namespace PCIWebFinAid
 					{
 						string appSecurity = mList.GetColumn("EnforceMenuItemSecurity");
 						appStatus          = mList.GetColumn("ApplicationStatus").ToUpper();
-						appCode            = mList.GetColumn("ApplicationCode");
+						ApplicationCode    = mList.GetColumn("ApplicationCode");
 
 						if ( appStatus == "A" )
-							if ( appCode == "000" )
+							if ( ApplicationCode == "000" )
 								goTo = "Register.aspx";
 //							else if ( appCode == "001" || Tools.StringToInt(appCode) == 1 )
 //								Response.Redirect("Blah.aspx");
@@ -46,7 +47,7 @@ namespace PCIWebFinAid
 				                            + ", domain="    + dName
 				                            + ", goTo="      + goTo
 				                            + ", parms="     + parms
-				                            + ", appCode="   + appCode
+				                            + ", appCode="   + ApplicationCode
 				                            + ", appStatus=" + appStatus,233);
 
 				Response.Redirect(goTo+parms);

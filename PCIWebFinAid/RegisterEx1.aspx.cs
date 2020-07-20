@@ -10,8 +10,6 @@ namespace PCIWebFinAid
 {
 	public partial class RegisterEx1 : BasePage
 	{
-		private   const  string ApplicationCode = "000";
-
 		private   byte   logDebug = 40; // 240;
 		private   string productCode;
 		private   string languageCode;

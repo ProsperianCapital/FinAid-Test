@@ -23,12 +23,10 @@ namespace PCIWebFinAid
 //		protected Label          lblErrorDtl;
 //		protected Label          lblError;
 
-		protected void SessionSave(string applicationCode=null,string userCode=null,string userName=null,string accessType=null,string contractCode=null)
+		protected void SessionSave(string userCode=null,string userName=null,string accessType=null,string contractCode=null)
 		{
 			if ( sessionGeneral  == null )
 				sessionGeneral     = new SessionGeneral();
-			if ( applicationCode != null )
-				sessionGeneral.ApplicationCode = Tools.NullToString(applicationCode);
 			if ( userCode        != null )
 				sessionGeneral.UserCode        = Tools.NullToString(userCode);
 			if ( userName        != null )
@@ -114,11 +112,11 @@ namespace PCIWebFinAid
 
 			if ( sessionMode == 99 && sessionGeneral == null )
 			{
-				sessionGeneral                 = new SessionGeneral();
-				sessionGeneral.UserCode        = "653";
-				sessionGeneral.UserName        = "Samual Briggs";
-				sessionGeneral.AccessType      = "P";
-				sessionGeneral.ApplicationCode = "002";
+				sessionGeneral            = new SessionGeneral();
+				sessionGeneral.UserCode   = "653";
+				sessionGeneral.UserName   = "Samual Briggs";
+				sessionGeneral.AccessType = "P";
+				ApplicationCode           = "002";
 			}
 
 			else if ( sessionMode == 4 && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )

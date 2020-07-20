@@ -22,7 +22,7 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,sessionGeneral.ApplicationCode) != 0 )
+			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) != 0 )
 				StartOver(10999);
 		}
 
@@ -138,6 +138,7 @@ namespace PCIWebFinAid
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.ConfigSoftware )
 			{
 				x1 = "Application name<br />"
+				   + "Application code<br />"
 				   + "Application version<br />"
 				   + "Application release date<br />"
 				   + "Machine name<br />"
@@ -150,6 +151,7 @@ namespace PCIWebFinAid
 				   + "Environment.UserDomainName<br />"
 				   + "Database version";
 				x2 = AppDetails.AppName + "<br />"
+				   + ApplicationCode + "<br />"
 				   + PCIBusiness.SystemDetails.AppVersion + "<br />"
 				   + PCIBusiness.SystemDetails.AppDate + "<br />"
 				   + Environment.MachineName + "<br />"

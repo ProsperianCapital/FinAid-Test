@@ -16,12 +16,10 @@ namespace PCIWebFinAid
 		protected SessionGeneral sessionGeneral;
 		protected string         sql;
 
-		protected void SessionSave(string applicationCode=null,string userCode=null,string userName=null,string accessType=null)
+		protected void SessionSave(string userCode=null,string userName=null,string accessType=null)
 		{
 			if ( sessionGeneral  == null )
 				sessionGeneral     = new SessionGeneral();
-			if ( applicationCode != null )
-				sessionGeneral.ApplicationCode = Tools.NullToString(applicationCode);
 			if ( userCode        != null )
 				sessionGeneral.UserCode        = Tools.NullToString(userCode);
 			if ( userName        != null )
@@ -53,7 +51,7 @@ namespace PCIWebFinAid
 //			return 0;
 //		}
 
-		protected byte SessionCheck(byte sessionMode=43,string applicationCode="")
+		protected byte SessionCheck(byte sessionMode=43) // ,string applicationCode="")
 		{
 			Response.Cache.SetExpires(DateTime.Now);
 			Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -99,17 +97,17 @@ namespace PCIWebFinAid
 					sessionGeneral = new SessionGeneral();
 				else
 					sessionGeneral.Clear();
-				SessionSave(applicationCode);
+				SessionSave(); // applicationCode);
 				return 0;
 			}
 
 			if ( sessionMode == 99 && sessionGeneral == null )
 			{
-				sessionGeneral                 = new SessionGeneral();
-				sessionGeneral.UserCode        = "653";
-				sessionGeneral.UserName        = "Samual Briggs";
-				sessionGeneral.AccessType      = "P";
-				sessionGeneral.ApplicationCode = "001";
+				sessionGeneral            = new SessionGeneral();
+				sessionGeneral.UserCode   = "653";
+				sessionGeneral.UserName   = "Samual Briggs";
+				sessionGeneral.AccessType = "P";
+				ApplicationCode           = "001";
 			}
 
 			else if ( sessionMode == 4 && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )
@@ -143,10 +141,13 @@ namespace PCIWebFinAid
 			}
 
 			ShowUserDetails();
-			if ( applicationCode.Length > 0 )
-				SessionSave(applicationCode);
-			else
-				SessionSave();
+			SessionSave();
+
+//			if ( applicationCode.Length > 0 )
+//				SessionSave(applicationCode);
+//			else
+//				SessionSave();
+
 			return 0;
 		}
 

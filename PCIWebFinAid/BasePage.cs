@@ -52,6 +52,27 @@ namespace PCIWebFinAid
 		//	Put this in the derived class:
 		//	protected override void PageLoad(object sender, EventArgs e)
 
+		public string ApplicationCode
+		{
+			get
+			{
+				try
+				{
+					if ( Session["ApplicationCode"] == null )
+						return "";
+					string appCode = Session["ApplicationCode"].ToString().Trim();
+					return appCode;
+				}
+				catch
+				{ }
+				return "";
+			}
+			set
+			{
+				Session["ApplicationCode"] = value;
+			}
+		}
+
 		protected void SetErrorDetail(string method,int errCode,string errBrief="",string errDetail="",byte briefMode=2,byte detailMode=2,Exception ex=null,bool alwaysShow=false,byte errPriority=0)
 		{
 			if ( errCode == 0 )
