@@ -871,12 +871,11 @@ namespace PCIWebFinAid
 						}
 						else if ( pageNo == 6 || pageNo > 180 )
 						{
-							sql   = "exec WP_ContractApplicationC"
-							      +     " @RegistrationPage = '5'"
-							      +     ",@ContractCode =" + Tools.DBString(contractCode);
-							errNo = miscList.ExecQuery(sql,0,"",false,true);
-//	Don't log an error for this ...
-//							SetErrorDetail("btnNext_Click/30050",(errNo==0?0:30050),"Unable to update information (WP_ContractApplicationC)",sql);
+						//	sql   = "exec WP_ContractApplicationC"
+						//	      +     " @RegistrationPage = '5'"
+						//	      +     ",@ContractCode =" + Tools.DBString(contractCode);
+						//	errNo = miscList.ExecQuery(sql,0,"",false,true);
+						//	SetErrorDetail("btnNext_Click/30050",(errNo==0?0:30050),"Unable to update information (WP_ContractApplicationC)",sql);
 
 							sql   = "exec sp_TokenEx_Ins_CardToken"
 							      +     " @ContractCode ="       + Tools.DBString(contractCode)

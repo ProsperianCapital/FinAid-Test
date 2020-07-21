@@ -12,8 +12,12 @@ namespace PCIWebFinAid
 
 			if ( ! Page.IsPostBack )
 			{
-				hdnVer.Value   = "Version " + PCIBusiness.SystemDetails.AppVersion + " (" + PCIBusiness.SystemDetails.AppDate + ")";
-				lblVer.Text    = hdnVer.Value;
+				if ( Session["ApplicationCode"] == null )
+					hdnVer.Value = "";
+				else
+					hdnVer.Value = "Application " + Session["ApplicationCode"].ToString().Trim() + ", ";
+				hdnVer.Value    = hdnVer.Value + "Version " + PCIBusiness.SystemDetails.AppVersion + " (" + PCIBusiness.SystemDetails.AppDate + ")";
+				lblVer.Text     = hdnVer.Value;
 //	Temporarily taken out ...
 //				lblVer.Visible = ! PCIBusiness.Tools.SystemIsLive();
 			}

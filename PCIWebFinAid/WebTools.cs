@@ -393,6 +393,31 @@ namespace PCIWebFinAid
 			return refer;
 		}
 
+		public static string DecodeWebException(System.Net.WebException ex)
+		{
+			try
+			{
+				System.Net.HttpWebResponse errorResponse = ex.Response as System.Net.HttpWebResponse;
+				if ( errorResponse == null )
+					return "";
+
+				string responseContent = "";
+				int    k               = 0;
+
+				using ( StreamReader sR = new StreamReader(errorResponse.GetResponseStream()) )
+					responseContent = sR.ReadToEnd();
+
+				responseContent = responseContent + Environment.NewLine + Environment.NewLine;
+				foreach (string key in errorResponse.Headers.AllKeys )
+					responseContent = responseContent + "[" + (k++).ToString() + "] " + key + " : " + errorResponse.Headers[key] + Environment.NewLine;
+
+				return responseContent;
+			}
+			catch
+			{ }
+			return "";
+		}
+
 		public static byte CheckProductProvider(string productCode,string urlOld,HttpRequest req=null,HttpResponse resp=null)
 		{
 			if ( string.IsNullOrWhiteSpace(productCode) || PCIBusiness.Tools.SystemLiveTestOrDev() == PCIBusiness.Constants.SystemMode.Development )

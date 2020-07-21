@@ -861,11 +861,11 @@ namespace PCIWebFinAid
 						}
 						else if ( pageNo == 6 || pageNo > 180 )
 						{
-							sql   = "exec WP_ContractApplicationC"
-							      +     " @RegistrationPage = '5'"
-							      +     ",@ContractCode     =" + Tools.DBString(contractCode);
-							errNo = miscList.ExecQuery(sql,0);
-							SetErrorDetail(errNo,30050,"Unable to update information (pageNo=6)",sql);
+						//	sql   = "exec WP_ContractApplicationC"
+						//	      +     " @RegistrationPage = '5'"
+						//	      +     ",@ContractCode     =" + Tools.DBString(contractCode);
+						//	errNo = miscList.ExecQuery(sql,0);
+						//	SetErrorDetail(errNo,30050,"Unable to update information (pageNo=6)",sql);
 
 							lbl100325.Text = "";
 							sql = "exec sp_WP_Get_WebsiteProductOptionA"
