@@ -133,14 +133,8 @@ namespace PCIBusiness
 				if ( Tools.NullToString(providerUserID).Length > 0 )
 					return providerUserID;
 
-				else if ( Tools.SystemIsLive() )
-					return "";
-
-//	Testing
-				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate) )
-					return "10011072130";
-				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate) )
-					return "8ac7a4ca72b781310172b7ed08860114";
+				else if ( Tools.NullToString(providerAccount).Length > 0 )
+					return providerAccount;
 
 				return "";
 			}
@@ -152,15 +146,6 @@ namespace PCIBusiness
 			{
 				if ( Tools.NullToString(providerPassword).Length > 0 )
 					return providerPassword;
-
-				else if ( Tools.SystemIsLive() )
-					return "";
-
-//	Testing
-				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS) )
-					return "70f4046b-542f-41c8-b928-dffabfb0650c";
-				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate) )
-					return "test";
 
 				return "";
 			}
@@ -611,8 +596,11 @@ namespace PCIBusiness
 
 			if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
 				retProc    = transaction.TokenPayment(this);
+			else if ( transactionType == (byte)Constants.TransactionType.CardPaymentTokenEx )
+				retProc    = transaction.CardPaymentTokenEx(this);
 			else
 				retProc    = transaction.CardPayment(this);
+
 			threeDForm    = "";
 			returnMessage = transaction.ResultMessage;
 
@@ -659,9 +647,9 @@ namespace PCIBusiness
 			providerPassword = dbConn.ColString ("MerchantUserPassword",0,0);
 
 		//	Token Provider (if empty, then it is the same as the payment provider)
-			tokenizerID      = dbConn.ColString ("idToken" ,0,0);
-			tokenizerKey     = dbConn.ColString ("keyToken",0,0);
-			tokenizerURL     = dbConn.ColString ("urlToken",0,0);
+			tokenizerID      = dbConn.ColString ("TxID" ,0,0);
+			tokenizerKey     = dbConn.ColString ("TxKey",0,0);
+			tokenizerURL     = dbConn.ColString ("TxURL",0,0);
 
 		//	Customer
 			if ( dbConn.ColStatus("lastName") == Constants.DBColumnStatus.ColumnOK )
