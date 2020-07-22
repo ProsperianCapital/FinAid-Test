@@ -5,7 +5,7 @@ using System;
 using System.Text;
 using PCIBusiness;
 
-// Error codes 30000-30099
+// Error codes 30000...30099
 
 namespace PCIWebFinAid
 {
@@ -19,7 +19,7 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,sessionGeneral.ApplicationCode) != 0 )
+			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) != 0 )
 				StartOver(10888);
 			else
 				SetErrorDetail("",-888);
@@ -83,11 +83,6 @@ namespace PCIWebFinAid
 							data.Append("tRow'>");
 						else
 							data.Append("tRowAlt'>");
-//						data.Append("<tr onmouseover='JavaScript:this.style.backgroundColor=\"aqua\"' onmouseout='JavaScript:this.style.backgroundColor=");
-//						if (odd)
-//							data.Append("\"\"'>");
-//						else
-//							data.Append("\"#E0D0C0\"' style='background-color:#E0D0C0'>");
 						data.Append("<td>" + miscList.GetColumn("MaskedCardNumber") + "</td>");
 						data.Append("<td>" + miscList.GetColumn("ClientCode") + "</td>");
 						data.Append("<td>" + miscList.GetColumn("ContractCode") + "</td>");

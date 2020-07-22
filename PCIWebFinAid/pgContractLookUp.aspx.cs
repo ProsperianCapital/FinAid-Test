@@ -7,7 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using PCIBusiness;
 
-// Error codes 22000-22099
+// Error codes 22000...22099
 
 namespace PCIWebFinAid
 {
@@ -21,7 +21,8 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,sessionGeneral.ApplicationCode) != 0 )
+
+			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) != 0 )
 				StartOver(11888);
 			else
 			{
@@ -273,16 +274,6 @@ namespace PCIWebFinAid
 
 			if ( ccNumber.Length >= 6 )
 				ccAssociation = ccNumber.Substring(0,6);
-
-//	Mask card number
-//			if ( ccNumber.Length > 12 )
-//				ccNumber = ccNumber.Substring(0,6) + "******" + ccNumber.Substring(12);
-//			else if ( ccNumber.Length > 8 )
-//				ccNumber = ccNumber.Substring(0,4) + "******";
-//			else if ( ccNumber.Length > 4 )
-//				ccNumber = ccNumber.Substring(0,2) + "******";
-//			else if ( ccNumber.Length > 2 )
-//				ccNumber = "******";
 
 			ccNumber           = Tools.MaskCardNumber(ccNumber);
 			lblCardNumber.Text = ccNumber;
