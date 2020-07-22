@@ -7,7 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using PCIBusiness;
 
-// Error codes 22000-22099
+// Error codes 22000...22099
 
 namespace PCIWebFinAid
 {

@@ -5,7 +5,7 @@ using System;
 using System.Text;
 using PCIBusiness;
 
-// Error codes 30000-30099
+// Error codes 30000...30099
 
 namespace PCIWebFinAid
 {
