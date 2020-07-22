@@ -1570,6 +1570,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal lblChat;
         
         /// <summary>
+        /// txScript control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal txScript;
+        
+        /// <summary>
         /// txHMAC control.
         /// </summary>
         /// <remarks>

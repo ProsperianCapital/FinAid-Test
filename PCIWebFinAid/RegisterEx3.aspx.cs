@@ -22,13 +22,14 @@ namespace PCIWebFinAid
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-//	Browser info in JavaScript:
+//	TokenEx card number validation version. 3 configuration variables are needed in Web.Config.
+//	The ones below are the test values:
 
-//	var h = "navigator.appCodeName : " + navigator.appCodeName + "<br />"
-//		   + "navigator.appName : " + navigator.appName + "<br />"
-//		   + "navigator.appVersion : " + navigator.appVersion + "<br />"
-//		   + "navigator.platform : " + navigator.platform + "<br />"
-//		   + "navigator.userAgent : " + navigator.userAgent;
+//	<appSettings>
+//		<add key="TokenEx/Id"     value="4311038889209736" />
+//		<add key="TokenEx/Key"    value="njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I" />
+//		<add key="TokenEx/Script" value="https://test-htp.tokenex.com/iframe/iframe-v3.min.js" />
+//	</appSettings>
 
 			SetErrorDetail("",-888);
 			SetPostBackURL();
@@ -47,6 +48,7 @@ namespace PCIWebFinAid
 			}
 			else
 			{
+				txScript.Text       = "<script src='" + Tools.ConfigValue("TokenEx/Script") + "'></script>";
 				lblJS.Text          = WebTools.JavaScriptSource("NextPage(0,null)");
 				productCode         = WebTools.RequestValueString(Request,"PC");  // ProductCode");
 				languageCode        = WebTools.RequestValueString(Request,"LC");  // LanguageCode");

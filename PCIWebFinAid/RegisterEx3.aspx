@@ -678,7 +678,11 @@ SetEltValue('hdnBrowser',navigator.userAgent.toString());
 
 <!-- TokenEx start -->
 
-<script src="https://test-htp.tokenex.com/iframe/iframe-v3.min.js"></script>
+<asp:Literal runat="server" ID="txScript"></asp:Literal>
+
+<!-- Above is a place holder for the TokenEx iFrame JavaScript source. Test version would look like
+[lt]script src="https://test-htp.tokenex.com/iframe/iframe-v3.min.js"
+-->
 
 <asp:HiddenField runat="server" ID="txHMAC" />
 <asp:HiddenField runat="server" ID="txToken" />
