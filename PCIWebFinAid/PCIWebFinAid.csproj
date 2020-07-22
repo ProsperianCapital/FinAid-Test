@@ -134,6 +134,8 @@
     <Content Include="Images\LightY.png" />
     <Content Include="Images\FinAid.png" />
     <Content Include="Images\Phone.png" />
+    <Content Include="Images\PlaNet-Black.png" />
+    <Content Include="Images\PlaNet-White.png" />
     <Content Include="Images\VeriSign.png" />
     <Content Include="Images\Visa.png" />
     <Content Include="Images\MasterCard.png" />
@@ -154,7 +156,6 @@
     <Content Include="Images\PCapital.png" />
     <Content Include="Images\PFintech.png" />
     <Content Include="Images\PKnab.png" />
-    <Content Include="Images\PlaNet.png" />
     <Content Include="Images\PWealth.png" />
     <Content Include="Templates\ConfirmationMail.htm" />
     <Content Include="Bin\PCIUnattended.EXE" />

@@ -83,11 +83,6 @@ namespace PCIWebFinAid
 							data.Append("tRow'>");
 						else
 							data.Append("tRowAlt'>");
-//						data.Append("<tr onmouseover='JavaScript:this.style.backgroundColor=\"aqua\"' onmouseout='JavaScript:this.style.backgroundColor=");
-//						if (odd)
-//							data.Append("\"\"'>");
-//						else
-//							data.Append("\"#E0D0C0\"' style='background-color:#E0D0C0'>");
 						data.Append("<td>" + miscList.GetColumn("MaskedCardNumber") + "</td>");
 						data.Append("<td>" + miscList.GetColumn("ClientCode") + "</td>");
 						data.Append("<td>" + miscList.GetColumn("ContractCode") + "</td>");
