@@ -106,7 +106,7 @@ namespace PCIWebFinAid
 // Ver 2
 //					menuRef = "<img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' onmouseover=\"JavaScript:XMenu('" + menuID + "',1)\" />";
 //	Ver 3
-					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' />";
+					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='width:130px' />";
 				else
 					menuRef = " class='VText'>" + m1.Name;
 
@@ -140,17 +140,28 @@ namespace PCIWebFinAid
 					}
 				}
 				str.Append("</table>"+Environment.NewLine);
-//				str.Append("<a href=\"JavaScript:XMenu('" + menuID + "',1)\"><img src='Images/" + menuImg + "' title='" + m1.Description + "' onmouseover=\"JavaScript:XMenu('" + menuID + "',1)\" /></a>"+Environment.NewLine);
 				str.Append("<a href=\"JavaScript:XMenu('" + menuID + "',1)\" onmouseover=\"JavaScript:XMenu('" + menuID + "',1)\"" + menuRef + "</a>"+Environment.NewLine);
 				str.Append("<br /><hr />"+Environment.NewLine);
 			}
 
+//	Exclude "Log Off"
+			if ( str.ToString().EndsWith("<br /><hr />"+Environment.NewLine) )
+			{
+				str.Append("[X*Z]");
+				str.Replace("<br /><hr />"+Environment.NewLine+"[X*Z]","");
+			}
 			lblMenu.Text = "<div style='float:left;vertical-align:top;padding:5px;margin-right:8px;background-color:black'>" + Environment.NewLine
 			             + str.ToString()
-			             + "<br /><div style='text-align:center'>"
-					       + "<a href='XLogin.aspx' class='VText' onmouseover=\"JavaScript:XMenu('',0)\" title='Close all resources and log out'>Log Off</a>"
-					       + "</div><br /></div>" + Environment.NewLine
+			             + "</div>" + Environment.NewLine
 			             + sub.ToString();
+//	Include "Log Off"
+//			lblMenu.Text = "<div style='float:left;vertical-align:top;padding:5px;margin-right:8px;background-color:black'>" + Environment.NewLine
+//			             + str.ToString()
+//			             + "<br /><div style='text-align:center'>"
+//					       + "<a href='XLogin.aspx' class='VText' onmouseover=\"JavaScript:XMenu('',0)\" title='Close all resources and log out'>Log Off</a>"
+//					       + "</div><br /></div>" + Environment.NewLine
+//			             + sub.ToString();
+
 			menuList     = null;
 			str          = null;
 			return 0;
@@ -162,6 +173,7 @@ namespace PCIWebFinAid
 			if ( string.IsNullOrWhiteSpace(mx.URL) )
 				return T + "href=\"JavaScript:alert('You do not have access to this functionality')\"> " + mx.Name + " </a>";
 
+			mx.URL = mx.URL.Replace("{usercode}",userCode);
 			mx.URL = mx.URL.Replace("{UserCode}",userCode);
 			mx.URL = mx.URL.Replace("{USERCODE}",userCode);
 			T      = T + "href='" + mx.URL + "'";
