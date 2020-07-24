@@ -127,7 +127,7 @@ namespace PCIBusiness
 
 		private void SetUpPaymentXML(Payment payment,byte transactionType)
 		{
-			if ( transactionType == (byte)Constants.TransactionType.CardPaymentTokenEx )
+			if ( transactionType == (byte)Constants.TransactionType.CardPaymentThirdParty )
 				xmlSent = "{{{" + Tools.URLString(payment.CardToken) + "}}}";
 			else
 				xmlSent = Tools.URLString(payment.CardNumber);
@@ -149,11 +149,11 @@ namespace PCIBusiness
 			        + "&paymentType=DB"; // DB = Instant debit, PA = Pre-authorize, CP =
 		}
 
-		public override int CardPaymentTokenEx(Payment payment)
+		public override int CardPaymentThirdParty(Payment payment)
 		{
 			int    ret  = 10;
-			string pURL = "https://test.oppwa.com/v1/registrations";
-			string tURL = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
+			string pURL = "";
+			string tURL = "";
 			strResult   = "";
 			payRef      = "";
 			resultCode  = "999.999.999";
@@ -163,54 +163,67 @@ namespace PCIBusiness
 			{
 				if ( payment.ProviderURL.Length > 0 )  // The PAYMENT provider (Peach)
 					pURL = payment.ProviderURL;
-				if ( payment.TokenizerURL.Length > 0 ) // The TOKENIZER (TokenEx)
+				else
+					pURL = "https://test.oppwa.com/v1/registrations";
+
+				ret = 20;
+
+				if ( payment.TokenizerURL.Length > 0 ) // The TOKENIZER/THIRD PARTY (TokenEx)
 					tURL = payment.TokenizerURL;
+				else if ( bureauCodeTokenizer == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+					tURL = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
+				else
+				{
+					Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/20","Unknown Third Party Tokenizer (" + bureauCodeTokenizer + "), data=" + xmlSent,221);
+					return ret;
+				}
 
-				SetUpPaymentXML(payment,(byte)Constants.TransactionType.CardPaymentTokenEx);
+				ret = 30;
+				SetUpPaymentXML(payment,(byte)Constants.TransactionType.CardPaymentThirdParty);
 
-				Tools.LogInfo("TransactionPeach.CardPaymentTokenEx/10","pURL=" + pURL + ", tURL=" + tURL + ", data=" + xmlSent,221);
+				Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/30","pURL=" + pURL + ", tURL=" + tURL + ", data=" + xmlSent,221);
 
-				ret                              = 20;
+				ret                              = 40;
 				byte[]         buffer            = Encoding.UTF8.GetBytes(xmlSent);
 				HttpWebRequest request           = (HttpWebRequest)HttpWebRequest.Create(tURL);
-				ret                              = 30;
+				ret                              = 50;
 				request.Method                   = "POST";
 				request.Headers["Authorization"] = "Bearer " + payment.ProviderKey;
 				request.Headers["TX_URL"]        = pURL;
 				request.Headers["TX_TokenExID"]  = payment.TokenizerID;  // "4311038889209736";
 				request.Headers["TX_APIKey"]     = payment.TokenizerKey; // "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
 				request.ContentType              = "application/x-www-form-urlencoded";
-				ret                              = 40;
+				ret                              = 70;
 				Stream postData                  = request.GetRequestStream();
-				ret                              = 50;
+				ret                              = 80;
 				postData.Write(buffer, 0, buffer.Length);
 				postData.Close();
 
 				using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
 				{
-					ret                     = 60;
+					ret                     = 100;
 					Stream       dataStream = response.GetResponseStream();
-					ret                     = 70;
+					ret                     = 110;
 					StreamReader reader     = new StreamReader(dataStream);
-					ret                     = 80;
+					ret                     = 120;
 					strResult               = reader.ReadToEnd();
-					ret                     = 90;
+					ret                     = 130;
 //					var s       = new JavaScriptSerializer();
 //					xmlReceived = s.Deserialize<Dictionary<string, dynamic>>(reader.ReadToEnd());
 					reader.Close();
 					dataStream.Close();
-					ret        = 100;
+					ret        = 160;
 					resultCode = Tools.JSONValue(strResult,"code");
 					resultMsg  = Tools.JSONValue(strResult,"description");
 					payRef     = Tools.JSONValue(strResult,"id");
-					ret        = 110;
+					ret        = 170;
 					if ( Successful )
 					{
 						ret = 0;
-						Tools.LogInfo("TransactionPeach.CardPaymentTokenEx/110","(Succeed) Result="+strResult,221);
+						Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/170","(Succeed) Result="+strResult,221);
 					}
 					else
-						Tools.LogInfo("TransactionPeach.CardPaymentTokenEx/120","(Fail) Result="+strResult,221);
+						Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/180","(Fail) Result="+strResult,221);
 				}
 			}
 			catch (WebException ex1)
@@ -222,14 +235,14 @@ namespace PCIBusiness
 				tx = Tools.NullToString(ex1.Response.Headers["tx_message"]);
 				if ( tx.Length > 0 )
 					resultMsg = tx;
-				Tools.DecodeWebException(ex1,"TransactionPeach.CardPaymentTokenEx/197",xmlSent);
+				Tools.DecodeWebException(ex1,"TransactionPeach.CardPaymentThirdParty/997",xmlSent);
 			}
 			catch (Exception ex2)
 			{
 				if ( strResult == null )
 					strResult = "";
-				Tools.LogInfo     ("TransactionPeach.CardPaymentTokenEx/198","Ret="+ret.ToString()+", Result="+strResult,255);
-				Tools.LogException("TransactionPeach.CardPaymentTokenEx/199","Ret="+ret.ToString()+", Result="+strResult,ex2);
+				Tools.LogInfo     ("TransactionPeach.CardPaymentThirdParty/998","Ret="+ret.ToString()+", Result="+strResult,255);
+				Tools.LogException("TransactionPeach.CardPaymentThirdParty/999","Ret="+ret.ToString()+", Result="+strResult,ex2);
 			}
 			return ret;
 		}
