@@ -70,6 +70,8 @@
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
+    <Content Include="pgContractLookUp.aspx" />
+    <Content Include="pgTransactionLookUp.aspx" />
     <Content Include="pgVieweWallets.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx1.aspx" />
@@ -96,8 +98,6 @@
     <Content Include="XTechnical.aspx" />
     <Content Include="pgAccountingCaptureCashbook.aspx" />
     <Content Include="pgViewDashboardProsperianWealth.aspx" />
-    <Content Include="pgTransactionLookUp.aspx" />
-    <Content Include="pgContractLookUp.aspx" />
     <Content Include="IncludeBusy.htm" />
     <Content Include="IncludeErrorDtl.htm" />
     <Content Include="IncludeMainAdmin.htm" />
@@ -129,6 +129,7 @@
     <Content Include="CSS\raleway-bold-webfont.svg" />
     <Content Include="CSS\raleway-semibold-webfont.svg" />
     <Content Include="CSS\raleway-medium-webfont.svg" />
+    <Content Include="CSS\atlanta-webfont.woff" />
     <Content Include="Images\LightG.png" />
     <Content Include="Images\LightR.png" />
     <Content Include="Images\LightY.png" />
@@ -267,6 +268,20 @@
       <DependentUpon>Menu.ascx</DependentUpon>
     </Compile>
     <Compile Include="MenuItem.cs" />
+    <Compile Include="pgContractLookUp.aspx.cs">
+      <DependentUpon>pgContractLookUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgContractLookUp.aspx.designer.cs">
+      <DependentUpon>pgContractLookUp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgTransactionLookUp.aspx.cs">
+      <DependentUpon>pgTransactionLookUp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgTransactionLookUp.aspx.designer.cs">
+      <DependentUpon>pgTransactionLookUp.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pgVieweWallets.aspx.cs">
       <DependentUpon>pgVieweWallets.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -336,13 +351,6 @@
     <Compile Include="pgAccountingCaptureCashbook.aspx.designer.cs">
       <DependentUpon>pgAccountingCaptureCashbook.aspx</DependentUpon>
     </Compile>
-    <Compile Include="pgContractLookup.aspx.cs">
-      <DependentUpon>pgContractLookup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="pgContractLookup.aspx.designer.cs">
-      <DependentUpon>pgContractLookup.aspx</DependentUpon>
-    </Compile>
     <Compile Include="XFooter.ascx.cs">
       <DependentUpon>XFooter.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -398,13 +406,6 @@
     </Compile>
     <Compile Include="pgViewDashboardProsperianWealth.aspx.designer.cs">
       <DependentUpon>pgViewDashboardProsperianWealth.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="pgTransactionLookup.aspx.cs">
-      <DependentUpon>pgTransactionLookup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="pgTransactionLookup.aspx.designer.cs">
-      <DependentUpon>pgTransactionLookup.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
