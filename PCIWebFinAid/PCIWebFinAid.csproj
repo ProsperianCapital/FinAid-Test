@@ -138,6 +138,7 @@
     <Content Include="Images\PayPayYa.png" />
     <Content Include="Images\PlaNet-Black.png" />
     <Content Include="Images\PlaNet-White.png" />
+    <Content Include="Images\PlaNet-Image.png" />
     <Content Include="Images\VeriSign.png" />
     <Content Include="Images\Visa.png" />
     <Content Include="Images\MasterCard.png" />
