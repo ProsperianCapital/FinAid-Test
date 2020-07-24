@@ -41,62 +41,64 @@ function HidePopups()
 	My eWallets
 	</div>
 
-	<div style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:600px;display:inline-block">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;display:inline-block;border-radius:10px">
 	<table style="width:100%">
 	<tr>
 		<td>
 			Currency<br />
 			<img src="Images/Flag-USA.png" title="US Dollars" style="width:60px" /></td>
-		<td style="font-size:16px;font-weight:bold">
+		<td>
 			<br />
-			USD</td>
+			<span class="Wallet3">USD</span></td>
 		<td>
 			Balance<br />
-			<span style="font-size:16px;font-weight:bold">38 901.68</span></td>
-		<td>
+			<span class="Wallet3">38 901.68</span></td>
+		<td style="float:right">
 			<img src="Images/PayPayYa.png" style="width:50px" /><br />
 			e-Wallet</td>
 	</tr>
 	</table>
 	Account Number<br />
-	<span style="font-size:22px;font-weight:bold">1234 5678 9012 3456</span><br />
-	<br />
+	<span class="Wallet4">1234 5678 9012 3456</span>
+	<p>
 	Account Description<br />
-	<a href="JavaScript:EditMode(1)" style="font-size:22px;font-weight:bold">My PayPayYa USD eWallet</a><br />
-	<img src="Images/PlaNet-White.png" style="float:right;width:200px" />
-	<br />
+	<span style="float:right"><img style="width:50px" src="Images/PlaNet-Image.png" />&nbsp;</span>
+	<a href="JavaScript:EditMode(1)" class="Wallet2">My PayPayYa USD eWallet</a><br />
+	</p><p>
 	Account Name<br />
-	<span style="font-size:22px;font-weight:bold">Samual Briggs</span>
+	<span class="Wallet2">Samual Briggs</span>
+	</p>
 	</div>
 
 	<br /><br />
 
-	<div style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:600px;display:inline-block">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;display:inline-block;border-radius:10px">
 	<table style="width:100%">
 	<tr>
 		<td>
 			Currency<br />
 			<img src="Images/Flag-EUR.png" title="Euros" style="width:60px" /></td>
-		<td style="font-size:16px;font-weight:bold">
+		<td>
 			<br />
-			EUR</td>
+			<span class="Wallet3">EUR</span></td>
 		<td>
 			Balance<br />
-			<span style="font-size:16px;font-weight:bold">9 012.77</span></td>
-		<td>
+			<span class="Wallet3">1 903.44</span></td>
+		<td style="float:right">
 			<img src="Images/PayPayYa.png" style="width:50px" /><br />
 			e-Wallet</td>
 	</tr>
 	</table>
 	Account Number<br />
-	<span style="font-size:22px;font-weight:bold">8445 6342 1099 0456</span><br />
-	<br />
+	<span class="Wallet4">8045 6723 0198 3755</span>
+	<p>
 	Account Description<br />
-	<a href="JavaScript:EditMode(1)" style="font-size:22px;font-weight:bold">My PayPayYa EUR eWallet</a><br />
-	<img src="Images/PlaNet-White.png" style="float:right;width:200px" />
-	<br />
+	<span style="float:right"><img style="width:50px" src="Images/PlaNet-Image.png" />&nbsp;</span>
+	<a href="JavaScript:EditMode(1)" class="Wallet2">My PayPayYa EUR eWallet</a><br />
+	</p><p>
 	Account Name<br />
-	<span style="font-size:22px;font-weight:bold">Samual Briggs</span>
+	<span class="Wallet2">Samual Briggs</span>
+	</p>
 	</div>
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
