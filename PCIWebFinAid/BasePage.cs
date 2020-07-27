@@ -23,7 +23,7 @@ namespace PCIWebFinAid
 		protected virtual void StartOver(int errNo,string pageName="")
 		{
 			if ( pageName.Length < 6 )
-				pageName = "XLogin.aspx";
+				pageName = "pgLogon.aspx";
 			Response.Redirect ( pageName + ( errNo > 0 ? "?ErrNo=" + errNo.ToString() : "" ) , true );
 		}
 

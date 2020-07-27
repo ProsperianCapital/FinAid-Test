@@ -158,7 +158,7 @@ namespace PCIWebFinAid
 //			lblMenu.Text = "<div style='float:left;vertical-align:top;padding:5px;margin-right:8px;background-color:black'>" + Environment.NewLine
 //			             + str.ToString()
 //			             + "<br /><div style='text-align:center'>"
-//					       + "<a href='XLogin.aspx' class='VText' onmouseover=\"JavaScript:XMenu('',0)\" title='Close all resources and log out'>Log Off</a>"
+//					       + "<a href='pgLogon.aspx' class='VText' onmouseover=\"JavaScript:XMenu('',0)\" title='Close all resources and log out'>Log Off</a>"
 //					       + "</div><br /></div>" + Environment.NewLine
 //			             + sub.ToString();
 

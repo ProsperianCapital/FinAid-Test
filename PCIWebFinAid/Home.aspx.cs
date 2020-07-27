@@ -13,7 +13,7 @@ namespace PCIWebFinAid
 			{
 				int    k         = url.IndexOf("://");
 				string dName     = url.Substring(k+3);
-				string goTo      = "XLogin.aspx";
+				string goTo      = "pgLogon.aspx";
 				string parms     = "";
 //				string appCode   = "*";
 				string appStatus = "*";

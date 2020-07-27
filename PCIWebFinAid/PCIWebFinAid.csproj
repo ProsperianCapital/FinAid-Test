@@ -92,12 +92,12 @@
     <Content Include="XFooter.ascx" />
     <Content Include="XHeader.ascx" />
     <Content Include="XHome.aspx" />
-    <Content Include="XLogin.aspx" />
     <Content Include="XMenu.ascx" />
     <Content Include="XRecurring.aspx" />
     <Content Include="XTechnical.aspx" />
     <Content Include="pgAccountingCaptureCashbook.aspx" />
     <Content Include="pgViewDashboardProsperianWealth.aspx" />
+    <Content Include="pgLogon.aspx" />
     <Content Include="IncludeBusy.htm" />
     <Content Include="IncludeErrorDtl.htm" />
     <Content Include="IncludeMainAdmin.htm" />
@@ -373,12 +373,12 @@
     <Compile Include="XHome.aspx.designer.cs">
       <DependentUpon>XHome.aspx</DependentUpon>
     </Compile>
-    <Compile Include="XLogin.aspx.cs">
-      <DependentUpon>XLogin.aspx</DependentUpon>
+    <Compile Include="pgLogon.aspx.cs">
+      <DependentUpon>pgLogon.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="XLogin.aspx.designer.cs">
-      <DependentUpon>XLogin.aspx</DependentUpon>
+    <Compile Include="pgLogon.aspx.designer.cs">
+      <DependentUpon>pgLogon.aspx</DependentUpon>
     </Compile>
     <Compile Include="XMenu.ascx.cs">
       <DependentUpon>XMenu.ascx</DependentUpon>

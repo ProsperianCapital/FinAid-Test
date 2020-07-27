@@ -79,7 +79,7 @@
 					else if ( AccessType == "A" ) // Admin
 						startPage = "LAdmin.aspx";
 					else if ( AccessType == "X" ) // Login not confirmed
-						startPage = "XLogin.aspx";
+						startPage = "pgLogon.aspx";
 					else
 						startPage = "LWelcome.aspx";
 				return startPage;
