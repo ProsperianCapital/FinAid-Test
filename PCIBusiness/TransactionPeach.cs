@@ -25,12 +25,13 @@ namespace PCIBusiness
 
 		private int PostHTML(byte transactionType,Payment payment)
 		{
+			byte   err = 0;
 			int    ret = 10;
 //			string url = "https://test.oppwa.com/v1/registrations";
 			string url = "https://test.oppwa.com/v1/payments";
 			strResult  = "";
 			payRef     = "";
-			resultCode = "999.999.999";
+			resultCode = "999.999.888";
 			resultMsg  = "Internal error";
 
 			try
@@ -68,27 +69,42 @@ namespace PCIBusiness
 //					xmlReceived = s.Deserialize<Dictionary<string, dynamic>>(reader.ReadToEnd());
 					reader.Close();
 					dataStream.Close();
-					ret        = 100;
-					resultCode = Tools.JSONValue(strResult,"code");
-					resultMsg  = Tools.JSONValue(strResult,"description");
-					ret        = 110;
-					if ( Successful )
-						ret     = 0;
-					else
-						Tools.LogInfo("TransactionPeach.PostHTML/120","resultCode="+resultCode+", resultMsg="+resultMsg,221);
 				}
+
+//	Moved to below the "Catch"
+//					ret        = 100;
+//					resultCode = Tools.JSONValue(strResult,"code");
+//					resultMsg  = Tools.JSONValue(strResult,"description");
+//					ret        = 110;
+//					if ( Successful )
+//						ret     = 0;
+//					else
+//						Tools.LogInfo("TransactionPeach.PostHTML/120","resultCode="+resultCode+", resultMsg="+resultMsg,221);
+//				}
 			}
 			catch (WebException ex1)
 			{
-				Tools.DecodeWebException(ex1,"TransactionPeach.PostHTML/197",xmlSent);
+				err = 1;
+				strResult = Tools.DecodeWebException(ex1,"TransactionPeach.PostHTML/197",xmlSent);
 			}
 			catch (Exception ex2)
 			{
+				err = 2;
 				if ( strResult == null )
 					strResult = "";
 				Tools.LogInfo     ("TransactionPeach.PostHTML/198","Ret="+ret.ToString()+", Result="+strResult,255);
 				Tools.LogException("TransactionPeach.PostHTML/199","Ret="+ret.ToString()+", Result="+strResult,ex2);
 			}
+
+			ret        = 200;
+			resultCode = Tools.JSONValue(strResult,"code");
+			resultMsg  = Tools.JSONValue(strResult,"description");
+			ret        = 210;
+			if ( Successful && err == 0 )
+				ret     = 0;
+			else
+				Tools.LogInfo("TransactionPeach.PostHTML/220","resultCode="+resultCode+", resultMsg="+resultMsg,221);
+
 			return ret;
 		}
 
@@ -151,12 +167,13 @@ namespace PCIBusiness
 
 		public override int CardPaymentThirdParty(Payment payment)
 		{
+			byte   err  = 0;
 			int    ret  = 10;
 			string pURL = "";
 			string tURL = "";
 			strResult   = "";
 			payRef      = "";
-			resultCode  = "999.999.999";
+			resultCode  = "999.999.777";
 			resultMsg   = "Internal error";
 
 			try
@@ -212,38 +229,64 @@ namespace PCIBusiness
 //					xmlReceived = s.Deserialize<Dictionary<string, dynamic>>(reader.ReadToEnd());
 					reader.Close();
 					dataStream.Close();
-					ret        = 160;
-					resultCode = Tools.JSONValue(strResult,"code");
-					resultMsg  = Tools.JSONValue(strResult,"description");
-					payRef     = Tools.JSONValue(strResult,"id");
-					ret        = 170;
-					if ( Successful )
-					{
-						ret = 0;
-						Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/170","(Succeed) Result="+strResult,221);
-					}
-					else
-						Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/180","(Fail) Result="+strResult,221);
 				}
+
+//				ret        = 160;
+//				resultCode = Tools.JSONValue(strResult,"code");
+//				resultMsg  = Tools.JSONValue(strResult,"description");
+//				payRef     = Tools.JSONValue(strResult,"id");
+//				ret        = 170;
+//				if ( Successful )
+//				{
+//					ret = 0;
+//					Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/170","(Succeed) Result="+strResult,221);
+//				}
+//				else
+//					Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/180","(Fail) Result="+strResult,221);
 			}
+
 			catch (WebException ex1)
 			{
-			//	TokenEx error codes
-				string tx = Tools.NullToString(ex1.Response.Headers["tx_code"]);
-				if ( tx.Length > 0 )
-					resultCode = tx;
-				tx = Tools.NullToString(ex1.Response.Headers["tx_message"]);
-				if ( tx.Length > 0 )
-					resultMsg = tx;
-				Tools.DecodeWebException(ex1,"TransactionPeach.CardPaymentThirdParty/997",xmlSent);
+				err       = 1;
+				strResult = Tools.DecodeWebException(ex1,"TransactionPeach.CardPaymentThirdParty/997",xmlSent);
+
+//	Catch the third party errors here
+//				if ( resultCode.Length < 1 && bureauCodeTokenizer == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+//					try
+//					{
+//						string tx = Tools.NullToString(ex1.Response.Headers["tx_code"]);
+//						if ( tx.Length > 0 )
+//							resultCode = tx;
+//						tx = Tools.NullToString(ex1.Response.Headers["tx_message"]);
+//						if ( tx.Length > 0 )
+//							resultMsg = tx;
+//					}
+//					catch
+//					{ }
 			}
+
 			catch (Exception ex2)
 			{
+				err = 2;
 				if ( strResult == null )
 					strResult = "";
 				Tools.LogInfo     ("TransactionPeach.CardPaymentThirdParty/998","Ret="+ret.ToString()+", Result="+strResult,255);
 				Tools.LogException("TransactionPeach.CardPaymentThirdParty/999","Ret="+ret.ToString()+", Result="+strResult,ex2);
 			}
+
+			ret        = 200;
+			resultCode = Tools.JSONValue(strResult,"code");
+			resultMsg  = Tools.JSONValue(strResult,"description");
+			payRef     = Tools.JSONValue(strResult,"id");
+			ret        = 210;
+			if ( Successful && err == 0 )
+			{
+				ret = 0;
+				Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/220","(Succeed) Result="+strResult,221);
+			}
+			else
+				Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/230","(Fail/" + err.ToString() + ") Result="+strResult,221);
+
 			return ret;
 		}
 
