@@ -171,7 +171,6 @@
     <Compile Include="AJAXProcess.aspx.designer.cs">
       <DependentUpon>AJAXProcess.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AppDetails.cs" />
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -337,6 +336,7 @@
     <Compile Include="StdDisposable.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SystemDetails.cs" />
     <Compile Include="TransLookup.aspx.cs">
       <DependentUpon>TransLookup.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

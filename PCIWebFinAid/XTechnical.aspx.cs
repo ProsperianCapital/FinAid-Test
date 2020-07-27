@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Security;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 
@@ -16,7 +14,7 @@ namespace PCIWebFinAid
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			if ( SessionCheck(19) != 0 )
+			if ( SessionCheck(99) != 0 )
 				return;
 			if ( PageCheck()      != 0 )
 				return;
@@ -57,9 +55,10 @@ namespace PCIWebFinAid
 				return;
 			}
 
-			string x1 = "";
-			string x2 = "";
-			string x3 = "";
+			string x1     = "";
+			string x2     = "";
+			string x3     = "";
+			string tdBlue = "<td style='color:blue'>";
 
 			if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.ConfigNet )
 			{
@@ -89,7 +88,7 @@ namespace PCIWebFinAid
 				   + Request.Url.GetLeftPart(UriPartial.Authority) + "<br />"
 				   + Request.RawUrl + "<br />"
 				   + Request.PhysicalApplicationPath;
-				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td><td><u>Value</u><br />" + x2 + "</td></tr></table>";
+				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td>" + tdBlue +"<u>Value</u><br />" + x2 + "</td></tr></table>";
 			}
 
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.ConfigApp )
@@ -98,6 +97,7 @@ namespace PCIWebFinAid
 				System.Configuration.ConnectionStringSettings db2 = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnTrade"];
 				x1 = "LogFileErrors<br />"
 				   + "LogFileInfo<br />"
+				   + "Tools.SystemFolder('')<br />"
 				   + "SystemPath<br />"
 				   + "SystemMode<br />"
 				   + "SMTP-Mode<br />"
@@ -111,6 +111,7 @@ namespace PCIWebFinAid
 				   + "DBConnTrade";
 				x2 = PCIBusiness.Tools.ConfigValue("LogFileErrors") + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("LogFileInfo")   + "<br />"
+				   + PCIBusiness.Tools.SystemFolder("")             + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("SystemPath")    + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("SystemMode")    + "<br />"
 				   + PCIBusiness.Tools.ConfigValue("SMTP-Mode")     + "<br />"
@@ -122,7 +123,7 @@ namespace PCIWebFinAid
 				   + PCIBusiness.Tools.ConfigValue("SMTP-BCC")      + "<br />"
 				   + ReplacePassword(db1.ConnectionString)          + "<br />"
 				   + ReplacePassword(db2.ConnectionString);
-				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td><td><u>Value</u><br />" + x2 + "</td></tr></table>";
+				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td>" + tdBlue + "<u>Value</u><br />" + x2 + "</td></tr></table>";
 			}
 
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.ServerVariables )
@@ -132,7 +133,7 @@ namespace PCIWebFinAid
 					x1 = x1 + sV + "<br />";
 					x2 = x2 + Request.ServerVariables[sV] + "<br />";
 				}
-				lblResult.Text = "<table><tr><td><u>Server Variable</u><br />" + x1 + "</td><td><u>Value</u><br />" + x2 + "</td></tr></table>";
+				lblResult.Text = "<table><tr><td><u>Server Variable</u><br />" + x1 + "</td>" + tdBlue + "<u>Value</u><br />" + x2 + "</td></tr></table>";
 			}
 
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.ConfigSoftware )
@@ -141,6 +142,10 @@ namespace PCIWebFinAid
 				   + "Application code<br />"
 				   + "Application version<br />"
 				   + "Application release date<br />"
+				   + "Application user code<br />"
+				   + "Application user name<br />"
+				   + "DLL version<br />"
+				   + "DLL release date<br /><hr />"
 				   + "Machine name<br />"
 				   + "Number of processors<br />"
 				   + "System memory<br />"
@@ -150,10 +155,13 @@ namespace PCIWebFinAid
 				   + "Environment.UserName<br />"
 				   + "Environment.UserDomainName<br />"
 				   + "Database version";
-				x2 = AppDetails.AppName + "<br />"
+				x2 = SystemDetails.AppName + "<br />"
 				   + ApplicationCode + "<br />"
+				   + SystemDetails.AppVersion + "<br />"
+				   + SystemDetails.AppDate + "<br />"
+				   + ( sessionGeneral == null ? "<br />" : sessionGeneral.UserCode + "<br />" + sessionGeneral.UserName ) + "<br />"
 				   + PCIBusiness.SystemDetails.AppVersion + "<br />"
-				   + PCIBusiness.SystemDetails.AppDate + "<br />"
+				   + PCIBusiness.SystemDetails.AppDate + "<br /><br />"
 				   + Environment.MachineName + "<br />"
 				   + Environment.ProcessorCount.ToString() + "<br />"
 				   + Environment.WorkingSet.ToString() + " bytes<br />"
@@ -180,14 +188,14 @@ namespace PCIWebFinAid
 				}
 				catch
 				{
-					x2 = x2 + "Microsoft SQL Server 2016";
+					x2 = x2 + "Microsoft SQL Server";
 				}
 				finally
 				{
 					PCIBusiness.Tools.CloseDB(ref conn);
 					conn = null;
 				}
-				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td><td><u>Value</u><br />" + x2 + "</td></tr></table>";
+				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td>" + tdBlue + "<u>Value</u><br />" + x2 + "</td></tr></table>";
 			}
 
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.EMailSend && txtData.Text.Length > 0 )
@@ -200,7 +208,7 @@ namespace PCIWebFinAid
 					mail.Heading = "Prosperian Test Message";
 					mail.Body    = "<html><head><title>Test</title></head>"
 					             + "<body><img src='" + x1 + "/Images/PCapital.png' title='Prosperian' style='float:right' />"
-					             + "<p>Good day, this is a test message from " + AppDetails.AppName + " user " + sessionGeneral.UserName
+					             + "<p>Good day, this is a test message from " + SystemDetails.AppName + " user " + sessionGeneral.UserName
 					             + " (" + sessionGeneral.UserCode + ").</p><table>"
 					             + "<tr><td> <b>SMTP Server</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-Server") + "</td></tr>"
 					             + "<tr><td> <b>SMTP User</b></td><td>: "   + PCIBusiness.Tools.ConfigValue("SMTP-User") + "</td></tr>"
@@ -209,9 +217,9 @@ namespace PCIWebFinAid
 					             + "<tr><td> <b>BCC Address</b></td><td>: " + PCIBusiness.Tools.ConfigValue("SMTP-BCC") + "</td></tr>"
 					             + "<tr><td> <b>Date/Time</b></td><td>: "   + PCIBusiness.Tools.DateToString(System.DateTime.Now,7,1) + "</td></tr></table>"
 					             + "<p>Best regards"
-					             + "<br />- " + AppDetails.AppName
-					             + "<br />&nbsp;&nbsp;Version " + PCIBusiness.SystemDetails.AppVersion
-					             + "<br />&nbsp;&nbsp;(c) Prosperian Capital International"
+					             + "<br />- " + SystemDetails.AppName
+					             + "<br />&nbsp;&nbsp;Version " + SystemDetails.AppVersion
+					             + "<br />&nbsp;&nbsp;(c) " + PCIBusiness.SystemDetails.Owner
 					             + "<br />&nbsp;&nbsp;<a href='" + x1 + "'>" + x1 + "</a></p></body></html>";
 					byte k = mail.Send();
 					if ( k == 0 )
@@ -325,7 +333,7 @@ namespace PCIWebFinAid
 				}
 				lblResult.Text = "<table><tr>"
 				               + "<td><u>Check</u><br />" + x1 + "</td>"
-				               + "<td><u>Result</u><br />" + x2 + "</td>"
+				               + tdBlue + "<u>Result</u><br />" + x2 + "</td>"
 				               + "<td><u>Value</u><br />" + ReplacePassword(x3) + "</td>"
 				               + "</tr></table>";
 			}
@@ -451,7 +459,7 @@ namespace PCIWebFinAid
 				                          + ( bw.IsMobileDevice ? "Yes" : "No" ) + "<br />"
 				                          + ( bw.MobileDeviceManufacturer.ToUpper() == "UNKNOWN" ? "" : bw.MobileDeviceManufacturer ) + "<br />"
 				                          + ( bw.MobileDeviceModel.ToUpper() == "UNKNOWN" ? "" : bw.MobileDeviceModel );
-				lblResult.Text = "<table><tr><td>" + x1 + "</td><td>" + x2 + "</td></tr></table>";
+				lblResult.Text = "<table><tr><td>" + x1 + "</td>" + tdBlue + x2 + "</td></tr></table>";
 			}
 
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.CertDetails )
@@ -526,7 +534,7 @@ namespace PCIWebFinAid
 				}
 
 				x2             = "<u>Value</u><br />" + txtData.Text + "<br />" + x2;
-				lblResult.Text = "<table><tr><td>" + x1 + "</td><td>" + x2 + "</td></tr></table>";
+				lblResult.Text = "<table><tr><td>" + x1 + "</td>" + tdBlue + x2 + "</td></tr></table>";
 			}
 
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.SQLExecute )

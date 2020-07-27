@@ -77,7 +77,7 @@ function ShowData(err)
 		<tr>
 			<td>What would you like to do?</td>
 			<td>
-				<asp:DropDownList runat="server" ID="lstAction" onchange="JavaScript:ShowData(0)">
+				<asp:DropDownList runat="server" ID="lstAction" Width="400" onchange="JavaScript:ShowData(0)">
 					<asp:ListItem Value= "00" Text="(Select one)"></asp:ListItem>
 					<asp:ListItem Value= "01" Text="Check SQL database status"></asp:ListItem>
 					<asp:ListItem Value="102" Text="View SQL object properties"></asp:ListItem>
