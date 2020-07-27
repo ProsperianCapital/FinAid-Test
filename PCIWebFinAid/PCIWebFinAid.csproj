@@ -156,10 +156,10 @@
     <Content Include="Images\Logo-ENG.png" />
     <Content Include="Images\Bell1.png" />
     <Content Include="Images\Busy.gif" />
-    <Content Include="Images\PCapital.png" />
-    <Content Include="Images\PFintech.png" />
-    <Content Include="Images\PKnab.png" />
-    <Content Include="Images\PWealth.png" />
+    <Content Include="Images\imgMenuItemPCI.png" />
+    <Content Include="Images\imgMenuItemFinTech.png" />
+    <Content Include="Images\imgMenuItemOLICO.png" />
+    <Content Include="Images\imgMenuItemWealth.png" />
     <Content Include="Templates\ConfirmationMail.htm" />
     <Content Include="Bin\PCIUnattended.EXE" />
   </ItemGroup>
