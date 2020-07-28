@@ -45,25 +45,24 @@ function HidePopups()
 	<table style="width:100%">
 	<tr>
 		<td>
-			Currency<br />
 			<img src="Images/Flag-USA.png" title="US Dollars" style="width:60px" /></td>
 		<td>
 			<br />
 			<span class="Wallet3">USD</span></td>
 		<td>
 			Balance<br />
-			<span class="Wallet3">38 901.68</span></td>
-		<td style="float:right">
+			<span class="Wallet3">38,901.68</span></td>
+		<td style="float:right;font-size:14px">
 			<img src="Images/PayPayYa.png" style="width:50px" /><br />
-			e-Wallet</td>
+			eWallet</td>
 	</tr>
 	</table>
 	Account Number<br />
 	<span class="Wallet4">1234 5678 9012 3456</span>
 	<p>
 	Account Description<br />
-	<span style="float:right"><img style="width:50px" src="Images/PlaNet-Image.png" />&nbsp;</span>
-	<a href="JavaScript:EditMode(1)" class="Wallet2">My PayPayYa USD eWallet</a><br />
+	<span class="Wallet2">My VISA USD eWallet</span><br />
+	<span style="float:right"><img style="width:60px" src="Images/LogoVisa.jpg" title="VISA" />&nbsp;</span>
 	</p><p>
 	Account Name<br />
 	<span class="Wallet2">Samual Briggs</span>
@@ -76,25 +75,24 @@ function HidePopups()
 	<table style="width:100%">
 	<tr>
 		<td>
-			Currency<br />
 			<img src="Images/Flag-EUR.png" title="Euros" style="width:60px" /></td>
 		<td>
 			<br />
 			<span class="Wallet3">EUR</span></td>
 		<td>
 			Balance<br />
-			<span class="Wallet3">1 903.44</span></td>
-		<td style="float:right">
+			<span class="Wallet3">8,013.76</span></td>
+		<td style="float:right;font-size:14px">
 			<img src="Images/PayPayYa.png" style="width:50px" /><br />
-			e-Wallet</td>
+			eWallet</td>
 	</tr>
 	</table>
 	Account Number<br />
 	<span class="Wallet4">8045 6723 0198 3755</span>
 	<p>
 	Account Description<br />
-	<span style="float:right"><img style="width:50px" src="Images/PlaNet-Image.png" />&nbsp;</span>
-	<a href="JavaScript:EditMode(1)" class="Wallet2">My PayPayYa EUR eWallet</a><br />
+	<span style="float:right"><img style="width:50px" src="Images/LogoPlaNet.png" title="PayPayYa" />&nbsp;</span>
+	<span class="Wallet2">My PayPayYa EUR eWallet</span><br />
 	</p><p>
 	Account Name<br />
 	<span class="Wallet2">Samual Briggs</span>

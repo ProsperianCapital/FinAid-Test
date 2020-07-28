@@ -138,7 +138,6 @@
     <Content Include="Images\PayPayYa.png" />
     <Content Include="Images\PlaNet-Black.png" />
     <Content Include="Images\PlaNet-White.png" />
-    <Content Include="Images\PlaNet-Image.png" />
     <Content Include="Images\VeriSign.png" />
     <Content Include="Images\Visa.png" />
     <Content Include="Images\MasterCard.png" />
@@ -153,7 +152,9 @@
     <Content Include="Images\Calendar.gif" />
     <Content Include="Images\Chat.png" />
     <Content Include="Images\Close1.png" />
-    <Content Include="Images\Logo-ENG.png" />
+    <Content Include="Images\LogoENG.png" />
+    <Content Include="Images\LogoPlaNet.png" />
+    <Content Include="Images\LogoVisa.jpg" />
     <Content Include="Images\Bell1.png" />
     <Content Include="Images\Busy.gif" />
     <Content Include="Images\imgMenuItemPCI.png" />

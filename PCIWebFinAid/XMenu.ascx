@@ -26,6 +26,10 @@
 	font-weight: bold;
 	text-decoration: none;
 	color: white;
+	display: flex; /* inline-block; */
+	height: 75px;
+	align-items: center;
+	justify-content: space-between;
 }
 </style>
 <script type="text/javascript">

@@ -106,7 +106,9 @@ namespace PCIWebFinAid
 // Ver 2
 //					menuRef = "<img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' onmouseover=\"JavaScript:XMenu('" + menuID + "',1)\" />";
 //	Ver 3
-					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='width:130px' />";
+//					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='width:130px' />";
+//	Ver 4
+					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='height:75px' />";
 				else
 					menuRef = " class='VText'>" + m1.Name;
 
@@ -141,7 +143,7 @@ namespace PCIWebFinAid
 				}
 				str.Append("</table>"+Environment.NewLine);
 				str.Append("<a href=\"JavaScript:XMenu('" + menuID + "',1)\" onmouseover=\"JavaScript:XMenu('" + menuID + "',1)\"" + menuRef + "</a>"+Environment.NewLine);
-				str.Append("<br /><hr />"+Environment.NewLine);
+				str.Append("<hr />"+Environment.NewLine);
 			}
 
 //	Exclude "Log Off"
