@@ -147,10 +147,10 @@ namespace PCIWebFinAid
 			}
 
 //	Exclude "Log Off"
-			if ( str.ToString().EndsWith("<br /><hr />"+Environment.NewLine) )
+			if ( str.ToString().EndsWith("<hr />"+Environment.NewLine) )
 			{
 				str.Append("[X*Z]");
-				str.Replace("<br /><hr />"+Environment.NewLine+"[X*Z]","");
+				str.Replace("<hr />"+Environment.NewLine+"[X*Z]","");
 			}
 			lblMenu.Text = "<div style='float:left;vertical-align:top;padding:5px;margin-right:8px;background-color:black'>" + Environment.NewLine
 			             + str.ToString()
