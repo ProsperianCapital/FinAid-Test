@@ -7,7 +7,7 @@
 	<title>Prosperian Capital</title>
 	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
 <form id="frmMain" runat="server">

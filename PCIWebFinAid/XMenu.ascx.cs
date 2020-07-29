@@ -108,7 +108,7 @@ namespace PCIWebFinAid
 //	Ver 3
 //					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='width:130px' />";
 //	Ver 4
-					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='height:75px' />";
+					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='height:75px;width:130px' />";
 				else
 					menuRef = " class='VText'>" + m1.Name;
 

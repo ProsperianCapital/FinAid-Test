@@ -28,6 +28,7 @@
 	color: white;
 	display: flex; /* inline-block; */
 	height: 75px;
+	width: 130px;
 	align-items: center;
 	justify-content: space-between;
 }

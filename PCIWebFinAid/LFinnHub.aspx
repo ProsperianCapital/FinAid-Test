@@ -11,7 +11,6 @@
 	<title>FinnHub Financial Data</title>
 	<link rel="stylesheet" href="CSS/FinAid.css" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
 	<asp:Literal runat="server" ID="lblRefresh"></asp:Literal>
 </head>
 <body>
