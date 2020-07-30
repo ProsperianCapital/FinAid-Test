@@ -137,11 +137,13 @@
     <Content Include="Images\FinAid.png" />
     <Content Include="Images\Phone.png" />
     <Content Include="Images\PayPayYa.png" />
-    <Content Include="Images\PlaNet-Black.png" />
+    <Content Include="Images\PlaNetBig-Black.png" />
+    <Content Include="Images\PlaNetSmall-Black.png" />
     <Content Include="Images\PlaNet-White.png" />
     <Content Include="Images\VeriSign.png" />
     <Content Include="Images\Visa.png" />
     <Content Include="Images\MasterCard.png" />
+    <Content Include="Images\HamburgerMenu.png" />
     <Content Include="Images\Flag-THA.png" />
     <Content Include="Images\Flag-USA.png" />
     <Content Include="Images\Flag-EUR.png" />
