@@ -41,11 +41,27 @@ function HidePopups()
 	My eWallets
 	</div>
 
-	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;display:inline-block;border-radius:10px">
+	<style>
+	.CardMenu
+	{
+		color: black;
+		padding: 0px;
+		width: 34%;
+		padding-left: 10px;
+	}
+	.CardFlag
+	{
+		height: 40px;
+		width: 60px;
+	}
+	</style>
+
+	<div style="width:360px;display:inline-block">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;border-radius:10px">
 	<table style="width:100%">
 	<tr>
 		<td>
-			<img src="Images/Flag-USA.png" title="US Dollars" style="width:60px" /></td>
+			<img src="Images/Flag-USA.png" title="US Dollars" class="CardFlag" /></td>
 		<td>
 			<br />
 			<span class="Wallet3">USD</span></td>
@@ -69,61 +85,64 @@ function HidePopups()
 	</p>
 	</div>
 
-	<style>
-	.CardMenu
-	{
-		color: darkblue;
-		background-color: hotpink;
-		padding: 5px;
-		text-decoration :none
-	}
-	</style>
+		<p style="display:flex;justify-content:space-between">
+			<a class="CardMenu" href="#">New<br />eWallet</a><span style="font-size:30px">|</span>
+			<a class="CardMenu" href="JavaScript:EditMode(1)">Edit<br />Description</a><span style="font-size:30px">|</span>
+			<a class="CardMenu" href="#">Get Bank<br />Details</a>
+		</p>
 
-	<p style="display:flex">
-	<a href="#" class="CardMenu">New<br />eWallet</a>&nbsp;
-	<a href="JavaScript:EditMode(1)" class="CardMenu">Edit<br />Description</a>&nbsp;
-	<a href="#" class="CardMenu">Get Bank<br />Details</a>&nbsp;
-	<a href="#" class="CardMenu">TopUp<br />Now</a>&nbsp;
-	<a href="#" class="CardMenu">Auto<br />TopUp</a>&nbsp;
-	<a href="#" class="CardMenu">Trans-<br />actions</a>
-	</p>
+		<p style="display:flex;justify-content:space-between">
+			<a class="CardMenu" href="#">TopUp<br />Now</a><span style="font-size:30px">|</span>
+			<a class="CardMenu" href="#">Auto<br />TopUp</a><span style="font-size:30px">|</span>
+			<a class="CardMenu" href="#">Trans-<br />actions</a>
+		</p>
 
-	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;display:inline-block;border-radius:10px">
-	<table style="width:100%">
-	<tr>
-		<td>
-			<img src="Images/Flag-EUR.png" title="Euros" style="width:60px" /></td>
-		<td>
-			<br />
-			<span class="Wallet3">EUR</span></td>
-		<td>
-			Balance<br />
-			<span class="Wallet3">8,013.76</span></td>
-		<td style="float:right;font-size:14px">
-			<img src="Images/PayPayYa.png" style="width:50px" /><br />
-			eWallet</td>
-	</tr>
-	</table>
-	Account Number<br />
-	<span class="Wallet4">8045 6723 0198 3755</span>
-	<p>
-	Account Description<br />
-	<span class="Wallet2">My PayPayYa EUR eWallet</span>
-	<span style="float:right"><img style="width:50px" src="Images/LogoPlaNet.png" title="PayPayYa" />&nbsp;</span>
-	</p><p>
-	Account Name<br />
-	<span class="Wallet2">Samual Briggs</span>
-	</p>
 	</div>
 
-	<p style="display:flex">
-	<a href="#" class="CardMenu">New<br />eWallet</a>&nbsp;
-	<a href="JavaScript:EditMode(1)" class="CardMenu">Edit<br />Description</a>&nbsp;
-	<a href="#" class="CardMenu">Get Bank<br />Details</a>&nbsp;
-	<a href="#" class="CardMenu">TopUp<br />Now</a>&nbsp;
-	<a href="#" class="CardMenu">Auto<br />TopUp</a>&nbsp;
-	<a href="#" class="CardMenu">Trans-<br />actions</a>
-	</p>
+	<br />
+
+	<div style="width:360px;display:inline-block">
+		<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;border-radius:10px">
+			<table style="width:100%">
+			<tr>
+			<td>
+				<img src="Images/Flag-EUR.png" title="Euros" class="CardFlag" /></td>
+			<td>
+				<br />
+				<span class="Wallet3">EUR</span></td>
+			<td>
+				Balance<br />
+				<span class="Wallet3">8,013.76</span></td>
+			<td style="float:right;font-size:14px">
+				<img src="Images/PayPayYa.png" style="width:50px" /><br />
+				eWallet</td>
+			</tr>
+			</table>
+			Account Number<br />
+			<span class="Wallet4">8045 6723 0198 3755</span>
+			<p>
+			Account Description<br />
+			<span class="Wallet2">My PayPayYa EUR eWallet</span>
+			<span style="float:right"><img style="width:50px" src="Images/LogoPlaNet.png" title="PayPayYa" />&nbsp;</span>
+			</p><p>
+			Account Name<br />
+			<span class="Wallet2">Samual Briggs</span>
+			</p>
+		</div>
+
+		<p style="display:flex;justify-content:space-between">
+			<a class="CardMenu" href="#">New<br />eWallet</a><span style="font-size:30px">|</span>
+			<a class="CardMenu" href="JavaScript:EditMode(1)">Edit<br />Description</a><span style="font-size:30px">|</span>
+			<a class="CardMenu" href="#">Get Bank<br />Details</a>
+		</p>
+
+		<p style="display:flex;justify-content:space-between">
+			<a class="CardMenu" href="#">TopUp<br />Now</a><span style="font-size:30px">|</span>
+			<a class="CardMenu" href="#">Auto<br />TopUp</a><span style="font-size:30px">|</span>
+			<a class="CardMenu" href="#">Trans-<br />actions</a>
+		</p>
+
+	</div>
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 

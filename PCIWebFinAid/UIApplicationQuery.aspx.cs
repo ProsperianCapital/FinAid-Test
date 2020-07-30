@@ -13,7 +13,7 @@ namespace PCIWebFinAid
 	public partial class UIApplicationQuery : BasePageBackOffice
 	{
 		private string queryName;
-		private string userCode;
+		private string contractCode;
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
@@ -27,7 +27,7 @@ namespace PCIWebFinAid
 		{
 			try
 			{
-				userCode         = WebTools.RequestValueString(Request,"UserCode");
+				contractCode     = WebTools.RequestValueString(Request,"ContractCode");
 				string passWord  = WebTools.RequestValueString(Request,"UserPassword");
 				string secretKey = WebTools.RequestValueString(Request,"SecretKey");
 				queryName        = WebTools.RequestValueString(Request,"QueryName");
@@ -35,7 +35,7 @@ namespace PCIWebFinAid
 				if ( secretKey != "7e6415a7cb790238fd12430a0ce419b3" )
 					return ReturnJSON(102,"Invalid secret key");
 
-				if ( userCode.ToUpper() != "TEST" )
+				if ( contractCode.ToUpper() != "TEST" )
 					return ReturnJSON(103,"Invalid user code");
 
 				if ( passWord.ToUpper() != "TEST" )
@@ -71,12 +71,12 @@ namespace PCIWebFinAid
 
 		private int ReturnJSON(int errCode,string errMessage,string json="")
 		{
-			userCode   = Tools.NullToString(userCode);
-			json       = Tools.JSONPair("ErrorCode",errCode.ToString(),1,"{",",")
-			           + Tools.JSONPair("ErrorMessage",errMessage,1,"","")
-			           + ( json.Length == 0 ? "" : "," + json ) + "}";
-			string log = "UserCode="+userCode+", Query: "+queryName
-			           + ( errCode > 0 ? " (Error " + errCode.ToString() + ": " + errMessage + ")" : "" );
+			contractCode = Tools.NullToString(contractCode);
+			json         = Tools.JSONPair("ErrorCode",errCode.ToString(),1,"{",",")
+			             + Tools.JSONPair("ErrorMessage",errMessage,1,"","")
+			             + ( json.Length == 0 ? "" : "," + json ) + "}";
+			string log   = "UserCode="+contractCode+", Query: "+queryName
+			             + ( errCode > 0 ? " (Error " + errCode.ToString() + ": " + errMessage + ")" : "" );
 
 			try
 			{
