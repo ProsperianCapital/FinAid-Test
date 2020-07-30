@@ -96,18 +96,45 @@ namespace PCIWebFinAid
 			{
 				menuNum++;
 				menuID = "mx" + menuNum.ToString();
+
 //	Ver 1
 //				if      ( menuNum == 1 ) menuRef = "PCapital.png' height='75";
 //				else if ( menuNum == 2 ) menuRef = "PFintech.png' height='75";
 //				else if ( menuNum == 3 ) menuRef = "PWealth.png' height='75";
 //				else if ( menuNum == 4 ) menuRef = "PKnab.png' width='130";
-
-				if ( m1.DisplayImageOrText == "0" )
+//
+//				if ( m1.DisplayImageOrText == "0" )
 // Ver 2
-//					menuRef = "<img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' onmouseover=\"JavaScript:XMenu('" + menuID + "',1)\" />";
+//					menuRef =  "<img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' onmouseover=\"JavaScript:XMenu('" + menuID + "',1)\" />";
 //	Ver 3
 //					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='width:130px' />";
 //	Ver 4
+//					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='height:75px;width:130px' />";
+//				else
+//					menuRef = " class='VText'>" + m1.Name;
+//	Ver 5
+//				if ( m1.DisplayImageOrText == "0" )
+//				{
+//					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='height:75px;width:130px' />";
+//					if ( m1.SubItems.Count == 0 )
+//					{
+//						menuRef = menuRef + URLTag(m1) + tRowEnd;
+//						continue;
+//					}
+//				}
+//				else
+//					menuRef = " class='VText'>" + m1.Name;
+//	Ver 6
+
+				if ( m1.SubItems.Count == 0 || ( m1.SubItems.Count == 1 && m1.SubItems[0].Name.Length == 0 ) )
+				{
+				//	Top level menu with no sub-items, so just put in a direct link
+					str.Append(URLTag(m1)+Environment.NewLine+"<hr />"+Environment.NewLine);
+					continue;
+				}
+
+			//	So these are top-level menus with sub items
+				if ( m1.DisplayImageOrText == "0" )
 					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='height:75px;width:130px' />";
 				else
 					menuRef = " class='VText'>" + m1.Name;
@@ -152,7 +179,8 @@ namespace PCIWebFinAid
 				str.Append("[X*Z]");
 				str.Replace("<hr />"+Environment.NewLine+"[X*Z]","");
 			}
-			lblMenu.Text = "<div style='float:left;vertical-align:top;padding:5px;margin-right:8px;background-color:black'>" + Environment.NewLine
+//			lblMenu.Text = "<div id='divMenu' style='float:left;vertical-align:top;padding:5px;margin-right:8px;background-color:black'>" + Environment.NewLine
+			lblMenu.Text = "<div class='VMain'>" + Environment.NewLine
 			             + str.ToString()
 			             + "</div>" + Environment.NewLine
 			             + sub.ToString();
@@ -186,7 +214,14 @@ namespace PCIWebFinAid
 				else
 					return T + " target='_blank'> " + mx.Name + " </a>";
 
-			return T + " onclick=\"JavaScript:ShowBusy('Loading ...',null,0)\"> " + mx.Name + " </a>";
+			T = T + " onclick=\"JavaScript:ShowBusy('Loading ...',null,0)\"";
+
+			if ( mx.Level > 1 )
+				return T + "> " + mx.Name + " </a>";
+			else if ( mx.DisplayImageOrText == "0" )
+				return T + "><img src='Images/" + mx.ImageName + "' title='" + mx.Description + "' style='height:75px;width:130px' /></a>";
+			else
+				return T + " class='VText'> " + mx.Name + " </a>";
 		}
 	}
 }

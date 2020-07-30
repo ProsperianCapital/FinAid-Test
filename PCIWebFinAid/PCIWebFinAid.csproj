@@ -89,6 +89,7 @@
     <Content Include="LView.aspx" />
     <Content Include="LWelcome.aspx" />
     <Content Include="Menu.ascx" />
+    <Content Include="UIApplicationQuery.aspx" />
     <Content Include="XFooter.ascx" />
     <Content Include="XHeader.ascx" />
     <Content Include="XHome.aspx" />
@@ -344,6 +345,13 @@
     </Compile>
     <Compile Include="TransLookup.aspx.designer.cs">
       <DependentUpon>TransLookup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UIApplicationQuery.aspx.cs">
+      <DependentUpon>UIApplicationQuery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UIApplicationQuery.aspx.designer.cs">
+      <DependentUpon>UIApplicationQuery.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebTools.cs" />
     <Compile Include="pgAccountingCaptureCashbook.aspx.cs">

@@ -1,10 +1,34 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="XMenu.ascx.cs" Inherits="PCIWebFinAid.XMenu" %>
 
 <style>
+.VMain {
+	float: left;
+	vertical-align: top;
+	padding: 5px;
+	margin-right: 8px;
+	background-color: black;
+}
 .VHead {
 	font-weight: bold;
 	background-color: orange;
 	padding: 5px;
+}
+.VHamburger {
+	float: left;
+	width: 60px;
+	display: none;
+	visibility: hidden;
+}
+@media screen and (max-width: 600px)
+{
+	.VMain {
+		display: none;
+		visibility: hidden;
+  }
+	.VHamburger {
+		display: inline;
+		visibility: visible;
+	}
 }
 .VMenu {
 	background-color: #C3C3C3;
@@ -109,4 +133,5 @@ function TestPos(obj)
 }
 </script>
 
+<a href="JavaScript:alert('Mobile menus will appear here ...')"><img src="Images/HamburgerMenu.png" class="VHamburger" title="Show menu" /></a>
 <asp:Literal runat="server" ID="lblMenu"></asp:Literal>

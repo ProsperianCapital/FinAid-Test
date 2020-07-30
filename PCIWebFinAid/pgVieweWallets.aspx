@@ -69,7 +69,24 @@ function HidePopups()
 	</p>
 	</div>
 
-	<br /><br />
+	<style>
+	.CardMenu
+	{
+		color: darkblue;
+		background-color: hotpink;
+		padding: 5px;
+		text-decoration :none
+	}
+	</style>
+
+	<p style="display:flex">
+	<a href="#" class="CardMenu">New<br />eWallet</a>&nbsp;
+	<a href="JavaScript:EditMode(1)" class="CardMenu">Edit<br />Description</a>&nbsp;
+	<a href="#" class="CardMenu">Get Bank<br />Details</a>&nbsp;
+	<a href="#" class="CardMenu">TopUp<br />Now</a>&nbsp;
+	<a href="#" class="CardMenu">Auto<br />TopUp</a>&nbsp;
+	<a href="#" class="CardMenu">Trans-<br />actions</a>
+	</p>
 
 	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;display:inline-block;border-radius:10px">
 	<table style="width:100%">
@@ -91,13 +108,22 @@ function HidePopups()
 	<span class="Wallet4">8045 6723 0198 3755</span>
 	<p>
 	Account Description<br />
+	<span class="Wallet2">My PayPayYa EUR eWallet</span>
 	<span style="float:right"><img style="width:50px" src="Images/LogoPlaNet.png" title="PayPayYa" />&nbsp;</span>
-	<span class="Wallet2">My PayPayYa EUR eWallet</span><br />
 	</p><p>
 	Account Name<br />
 	<span class="Wallet2">Samual Briggs</span>
 	</p>
 	</div>
+
+	<p style="display:flex">
+	<a href="#" class="CardMenu">New<br />eWallet</a>&nbsp;
+	<a href="JavaScript:EditMode(1)" class="CardMenu">Edit<br />Description</a>&nbsp;
+	<a href="#" class="CardMenu">Get Bank<br />Details</a>&nbsp;
+	<a href="#" class="CardMenu">TopUp<br />Now</a>&nbsp;
+	<a href="#" class="CardMenu">Auto<br />TopUp</a>&nbsp;
+	<a href="#" class="CardMenu">Trans-<br />actions</a>
+	</p>
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 

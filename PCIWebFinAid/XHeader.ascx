@@ -1,7 +1,31 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="XHeader.ascx.cs" Inherits="PCIWebFinAid.XHeader" %>
 
+<style>
+.HImageBig {
+	display: inline;
+	visibility: visible;
+	height: 60px;
+}
+.HImageSmall {
+	display: none;
+	visibility: hidden;
+	height: 60px;
+}
+	@media screen and (max-width: 600px) {
+		.HImageBig {
+			display: none;
+			visibility: hidden;
+		}
+		.HImageSmall {
+			display: inline;
+			visibility: visible;
+		}
+	}
+</style>
+
 <div class="Header1">
-	<img src="Images/PlaNet-Black.png" height="60" title="PlaNet Tech Limited" />
+	<img src="Images/PlaNetBig-Black.png" title="PlaNet Tech Limited" class="HImageBig" />
+	<img src="Images/PlaNetSmall-Black.png" title="PlaNet Tech Limited" class="HImageSmall" />
 	<div style="float:right;margin-right:20px">
 		<asp:Label runat="server" ID="lblUName" style="top:12px;position:relative"></asp:Label>
 		&nbsp;&nbsp;&nbsp;&nbsp;
