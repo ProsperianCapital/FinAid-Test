@@ -28,6 +28,7 @@ namespace PCIWebFinAid
 			try
 			{
 				contractCode     = WebTools.RequestValueString(Request,"ContractCode");
+				string userCode  = WebTools.RequestValueString(Request,"UserCode");
 				string passWord  = WebTools.RequestValueString(Request,"UserPassword");
 				string secretKey = WebTools.RequestValueString(Request,"SecretKey");
 				queryName        = WebTools.RequestValueString(Request,"QueryName");
@@ -35,8 +36,8 @@ namespace PCIWebFinAid
 				if ( secretKey != "7e6415a7cb790238fd12430a0ce419b3" )
 					return ReturnJSON(102,"Invalid secret key");
 
-				if ( contractCode.ToUpper() != "TEST" )
-					return ReturnJSON(103,"Invalid user code");
+				if ( contractCode.ToUpper() != "TEST" && userCode.ToUpper() != "TEST" )
+					return ReturnJSON(103,"Invalid contract code");
 
 				if ( passWord.ToUpper() != "TEST" )
 					return ReturnJSON(104,"Invalid password");
@@ -75,7 +76,7 @@ namespace PCIWebFinAid
 			json         = Tools.JSONPair("ErrorCode",errCode.ToString(),1,"{",",")
 			             + Tools.JSONPair("ErrorMessage",errMessage,1,"","")
 			             + ( json.Length == 0 ? "" : "," + json ) + "}";
-			string log   = "UserCode="+contractCode+", Query: "+queryName
+			string log   = "ContractCode="+contractCode+", Query: "+queryName
 			             + ( errCode > 0 ? " (Error " + errCode.ToString() + ": " + errMessage + ")" : "" );
 
 			try
