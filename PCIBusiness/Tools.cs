@@ -288,14 +288,6 @@ namespace PCIBusiness
 			     + suffix;
 		}
 
-//		public static string JSONPair(string name,int value,bool firstPair=false,bool lastPair=false)
-//		{
-//			string quote = "\"";
-//			return (firstPair?"{":"")
-//			     + quote + name.Trim().Replace(quote,"'") + quote + " : " + value.ToString()
-//			     + (lastPair ?"}":",");
-//		}
-
 		public static string JSONValue(string data,string tag)
 		{
 		//	Handle data in the format
@@ -637,7 +629,7 @@ namespace PCIBusiness
 				fName = fName.Substring(0,k) + "-" + DateToString(fileDate,7) + fName.Substring(k);
 				return fName;
 			}
-			catch (Exception ex)
+			catch
 			{
 			}
 			return "C:\\Temp\\Error-X.txt";
@@ -732,7 +724,7 @@ namespace PCIBusiness
 						fOut.WriteLine( "[v" + SystemDetails.AppVersion + ", " + Tools.DateToString(System.DateTime.Now,1,1,false) + "] " + component + " : " + msg);
 						break;
 					}
-					catch (Exception ex1)
+					catch
 					{ }
 					finally
 					{
