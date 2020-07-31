@@ -1,17 +1,18 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="XMenu.ascx.cs" Inherits="PCIWebFinAid.XMenu" %>
 
 <style>
-.VMain {
+.VBig {
 	float: left;
 	vertical-align: top;
 	padding: 5px;
 	margin-right: 8px;
 	background-color: black;
+	display: inline;
+	visibility: visible;
 }
-.VHead {
-	font-weight: bold;
-	background-color: orange;
-	padding: 5px;
+.VSmall {
+	display: inline-block;
+	width: 98%;
 }
 .VHamburger {
 	float: left;
@@ -21,18 +22,35 @@
 }
 @media screen and (max-width: 600px)
 {
-	.VMain {
+	.VBig {
 		display: none;
 		visibility: hidden;
-  }
+	}
 	.VHamburger {
 		display: inline;
 		visibility: visible;
 	}
 }
+@media screen and (min-width: 600px)
+{
+	.VSmall {
+		display: none;
+		visibility: hidden;
+	}
+}
+.VHead {
+	font-weight: bold;
+	background-color: orange;
+	padding: 5px;
+}
 .VMenu {
 	background-color: #C3C3C3;
 	padding: 5px;
+}
+.VSubMenu {
+	background-color: #E3E3E3;
+	padding: 3px;
+	margin: 0px;
 }
 .VMenu a {
 	color: black;
@@ -44,6 +62,12 @@
 .VMenu a:hover {
 	color: white;
 	text-decoration: none;
+	vertical-align: middle;
+}
+.VMenuMobi {
+	margin-bottom: 2px;
+	width: 100%;
+	font-size: 24px;
 }
 .VText {
 	font-size: 20px;
@@ -131,7 +155,41 @@ function TestPos(obj)
 	h.style.left = (3+eltX.right-bodyX.left).toString() + "px";
 	ShowElt(h,true);
 }
+function MobileMenu(mID)
+{
+	if ( mID == null )
+		mID = 'menuSmall';
+	var p = GetElt(mID);
+	if ( p.style.display.length == 0 )
+	{
+		p.style.display    = 'none';
+		p.style.visibility = "hidden";
+	}
+	else
+	{
+		p.style.display    = '';
+		p.style.visibility = "visible";
+	}
+}
 </script>
 
-<a href="JavaScript:alert('Mobile menus will appear here ...')"><img src="Images/HamburgerMenu.png" class="VHamburger" title="Show menu" /></a>
-<asp:Literal runat="server" ID="lblMenu"></asp:Literal>
+<a href="JavaScript:MobileMenu()"><img src="Images/HamburgerMenu.png" class="VHamburger" title="Show menu" /></a>
+<asp:Literal runat="server" ID="lblMenuL"></asp:Literal>
+<asp:Literal runat="server" ID="lblMenuS">
+<div class="VSmall" id="menuSmall">
+<!-- these are for testing ... -->
+	<div class="VMenu VMenuMobi"><a href="JavaScript:MobileMenu('mx1h')" style="display:block">Menu 1<img src="Images/DownArrow.png" style="float:right;height:30px" /></a></div>
+	<div id="mx1h">	
+		<div class="VMenu VSubMenu VMenuMobi" style="margin-left:40px"><a href="#" style="display:block">Menu 1.1</a></div>
+		<div class="VMenu VSubMenu VMenuMobi" style="margin-left:40px"><a href="JavaScript:MobileMenu('mx2h')" style="display:block">Menu 1.2</a></div>
+		<div id="mx2h">	
+			<div class="VMenu VSubMenu VMenuMobi" style="margin-left:80px"><a href="#" style="display:block">Menu 1.2.1</a></div>
+			<div class="VMenu VSubMenu VMenuMobi" style="margin-left:80px"><a href="#" style="display:block">Menu 1.2.2</a></div>
+			<div class="VMenu VSubMenu VMenuMobi" style="margin-left:80px"><a href="#" style="display:block">Menu 1.2.3</a></div>
+		</div>
+		<div class="VMenu VSubMenu VMenuMobi" style="margin-left:40px"><a href="#" style="display:block">Menu 1.3</a></div>
+	</div>
+	<div class="VMenu VMenuMobi"><a href="#" style="display:block">Menu 2<img src="Images/DownArrow.png" style="float:right;height:30px" /></a></div>
+	<div class="VMenu VMenuMobi"><a href="#" style="display:block">Menu 3<img src="Images/DownArrow.png" style="float:right;height:30px" /></a></div>
+</div>
+</asp:Literal>

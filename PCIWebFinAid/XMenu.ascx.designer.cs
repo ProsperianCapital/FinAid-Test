@@ -13,12 +13,21 @@ namespace PCIWebFinAid {
     public partial class XMenu {
         
         /// <summary>
-        /// lblMenu control.
+        /// lblMenuL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblMenu;
+        protected global::System.Web.UI.WebControls.Literal lblMenuL;
+        
+        /// <summary>
+        /// lblMenuS control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lblMenuS;
     }
 }

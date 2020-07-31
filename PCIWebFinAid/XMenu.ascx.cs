@@ -86,15 +86,25 @@ namespace PCIWebFinAid
 	
 			StringBuilder str     = new StringBuilder();
 			StringBuilder sub     = new StringBuilder();
+			StringBuilder mobi    = new StringBuilder();
 			byte          menuNum = 0;
 			byte          subNum  = 0;
+			short         mobNo   = 0;
 			string        menuID  = "";
 			string        menuRef = "";
 			string        tRowEnd = "</td></tr>" + Environment.NewLine;
 
+//	Mobile
+			string        dnArrow = "<img src='Images/DownArrow.png' style='float:right;height:30px' />";
+//			string        upArrow = "<img src='Images/UpArrow.png' style='float:right;height:30px' />";
+//			string        node1  = "<img src='Images/DownArrow.png' style='float:right;height:30px' />";
+//			string        node2  = "<img src='Images/DownArrow.png' style='float:right;height:30px' />";
+//			string        node3  = "<img src='Images/DownArrow.png' style='float:right;height:30px' />";
+
 			foreach (MenuItem m1 in menuList)
 			{
 				menuNum++;
+				mobNo++;
 				menuID = "mx" + menuNum.ToString();
 
 //	Ver 1
@@ -134,6 +144,8 @@ namespace PCIWebFinAid
 				}
 
 			//	So these are top-level menus with sub items
+
+			//	Main menu
 				if ( m1.DisplayImageOrText == "0" )
 					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='height:75px;width:130px' />";
 				else
@@ -142,21 +154,45 @@ namespace PCIWebFinAid
 				str.Append("<table id='" + menuID + "' style='position:absolute;left:152px;visibility:hidden;display:none;border:1px #000000 solid' onmouseleave=\"JavaScript:XMenu('',0)\">" + Environment.NewLine);
 				str.Append("<tr><td class='VHead'>" + m1.Name + tRowEnd);
 
+			//	Mobile menu
+				mobi.Append("<div class='VMenu VMenuMobi'><a href=\"JavaScript:MobileMenu('h" + mobNo.ToString() + "')\" style='display:block;padding-top:4px;padding-bottom:4px'>" + m1.Name.Replace("<br />"," ") + dnArrow + "</a></div>" + Environment.NewLine);
+				mobi.Append("<div id='h" + mobNo.ToString() + "' style='display:none;visibility:hidden'>" + Environment.NewLine);
+
 				foreach ( MenuItem m2 in m1.SubItems )
 				{
 					str.Append("<tr><td class='VMenu' onmouseover='XSubMenu(null)'>");
+					mobNo++;
+
 					if ( m2.SubItems.Count < 2 )
+					{
+					//	Main menu
 						str.Append(URLTag(m2) + tRowEnd);
+					//	Mobile menu
+						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:91%;margin-left:10%'><a href='#' style='display:block'>" + m2.Name + "</a></div>" + Environment.NewLine);
+					}
 					else
 					{
+					//	Main menu
 						str.Append(" " + m2.Name + " " + tRowEnd);
+					//	Mobile menu
+						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:91%;margin-left:10%'><a href=\"JavaScript:MobileMenu('h" + mobNo.ToString() + "')\" style='display:block;padding-top:4px;padding-bottom:4px'>" + m2.Name.Replace("<br />"," ") + dnArrow + "</a></div>" + Environment.NewLine);
+						mobi.Append("<div id='h" + mobNo.ToString() + "' style='display:none;visibility:hidden'>" + Environment.NewLine);
+
 						foreach ( MenuItem m3 in m2.SubItems )
 						{
 							str.Append("<tr><td class='VMenu'");
+							mobNo++;
+
 							if ( m3.SubItems.Count < 2 )
+							{
+							//	Main menu
 								str.Append(" onmouseover='XSubMenu(null)'>&nbsp;&nbsp;->" + URLTag(m3) + tRowEnd);
+							//	Mobile menu
+								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:81%;margin-left:20%'><a href='#' style='display:block'>" + m3.Name + "</a></div>" + Environment.NewLine);
+							}
 							else
 							{
+							//	Main menu
 								string mID = "vx" + (++subNum).ToString();
 								str.Append(" onmouseover=\"XSubMenu('"+mID+"',this)\">&nbsp;&nbsp;->");
 								str.Append(" " + m3.Name + " " + tRowEnd);
@@ -164,13 +200,19 @@ namespace PCIWebFinAid
 								foreach ( MenuItem m4 in m3.SubItems )
 									sub.Append("<tr><td class='VMenu'>" + URLTag(m4) + tRowEnd);
 								sub.Append("</table>");
+							//	Mobile menu
+								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:81%;margin-left:20%'><a href=\"JavaScript:MobileMenu('h" + mobNo.ToString() + "')\" style='display:block;padding-top:4px;padding-bottom:4px'>" + m3.Name.Replace("<br />"," ") + dnArrow + "</a></div>" + Environment.NewLine);
 							}
 						}
+						mobi.Append("</div>" + Environment.NewLine);
 					}
 				}
 				str.Append("</table>"+Environment.NewLine);
 				str.Append("<a href=\"JavaScript:XMenu('" + menuID + "',1)\" onmouseover=\"JavaScript:XMenu('" + menuID + "',1)\"" + menuRef + "</a>"+Environment.NewLine);
 				str.Append("<hr />"+Environment.NewLine);
+
+//				if ( div2 > 0 )
+					mobi.Append("</div>" + Environment.NewLine);
 			}
 
 //	Exclude "Log Off"
@@ -179,21 +221,24 @@ namespace PCIWebFinAid
 				str.Append("[X*Z]");
 				str.Replace("<hr />"+Environment.NewLine+"[X*Z]","");
 			}
-//			lblMenu.Text = "<div id='divMenu' style='float:left;vertical-align:top;padding:5px;margin-right:8px;background-color:black'>" + Environment.NewLine
-			lblMenu.Text = "<div class='VMain'>" + Environment.NewLine
-			             + str.ToString()
-			             + "</div>" + Environment.NewLine
-			             + sub.ToString();
+			lblMenuL.Text = "<div id='menuBig' class='VBig'>" + Environment.NewLine
+			              + str.ToString()
+			              + "</div>" + Environment.NewLine
+			              + sub.ToString();
 //	Include "Log Off"
-//			lblMenu.Text = "<div style='float:left;vertical-align:top;padding:5px;margin-right:8px;background-color:black'>" + Environment.NewLine
-//			             + str.ToString()
-//			             + "<br /><div style='text-align:center'>"
-//					       + "<a href='pgLogon.aspx' class='VText' onmouseover=\"JavaScript:XMenu('',0)\" title='Close all resources and log out'>Log Off</a>"
-//					       + "</div><br /></div>" + Environment.NewLine
-//			             + sub.ToString();
+//			lblMenuL.Text = "<div style='float:left;vertical-align:top;padding:5px;margin-right:8px;background-color:black'>" + Environment.NewLine
+//			              + str.ToString()
+//			              + "<br /><div style='text-align:center'>"
+//					        + "<a href='pgLogon.aspx' class='VText' onmouseover=\"JavaScript:XMenu('',0)\" title='Close all resources and log out'>Log Off</a>"
+//					        + "</div><br /></div>" + Environment.NewLine
+//			              + sub.ToString();
 
-			menuList     = null;
-			str          = null;
+//	Mobile menu
+			lblMenuS.Text = "<div id='menuSmall' class='VSmall'>" + Environment.NewLine
+			              + mobi.ToString() + "</div>" + Environment.NewLine
+			              + WebTools.JavaScriptSource("ShowElt('menuSmall',false)");
+			menuList      = null;
+			str           = null;
 			return 0;
 		}
 

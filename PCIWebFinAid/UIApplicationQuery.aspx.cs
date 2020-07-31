@@ -45,6 +45,9 @@ namespace PCIWebFinAid
 				if ( queryName.ToUpper() != "TEST" )
 					return ReturnJSON(105,"Invalid query");
 
+				if ( contractCode.Length < 1 )
+					contractCode = userCode;
+
 				string json = Tools.JSONPair("ClientCode","10927483")
 				            + Tools.JSONPair("ClientName","John D Klutz",1,"")
 				            + Tools.JSONPair("NumberOfAccounts","3",11,"")
