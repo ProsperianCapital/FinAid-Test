@@ -131,6 +131,7 @@
     <Content Include="CSS\raleway-semibold-webfont.svg" />
     <Content Include="CSS\raleway-medium-webfont.svg" />
     <Content Include="CSS\atlanta-webfont.woff" />
+    <Content Include="Images\DownArrow.png" />
     <Content Include="Images\LightG.png" />
     <Content Include="Images\LightR.png" />
     <Content Include="Images\LightY.png" />
