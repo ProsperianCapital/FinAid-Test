@@ -263,7 +263,7 @@ function ValidEmail(email)
 	return true;
 }
 
-function ShowElt(eltID,show,background)
+function ShowElt(eltID,show,background,retType)
 {
 	try
 	{
@@ -282,6 +282,8 @@ function ShowElt(eltID,show,background)
 			if ( background > 0 )
 				document.body.className = '';
 		}
+		if ( retType == 59 )
+			return;
 		return 0;
 	}
 	catch (x)
