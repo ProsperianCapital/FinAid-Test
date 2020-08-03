@@ -97,9 +97,6 @@ namespace PCIWebFinAid
 //	Mobile
 			string        dnArrow = "<img src='Images/DownArrow.png' style='float:right;height:30px' />";
 //			string        upArrow = "<img src='Images/UpArrow.png' style='float:right;height:30px' />";
-//			string        node1  = "<img src='Images/DownArrow.png' style='float:right;height:30px' />";
-//			string        node2  = "<img src='Images/DownArrow.png' style='float:right;height:30px' />";
-//			string        node3  = "<img src='Images/DownArrow.png' style='float:right;height:30px' />";
 
 			foreach (MenuItem m1 in menuList)
 			{
@@ -138,8 +135,13 @@ namespace PCIWebFinAid
 
 				if ( m1.SubItems.Count == 0 || ( m1.SubItems.Count == 1 && m1.SubItems[0].Name.Length == 0 ) )
 				{
+				//	Main menu
 				//	Top level menu with no sub-items, so just put in a direct link
 					str.Append(URLTag(m1)+Environment.NewLine+"<hr />"+Environment.NewLine);
+
+				//	Mobile menu
+					mobi.Append("<div class='VMenu VMenuMobi'>" + URLTag(m1,"display:block;padding-top:4px;padding-bottom:4px") + "</div>" + Environment.NewLine);
+
 					continue;
 				}
 
@@ -246,7 +248,6 @@ namespace PCIWebFinAid
 
 		private string URLTag(MenuItem mx,string styling="")
 		{
-		//	string T = "<a style='display:block' " + ( mx.Description.Length > 0 ? "title='" + mx.Description.Replace("'","&#39;") + "' " : "" );
 			string T = "<a" + ( mx.Description.Length > 0 ? " title='" + mx.Description.Replace("'","&#39;") + "'" : "" );
 			if ( styling.Length > 0 )
 				T = T + " style='" + styling + "'";
@@ -268,10 +269,13 @@ namespace PCIWebFinAid
 
 			if ( mx.Level > 1 )
 				return T + "> " + mx.Name + " </a>";
-			else if ( mx.DisplayImageOrText == "0" )
+			else if ( mx.DisplayImageOrText == "0" ) // LIVE
+//			else if ( mx.DisplayImageOrText != "0" ) // TEST
 				return T + "><img src='Images/" + mx.ImageName + "' title='" + mx.Description + "' style='height:75px;width:130px' /></a>";
-			else
+			else if ( styling.Length == 0 )
 				return T + " class='VText'> " + mx.Name + " </a>";
+			else
+				return T + "> " + mx.Name + " </a>";
 		}
 	}
 }
