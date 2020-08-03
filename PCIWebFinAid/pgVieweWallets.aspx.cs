@@ -20,8 +20,11 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) != 0 )
-				StartOver(10888);
+			int ret = ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode);
+			if ( ret == 0 )
+				return;
+			Tools.LogInfo("pgVieweWallets.PageLoad","ret="+ret.ToString(),222);
+			StartOver(10888);
 		}
 
 		private void LoadDataInitial()

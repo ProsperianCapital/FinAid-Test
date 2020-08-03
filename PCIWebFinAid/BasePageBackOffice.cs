@@ -104,7 +104,7 @@ namespace PCIWebFinAid
 			if ( sessionMode == 99 && sessionGeneral == null )
 			{
 				sessionGeneral            = new SessionGeneral();
-				sessionGeneral.UserCode   = "653";
+				sessionGeneral.UserCode   = "013";
 				sessionGeneral.UserName   = "Samual Briggs";
 				sessionGeneral.AccessType = "P";
 				ApplicationCode           = "001";
