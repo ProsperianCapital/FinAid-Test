@@ -168,7 +168,8 @@ namespace PCIWebFinAid
 					//	Main menu
 						str.Append(URLTag(m2) + tRowEnd);
 					//	Mobile menu
-						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:91%;margin-left:10%'><a href='#' style='display:block'>" + m2.Name + "</a></div>" + Environment.NewLine);
+					//	mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:91%;margin-left:10%'><a href='#' style='display:block'>" + m2.Name + "</a></div>" + Environment.NewLine);
+						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:91%;margin-left:10%'>" + URLTag(m2,"display:block") + "</div>" + Environment.NewLine);
 					}
 					else
 					{
@@ -188,7 +189,8 @@ namespace PCIWebFinAid
 							//	Main menu
 								str.Append(" onmouseover='XSubMenu(null)'>&nbsp;&nbsp;->" + URLTag(m3) + tRowEnd);
 							//	Mobile menu
-								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:81%;margin-left:20%'><a href='#' style='display:block'>" + m3.Name + "</a></div>" + Environment.NewLine);
+							//	mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:81%;margin-left:20%'><a href='#' style='display:block'>" + m3.Name + "</a></div>" + Environment.NewLine);
+								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:81%;margin-left:20%'>" + URLTag(m3,"display:block") + "</div>" + Environment.NewLine);
 							}
 							else
 							{
@@ -242,16 +244,19 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
-		private string URLTag(MenuItem mx)
+		private string URLTag(MenuItem mx,string styling="")
 		{
-			string T = "<a " + ( mx.Description.Length > 0 ? "title='" + mx.Description.Replace("'","&#39;") + "' " : "" );
+		//	string T = "<a style='display:block' " + ( mx.Description.Length > 0 ? "title='" + mx.Description.Replace("'","&#39;") + "' " : "" );
+			string T = "<a" + ( mx.Description.Length > 0 ? " title='" + mx.Description.Replace("'","&#39;") + "'" : "" );
+			if ( styling.Length > 0 )
+				T = T + " style='" + styling + "'";
 			if ( string.IsNullOrWhiteSpace(mx.URL) )
-				return T + "href=\"JavaScript:alert('You do not have access to this functionality')\"> " + mx.Name + " </a>";
+				return T + " href=\"JavaScript:alert('You do not have access to this functionality')\"> " + mx.Name + " </a>";
 
 			mx.URL = mx.URL.Replace("{usercode}",userCode);
 			mx.URL = mx.URL.Replace("{UserCode}",userCode);
 			mx.URL = mx.URL.Replace("{USERCODE}",userCode);
-			T      = T + "href='" + mx.URL + "'";
+			T      = T + " href='" + mx.URL + "'";
 
 			if ( mx.URL.ToUpper().StartsWith("HTTP") || mx.URL.ToUpper().StartsWith("WWW") )
 				if ( mx.Code.Length > 0 )
