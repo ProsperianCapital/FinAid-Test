@@ -54,15 +54,16 @@ function HidePopups()
 	{
 		color: black;
 		padding: 0px;
-		width: 30%;
-		padding-left: 10px;
+		width: 31%;
+		padding-top: 2px;
+		font-size: 13px;
 	}
 	.CardMenuSep
 	{
 		color: black;
 		padding: 0px;
-		width: 5%;
-		font-size: 30px;
+		width: 4%;
+		font-size: 16px;
 	}
 	.CardFlag
 	{
@@ -71,8 +72,8 @@ function HidePopups()
 	}
 	</style>
 
-	<div style="width:360px;display:inline-block">
-	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;border-radius:10px">
+	<div style="width:350px;display:inline-block">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:348px;height:200px;border-radius:10px">
 		<table style="width:100%">
 		<tr>
 		<td>
@@ -101,26 +102,26 @@ function HidePopups()
 	</div>
 
 	<div class="CardMenuBox">
-		<div class="CardMenuItem"><a href="#">New<br />eWallet</a></div>
+		<div class="CardMenuItem"><a href="#">New eWallet</a></div>
 		<div class="CardMenuSep">|</div>
-		<div class="CardMenuItem"><a href="JavaScript:EditMode(1)">Edit<br />Description</a></div>
+		<div class="CardMenuItem"><a href="JavaScript:EditMode(1)">Edit Description</a></div>
 		<div class="CardMenuSep">|</div>
-		<div class="CardMenuItem"><a href="#">Get Bank<br />Details</a></div>
+		<div class="CardMenuItem"><a href="#">Get Bank Details</a></div>
 	</div>
 	<div class="CardMenuBox">
-		<div class="CardMenuItem"><a class="CardMenu" href="#">TopUp<br />Now</a></div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">TopUp Now</a></div>
 		<div class="CardMenuSep">|</div>
-		<div class="CardMenuItem"><a class="CardMenu" href="#">Auto<br />TopUp</a></div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Auto TopUp</a></div>
 		<div class="CardMenuSep">|</div>
-		<div class="CardMenuItem"><a class="CardMenu" href="#">Trans-<br />actions</a></div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Transactions</a></div>
 	</div>
 
 	</div>
 
 	<br /><br />
 
-	<div style="width:360px;display:inline-block">
-		<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;border-radius:10px">
+	<div style="width:350px;display:inline-block">
+		<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:348px;height:200px;border-radius:10px">
 			<table style="width:100%">
 			<tr>
 			<td>

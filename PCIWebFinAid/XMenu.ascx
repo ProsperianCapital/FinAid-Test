@@ -15,10 +15,11 @@
 	width: 98%;
 }
 .VHamburger {
-	float: left;
 	width: 60px;
 	display: none;
 	visibility: hidden;
+	margin-left: 45%;
+	margin-right: 55%;
 }
 @media screen and (max-width: 600px)
 {
@@ -78,7 +79,6 @@
 	height: 75px;
 	width: 130px;
 	align-items: center;
-	justify-content: space-between;
 }
 </style>
 <script type="text/javascript">

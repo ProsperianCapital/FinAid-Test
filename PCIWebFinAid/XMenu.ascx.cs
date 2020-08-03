@@ -139,7 +139,7 @@ namespace PCIWebFinAid
 				//	Top level menu with no sub-items, so just put in a direct link
 					str.Append(URLTag(m1)+Environment.NewLine+"<hr />"+Environment.NewLine);
 
-				//	Mobile menu
+				//	Mobile menu item
 					mobi.Append("<div class='VMenu VMenuMobi'>" + URLTag(m1,"display:block;padding-top:4px;padding-bottom:4px") + "</div>" + Environment.NewLine);
 
 					continue;
@@ -156,7 +156,7 @@ namespace PCIWebFinAid
 				str.Append("<table id='" + menuID + "' style='position:absolute;left:152px;visibility:hidden;display:none;border:1px #000000 solid' onmouseleave=\"JavaScript:XMenu('',0)\">" + Environment.NewLine);
 				str.Append("<tr><td class='VHead'>" + m1.Name + tRowEnd);
 
-			//	Mobile menu
+			//	Mobile sub-menu
 				mobi.Append("<div class='VMenu VMenuMobi'><a href=\"JavaScript:MobileMenu('h" + mobNo.ToString() + "')\" style='display:block;padding-top:4px;padding-bottom:4px'>" + m1.Name.Replace("<br />"," ") + dnArrow + "</a></div>" + Environment.NewLine);
 				mobi.Append("<div id='h" + mobNo.ToString() + "' style='display:none;visibility:hidden'>" + Environment.NewLine);
 
@@ -169,15 +169,15 @@ namespace PCIWebFinAid
 					{
 					//	Main menu
 						str.Append(URLTag(m2) + tRowEnd);
-					//	Mobile menu
-						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:91%;margin-left:10%'>" + URLTag(m2,"display:block") + "</div>" + Environment.NewLine);
+					//	Mobile menu item
+						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:93%;margin-left:8%'>" + URLTag(m2,"display:block;padding-top:4px;padding-bottom:4px") + "</div>" + Environment.NewLine);
 					}
 					else
 					{
 					//	Main menu
 						str.Append(" " + m2.Name + " " + tRowEnd);
-					//	Mobile menu
-						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:91%;margin-left:10%'><a href=\"JavaScript:MobileMenu('h" + mobNo.ToString() + "')\" style='display:block;padding-top:4px;padding-bottom:4px'>" + m2.Name.Replace("<br />"," ") + dnArrow + "</a></div>" + Environment.NewLine);
+					//	Mobile sub-menu
+						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:93%;margin-left:8%'><a href=\"JavaScript:MobileMenu('h" + mobNo.ToString() + "')\" style='display:block;padding-top:4px;padding-bottom:4px'>" + m2.Name.Replace("<br />"," ") + dnArrow + "</a></div>" + Environment.NewLine);
 						mobi.Append("<div id='h" + mobNo.ToString() + "' style='display:none;visibility:hidden'>" + Environment.NewLine);
 
 						foreach ( MenuItem m3 in m2.SubItems )
@@ -189,8 +189,8 @@ namespace PCIWebFinAid
 							{
 							//	Main menu
 								str.Append(" onmouseover='XSubMenu(null)'>&nbsp;&nbsp;->" + URLTag(m3) + tRowEnd);
-							//	Mobile menu
-								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:81%;margin-left:20%'>" + URLTag(m3,"display:block") + "</div>" + Environment.NewLine);
+							//	Mobile menu item
+								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:85%;margin-left:16%'>" + URLTag(m3,"display:block;padding-top:4px;padding-bottom:4px") + "</div>" + Environment.NewLine);
 							}
 							else
 							{
@@ -199,11 +199,20 @@ namespace PCIWebFinAid
 								str.Append(" onmouseover=\"XSubMenu('"+mID+"',this)\">&nbsp;&nbsp;->");
 								str.Append(" " + m3.Name + " " + tRowEnd);
 								sub.Append(Environment.NewLine+"<table id='"+mID+"' style='border:1px solid #000000;position:absolute;visibility:hidden;display:none' onmouseleave='JavaScript:XSubMenu(null)'>");
+							//	Mobile sub-menu
+								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:85%;margin-left:16%'><a href=\"JavaScript:MobileMenu('h" + mobNo.ToString() + "')\" style='display:block;padding-top:4px;padding-bottom:4px'>" + m3.Name.Replace("<br />"," ") + dnArrow + "</a></div>" + Environment.NewLine);
+								mobi.Append("<div id='h" + mobNo.ToString() + "' style='display:none;visibility:hidden'>" + Environment.NewLine);
+
 								foreach ( MenuItem m4 in m3.SubItems )
+								{
+									mobNo++;
+								//	Main menu
 									sub.Append("<tr><td class='VMenu'>" + URLTag(m4) + tRowEnd);
+								//	Mobile menu
+									mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:77%;margin-left:24%'>" + URLTag(m4,"display:block;padding-top:4px;padding-bottom:4px") + "</div>" + Environment.NewLine);
+								}
 								sub.Append("</table>");
-							//	Mobile menu
-								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:81%;margin-left:20%'><a href=\"JavaScript:MobileMenu('h" + mobNo.ToString() + "')\" style='display:block;padding-top:4px;padding-bottom:4px'>" + m3.Name.Replace("<br />"," ") + dnArrow + "</a></div>" + Environment.NewLine);
+								mobi.Append("</div>" + Environment.NewLine);
 							}
 						}
 						mobi.Append("</div>" + Environment.NewLine);
@@ -212,9 +221,7 @@ namespace PCIWebFinAid
 				str.Append("</table>"+Environment.NewLine);
 				str.Append("<a href=\"JavaScript:XMenu('" + menuID + "',1)\" onmouseover=\"JavaScript:XMenu('" + menuID + "',1)\"" + menuRef + "</a>"+Environment.NewLine);
 				str.Append("<hr />"+Environment.NewLine);
-
-//				if ( div2 > 0 )
-					mobi.Append("</div>" + Environment.NewLine);
+				mobi.Append("</div>" + Environment.NewLine);
 			}
 
 //	Exclude "Log Off"
@@ -267,8 +274,7 @@ namespace PCIWebFinAid
 
 			if ( mx.Level > 1 )
 				return T + "> " + mx.Name + " </a>";
-			else if ( mx.DisplayImageOrText == "0" ) // LIVE
-//			else if ( mx.DisplayImageOrText != "0" ) // TEST
+			else if ( mx.DisplayImageOrText == "0" )
 				return T + "><img src='Images/" + mx.ImageName + "' title='" + mx.Description + "' style='height:75px;width:130px' /></a>";
 			else if ( styling.Length == 0 )
 				return T + " class='VText'> " + mx.Name + " </a>";
