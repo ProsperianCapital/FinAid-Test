@@ -42,12 +42,27 @@ function HidePopups()
 	</div>
 
 	<style>
-	.CardMenu
+	.CardMenuBox
+	{
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		margin-top: 2px;
+		margin-bottom: 4px;
+	}
+	.CardMenuItem
 	{
 		color: black;
 		padding: 0px;
-		width: 34%;
+		width: 30%;
 		padding-left: 10px;
+	}
+	.CardMenuSep
+	{
+		color: black;
+		padding: 0px;
+		width: 5%;
+		font-size: 30px;
 	}
 	.CardFlag
 	{
@@ -58,8 +73,8 @@ function HidePopups()
 
 	<div style="width:360px;display:inline-block">
 	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;border-radius:10px">
-	<table style="width:100%">
-	<tr>
+		<table style="width:100%">
+		<tr>
 		<td>
 			<img src="Images/Flag-USA.png" title="US Dollars" class="CardFlag" /></td>
 		<td>
@@ -71,35 +86,38 @@ function HidePopups()
 		<td style="float:right;font-size:14px">
 			<img src="Images/PayPayYa.png" style="width:50px" /><br />
 			eWallet</td>
-	</tr>
-	</table>
-	Account Number<br />
-	<span class="Wallet4">1234 5678 9012 3456</span>
-	<p>
-	Account Description<br />
-	<span class="Wallet2">My VISA USD eWallet</span><br />
-	<span style="float:right"><img style="width:60px" src="Images/LogoVisa.jpg" title="VISA" />&nbsp;</span>
-	</p><p>
-	Account Name<br />
-	<span class="Wallet2">Samual Briggs</span>
-	</p>
+		</tr>
+		</table>
+		Account Number<br />
+		<span class="Wallet4">1234 5678 9012 3456</span>
+		<p>
+			Account Description<br />
+			<span class="Wallet2">My VISA USD eWallet</span><br />
+		<span style="float:right"><img style="width:60px" src="Images/LogoVisa.jpg" title="VISA" />&nbsp;</span>
+		</p><p>
+			Account Name<br />
+			<span class="Wallet2">Samual Briggs</span>
+		</p>
 	</div>
 
-		<p style="display:flex;justify-content:space-between">
-			<a class="CardMenu" href="#">New<br />eWallet</a><span style="font-size:30px">|</span>
-			<a class="CardMenu" href="JavaScript:EditMode(1)">Edit<br />Description</a><span style="font-size:30px">|</span>
-			<a class="CardMenu" href="#">Get Bank<br />Details</a>
-		</p>
-
-		<p style="display:flex;justify-content:space-between">
-			<a class="CardMenu" href="#">TopUp<br />Now</a><span style="font-size:30px">|</span>
-			<a class="CardMenu" href="#">Auto<br />TopUp</a><span style="font-size:30px">|</span>
-			<a class="CardMenu" href="#">Trans-<br />actions</a>
-		</p>
+	<div class="CardMenuBox">
+		<div class="CardMenuItem"><a href="#">New<br />eWallet</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a href="JavaScript:EditMode(1)">Edit<br />Description</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a href="#">Get Bank<br />Details</a></div>
+	</div>
+	<div class="CardMenuBox">
+		<div class="CardMenuItem"><a class="CardMenu" href="#">TopUp<br />Now</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Auto<br />TopUp</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Trans-<br />actions</a></div>
+	</div>
 
 	</div>
 
-	<br />
+	<br /><br />
 
 	<div style="width:360px;display:inline-block">
 		<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:350px;height:200px;border-radius:10px">
@@ -130,17 +148,20 @@ function HidePopups()
 			</p>
 		</div>
 
-		<p style="display:flex;justify-content:space-between">
-			<a class="CardMenu" href="#">New<br />eWallet</a><span style="font-size:30px">|</span>
-			<a class="CardMenu" href="JavaScript:EditMode(1)">Edit<br />Description</a><span style="font-size:30px">|</span>
-			<a class="CardMenu" href="#">Get Bank<br />Details</a>
-		</p>
-
-		<p style="display:flex;justify-content:space-between">
-			<a class="CardMenu" href="#">TopUp<br />Now</a><span style="font-size:30px">|</span>
-			<a class="CardMenu" href="#">Auto<br />TopUp</a><span style="font-size:30px">|</span>
-			<a class="CardMenu" href="#">Trans-<br />actions</a>
-		</p>
+	<div class="CardMenuBox">
+		<div class="CardMenuItem"><a href="#">New<br />eWallet</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a href="JavaScript:EditMode(1)">Edit<br />Description</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a href="#">Get Bank<br />Details</a></div>
+	</div>
+	<div class="CardMenuBox">
+		<div class="CardMenuItem"><a class="CardMenu" href="#">TopUp<br />Now</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Auto<br />TopUp</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Trans-<br />actions</a></div>
+	</div>
 
 	</div>
 

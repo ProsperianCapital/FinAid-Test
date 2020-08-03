@@ -69,12 +69,12 @@ namespace PCIWebFinAid
 		{
 			string x           = "Level" + levelCode.ToString();
 			level              = levelCode;
-			menuCode           = mList.GetColumn(x+"ItemCode");
+			menuCode           = mList.GetColumn("MenuItemCode");
 			menuName           = mList.GetColumn(x+"ItemDescription");
 			menuDescription    = mList.GetColumn(x+"ItemDescription");
 			url                = mList.GetColumn("URL");
-			imageName          = mList.GetColumn("ImageFileName");
-			displayImageOrText = mList.GetColumn("DisplayMenuText");
+			imageName          = mList.GetColumn("MenuLevel1ImageFileName");
+			displayImageOrText = mList.GetColumn("DisplayMenuLevel1Image");
 //	Testing
 //			url                = mList.GetColumn("URL") + "?UserCode={UserCode}";
 		}

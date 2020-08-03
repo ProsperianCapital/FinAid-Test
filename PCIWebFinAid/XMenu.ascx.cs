@@ -26,7 +26,7 @@ namespace PCIWebFinAid
 
 			using (MiscList mList = new MiscList())
 			{
-				int ret = mList.ExecQuery("exec sp_Get_BackOfficeMenuA @UserCode="        + Tools.DBString(userCode)
+				int ret = mList.ExecQuery("exec sp_Get_BackOfficeMenuB @UserCode="        + Tools.DBString(userCode)
 				                                                   + ",@ApplicationCode=" + Tools.DBString(applicationCode),0);
 				if ( ret != 0 )
 					return 20;
@@ -45,9 +45,9 @@ namespace PCIWebFinAid
 
 				while ( ! mList.EOF )
 				{
-					if ( mList.GetColumn("Level1ItemCode") != level1 )
+					if ( mList.GetColumn("Level1ItemDescription") != level1 )
 					{
-						level1 = mList.GetColumn("Level1ItemCode");
+						level1 = mList.GetColumn("Level1ItemDescription");
 						level2 = "X";
 						level3 = "X";
 						level4 = "X";
@@ -55,26 +55,26 @@ namespace PCIWebFinAid
 						menu1.Setup(1,mList);
 						menuList.Add(menu1);
 					}
-					if ( mList.GetColumn("Level2ItemCode") != level2 )
+					if ( mList.GetColumn("Level2ItemDescription") != level2 )
 					{
-						level2 = mList.GetColumn("Level2ItemCode");
+						level2 = mList.GetColumn("Level2ItemDescription");
 						level3 = "X";
 						level4 = "X";
 						menu2  = new MenuItem();
 						menu2.Setup(2,mList);
 						menu1.SubItems.Add(menu2);
 					}
-					if ( mList.GetColumn("Level3ItemCode") != level3 )
+					if ( mList.GetColumn("Level3ItemDescription") != level3 )
 					{
-						level3 = mList.GetColumn("Level3ItemCode");
+						level3 = mList.GetColumn("Level3ItemDescription");
 						level4 = "X";
 						menu3  = new MenuItem();
 						menu3.Setup(3,mList);
 						menu2.SubItems.Add(menu3);
 					}
-					if ( mList.GetColumn("Level4ItemCode") != level4 )
+					if ( mList.GetColumn("Level4ItemDescription") != level4 )
 					{
-						level4 = mList.GetColumn("Level4ItemCode");
+						level4 = mList.GetColumn("Level4ItemDescription");
 //						level5 = "X"; // We don't have 5 levels
 						menu4  = new MenuItem();
 						menu4.Setup(4,mList);
@@ -170,7 +170,6 @@ namespace PCIWebFinAid
 					//	Main menu
 						str.Append(URLTag(m2) + tRowEnd);
 					//	Mobile menu
-					//	mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:91%;margin-left:10%'><a href='#' style='display:block'>" + m2.Name + "</a></div>" + Environment.NewLine);
 						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:91%;margin-left:10%'>" + URLTag(m2,"display:block") + "</div>" + Environment.NewLine);
 					}
 					else
@@ -191,7 +190,6 @@ namespace PCIWebFinAid
 							//	Main menu
 								str.Append(" onmouseover='XSubMenu(null)'>&nbsp;&nbsp;->" + URLTag(m3) + tRowEnd);
 							//	Mobile menu
-							//	mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:81%;margin-left:20%'><a href='#' style='display:block'>" + m3.Name + "</a></div>" + Environment.NewLine);
 								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:81%;margin-left:20%'>" + URLTag(m3,"display:block") + "</div>" + Environment.NewLine);
 							}
 							else
