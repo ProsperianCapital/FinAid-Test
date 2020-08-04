@@ -107,7 +107,7 @@ function HidePopups()
 				<span class="Wallet3">USD</span></div>
 			<div>
 				Balance<br />
-				<span class="Wallet3">38,901.68</span></div>
+				<span class="Wallet3">71,463.12</span></div>
 			<div style="float:right;font-size:14px">
 				<img src="Images/PayPayYa.png" style="width:50px" /><br />
 				eWallet</div>
