@@ -98,7 +98,7 @@ function HidePopups()
 
 	<!-- Card 1 (start) -->
 	<div style="width:350px;display:inline-block">
-	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:188px;border-radius:10px">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:190px;border-radius:10px">
 		<div style="display:inline-flex;justify-content:space-between;width:100%">
 			<div>
 				<img src="Images/Flag-USA.png" title="US Dollars" class="CardFlag" /></div>
@@ -112,12 +112,11 @@ function HidePopups()
 				<img src="Images/PayPayYa.png" style="width:50px" /><br />
 				eWallet</div>
 		</div>
-		<br />
 		Account Number<br />
 		<span class="Wallet4">1234 5678 9012 3456</span>
 		<p>
 		Account Description<br />
-		<span class="Wallet2">My VISA USD eWallet</span><br />
+		<span class="Wallet2">My VISA USD eWallet</span>
 		<span style="float:right"><img style="width:60px" src="Images/LogoVisa.jpg" title="VISA" />&nbsp;</span>
 		</p><p>
 		Account Name<br />
@@ -147,7 +146,7 @@ function HidePopups()
 
 	<!-- Card 2 (start) -->
 	<div style="width:350px;display:inline-block">
-	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:188px;border-radius:10px">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:190px;border-radius:10px">
 		<div style="display:inline-flex;justify-content:space-between;width:100%">
 			<div>
 				<img src="Images/Flag-EUR.png" title="Euros" class="CardFlag" /></div>
@@ -161,7 +160,6 @@ function HidePopups()
 				<img src="Images/PayPayYa.png" style="width:50px" /><br />
 				eWallet</div>
 		</div>
-		<br />
 		Account Number<br />
 		<span class="Wallet4">6702 3853 1066 4287</span>
 		<p>
@@ -192,13 +190,13 @@ function HidePopups()
 	</div>
 	<!-- Card 2 (end) -->
 
+	<!--
 	<hr />
 
 	<p style="color:red;font-weight:bold">OTHER TESTING</p>
 
 	<hr />
 
-	<!-- Card 3 (start) -->
 	<div style="width:350px;display:inline-block">
 	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:188px;border-radius:10px">
 		<table style="width:100%">
@@ -245,7 +243,6 @@ function HidePopups()
 	</div>
 
 	</div>
-	<!-- Card 3 (end) -->
 
 	<br /><br />
 
@@ -294,6 +291,8 @@ function HidePopups()
 	</div>
 
 	</div>
+
+	-->
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
