@@ -98,7 +98,7 @@ function HidePopups()
 
 	<!-- Card 1 (start) -->
 	<div style="width:350px;display:inline-block">
-	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:190px;border-radius:10px">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:8px;width:338px;height:188px;border-radius:10px">
 		<div style="display:inline-flex;justify-content:space-between;width:100%">
 			<div>
 				<img src="Images/Flag-USA.png" title="US Dollars" class="CardFlag" /></div>
@@ -108,8 +108,8 @@ function HidePopups()
 			<div>
 				Balance<br />
 				<span class="Wallet3">71,463.12</span></div>
-			<div style="float:right;font-size:14px">
-				<img src="Images/PayPayYa.png" style="width:50px" /><br />
+			<div style="float:right;font-size:13px">
+				<img src="Images/PayPayYa.png" style="width:45px" /><br />
 				eWallet</div>
 		</div>
 		Account Number<br />
