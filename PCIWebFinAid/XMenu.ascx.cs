@@ -137,6 +137,7 @@ namespace PCIWebFinAid
 				{
 				//	Main menu
 				//	Top level menu with no sub-items, so just put in a direct link
+				//	str.Append(URLTag(m1,"","XSubMenu(null)")+Environment.NewLine+"<hr />"+Environment.NewLine);
 					str.Append(URLTag(m1)+Environment.NewLine+"<hr />"+Environment.NewLine);
 
 				//	Mobile menu item
@@ -154,7 +155,7 @@ namespace PCIWebFinAid
 					menuRef = " class='VText'>" + m1.Name;
 
 				str.Append("<table id='" + menuID + "' style='position:absolute;left:152px;visibility:hidden;display:none;border:1px #000000 solid' onmouseleave=\"JavaScript:XMenu('',0)\">" + Environment.NewLine);
-				str.Append("<tr><td class='VHead'>" + m1.Name + tRowEnd);
+				str.Append("<tr><td class='VHead'>" + m1.Name.Replace("<br />"," ") + tRowEnd);
 
 			//	Mobile sub-menu
 				mobi.Append("<div class='VMenu VMenuMobi'><a href=\"JavaScript:MobileMenu('h" + mobNo.ToString() + "')\" style='display:block;padding-top:4px;padding-bottom:4px'>" + m1.Name.Replace("<br />"," ") + dnArrow + "</a></div>" + Environment.NewLine);
@@ -251,7 +252,7 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
-		private string URLTag(MenuItem mx,string styling="")
+		private string URLTag(MenuItem mx,string styling="",string mouseOver="")
 		{
 			string T = "<a" + ( mx.Description.Length > 0 ? " title='" + mx.Description.Replace("'","&#39;") + "'" : "" );
 			if ( styling.Length > 0 )
@@ -262,7 +263,7 @@ namespace PCIWebFinAid
 			mx.URL = mx.URL.Replace("{usercode}",userCode);
 			mx.URL = mx.URL.Replace("{UserCode}",userCode);
 			mx.URL = mx.URL.Replace("{USERCODE}",userCode);
-			T      = T + " href='" + mx.URL + "'";
+			T      = T + " href='" + mx.URL + "'" + ( mouseOver.Length > 0 ? " onmouseover='" + mouseOver + "'" : "" );
 
 			if ( mx.URL.ToUpper().StartsWith("HTTP") || mx.URL.ToUpper().StartsWith("WWW") )
 				if ( mx.Code.Length > 0 )

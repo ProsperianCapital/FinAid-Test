@@ -79,6 +79,7 @@
 	height: 75px;
 	width: 130px;
 	align-items: center;
+	justify-content: center;
 }
 </style>
 <script type="text/javascript">
