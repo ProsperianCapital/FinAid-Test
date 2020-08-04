@@ -47,6 +47,8 @@ function HidePopups()
 		display: flex;
 		flex-wrap: nowrap;
 		justify-content: space-between;
+		margin-left: 8px;
+		margin-right: 0px;
 		margin-top: 2px;
 		margin-bottom: 4px;
 	}
@@ -54,7 +56,7 @@ function HidePopups()
 	{
 		color: black;
 		padding: 0px;
-		width: 32%;
+		width: 31%;
 		padding-top: 2px;
 		font-size: 13px;
 	}
@@ -62,7 +64,7 @@ function HidePopups()
 	{
 		color: black;
 		padding: 0px;
-		width: 2%;
+		width: 3%;
 		font-size: 16px;
 	}
 	.CardFlag
@@ -146,7 +148,7 @@ function HidePopups()
 
 	<!-- Card 2 (start) -->
 	<div style="width:350px;display:inline-block">
-	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:190px;border-radius:10px">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:8px;width:338px;height:188px;border-radius:10px">
 		<div style="display:inline-flex;justify-content:space-between;width:100%">
 			<div>
 				<img src="Images/Flag-EUR.png" title="Euros" class="CardFlag" /></div>
@@ -156,8 +158,8 @@ function HidePopups()
 			<div>
 				Balance<br />
 				<span class="Wallet3">1,433.29</span></div>
-			<div style="float:right;font-size:14px">
-				<img src="Images/PayPayYa.png" style="width:50px" /><br />
+			<div style="float:right;font-size:13px">
+				<img src="Images/PayPayYa.png" style="width:45px" /><br />
 				eWallet</div>
 		</div>
 		Account Number<br />
