@@ -297,31 +297,6 @@ input[type=text]:focus, input[type=password]:focus, select:focus, textarea:focus
 	background-color: lightgreen;
 }
 
-.Wallet1
-{
-	font-family: atlanta;
-	font-size: 9px;
-	letter-spacing: 0.1em;
-}
-.Wallet2
-{
-	font-family: atlanta;
-	font-size: 16px;
-	letter-spacing: 0.1em;
-}
-.Wallet3
-{
-	font-family: atlanta;
-	font-size: 20px;
-	letter-spacing: 0.1em;
-}
-.Wallet4
-{
-	font-family: atlanta;
-	font-size: 24px;
-	letter-spacing: 0.1em;
-}
-
 tr.odd, .tRow {
 	background-color: #E1E1E1; }
 tr.tRow td {
