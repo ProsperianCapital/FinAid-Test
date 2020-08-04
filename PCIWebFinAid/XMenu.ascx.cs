@@ -141,7 +141,7 @@ namespace PCIWebFinAid
 					str.Append(URLTag(m1)+Environment.NewLine+"<hr />"+Environment.NewLine);
 
 				//	Mobile menu item
-					mobi.Append("<div class='VMenu VMenuMobi'>" + URLTag(m1,"display:block;padding-top:4px;padding-bottom:4px") + "</div>" + Environment.NewLine);
+					mobi.Append("<div class='VMenu VMenuMobi'>" + URLTag(m1,1) + "</div>" + Environment.NewLine);
 
 					continue;
 				}
@@ -171,7 +171,7 @@ namespace PCIWebFinAid
 					//	Main menu
 						str.Append(URLTag(m2) + tRowEnd);
 					//	Mobile menu item
-						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:93%;margin-left:8%'>" + URLTag(m2,"display:block;padding-top:4px;padding-bottom:4px") + "</div>" + Environment.NewLine);
+						mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:93%;margin-left:8%'>" + URLTag(m2,1) + "</div>" + Environment.NewLine);
 					}
 					else
 					{
@@ -191,7 +191,7 @@ namespace PCIWebFinAid
 							//	Main menu
 								str.Append(" onmouseover='XSubMenu(null)'>&nbsp;&nbsp;->" + URLTag(m3) + tRowEnd);
 							//	Mobile menu item
-								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:85%;margin-left:16%'>" + URLTag(m3,"display:block;padding-top:4px;padding-bottom:4px") + "</div>" + Environment.NewLine);
+								mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:85%;margin-left:16%'>" + URLTag(m3,1) + "</div>" + Environment.NewLine);
 							}
 							else
 							{
@@ -210,7 +210,7 @@ namespace PCIWebFinAid
 								//	Main menu
 									sub.Append("<tr><td class='VMenu'>" + URLTag(m4) + tRowEnd);
 								//	Mobile menu
-									mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:77%;margin-left:24%'>" + URLTag(m4,"display:block;padding-top:4px;padding-bottom:4px") + "</div>" + Environment.NewLine);
+									mobi.Append("<div class='VMenu VSubMenu VMenuMobi' style='width:77%;margin-left:24%'>" + URLTag(m4,1) + "</div>" + Environment.NewLine);
 								}
 								sub.Append("</table>");
 								mobi.Append("</div>" + Environment.NewLine);
@@ -252,18 +252,18 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
-		private string URLTag(MenuItem mx,string styling="",string mouseOver="")
+		private string URLTag(MenuItem mx,byte styleMode=0,string cssExtra="")
 		{
 			string T = "<a" + ( mx.Description.Length > 0 ? " title='" + mx.Description.Replace("'","&#39;") + "'" : "" );
-			if ( styling.Length > 0 )
-				T = T + " style='" + styling + "'";
+			if ( styleMode == 1 )
+				T = T + " style='display:block;padding-top:4px;padding-bottom:4px'";
 			if ( string.IsNullOrWhiteSpace(mx.URL) )
 				return T + " href=\"JavaScript:alert('You do not have access to this functionality')\"> " + mx.Name + " </a>";
 
 			mx.URL = mx.URL.Replace("{usercode}",userCode);
 			mx.URL = mx.URL.Replace("{UserCode}",userCode);
 			mx.URL = mx.URL.Replace("{USERCODE}",userCode);
-			T      = T + " href='" + mx.URL + "'" + ( mouseOver.Length > 0 ? " onmouseover='" + mouseOver + "'" : "" );
+			T      = T + " href='" + mx.URL + "'" + ( cssExtra.Length > 0 ? " " + cssExtra : "" );
 
 			if ( mx.URL.ToUpper().StartsWith("HTTP") || mx.URL.ToUpper().StartsWith("WWW") )
 				if ( mx.Code.Length > 0 )
@@ -277,7 +277,7 @@ namespace PCIWebFinAid
 				return T + "> " + mx.Name + " </a>";
 			else if ( mx.DisplayImageOrText == "0" )
 				return T + "><img src='Images/" + mx.ImageName + "' title='" + mx.Description + "' style='height:75px;width:130px' /></a>";
-			else if ( styling.Length == 0 )
+			else if ( styleMode == 0 )
 				return T + " class='VText'> " + mx.Name + " </a>";
 			else
 				return T + "> " + mx.Name + " </a>";

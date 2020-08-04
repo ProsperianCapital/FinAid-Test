@@ -54,7 +54,7 @@ function HidePopups()
 	{
 		color: black;
 		padding: 0px;
-		width: 31%;
+		width: 32%;
 		padding-top: 2px;
 		font-size: 13px;
 	}
@@ -62,7 +62,7 @@ function HidePopups()
 	{
 		color: black;
 		padding: 0px;
-		width: 4%;
+		width: 2%;
 		font-size: 16px;
 	}
 	.CardFlag
@@ -70,14 +70,142 @@ function HidePopups()
 		height: 40px;
 		width: 60px;
 	}
+	.Wallet1
+	{
+		font-family: atlanta;
+		font-size: 9px;
+		letter-spacing: 0.1em;
+	}
+	.Wallet2
+	{
+		font-family: atlanta;
+		font-size: 16px;
+		letter-spacing: 0.1em;
+	}
+	.Wallet3
+	{
+		font-family: atlanta;
+		font-size: 20px;
+		letter-spacing: 0.1em;
+	}
+	.Wallet4
+	{
+		font-family: atlanta;
+		font-size: 24px;
+		letter-spacing: 0.1em;
+	}
 	</style>
 
+	<!-- Card 1 (start) -->
 	<div style="width:350px;display:inline-block">
-	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:10px;width:348px;height:200px;border-radius:10px">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:188px;border-radius:10px">
+		<div style="display:inline-flex;justify-content:space-between;width:100%">
+			<div>
+				<img src="Images/Flag-USA.png" title="US Dollars" class="CardFlag" /></div>
+			<div>
+				<br />
+				<span class="Wallet3">USD</span></div>
+			<div>
+				Balance<br />
+				<span class="Wallet3">38,901.68</span></div>
+			<div style="float:right;font-size:14px">
+				<img src="Images/PayPayYa.png" style="width:50px" /><br />
+				eWallet</div>
+		</div>
+		<br />
+		Account Number<br />
+		<span class="Wallet4">1234 5678 9012 3456</span>
+		<p>
+		Account Description<br />
+		<span class="Wallet2">My VISA USD eWallet</span><br />
+		<span style="float:right"><img style="width:60px" src="Images/LogoVisa.jpg" title="VISA" />&nbsp;</span>
+		</p><p>
+		Account Name<br />
+		<span class="Wallet2">Samual Briggs</span>
+		</p>
+	</div>
+
+	<div class="CardMenuBox">
+		<div class="CardMenuItem"><a href="#">New eWallet</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a href="JavaScript:EditMode(1)">Edit Description</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a href="#">Get Bank Details</a></div>
+	</div>
+	<div class="CardMenuBox">
+		<div class="CardMenuItem"><a class="CardMenu" href="#">TopUp Now</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Auto TopUp</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Transactions</a></div>
+	</div>
+
+	</div>
+	<!-- Card 1 (end) -->
+
+	<br /><br />
+
+	<!-- Card 2 (start) -->
+	<div style="width:350px;display:inline-block">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:188px;border-radius:10px">
+		<div style="display:inline-flex;justify-content:space-between;width:100%">
+			<div>
+				<img src="Images/Flag-EUR.png" title="Euros" class="CardFlag" /></div>
+			<div>
+				<br />
+				<span class="Wallet3">EUR</span></div>
+			<div>
+				Balance<br />
+				<span class="Wallet3">1,433.29</span></div>
+			<div style="float:right;font-size:14px">
+				<img src="Images/PayPayYa.png" style="width:50px" /><br />
+				eWallet</div>
+		</div>
+		<br />
+		Account Number<br />
+		<span class="Wallet4">6702 3853 1066 4287</span>
+		<p>
+		Account Description<br />
+		<span class="Wallet2">My PayPayYa EUR eWallet</span>
+		<span style="float:right"><img style="width:50px" src="Images/LogoPlaNet.png" title="PayPayYa" />&nbsp;</span>
+		</p><p>
+		Account Name<br />
+		<span class="Wallet2">Samual Briggs</span>
+		</p>
+	</div>
+
+	<div class="CardMenuBox">
+		<div class="CardMenuItem"><a href="#">New eWallet</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a href="JavaScript:EditMode(1)">Edit Description</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a href="#">Get Bank Details</a></div>
+	</div>
+	<div class="CardMenuBox">
+		<div class="CardMenuItem"><a class="CardMenu" href="#">TopUp Now</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Auto TopUp</a></div>
+		<div class="CardMenuSep">|</div>
+		<div class="CardMenuItem"><a class="CardMenu" href="#">Transactions</a></div>
+	</div>
+
+	</div>
+	<!-- Card 2 (end) -->
+
+	<hr />
+
+	<p style="color:red;font-weight:bold">OTHER TESTING</p>
+
+	<hr />
+
+	<!-- Card 3 (start) -->
+	<div style="width:350px;display:inline-block">
+	<div class="Wallet1" style="border:1px solid #000000;background-color:lightgrey;padding:5px;width:338px;height:188px;border-radius:10px">
 		<table style="width:100%">
 		<tr>
 		<td>
-			<img src="Images/Flag-USA.png" title="US Dollars" class="CardFlag" /></td>
+			<img src="Images/Flag-USA.png" title="US Dollars" class="CardFlag" />
+		</td>
 		<td>
 			<br />
 			<span class="Wallet3">USD</span></td>
@@ -117,6 +245,7 @@ function HidePopups()
 	</div>
 
 	</div>
+	<!-- Card 3 (end) -->
 
 	<br /><br />
 
