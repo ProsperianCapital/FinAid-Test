@@ -17,15 +17,17 @@ namespace PCIWebFinAid
 		private   string contractCode;
 		private   string contractPIN;
 		private   string sql;
+		private   int    tokenExMode;
 		private   int    errNo;
 		private   int    pageNo;
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-//	TokenEx card number validation version. 3 configuration variables are needed in Web.Config.
+//	TokenEx card number validation version. 4 configuration variables are needed in Web.Config.
 //	The ones below are the test values:
 
 //	<appSettings>
+//		<add key="TokenEx/Mode"   value="1" />  /* Any value greater than zero will turn it ON */
 //		<add key="TokenEx/Id"     value="4311038889209736" />
 //		<add key="TokenEx/Key"    value="njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I" />
 //		<add key="TokenEx/Script" value="https://test-htp.tokenex.com/iframe/iframe-v3.min.js" />
@@ -35,6 +37,9 @@ namespace PCIWebFinAid
 			SetPostBackURL();
 			SetWarning("");
 
+//			lbl3d.Text  = "";
+			tokenExMode = Tools.StringToInt(Tools.ConfigValue("TokenEx/Mode"));
+
 			if ( Page.IsPostBack )
 			{
 				productCode         = WebTools.ViewStateString(ViewState,"ProductCode");
@@ -43,8 +48,8 @@ namespace PCIWebFinAid
 				contractCode        = WebTools.ViewStateString(ViewState,"ContractCode");
 				contractPIN         = WebTools.ViewStateString(ViewState,"ContractPIN");
 				pageNo              = Tools.StringToInt(hdnPageNo.Value);
-				if ( pageNo == 5 )
-					btnNext_Click(null,null); // Isn't called because of TokenEx
+//				if ( pageNo == 5 && tokenExMode > 0 )
+//					btnNext_Click(null,null); // Isn't called because of TokenEx
 			}
 			else
 			{
@@ -82,12 +87,18 @@ namespace PCIWebFinAid
 				ViewState["LanguageCode"]        = languageCode;
 				ViewState["LanguageDialectCode"] = languageDialectCode;
 
-				hdnVer.Value       = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
-				lblVer.Text        = "Version " + SystemDetails.AppVersion;
-				lblVer.Visible     = ! Tools.SystemIsLive();
-				btnBack1.Visible   = ! Tools.SystemIsLive();
-				lblReg.Visible     = true;
-				lblRegConf.Visible = false;
+				hdnVer.Value        = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
+				lblVer.Text         = "Version " + SystemDetails.AppVersion;
+				lblVer.Visible      = ! Tools.SystemIsLive();
+				btnBack1.Visible    = ! Tools.SystemIsLive();
+				lblReg.Visible      = true;
+				lblRegConf.Visible  = false;
+				pnlTokenYes.Visible = ( tokenExMode > 0 );
+				pnlTokenNo.Visible  = ( tokenExMode < 1 );
+				if ( tokenExMode    > 0 )
+					txtCCNumber.Text = "";
+				else
+					txToken.Value    = "";
 
 				LoadGoogleAnalytics();
 				LoadChat();
@@ -106,12 +117,11 @@ namespace PCIWebFinAid
 //				if ( lblRegConf.Text.Length < 1 ) lblRegConf.Text = "Registration Confirmation";
 
 //	Testing 3
-//				if ( WebTools.RequestValueInt(Request,"PageNoX") > 0 )
-//				{
-//					hdnPageNo.Value = WebTools.RequestValueString(Request,"PageNoX");
-//					btnNext_Click(null,null);
-//				}
-
+				if ( WebTools.RequestValueInt(Request,"PageNoX") > 0 )
+				{
+					hdnPageNo.Value = WebTools.RequestValueString(Request,"PageNoX");
+					btnNext_Click(null,null);
+				}
 			}
 		}
 
@@ -680,17 +690,20 @@ namespace PCIWebFinAid
 			{ }
 			else if ( pageNo == 5 )
 			{
-//				txtCCNumber.Text = txtCCNumber.Text.Trim();
-//				if ( txtCCNumber.Visible && txtCCNumber.Text.Length < 12 )
-//					err = err + "Invalid credit/debit card number<br />";
+				if ( tokenExMode < 1 )
+				{
+					txtCCNumber.Text = txtCCNumber.Text.Trim();
+					if ( txtCCNumber.Visible && txtCCNumber.Text.Length < 12 )
+						err = err + "Invalid credit/debit card number<br />";
+				}
+				else if ( txToken.Value.Trim().Length < 12 )
+					err = err + "Invalid credit/debit card number and/or CVV<br />";
 				txtCCName.Text = txtCCName.Text.Trim();
 				if ( txtCCName.Visible && txtCCName.Text.Length < 3 )
 					err = err + "Invalid credit/debit card name<br />";
 				txtCCCVV.Text = txtCCCVV.Text.Trim();
 				if ( txtCCCVV.Visible && txtCCCVV.Text.Length < 3 )
 					err = err + "Invalid credit/debit card CVV code<br />";
-				if ( txToken.Value.Trim().Length < 10 )
-					err = err + "Invalid credit/debit card number and/or CVV<br />";
 				try
 				{
 					DateTime dt = new DateTime(WebTools.ListValue(lstCCYear),WebTools.ListValue(lstCCMonth),1,0,0,0);
@@ -708,6 +721,38 @@ namespace PCIWebFinAid
 			return err.Length;
 		}
 
+		protected void btn3d_Click(Object sender, EventArgs e)
+		{
+			using (Payment payment = new Payment())
+			{
+				payment.BureauCode         = Tools.BureauCode(Constants.PaymentProvider.Peach);
+				payment.CardNumber         = txtCCNumber.Text;
+				payment.CardName           = txtCCName.Text;
+				payment.CardExpiryMM       = WebTools.ListValue(lstCCMonth).ToString();
+				payment.CardExpiryYYYY     = WebTools.ListValue(lstCCYear).ToString();
+				payment.CardCVV            = txtCCCVV.Text;
+				payment.CurrencyCode       = "ZAR";
+				payment.PaymentAmount      = 017; // 17 cents
+				payment.MerchantReference  = contractCode;
+				payment.PaymentDescription = "Prosperian Initial Payment";
+
+				using (TransactionPeach trans = new TransactionPeach())
+					if ( trans.ThreeDSecurePayment(payment) == 0 )
+						try
+						{
+						//	Ver 1
+						//	lbl3d.Text = trans.ThreeDSecureHTML;
+						//	Ver 2
+						//	This always throws a "thread aborted" exception ... ignore it
+							System.Web.HttpContext.Current.Response.Clear();
+							System.Web.HttpContext.Current.Response.Write(trans.ThreeDSecureHTML);
+							System.Web.HttpContext.Current.Response.End();
+						}
+						catch
+						{ }
+			}
+		}
+
 		protected void btnNext_Click(Object sender, EventArgs e)
 		{
 			int pdfErr = 0;
@@ -720,13 +765,13 @@ namespace PCIWebFinAid
 			}
 			if ( pageNo > 180 ) // Testing
 			{
-				contractCode      = "20191101/0014";
+				contractCode      = "20200831/0014";
 				txtSurname.Text   = "Smith";
 				txtFirstName.Text = "Peter";
 				txtEMail.Text     = "PaulKilfoil@gmail.com";
 				txtIncome.Text    = "125000";
-				txToken.Value     = "4901628031770019";
-//				txtCCNumber.Text  = "4901888877776666";
+				txToken.Value     = "4111118034721111";
+				txtCCNumber.Text  = "4111111111111111";
 				txtCCCVV.Text     = "789";
 			}
 
@@ -765,17 +810,11 @@ namespace PCIWebFinAid
 					             + ",@TsCsRead = '1'"
 					             + ",@PaymentMethodCode =" + Tools.DBString(WebTools.ListValue(lstPayment,""));
 					else if ( pageNo == 5 )
-						sql = sql + ",@CardNumber = ''"
+						sql = sql + ",@CardNumber ="      + Tools.DBString(txtCCNumber.Text,47) // Will be blank if TokenEx is ON
 					             + ",@CardCVVCode ="     + Tools.DBString(txtCCCVV.Text,47)
 					             + ",@AccountHolder ="   + Tools.DBString(txtCCName.Text,47)
 					             + ",@CardExpiryMonth =" + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
 					             + ",@CardExpiryYear ="  + Tools.DBString(WebTools.ListValue(lstCCYear).ToString());
-//					else if ( pageNo == 5 )
-//						sql = sql + ",@CardNumber ="      + Tools.DBString(txtCCNumber.Text,47)
-//					             + ",@AccountHolder ="   + Tools.DBString(txtCCName.Text,47)
-//					             + ",@CardExpiryMonth =" + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
-//					             + ",@CardExpiryYear ="  + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
-//					             + ",@CardCVVCode ="     + Tools.DBString(txtCCCVV.Text,47);
 
 					errNo = miscList.ExecQuery(sql,0);
 					SetErrorDetail("btnNext_Click/30020",errNo,"Unable to update information (pageNo="+pageNo.ToString()+")",sql);
@@ -933,8 +972,7 @@ namespace PCIWebFinAid
 								SetErrorDetail("btnNext_Click/30080",30080,"Unable to retrieve product policy text",sql);
 
 							lblp6CCType.Text = "";
-//							sql              = txtCCNumber.Text.Trim();
-							sql              = txToken.Value.Trim(); // Tokenized as SIXxxxxxxFOUR
+							sql              = ( tokenExMode > 0 ? txToken.Value : txtCCNumber.Text ).Trim(); // Tokenized as SIXxxxxxxFOUR
 							if ( sql.Length > 6 )
 								sql = sql.Substring(0,6);
 							sql = "exec WP_Get_CardAssociation @BIN=" + Tools.DBString(sql);
@@ -979,12 +1017,14 @@ namespace PCIWebFinAid
 							else
 								lbl100209.Text   = lbl100209.Text.Replace("[Initials]","");
 							lblp6CCName.Text    = txtCCName.Text;
-//							lblp6CCNumber.Text  = Tools.MaskCardNumber(txtCCNumber.Text);
-							lblp6CCNumber.Text  = Tools.MaskCardNumber(txToken.Value);
 							lblp6CCExpiry.Text  = lstCCYear.SelectedValue + "/" + lstCCMonth.SelectedValue;
 							lblp6Date.Text      = Tools.DateToString(System.DateTime.Now,2,1);
 							lblp6IP.Text        = WebTools.ClientIPAddress(Request,1);
 							lblp6Browser.Text   = WebTools.ClientBrowser(Request,hdnBrowser.Value);
+							if ( tokenExMode > 0 )
+								lblp6CCNumber.Text = Tools.MaskCardNumber(txToken.Value);
+							else
+								lblp6CCNumber.Text = Tools.MaskCardNumber(txtCCNumber.Text);
 
 							foreach (Control ctlOuter in Page.Controls)
 								if ( ctlOuter.GetType() == typeof(Literal) && mailText.Contains("#"+ctlOuter.ID+"#") )

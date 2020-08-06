@@ -751,6 +751,33 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal lblCCNumberLabel;
         
         /// <summary>
+        /// pnlTokenNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlTokenNo;
+        
+        /// <summary>
+        /// txtCCNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCCNumber;
+        
+        /// <summary>
+        /// pnlTokenYes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlTokenYes;
+        
+        /// <summary>
         /// hdnCCNumberHelp control.
         /// </summary>
         /// <remarks>
@@ -974,6 +1001,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal lbl100209;
+        
+        /// <summary>
+        /// btn3d control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn3d;
         
         /// <summary>
         /// lbl100372 control.

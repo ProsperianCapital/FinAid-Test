@@ -11,7 +11,6 @@
 	<link rel="shortcut icon" href="Images/favicon.ico" />
 </head>
 <body>
-<form id="frmRegister" runat="server">
 
 <script type="text/javascript">
 var firstPage = 1;
@@ -166,15 +165,16 @@ function ValidatePage(ctl,seq,misc)
 
 	//	Page 5
 
-	//	if ( ( pageNo == 5 && ctl == 0 ) || ctl == 100187 )
-	//	{
-	//		if ( GetEltValue('hdn100187') == 'Y' ) // Validate card number using Luhn check digit
-	//			p = Validate('txtCCNumber','lblInfo5',9,GetEltValue('hdnCCNumberError'));
-	//		else
-	//			p = Validate('txtCCNumber','lblInfo5',6,GetEltValue('hdnCCNumberError'),8,14);
-	//		err  = err + p;
-	//		ShowTick(p,'CCNumber',seq);
-	//	}
+		if ( ( pageNo == 5 && ctl == 0 ) || ctl == 100187 )
+			if ( GetElt('txtCCNumber') != null )
+			{
+				if ( GetEltValue('hdn100187') == 'Y' ) // Validate card number using Luhn check digit
+					p = Validate('txtCCNumber','lblInfo5',9,GetEltValue('hdnCCNumberError'));
+				else
+					p = Validate('txtCCNumber','lblInfo5',6,GetEltValue('hdnCCNumberError'),8,14);
+				err  = err + p;
+				ShowTick(p,'CCNumber',seq);
+			}
 
 		if ( ( pageNo == 5 && ctl == 0 ) || ctl == 100186 )
 		{
@@ -246,6 +246,8 @@ function OptSelect(p)
 //	SetEltValue('hdnOption',h);
 }
 </script>
+
+<form id="frmRegister" runat="server">
 
 <asp:HiddenField runat="server" id="hdnPageNo" value="1" />
 <asp:HiddenField runat="server" id="hdnBrowser" />
@@ -446,9 +448,14 @@ function OptSelect(p)
 		<td style="white-space:nowrap">
 			<div class="DataLabel">
 			<asp:Literal runat="server" ID="lblCCNumberLabel"></asp:Literal>
-			<a href="#" onmouseover="JavaScript:Help(1,this,'CCNumber')" onmouseout="JavaScript:Help(0)" style="float:right">?</a>
-			<img id="imgCCNumber" /></div>
-			<span id="txIFrameCC"></span>
+			<a href="#" onmouseover="JavaScript:Help(1,this,'CCNumber')" onmouseout="JavaScript:Help(0)" style="float:right">?</a></div>
+			<asp:PlaceHolder runat="server" ID="pnlTokenNo" Visible="false">
+				<asp:TextBox runat="server" CssClass="DataInput" ID="txtCCNumber" MaxLength="20" onfocus="JavaScript:ValidatePage(100187,1)" onblur="JavaScript:ValidatePage(100187,2)"></asp:TextBox>
+			</asp:PlaceHolder>
+			<img id="imgCCNumber" />
+			<asp:PlaceHolder runat="server" ID="pnlTokenYes" Visible="false">
+				<span id="txIFrameCC"></span>
+			</asp:PlaceHolder>
 			<asp:HiddenField runat="server" ID="hdnCCNumberHelp" />
 			<asp:HiddenField runat="server" ID="hdnCCNumberError" />
 			<asp:HiddenField runat="server" ID="hdnCCNumberGuide" /></td>
@@ -520,6 +527,16 @@ function OptSelect(p)
 </p><p>
 <asp:Literal runat="server" ID="lbl100209"></asp:Literal>
 </p>
+
+<!-- TESTING -->
+<hr />
+<p style="color:red;font-weight:bold">
+3d Secure Testing ... please click this button -->
+<asp:Button runat="server" ID="btn3d" Text="3d Secure" OnClick="btn3d_Click" />
+</p>
+<hr />
+<!-- TESTING -->
+
 <table class="Confirmation" style="width:99%">
 	<tr>
 		<td colspan="2" class="Header5"><asp:Literal runat="server" ID="lbl100372"></asp:Literal></td></tr>
@@ -643,7 +660,7 @@ Disabled
 
 <asp:Button runat="server" ID="btnBack1" UseSubmitBehavior="false" OnClientClick="JavaScript:if (!NextPage(-1,this)) return false;" Text="BACK" />
 <asp:Button runat="server" ID="btnNext"  UseSubmitBehavior="false" OnClientClick="JavaScript:if (!NextPage( 1,this)) return false;" OnClick="btnNext_Click" />
-<asp:Button runat="server" ID="btnAgree" UseSubmitBehavior="false" OnClientClick="JavaScript:if ( NextPage( 1,this)) TokenFinish(); return false;" /> <!-- OnClick="btnNext_Click" -->
+<asp:Button runat="server" ID="btnAgree" UseSubmitBehavior="false" OnClientClick="JavaScript:if (!NextPage( 1,this)) return false;if (!TokenFinish()) return false;" OnClick="btnNext_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;
 <asp:Button runat="server" ID="btnBack2" UseSubmitBehavior="false" OnClientClick="JavaScript:if (!NextPage(-1,this)) return false" Width="200px" />
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -697,6 +714,9 @@ var txCC;
 
 function TokenFinish()
 {
+	if ( GetElt('txIFrameCC') == null )
+		return true;
+
 	var err = 'Invalid card number and/or CVV';
 
 	try

@@ -74,9 +74,8 @@
     <Content Include="pgTransactionLookUp.aspx" />
     <Content Include="pgVieweWallets.aspx" />
     <Content Include="Register.aspx" />
-    <Content Include="RegisterEx1.aspx" />
-    <Content Include="RegisterEx2.aspx" />
     <Content Include="RegisterEx3.aspx" />
+    <Content Include="RegisterThreeD.aspx" />
     <Content Include="TransLookup.aspx" />
     <Content Include="ContractLookup.aspx" />
     <Content Include="LAdmin.aspx" />
@@ -316,26 +315,19 @@
     <Compile Include="Footer.ascx.designer.cs">
       <DependentUpon>Footer.ascx</DependentUpon>
     </Compile>
-    <Compile Include="RegisterEx1.aspx.cs">
-      <DependentUpon>RegisterEx1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="RegisterEx1.aspx.designer.cs">
-      <DependentUpon>RegisterEx1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="RegisterEx2.aspx.cs">
-      <DependentUpon>RegisterEx2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="RegisterEx2.aspx.designer.cs">
-      <DependentUpon>RegisterEx2.aspx</DependentUpon>
-    </Compile>
     <Compile Include="RegisterEx3.aspx.cs">
       <DependentUpon>RegisterEx3.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="RegisterEx3.aspx.designer.cs">
       <DependentUpon>RegisterEx3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterThreeD.aspx.cs">
+      <DependentUpon>RegisterThreeD.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterThreeD.aspx.designer.cs">
+      <DependentUpon>RegisterThreeD.aspx</DependentUpon>
     </Compile>
     <Compile Include="SessionGeneral.cs" />
     <Compile Include="StdDisposable.cs">
