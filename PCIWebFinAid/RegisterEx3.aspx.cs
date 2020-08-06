@@ -837,22 +837,25 @@ namespace PCIWebFinAid
 						else if ( pageNo == 5 )
 						{
 //	TokenEx Start
+							if ( tokenExMode > 0 )
+							{
 //	[TESTING]
 //	iFrame API key = njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I
 //	Mobile API key = bDjxBnxQFfv7mrFtPJA24sGGbNBYvUF7JMnlNjwq
 //	TokenEx Id     = 4311038889209736
 //	[TESTING]
-							string apiKey       = Tools.ConfigValue("TokenEx/Key");
-							txID.Value          = Tools.ConfigValue("TokenEx/Id");
-							txOrigin.Value      = Request.Url.GetLeftPart(UriPartial.Authority);
-							txTimestamp.Value   = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
-//							txTokenScheme.Value = "sixTOKENfour";
-							string data         = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
-							txHMAC.Value        = Tools.GenerateHMAC(data,apiKey);
-							lblTx.Text          = WebTools.JavaScriptSource("TokenSetup()");
+								string apiKey       = Tools.ConfigValue("TokenEx/Key");
+								txID.Value          = Tools.ConfigValue("TokenEx/Id");
+								txOrigin.Value      = Request.Url.GetLeftPart(UriPartial.Authority);
+								txTimestamp.Value   = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
+//								txTokenScheme.Value = "sixTOKENfour";
+								string data         = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
+								txHMAC.Value        = Tools.GenerateHMAC(data,apiKey);
+								lblTx.Text          = WebTools.JavaScriptSource("TokenSetup()");
 //	[TESTING]
-//							txConcatenatedString.Value = data;
+//								txConcatenatedString.Value = data;
 //	[TESTING]
+							}
 //	TokenEx End
 							string productOption  = WebTools.ListValue(lstOptions,"X");
 							string payMethod      = WebTools.ListValue(lstPayment,"X");
@@ -918,20 +921,22 @@ namespace PCIWebFinAid
 						//	errNo = miscList.ExecQuery(sql,0,"",false,true);
 						//	SetErrorDetail("btnNext_Click/30050",(errNo==0?0:30050),"Unable to update information (WP_ContractApplicationC)",sql);
 
-							sql   = "exec sp_TokenEx_Ins_CardToken"
-							      +     " @ContractCode ="       + Tools.DBString(contractCode)
-							      +     ",@MaskedCardNumber ="   + Tools.DBString(Tools.MaskCardNumber(txToken.Value))
-							      +     ",@PaymentBureauCode ="  + Tools.DBString(Tools.BureauCode(Constants.PaymentProvider.TokenEx))
-							      +     ",@PaymentBureauToken =" + Tools.DBString(txToken.Value)
-							      +     ",@CardCVV ="            + Tools.DBString(txtCCCVV.Text)
-							      +     ",@CardExpieryMonth ="   + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
-							      +     ",@CardExpieryYear ="    + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
-							      +     ",@ReferenceNumber ="    + Tools.DBString(txReference.Value,47)
-							      +     ",@TransactionStatusCode = ''"
-							      +     ",@CardTokenisationStatusCode = '007'";
-							errNo = miscList.ExecQuery(sql,0,"",false,true);
-							SetErrorDetail("btnNext_Click/30053",(errNo==0?0:30053),"Unable to update card token (sp_TokenEx_Ins_CardToken)",sql);
-
+							if ( tokenExMode > 0 )
+							{
+								sql   = "exec sp_TokenEx_Ins_CardToken"
+								      +     " @ContractCode ="       + Tools.DBString(contractCode)
+								      +     ",@MaskedCardNumber ="   + Tools.DBString(Tools.MaskCardNumber(txToken.Value))
+								      +     ",@PaymentBureauCode ="  + Tools.DBString(Tools.BureauCode(Constants.PaymentProvider.TokenEx))
+								      +     ",@PaymentBureauToken =" + Tools.DBString(txToken.Value)
+								      +     ",@CardCVV ="            + Tools.DBString(txtCCCVV.Text)
+								      +     ",@CardExpieryMonth ="   + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
+								      +     ",@CardExpieryYear ="    + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
+								      +     ",@ReferenceNumber ="    + Tools.DBString(txReference.Value,47)
+								      +     ",@TransactionStatusCode = ''"
+								      +     ",@CardTokenisationStatusCode = '007'";
+								errNo = miscList.ExecQuery(sql,0,"",false,true);
+								SetErrorDetail("btnNext_Click/30053",(errNo==0?0:30053),"Unable to update card token (sp_TokenEx_Ins_CardToken)",sql);
+							}
 							lbl100325.Text = "";
 							sql = "exec sp_WP_Get_WebsiteProductOptionA"
 							    +     " @ProductCode ="         + Tools.DBString(productCode)
