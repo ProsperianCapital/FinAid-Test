@@ -7,18 +7,61 @@ namespace PCIBusiness
 {
 	public class TransactionPeach : Transaction
 	{
+		string d3Form;
+		string currency;
+		string amount;
+		string cardNumber;
+		string cardHolder;
+
+		public string   Currency
+		{
+			get { return Tools.NullToString(currency); }
+		}
+		public string   Amount
+		{
+			get { return Tools.NullToString(amount); }
+		}
+		public string   CardNumber
+		{
+			get { return Tools.NullToString(cardNumber); }
+		}
+		public string   CardHolder
+		{
+			get { return Tools.NullToString(cardHolder); }
+		}
+
+		public string   ThreeDSecureHTML
+		{
+			get { return Tools.NullToString(d3Form); }
+		}
+
 		public  bool   Successful
 		{
 			get
 			{
 			//	Always in 999.999.999 format
-				resultCode = Tools.NullToString(resultCode).ToUpper();
-				if ( ! resultCode.StartsWith("000") )
-					return false;
-				if ( ! resultCode.StartsWith("000.400") )
+				string okList = "|000.000.000|"
+				              +  "000.300.000|"
+				              +  "000.400.000|"
+				              +  "000.400.010|"
+				              +  "000.400.020|"
+				              +  "000.400.040|"
+				              +  "000.400.060|"
+				              +  "000.400.090|"
+				              +  "000.100.110|"
+				              +  "000.100.111|"
+				              +  "000.100.112|";
+				resultCode    = Tools.NullToString(resultCode).ToUpper();
+				if ( resultCode.Length == 11 && okList.Contains("|"+resultCode+"|") )
 					return true;
-				if ( resultCode.CompareTo("000.400.101") < 0 ) // 000.400.000 - 000.400.100 is OK, 101+ is an error
-					return true;
+
+//				if ( ! resultCode.StartsWith("000") )
+//					return false;
+//				if ( ! resultCode.StartsWith("000.400") )
+//					return true;
+//				if ( resultCode.CompareTo("000.400.101") < 0 ) // 000.400.000 - 000.400.100 is OK, 101+ is an error
+//					return true;
+
 				return false;
 			}
 		}
@@ -40,6 +83,8 @@ namespace PCIBusiness
 					url = payment.ProviderURL;
 				if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
 					url = url + "/" + payment.CardToken + "/payments";
+				else if ( transactionType == (byte)Constants.TransactionType.ThreeDSecurePayment )
+					url = "https://test.oppwa.com/v1/threeDSecure";
 
 				Tools.LogInfo("TransactionPeach.PostHTML/10","URL=" + url + ", URL data=" + xmlSent,221);
 
@@ -382,8 +427,175 @@ namespace PCIBusiness
 			return ret;
 		}
 
+		public int ThreeDSecureCheck(string transID)
+		{
+			int ret = 10;
+
+			try
+			{
+				string         url     = "https://test.oppwa.com/v1/threeDSecure/" + transID + "?entityId=8ac7a4c772b77ddf0172b7ed1cd206df";
+				HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+				request.Method                   = "GET";
+				request.Headers["Authorization"] = "Bearer OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
+				using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+				{
+					ret                     = 60;
+					Stream       dataStream = response.GetResponseStream();
+					ret                     = 70;
+					StreamReader reader     = new StreamReader(dataStream);
+					ret                     = 80;
+					strResult               = reader.ReadToEnd();
+					ret                     = 90;
+					reader.Close();
+					dataStream.Close();
+					ret                     = 0;
+				}
+			}
+			catch (WebException ex1)
+			{
+				strResult = Tools.DecodeWebException(ex1,"TransactionPeach.ThreeDSecureCheck/197",xmlSent);
+			}
+			catch (Exception ex2)
+			{
+				if ( strResult == null )
+					strResult = "";
+				Tools.LogInfo     ("TransactionPeach.ThreeDSecureCheck/198","Ret="+ret.ToString()+", Result="+strResult,255);
+				Tools.LogException("TransactionPeach.ThreeDSecureCheck/199","Ret="+ret.ToString()+", Result="+strResult,ex2);
+			}
+
+			resultCode = Tools.JSONValue(strResult,"code");
+			resultMsg  = Tools.JSONValue(strResult,"description");
+			currency   = Tools.JSONValue(strResult,"currency");
+			amount     = Tools.JSONValue(strResult,"amount");
+			cardNumber = Tools.JSONValue(strResult,"bin") + "******" + Tools.JSONValue(strResult,"last4Digits");
+			cardHolder = Tools.JSONValue(strResult,"holder");
+
+			if ( ! Successful && ret == 0 )
+				ret = 220;
+			if ( ! Successful || ret != 0 )
+				Tools.LogInfo("TransactionPeach.ThreeDSecureCheck/220","resultCode="+resultCode+", resultMsg="+resultMsg,221);
+			return ret;
+		}
+
+		public int ThreeDSecurePayment(Payment payment)
+		{
+			int ret = 10;
+
+			try
+			{
+				d3Form  = "";
+				xmlSent = "entityId="               + Tools.URLString(payment.ProviderUserID)
+				        + "&amount="                + Tools.URLString(payment.PaymentAmountDecimal)
+				        + "&currency="              + Tools.URLString(payment.CurrencyCode)
+//			           + "&paymentBrand="          + Tools.URLString(payment.CardType.ToUpper())
+			           + "&card.number="           + Tools.URLString(payment.CardNumber)
+			           + "&card.holder="           + Tools.URLString(payment.CardName)
+			           + "&card.expiryMonth="      + Tools.URLString(payment.CardExpiryMM)
+			           + "&card.expiryYear="       + Tools.URLString(payment.CardExpiryYYYY)
+			           + "&card.cvv="              + Tools.URLString(payment.CardCVV)
+				        + "&merchantTransactionId=" + Tools.URLString(payment.MerchantReference)
+				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
+			           + "&shopperResultUrl="      + Tools.ConfigValue("SystemURL")+"/RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference);
+
+				Tools.LogInfo("TransactionPeach.TokenPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
+
+				ret     = PostHTML((byte)Constants.TransactionType.ThreeDSecurePayment,payment);
+				payRef  = Tools.JSONValue(strResult,"id");
+
+/*				
+//	TESTING
+				ret = 0;
+				strResult = @"{
+									|id|:|8ac7a4a173bdef630173be24d9710ad9|,
+									|paymentBrand|:|VISA|,
+									|amount|:|12.50|,
+									|currency|:|EUR|,
+									|result|:{
+										|code|:|000.200.000|,
+										|description|:|transaction pending|
+									},
+									|card|:{
+										|bin|:|471110|,
+										|last4Digits|:|0000|,
+										|holder|:|John Smith|,
+										|expiryMonth|:|12|,
+										|expiryYear|:|2021|
+									},
+									|threeDSecure|:{
+										|eci|:|06|
+									},
+									|redirect|:{
+										|url|:|https://test.ppipe.net/connectors/demo/simulator.link?ndcid=8a8294174e735d0c014e78cf26461790_32b958682e7942e5a045c5b08bbd03ce&REMOTEADDRESS=10.71.36.33|,
+										|parameters|:[
+										{
+											|name|:|PaReq|,
+											|value|:|IT8ubu+5z4YupUCOEHKsbiPep8UzIAcPKJEjpwGlzD8#NDcxMTEwMDAwMDAwMDAwMCMxMi41MCBFVVIj|
+										},
+										{
+											|name|:|TermUrl|,
+											|value|:|https://test.ppipe.net/connectors/asyncresponse_simulator;jsessionid=12885DB09A3E49DB8B6214E20A7246D7.uat01-vm-con02?asyncsource=THREEDSECURE&ndcid=8a8294174e735d0c014e78cf26461790_32b958682e7942e5a045c5b08bbd03ce|
+										},
+										{
+											|name|:|connector|,
+											|value|:|THREEDSECURE|
+										},
+										{
+											|name|:|MD|,
+											|value|:|8ac7a4a173bdef630173be24d9710ad9|
+										}
+										]
+									},
+									|buildNumber|:|982467e36fd8bc9e74f536ba375c5d0be4fe48eb@2020-07-30 03:42:32 +0000|,
+									|timestamp|:|2020-08-05 10:22:32+0000|,
+									|ndc|:|8a8294174e735d0c014e78cf26461790_32b958682e7942e5a045c5b08bbd03ce|
+									}";
+				strResult = strResult.Replace("|","\"");
+//	TESTING
+*/
+
+				short     k       = 1;
+				string[,] d3Parms = new string[100,3];
+				string    d3Parm  = Tools.JSONValue(strResult,"parameters",k);
+				string    d3URL   = Tools.JSONValue(strResult,"url");
+
+				while ( d3Parm.Length > 0 && k < 100 )
+				{
+					d3Parms[k,1] = Tools.JSONValue(d3Parm,"name");
+					d3Parms[k,2] = Tools.JSONValue(d3Parm,"value");
+					d3Form       = d3Form + "<input type='text' name='" + d3Parms[k,1] + "' value='" + d3Parms[k,2] + "' />";
+					k++;
+					d3Parm       = Tools.JSONValue(strResult,"parameters",k);
+				}
+
+				if ( d3Form.Length > 0 )
+				{
+				//	Ver 1
+				//	d3Form = "<form name='frm3d' action='" + d3URL + "' class='paymentWidgets'>"
+				//	       + d3Form
+				//	       + "</form>"
+				//	       + "<script type='text/javascript'>"
+				//	       + "document.frm3d.submit();"
+				//	       + "</script>";
+				//	Ver 2
+					d3Form = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
+					       + "<form name='frm3D' action='" + d3URL + "' class='paymentWidgets'>"
+					       + d3Form
+					       + "</form></body></html>";
+					Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/20","PayRef=" + payRef + ", " + d3Form,221);
+					return 0;
+				}
+				Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/30","ResultCode="+ResultCode + ", payRef=" + payRef,221);
+			}
+			catch (Exception ex)
+			{
+				Tools.LogException("TransactionPeach.ThreeDSecurePayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+			}
+			return ret;
+		}
+
 		public TransactionPeach() : base()
 		{
+			d3Form                                = "";
 			bureauCode                            = Tools.BureauCode(Constants.PaymentProvider.Peach);
 			ServicePointManager.Expect100Continue = true;
 			ServicePointManager.SecurityProtocol  = SecurityProtocolType.Tls12;

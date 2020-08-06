@@ -288,7 +288,7 @@ namespace PCIBusiness
 			     + suffix;
 		}
 
-		public static string JSONValue(string data,string tag)
+		public static string JSONValue(string data,string tag,short arrayPosition=0)
 		{
 		//	Handle data in the format
 		//	{"key1":"value","key2":"value","key3":"value"}
@@ -322,6 +322,31 @@ namespace PCIBusiness
 								k = j;
 							break;
 						}
+				}
+
+				if ( arrayPosition > 0 ) // Look for [...]
+				{
+					h = value.IndexOf("[");
+					k = value.IndexOf("]",h+1);
+					if ( h >= 0 && k > h )
+					{
+						value = value.Substring(h+1,k-h-1).Trim();
+						j     = 0;
+						while ( j < arrayPosition && value.Length > 0 )
+						{
+							j++;
+							h = value.IndexOf("{");
+							k = value.IndexOf("}",h+1);
+							if ( h >= 0 && k > h )
+								if ( j == arrayPosition )
+									return value.Substring(h+1,k-h-1).Trim();
+								else
+									value = value.Substring(k+1).Trim();
+							else
+								break;
+						}
+					}
+					return "";
 				}
 
 				if ( value.Substring(0,1) == "\"" ) // Value starts with " and will end with "

@@ -118,8 +118,6 @@ namespace PCIBusiness
 //	Testing
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate) )
 					return "27ededae-4ba3-486a-a243-8da1e4c1a067";
-//				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS) )
-//					return "27ededae-4ba3-486a-a243-8da1e4c1a067";
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
 					return "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
 
@@ -135,6 +133,14 @@ namespace PCIBusiness
 
 				else if ( Tools.NullToString(providerAccount).Length > 0 )
 					return providerAccount;
+
+				else if ( Tools.SystemIsLive() )
+					return "";
+
+//	Testing
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
+				//	return "8ac7a4ca72b781310172b7ed08860114";
+					return "8ac7a4c772b77ddf0172b7ed1cd206df";
 
 				return "";
 			}
@@ -320,6 +326,7 @@ namespace PCIBusiness
 		public string    PaymentDescription
 		{
 			get { return  Tools.NullToString(paymentDescription); }
+			set { paymentDescription = value.Trim(); }
 		}
 		public  int      PaymentAmount
 		{
@@ -364,6 +371,7 @@ namespace PCIBusiness
 		public  string   CardType
 		{
 			get { return  Tools.NullToString(ccType); }
+			set { ccType = value.Trim(); }
 		}
 		public  string   CardNumber
 		{
