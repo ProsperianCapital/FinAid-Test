@@ -642,16 +642,26 @@ namespace PCIWebFinAid
 								paymentCurrency   = miscList.GetColumn("TransactionalCurrencyCode");
 //								paymentAmount     = "031"; // miscList.GetColumn("TransactionalAmount");
 
-								Tools.LogInfo("RegisterEx3.LoadContractCode",sql+" ->"
-								            +  " bureauCodeToken="  +bureauCodeToken
-								            + ", bureauCodePayment="+bureauCodePayment
-								            + ", paymentURL="       +paymentURL
-								            + ", paymentMID="       +paymentMID
-								            + ", paymentKey="       +paymentKey
-								            + ", paymentCurrency="  +paymentCurrency,224);
-//	TESTING
-								bureauCodeToken   = "";
-								paymentURL        = "https://test.oppwa.com/v1";
+//	TESTING 1
+								if ( paymentURL.Length < 1 || paymentMID.Length < 1 || paymentKey.Length < 1 )
+								{
+									Tools.LogInfo("RegisterEx3.LoadContractCode",sql+" ->"
+									            +  " bureauCodeToken="  +bureauCodeToken
+									            + ", bureauCodePayment="+bureauCodePayment
+									            + ", paymentURL="       +paymentURL
+									            + ", paymentMID="       +paymentMID
+									            + ", paymentKey="       +paymentKey
+									            + ", paymentCurrency="  +paymentCurrency,224);
+
+									bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
+									paymentURL        = "https://test.oppwa.com/v1";
+									paymentMID        = "8ac7a4c772b77ddf0172b7ed1cd206df";
+									paymentKey        = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
+									paymentCurrency   = "ZAR";
+								}
+//	TESTING 2
+								bureauCodeToken = "";
+								paymentURL      = "https://test.oppwa.com/v1";
 //	TESTING
 								ViewState["BureauCodeToken"]   = bureauCodeToken;
 								ViewState["BureauCodePayment"] = bureauCodePayment;
