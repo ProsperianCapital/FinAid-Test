@@ -46,8 +46,10 @@ namespace PCIWebFinAid
 			SetPostBackURL();
 			SetWarning("");
 
-//			lbl3d.Text  = "";
-//			tokenExMode = Tools.StringToInt(Tools.ConfigValue("TokenEx/Mode"));
+			pnl3d.Visible   = false;
+//			lblRefresh.Text = "";
+//			lbl3d.Text      = "";
+//			tokenExMode     = Tools.StringToInt(Tools.ConfigValue("TokenEx/Mode"));
 
 			if ( Page.IsPostBack )
 			{
@@ -63,6 +65,7 @@ namespace PCIWebFinAid
 				paymentKey          = WebTools.ViewStateString(ViewState,"PaymentKey");
 				paymentCurrency     = WebTools.ViewStateString(ViewState,"PaymentCurrency");
 				pageNo              = Tools.StringToInt(hdnPageNo.Value);
+
 //				if ( pageNo == 5 && tokenExMode > 0 )
 //					btnNext_Click(null,null); // Isn't called because of TokenEx
 			}
@@ -653,16 +656,21 @@ namespace PCIWebFinAid
 									            + ", paymentKey="       +paymentKey
 									            + ", paymentCurrency="  +paymentCurrency,224);
 
-									bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
-									paymentURL        = "https://test.oppwa.com/v1";
-									paymentMID        = "8ac7a4c772b77ddf0172b7ed1cd206df";
-									paymentKey        = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
-									paymentCurrency   = "ZAR";
+								//	bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
+								//	paymentURL        = "https://test.oppwa.com/v1";
+								//	paymentMID        = "8ac7a4c772b77ddf0172b7ed1cd206df";
+								//	paymentKey        = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
+								//	paymentCurrency   = "ZAR";
 								}
 //	TESTING 2
-								bureauCodeToken = "";
-								paymentURL      = "https://test.oppwa.com/v1";
+								bureauCodeToken   = "";
+								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
+								paymentURL        = "https://test.oppwa.com/v1";
+								paymentMID        = "8ac7a4c772b77ddf0172b7ed1cd206df";
+								paymentKey        = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
+								paymentCurrency   = "ZAR";
 //	TESTING
+
 								ViewState["BureauCodeToken"]   = bureauCodeToken;
 								ViewState["BureauCodePayment"] = bureauCodePayment;
 								ViewState["PaymentURL"]        = paymentURL;
@@ -1232,6 +1240,12 @@ namespace PCIWebFinAid
 									}
 
 							SetErrorDetail("btnNext_Click",errNo,"Unable to send confirmation email (SQL error)",sql);
+							pnl3d.Visible = true;
+
+//	This does not postback but does a redirect. ViewState is lost!
+//							lblRefresh.Text = "<meta http-equiv=\"refresh\" content=\"5;URL='RegisterEx3.aspx?PageNo=43'\" />";
+//	This works, but better to put it in the page itself
+//							lblJS.Text = "<script type='text/javascript'>setTimeout(function(){GetElt('btn3d').click()},10000)</script>";
 						}
 					}
 				}

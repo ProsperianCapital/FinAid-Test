@@ -528,14 +528,21 @@ function OptSelect(p)
 <asp:Literal runat="server" ID="lbl100209"></asp:Literal>
 </p>
 
-<!-- TESTING -->
-<hr />
-<p style="color:red;font-weight:bold">
-3d Secure Testing ... please click this button -->
-<asp:Button runat="server" ID="btn3d" Text="3d Secure" OnClick="btn3d_Click" />
-</p>
-<hr />
-<!-- TESTING -->
+<!-- 3d Secure -->
+<asp:Panel runat="server" id="pnl3d" style="border:1px solid red;background-color:aqua;color:black;padding:10px">
+PLEASE NOTE: You will shortly be re-directed to your bank's secure payment page to pay your
+once-off Card Verification Fee of $0.10 (10 US Cents).
+<br /><br />
+If you are not re-directed within 5 seconds, please click the button below to pay the
+Card Verification Fee manually.
+<br /><br />
+<asp:Button runat="server" ID="btn3d" Text="Pay Now" OnClick="btn3d_Click" />
+<script type='text/javascript'>
+setTimeout(function(){GetElt('btn3d').click()},7000);
+</script>
+</asp:Panel>
+<br />
+<!-- 3d Secure -->
 
 <table class="Confirmation" style="width:99%">
 	<tr>

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Text;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Net.Mail;
 using PCIBusiness;
 
 namespace PCIWebFinAid
@@ -25,20 +20,23 @@ namespace PCIWebFinAid
 				return;
 			}
 
+//			Get MID, Key and URL here
+//			Populate fields in object "trans"
+
 			using (TransactionPeach trans = new TransactionPeach())
 			{
 				int    ret   = trans.ThreeDSecureCheck(peachID);
 				lblData.Text = "<p>Transaction<br />"
-				             + " - Contract Id : " + transRef + "<br />"
-				             + " - Card Holder : " + trans.CardHolder + "<br />"
-				             + " - Card Number : " + trans.CardNumber + "<br />"
-				             + " - Currency : " + trans.Currency + "<br />"
-				             + " - Amount : " + trans.Amount + "</p>"
+				             + " - Contract Id : <b>" + transRef + "</b><br />"
+				             + " - Card Holder : <b>" + trans.CardHolder + "</b><br />"
+				             + " - Card Number : <b>" + trans.CardNumber + "</b><br />"
+				             + " - Currency : <b>" + trans.Currency + "</b><br />"
+				             + " - Amount : <b>" + trans.Amount + "</b></p>"
 				             + "<p>Payment Gateway Response<br />"
-				             + " - id : " + peachID + "<br />"
-				             + " - resourcePath : " + peachURL + "<br />"
-				             + " - resultCode : " + trans.ResultCode + "<br />"
-				             + " - resultMessage : " + trans.ResultMessage + "</p>";
+				             + " - id : <b>" + peachID + "</b><br />"
+				             + " - resourcePath : <b>" + peachURL + "</b><br />"
+				             + " - resultCode : <b>" + trans.ResultCode + "</b><br />"
+				             + " - resultMessage : <b>" + trans.ResultMessage + "</b></p>";
 				lblErr.Text      = lblData.Text;
 				pnlOK.Visible    = ( ret == 0 );
 				pnlError.Visible = ( ret != 0 );
