@@ -126,6 +126,7 @@ namespace PCIBusiness
 		}
 		public string    ProviderUserID
 		{
+			set { providerUserID = value.Trim(); }
 			get
 			{
 				if ( Tools.NullToString(providerUserID).Length > 0 )
@@ -139,8 +140,8 @@ namespace PCIBusiness
 
 //	Testing
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
-				//	return "8ac7a4ca72b781310172b7ed08860114";
-					return "8ac7a4c772b77ddf0172b7ed1cd206df";
+					return "8ac7a4ca72b781310172b7ed08860114"; // Payments
+				//	return "8ac7a4c772b77ddf0172b7ed1cd206df"; // 3d
 
 				return "";
 			}
@@ -158,6 +159,7 @@ namespace PCIBusiness
 		}
 		public string    ProviderURL
 		{
+			set { providerURL = value.Trim(); }
 			get
 			{
 				if ( Tools.NullToString(providerURL).Length > 0 )

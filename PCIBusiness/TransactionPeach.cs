@@ -71,7 +71,8 @@ namespace PCIBusiness
 			byte   err = 0;
 			int    ret = 10;
 //			string url = "https://test.oppwa.com/v1/registrations";
-			string url = "https://test.oppwa.com/v1/payments";
+//			string url = "https://test.oppwa.com/v1/payments";
+			string url = "https://test.oppwa.com/v1";
 			strResult  = "";
 			payRef     = "";
 			resultCode = "999.999.888";
@@ -84,7 +85,7 @@ namespace PCIBusiness
 				if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
 					url = url + "/" + payment.CardToken + "/payments";
 				else if ( transactionType == (byte)Constants.TransactionType.ThreeDSecurePayment )
-					url = "https://test.oppwa.com/v1/threeDSecure";
+					url = url + "/threeDSecure";
 
 				Tools.LogInfo("TransactionPeach.PostHTML/10","URL=" + url + ", URL data=" + xmlSent,221);
 
