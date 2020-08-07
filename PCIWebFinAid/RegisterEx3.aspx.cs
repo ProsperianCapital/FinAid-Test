@@ -17,17 +17,26 @@ namespace PCIWebFinAid
 		private   string contractCode;
 		private   string contractPIN;
 		private   string sql;
-		private   int    tokenExMode;
+//		private   int    tokenExMode;
 		private   int    errNo;
 		private   int    pageNo;
 
+//	3d Secure stuff
+//	See SPR "sp_WP_Get_ProductInfo"
+		private string   bureauCodeToken;
+		private string   bureauCodePayment;
+		private string   paymentURL;
+		private string   paymentMID;
+		private string   paymentKey;
+		private string   paymentCurrency;
+		private string   paymentAmount;
+
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-//	TokenEx card number validation version. 4 configuration variables are needed in Web.Config.
+//	TokenEx card number validation version. 3 configuration variables are needed in Web.Config.
 //	The ones below are the test values:
 
 //	<appSettings>
-//		<add key="TokenEx/Mode"   value="1" />  /* Any value greater than zero will turn it ON */
 //		<add key="TokenEx/Id"     value="4311038889209736" />
 //		<add key="TokenEx/Key"    value="njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I" />
 //		<add key="TokenEx/Script" value="https://test-htp.tokenex.com/iframe/iframe-v3.min.js" />
@@ -38,7 +47,7 @@ namespace PCIWebFinAid
 			SetWarning("");
 
 //			lbl3d.Text  = "";
-			tokenExMode = Tools.StringToInt(Tools.ConfigValue("TokenEx/Mode"));
+//			tokenExMode = Tools.StringToInt(Tools.ConfigValue("TokenEx/Mode"));
 
 			if ( Page.IsPostBack )
 			{
@@ -47,6 +56,12 @@ namespace PCIWebFinAid
 				languageDialectCode = WebTools.ViewStateString(ViewState,"LanguageDialectCode");
 				contractCode        = WebTools.ViewStateString(ViewState,"ContractCode");
 				contractPIN         = WebTools.ViewStateString(ViewState,"ContractPIN");
+				bureauCodeToken     = WebTools.ViewStateString(ViewState,"BureauCodeToken");
+				bureauCodePayment   = WebTools.ViewStateString(ViewState,"BureauCodePayment");
+				paymentURL          = WebTools.ViewStateString(ViewState,"PaymentURL");
+				paymentMID          = WebTools.ViewStateString(ViewState,"PaymentMID");
+				paymentKey          = WebTools.ViewStateString(ViewState,"PaymentKey");
+				paymentCurrency     = WebTools.ViewStateString(ViewState,"PaymentCurrency");
 				pageNo              = Tools.StringToInt(hdnPageNo.Value);
 //				if ( pageNo == 5 && tokenExMode > 0 )
 //					btnNext_Click(null,null); // Isn't called because of TokenEx
@@ -80,8 +95,8 @@ namespace PCIWebFinAid
 					return;
 				}
 
-				if ( WebTools.CheckProductProvider(productCode,"RegisterEx3.aspx",Request,Response) == 0 )
-					return;
+//				if ( WebTools.CheckProductProvider(productCode,"RegisterEx3.aspx",Request,Response) == 0 )
+//					return;
 
 				ViewState["ProductCode"]         = productCode;
 				ViewState["LanguageCode"]        = languageCode;
@@ -93,12 +108,6 @@ namespace PCIWebFinAid
 				btnBack1.Visible    = ! Tools.SystemIsLive();
 				lblReg.Visible      = true;
 				lblRegConf.Visible  = false;
-				pnlTokenYes.Visible = ( tokenExMode > 0 );
-				pnlTokenNo.Visible  = ( tokenExMode < 1 );
-				if ( tokenExMode    > 0 )
-					txtCCNumber.Text = "";
-				else
-					txToken.Value    = "";
 
 				LoadGoogleAnalytics();
 				LoadChat();
@@ -108,6 +117,18 @@ namespace PCIWebFinAid
 				{
 					LoadContractCode();
 					btnNext.Visible = ( lblError.Text.Length == 0 );
+					if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+					{
+						pnlTokenYes.Visible = true;
+						pnlTokenNo.Visible  = false;
+						txtCCNumber.Text    = "";
+					}
+					else
+					{
+						pnlTokenYes.Visible = false;
+						pnlTokenNo.Visible  = true;
+						txToken.Value       = "";
+					}
 				}
 
 //	Testing 2
@@ -560,10 +581,16 @@ namespace PCIWebFinAid
 
 		private bool LoadContractCode()
 		{
-			contractCode              = "";
-			contractPIN               = "";
-			ViewState["ContractCode"] = null;
-			ViewState["ContractPIN"]  = null;
+			contractCode                   = "";
+			contractPIN                    = "";
+			ViewState["ContractCode"]      = null;
+			ViewState["ContractPIN"]       = null;
+			ViewState["BureauCodeToken"]   = null;
+			ViewState["BureauCodePayment"] = null;
+			ViewState["PaymentURL"]        = null;
+			ViewState["PaymentMID"]        = null;
+			ViewState["PaymentKey"]        = null;
+			ViewState["PaymentCurrency"]   = null;
 
 			using (MiscList miscList = new MiscList())
 				try
@@ -597,58 +624,40 @@ namespace PCIWebFinAid
 						string stat  = miscList.GetColumn("Status");
 						if ( contractCode.Length > 0 && contractPIN.Length > 0 && ( stat == "0" || stat.Length == 0 ) )
 						{
-							lblError.Text             = "";
 							ViewState["ContractCode"] = contractCode;
 							ViewState["ContractPIN"]  = contractPIN;
+							lblError.Text             = "";
+							sql                       = "exec sp_WP_Get_ProductInfo @ProductCode=" + Tools.DBString(productCode);
+							if ( miscList.ExecQuery(sql,0) != 0 )
+								SetErrorDetail("LoadContractCode",10033,"Error retrieving product info ; please try again later",sql);
+							else if ( miscList.EOF )
+								SetErrorDetail("LoadContractCode",10043,"Error retrieving product info ; please try again later",sql);
+							else
+							{
+								bureauCodeToken   = miscList.GetColumn("TokenBureauCode");
+								bureauCodePayment = miscList.GetColumn("3DsecBureauCode");
+								paymentURL        = miscList.GetColumn("3DsecURL");
+								paymentMID        = miscList.GetColumn("PaymentBureauUserPassword");
+								paymentKey        = miscList.GetColumn("PaymentBureauUserSaveKey");
+								paymentCurrency   = miscList.GetColumn("TransactionalCurrencyCode");
+//								paymentAmount     = "031"; // miscList.GetColumn("TransactionalAmount");
+//	TESTING
+								bureauCodeToken   = "";
+								paymentURL        = "https://test.oppwa.com/v1";
+//	TESTING
+								ViewState["BureauCodeToken"]   = bureauCodeToken;
+								ViewState["BureauCodePayment"] = bureauCodePayment;
+								ViewState["PaymentURL"]        = paymentURL;
+								ViewState["PaymentMID"]        = paymentMID;
+								ViewState["PaymentKey"]        = paymentKey;
+								ViewState["PaymentCurrency"]   = paymentCurrency;
+							}
 						}
 					}
-
-/* Moved to "LoadGoogleAnalytics()
-
-//					If this fails, continue - don't stop with an error
-					lblGoogleUA.Text = "";
-					sql              = "exec sp_WP_Get_GoogleACA @ProductCode =" + Tools.DBString(productCode);
-					if ( miscList.ExecQuery(sql,0) == 0 && ! miscList.EOF )
-					{
-						string gaCode    = miscList.GetColumn("GoogleAnalyticCode");
-						string url       = miscList.GetColumn("URL");
-//	V1 ... gtag.js
-//						lblGoogleUA.Text = Environment.NewLine
-//						                 + "<!-- Global site tag (gtag.js) - Google Analytics -->" + Environment.NewLine
-//						                 + "<script async src=\"https://www.googletagmanager.com/gtag/js?id=" + gaCode + "\"></script>" + Environment.NewLine
-//						                 + "<script>" + Environment.NewLine
-//						                 + "window.dataLayer = window.dataLayer || [];" + Environment.NewLine
-//						                 + "function gtag(){dataLayer.push(arguments);}" + Environment.NewLine
-//						                 + "gtag('js', new Date());" + Environment.NewLine
-//						                 + "gtag('config', '" + gaCode + "', { 'linker': { 'accept_incoming': true } });" + Environment.NewLine
-// //					                 + "gtag('config', '" + gaCode + "');" + Environment.NewLine
-//						                 + "</script>" + Environment.NewLine;
-
-// V2 ... Analytics.js
-						lblGoogleUA.Text = Environment.NewLine
-						                 + "<script>" + Environment.NewLine
-						                 + "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
-						                 + "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
-						                 + "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)"
-						                 + "})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');" + Environment.NewLine
-						                 + "ga('create', '" + gaCode + "', 'auto', {'allowLinker': true});" + Environment.NewLine
-						                 + "ga('require', 'linker');" + Environment.NewLine
-						                 + "ga('linker:autoLink', ['" + url + "'] );" + Environment.NewLine
-						                 + "ga('send', 'pageview');" + Environment.NewLine
-						                 + "</script>" + Environment.NewLine;
-					}
-
-//					if ( miscList.ExecQuery(sql,0) != 0 )
-//						SetErrorDetail(10026,10026,"Error retrieving the Google analytics code ; please try again later",sql);
-//					else if ( miscList.EOF )
-//						SetErrorDetail(10028,10028,"Error retrieving the Google analytics code ; please try again later",sql);
-//					else
-//						lblGoogleUA.Text = "Blah, blah" + miscList.GetColumn(0);
-*/
 				}
 				catch (Exception ex)
 				{
-					SetErrorDetail("LoadContractCode",10033,"Error retrieving new contract details ; please try again later",ex.Message + " (" + sql + ")",2,2,ex);
+					SetErrorDetail("LoadContractCode",10093,"Error retrieving contract or product details ; please try again later",ex.Message + " (" + sql + ")",2,2,ex);
 					return false;
 				}
 				return ( lblError.Text.Length == 0 );
@@ -690,7 +699,7 @@ namespace PCIWebFinAid
 			{ }
 			else if ( pageNo == 5 )
 			{
-				if ( tokenExMode < 1 )
+				if ( bureauCodeToken != Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 				{
 					txtCCNumber.Text = txtCCNumber.Text.Trim();
 					if ( txtCCNumber.Visible && txtCCNumber.Text.Length < 12 )
@@ -723,18 +732,31 @@ namespace PCIWebFinAid
 
 		protected void btn3d_Click(Object sender, EventArgs e)
 		{
+			if ( paymentMID.Length < 1 || paymentKey.Length < 1 || paymentURL.Length < 1 )
+			{
+				SetErrorDetail("btn3d_Click",24010,"Invalid Peach MID/URL/Key");
+				return;
+			}
+
 			using (Payment payment = new Payment())
 			{
+			//	Peach
 				payment.BureauCode         = Tools.BureauCode(Constants.PaymentProvider.Peach);
+				payment.ProviderUserID     = paymentMID;
+				payment.ProviderKey        = paymentKey;
+				payment.ProviderURL        = paymentURL;
+			//	Customer
 				payment.CardNumber         = txtCCNumber.Text;
 				payment.CardName           = txtCCName.Text;
 				payment.CardExpiryMM       = WebTools.ListValue(lstCCMonth).ToString();
 				payment.CardExpiryYYYY     = WebTools.ListValue(lstCCYear).ToString();
 				payment.CardCVV            = txtCCCVV.Text;
-				payment.CurrencyCode       = "ZAR";
-				payment.PaymentAmount      = 017; // 17 cents
 				payment.MerchantReference  = contractCode;
 				payment.PaymentDescription = "Prosperian Initial Payment";
+				payment.CurrencyCode       = paymentCurrency;
+				payment.PaymentAmount      = Tools.StringToInt(paymentAmount);
+				if ( payment.PaymentAmount < 1 )
+					payment.PaymentAmount   = 031; // 31 cents
 
 				using (TransactionPeach trans = new TransactionPeach())
 					if ( trans.ThreeDSecurePayment(payment) == 0 )
@@ -750,6 +772,8 @@ namespace PCIWebFinAid
 						}
 						catch
 						{ }
+					else
+						Response.Redirect("RegisterThreeD.aspx?TransRef="+contractCode.ToString()+"&id="+trans.PaymentReference);
 			}
 		}
 
@@ -837,7 +861,7 @@ namespace PCIWebFinAid
 						else if ( pageNo == 5 )
 						{
 //	TokenEx Start
-							if ( tokenExMode > 0 )
+							if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 							{
 //	[TESTING]
 //	iFrame API key = njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I
@@ -921,7 +945,7 @@ namespace PCIWebFinAid
 						//	errNo = miscList.ExecQuery(sql,0,"",false,true);
 						//	SetErrorDetail("btnNext_Click/30050",(errNo==0?0:30050),"Unable to update information (WP_ContractApplicationC)",sql);
 
-							if ( tokenExMode > 0 )
+							if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 							{
 								sql   = "exec sp_TokenEx_Ins_CardToken"
 								      +     " @ContractCode ="       + Tools.DBString(contractCode)
@@ -959,6 +983,7 @@ namespace PCIWebFinAid
 							string refundPolicy       = "";
 							string moneyBackPolicy    = "";
 							string cancellationPolicy = "";
+							lblp6CCType.Text          = "";
 
 							sql = "exec sp_WP_Get_ProductPolicy"
 							    +     " @ProductCode ="         + Tools.DBString(productCode)
@@ -976,8 +1001,7 @@ namespace PCIWebFinAid
 							if ( refundPolicy.Length < 1 || moneyBackPolicy.Length < 1 || cancellationPolicy.Length < 1 )
 								SetErrorDetail("btnNext_Click/30080",30080,"Unable to retrieve product policy text",sql);
 
-							lblp6CCType.Text = "";
-							sql              = ( tokenExMode > 0 ? txToken.Value : txtCCNumber.Text ).Trim(); // Tokenized as SIXxxxxxxFOUR
+							sql = ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) ? txToken.Value : txtCCNumber.Text ).Trim(); // Tokenized as SIXxxxxxxFOUR
 							if ( sql.Length > 6 )
 								sql = sql.Substring(0,6);
 							sql = "exec WP_Get_CardAssociation @BIN=" + Tools.DBString(sql);
@@ -1026,7 +1050,7 @@ namespace PCIWebFinAid
 							lblp6Date.Text      = Tools.DateToString(System.DateTime.Now,2,1);
 							lblp6IP.Text        = WebTools.ClientIPAddress(Request,1);
 							lblp6Browser.Text   = WebTools.ClientBrowser(Request,hdnBrowser.Value);
-							if ( tokenExMode > 0 )
+							if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 								lblp6CCNumber.Text = Tools.MaskCardNumber(txToken.Value);
 							else
 								lblp6CCNumber.Text = Tools.MaskCardNumber(txtCCNumber.Text);

@@ -18,7 +18,7 @@ namespace PCIWebFinAid
 			pnlError.Visible = false;
 			pnlOK.Visible    = false;
 
-			if ( transRef.Length < 1 || peachID.Length < 1 || peachURL.Length < 1 )
+			if ( transRef.Length < 1 || peachID.Length < 1 ) // || peachURL.Length < 1 )
 			{
 				pnlError.Visible = true;
 				lblErr.Text      = "The data returned from 3d Secure processing is invalid/missing";
