@@ -641,6 +641,14 @@ namespace PCIWebFinAid
 								paymentKey        = miscList.GetColumn("PaymentBureauUserSaveKey");
 								paymentCurrency   = miscList.GetColumn("TransactionalCurrencyCode");
 //								paymentAmount     = "031"; // miscList.GetColumn("TransactionalAmount");
+
+								Tools.LogInfo("RegisterEx3.LoadContractCode",sql+" ->"
+								            +  " bureauCodeToken="  +bureauCodeToken
+								            + ", bureauCodePayment="+bureauCodePayment
+								            + ", paymentURL="       +paymentURL
+								            + ", paymentMID="       +paymentMID
+								            + ", paymentKey="       +paymentKey
+								            + ", paymentCurrency="  +paymentCurrency,224);
 //	TESTING
 								bureauCodeToken   = "";
 								paymentURL        = "https://test.oppwa.com/v1";
@@ -734,7 +742,8 @@ namespace PCIWebFinAid
 		{
 			if ( paymentMID.Length < 1 || paymentKey.Length < 1 || paymentURL.Length < 1 )
 			{
-				SetErrorDetail("btn3d_Click",24010,"Invalid Peach MID/URL/Key");
+				string x = "paymentMID="+paymentMID + ", paymentKey="+paymentKey + ", paymentURL=" + paymentURL;
+				SetErrorDetail("btn3d_Click",24010,"Invalid payment provider MID/URL/Key",x,2,2,null,false,239);
 				return;
 			}
 
