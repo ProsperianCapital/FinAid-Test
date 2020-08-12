@@ -388,7 +388,7 @@ namespace PCIWebFinAid
 			{
 				if ( logSource.Length < 1 )
 					logSource = req.Url.AbsoluteUri;
-				PCIBusiness.Tools.LogInfo ( "WebTools.ClientReferringURL", logSource + " (" + logInfo.ToString() + "), Referring URL=" + refer, 244 );
+				PCIBusiness.Tools.LogInfo ( "WebTools.ClientReferringURL", logSource + " (" + logInfo.ToString() + "), Referring URL=" + refer );
 			}
 			return refer;
 		}

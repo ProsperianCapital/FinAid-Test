@@ -758,6 +758,9 @@ namespace PCIWebFinAid
 					             + ",@CardCVVCode ="     + Tools.DBString(txtCCCVV.Text,47);
 
 					errNo = miscList.ExecQuery(sql,0);
+
+					Tools.LogInfo("Register.btnNext_Click/11","errNo="+errNo.ToString()+ " ("+sql+")",244);
+
 					SetErrorDetail("btnNext_Click/30020",errNo,"Unable to update information (pageNo="+pageNo.ToString()+")",sql);
 
 //					if ( errNo == 0 && pageNo == 5 )
