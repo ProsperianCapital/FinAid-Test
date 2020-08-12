@@ -285,6 +285,8 @@ namespace PCIBusiness
 			string certPwd  = "";
 			byte   err      = 10;
 
+			base.LoadBureauDetails(Constants.PaymentProvider.Ecentric);
+
 			try
 			{
 				xmlHeader  = "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/'>"
@@ -301,8 +303,8 @@ namespace PCIBusiness
 				certName   = Tools.SystemFolder("Certificates") + Tools.ConfigValue("ECentric/CertName");
 				err        = 30;
 				certPwd    = Tools.ConfigValue("ECentric/CertPassword");
-				err        = 40;
-				bureauCode = Tools.BureauCode(Constants.PaymentProvider.Ecentric);
+//				err        = 40;
+//				bureauCode = Tools.BureauCode(Constants.PaymentProvider.Ecentric);
 				err        = 50;
 				certs      = new X509Certificate2Collection();
 

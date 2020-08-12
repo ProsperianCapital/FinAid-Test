@@ -269,7 +269,8 @@ namespace PCIBusiness
 
 		public TransactionPayGenius() : base()
 		{
-			bureauCode = Tools.BureauCode(Constants.PaymentProvider.PayGenius);
+			base.LoadBureauDetails(Constants.PaymentProvider.PayGenius);
+		//	bureauCode = Tools.BureauCode(Constants.PaymentProvider.PayGenius);
 			xmlResult  = null;
 		}
 	}

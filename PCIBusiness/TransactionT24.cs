@@ -328,7 +328,8 @@ namespace PCIBusiness
 
 		public TransactionT24() : base()
 		{
-			bureauCode = Tools.BureauCode(Constants.PaymentProvider.T24);
+			base.LoadBureauDetails(Constants.PaymentProvider.T24);
+		//	bureauCode = Tools.BureauCode(Constants.PaymentProvider.T24);
 		}
 	}
 }

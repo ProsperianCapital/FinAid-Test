@@ -41,16 +41,17 @@ namespace PCIBusiness
 			{
 			//	Always in 999.999.999 format
 				string okList = "|000.000.000|"
+				              +  "000.100.110|"
+				              +  "000.100.111|"
+				              +  "000.100.112|"
+				              +  "000.200.000|"
 				              +  "000.300.000|"
 				              +  "000.400.000|"
 				              +  "000.400.010|"
 				              +  "000.400.020|"
 				              +  "000.400.040|"
 				              +  "000.400.060|"
-				              +  "000.400.090|"
-				              +  "000.100.110|"
-				              +  "000.100.111|"
-				              +  "000.100.112|";
+				              +  "000.400.090|";
 				resultCode    = Tools.NullToString(resultCode).ToUpper();
 				if ( resultCode.Length == 11 && okList.Contains("|"+resultCode+"|") )
 					return true;
@@ -70,9 +71,8 @@ namespace PCIBusiness
 		{
 			byte   err = 0;
 			int    ret = 10;
-//			string url = "https://test.oppwa.com/v1/registrations";
-//			string url = "https://test.oppwa.com/v1/payments";
-			string url = "https://test.oppwa.com/v1";
+//			string url = "https://test.oppwa.com/v1";
+			string url = bureauURL;
 			strResult  = "";
 			payRef     = "";
 			resultCode = "999.999.888";
@@ -89,44 +89,46 @@ namespace PCIBusiness
 
 				Tools.LogInfo("TransactionPeach.PostHTML/10","URL=" + url + ", URL data=" + xmlSent,221);
 
-				ret                              = 20;
-				byte[]         buffer            = Encoding.UTF8.GetBytes(xmlSent);
-				HttpWebRequest request           = (HttpWebRequest)HttpWebRequest.Create(url);
-				ret                              = 30;
-				request.Method                   = "POST";
-				request.Headers["Authorization"] = "Bearer " + payment.ProviderKey;
-				request.ContentType              = "application/x-www-form-urlencoded";
-				ret                              = 40;
-				Stream postData                  = request.GetRequestStream();
-				ret                              = 50;
-				postData.Write(buffer, 0, buffer.Length);
-				postData.Close();
+				ret                   = 20;
+				byte[]         buffer = Encoding.UTF8.GetBytes(xmlSent);
+				HttpWebRequest request;
+
+				if ( payment.TokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+				{
+					ret                             = 30;
+					request                         = (HttpWebRequest)HttpWebRequest.Create(payment.TokenizerURL);
+					request.Headers["TX_URL"]       = url;
+					request.Headers["TX_TokenExID"] = payment.TokenizerID;  // "4311038889209736";
+					request.Headers["TX_APIKey"]    = payment.TokenizerKey; // "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
+				}
+				else
+					request                         = (HttpWebRequest)HttpWebRequest.Create(url);
+
+				ret                                = 50;
+				request.Method                     = "POST";
+				request.Headers["Authorization"]   = "Bearer " + payment.ProviderKey;
+				request.ContentType                = "application/x-www-form-urlencoded";
+				ret                                = 60;
+
+				using (Stream postData = request.GetRequestStream())
+				{
+					ret = 70;
+					postData.Write(buffer, 0, buffer.Length);
+					postData.Close();
+				}
 
 				using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
 				{
-					ret                     = 60;
+					ret                     = 100;
 					Stream       dataStream = response.GetResponseStream();
-					ret                     = 70;
+					ret                     = 110;
 					StreamReader reader     = new StreamReader(dataStream);
-					ret                     = 80;
+					ret                     = 120;
 					strResult               = reader.ReadToEnd();
-					ret                     = 90;
-//					var s       = new JavaScriptSerializer();
-//					xmlReceived = s.Deserialize<Dictionary<string, dynamic>>(reader.ReadToEnd());
+					ret                     = 130;
 					reader.Close();
 					dataStream.Close();
 				}
-
-//	Moved to below the "Catch"
-//					ret        = 100;
-//					resultCode = Tools.JSONValue(strResult,"code");
-//					resultMsg  = Tools.JSONValue(strResult,"description");
-//					ret        = 110;
-//					if ( Successful )
-//						ret     = 0;
-//					else
-//						Tools.LogInfo("TransactionPeach.PostHTML/120","resultCode="+resultCode+", resultMsg="+resultMsg,221);
-//				}
 			}
 			catch (WebException ex1)
 			{
@@ -227,7 +229,8 @@ namespace PCIBusiness
 				if ( payment.ProviderURL.Length > 0 )  // The PAYMENT provider (Peach)
 					pURL = payment.ProviderURL;
 				else
-					pURL = "https://test.oppwa.com/v1/registrations";
+				//	pURL = "https://test.oppwa.com/v1/registrations";
+					pURL = bureauURL + "/registrations";
 
 				ret = 20;
 
@@ -434,11 +437,11 @@ namespace PCIBusiness
 
 			try
 			{
-				string         url     = "https://test.oppwa.com/v1/threeDSecure/" + transID + "?entityId=8ac7a4c772b77ddf0172b7ed1cd206df";
-				HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+				string         url               = bureauURL + "/threeDSecure/" + transID + "?entityId=8ac7a4c772b77ddf0172b7ed1cd206df";
+				HttpWebRequest request           = (HttpWebRequest)HttpWebRequest.Create(url);
 				request.Method                   = "GET";
 				request.Headers["Authorization"] = "Bearer OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
-				using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+				using ( HttpWebResponse response = (HttpWebResponse)request.GetResponse() )
 				{
 					ret                     = 60;
 					Stream       dataStream = response.GetResponseStream();
@@ -489,19 +492,25 @@ namespace PCIBusiness
 				        + "&amount="                + Tools.URLString(payment.PaymentAmountDecimal)
 				        + "&currency="              + Tools.URLString(payment.CurrencyCode)
 //			           + "&paymentBrand="          + Tools.URLString(payment.CardType.ToUpper())
-			           + "&card.number="           + Tools.URLString(payment.CardNumber)
+//			           + "&card.number="           + Tools.URLString(payment.CardNumber)
 			           + "&card.holder="           + Tools.URLString(payment.CardName)
 			           + "&card.expiryMonth="      + Tools.URLString(payment.CardExpiryMM)
 			           + "&card.expiryYear="       + Tools.URLString(payment.CardExpiryYYYY)
 			           + "&card.cvv="              + Tools.URLString(payment.CardCVV)
 				        + "&merchantTransactionId=" + Tools.URLString(payment.MerchantReference)
 				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
-			           + "&shopperResultUrl="      + Tools.ConfigValue("SystemURL")+"/RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference);
+			           + "&shopperResultUrl="      + Tools.ConfigValue("SystemURL")+"/RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference)
+			           + "&card.number=";
+
+				if ( payment.TokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+					xmlSent = xmlSent + "{{{" + Tools.URLString(payment.CardToken) + "}}}";
+				else
+					xmlSent = xmlSent + Tools.URLString(payment.CardNumber);
 
 				Tools.LogInfo("TransactionPeach.TokenPayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
-				ret     = PostHTML((byte)Constants.TransactionType.ThreeDSecurePayment,payment);
-				payRef  = Tools.JSONValue(strResult,"id");
+				ret    = PostHTML((byte)Constants.TransactionType.ThreeDSecurePayment,payment);
+				payRef = Tools.JSONValue(strResult,"id");
 
 /*				
 //	TESTING
@@ -597,9 +606,10 @@ namespace PCIBusiness
 		public TransactionPeach() : base()
 		{
 			d3Form                                = "";
-			bureauCode                            = Tools.BureauCode(Constants.PaymentProvider.Peach);
+//			bureauCode                            = Tools.BureauCode(Constants.PaymentProvider.Peach);
 			ServicePointManager.Expect100Continue = true;
 			ServicePointManager.SecurityProtocol  = SecurityProtocolType.Tls12;
+			base.LoadBureauDetails(Constants.PaymentProvider.Peach);
 		}
 	}
 }

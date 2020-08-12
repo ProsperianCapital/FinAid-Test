@@ -15,6 +15,7 @@ namespace PCIBusiness
 		protected string      xmlSent;
 		protected string      bureauCode;
 		protected string      bureauCodeTokenizer;
+		protected string      bureauURL;
 		protected string      strResult;
 		protected XmlDocument xmlResult;
 
@@ -161,6 +162,15 @@ namespace PCIBusiness
 			return false;
 		}
 
+		protected void LoadBureauDetails(Constants.PaymentProvider bureau)
+		{
+			bureauCode = Tools.BureauCode(bureau);
+			bureauURL  = Tools.ConfigValue(bureauCode+"/URL");
+			if ( bureauURL.Length < 1 )
+				if ( bureau == Constants.PaymentProvider.Peach )
+					bureauURL = "https://test.oppwa.com/v1";
+		}
+
       public override void Close()
 		{
 			xmlResult = null;
@@ -170,6 +180,7 @@ namespace PCIBusiness
 		{
 			bureauCodeTokenizer = Tools.BureauCode(Constants.PaymentProvider.TokenEx);
 			bureauCode          = "";
+			bureauURL           = "";
 			payRef              = "";
 			payToken            = "";
 //			authCode            = "";

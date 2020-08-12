@@ -47,6 +47,7 @@ namespace PCIBusiness
 		private string   providerURL;
 
 //	Token Provider (eg. TokenEx)
+		private string   tokenizerCode;
 		private string   tokenizerKey;
 		private string   tokenizerID;
 		private string   tokenizerURL;
@@ -59,17 +60,25 @@ namespace PCIBusiness
 
 
 //		Token Provider stuff
+		public string    TokenizerCode
+		{
+			get { return  Tools.NullToString(tokenizerCode); }
+			set { tokenizerCode = Tools.NullToString(value); }
+		}
 		public string    TokenizerKey
 		{
 			get { return  Tools.NullToString(tokenizerKey); }
+			set { tokenizerKey = Tools.NullToString(value); }
 		}
 		public string    TokenizerID
 		{
 			get { return  Tools.NullToString(tokenizerID); }
+			set { tokenizerID = Tools.NullToString(value); }
 		}
 		public string    TokenizerURL
 		{
 			get { return  Tools.NullToString(tokenizerURL); }
+			set { tokenizerURL = Tools.NullToString(value); }
 		}
 
 //		Payment Provider stuff
@@ -185,8 +194,8 @@ namespace PCIBusiness
 					return "https://secure.paygate.co.za/payhost/process.trans";
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS) )
 					return "https://uat-api.nets.com.sg:9065/GW2/TxnReqListener";
-				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
-					return "https://test.oppwa.com/v1/registrations";
+//				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
+//					return "https://test.oppwa.com/v1/registrations";
 
 				return "";
 			}
@@ -365,6 +374,7 @@ namespace PCIBusiness
 		public  string   CardToken
 		{
 			get { return  Tools.NullToString(ccToken); }
+			set { ccToken = value.Trim(); }
 		}
 		public  string   CardPIN
 		{

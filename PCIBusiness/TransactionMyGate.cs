@@ -188,7 +188,8 @@ namespace PCIBusiness
 
 		public TransactionMyGate() : base()
 		{
-			bureauCode = Tools.BureauCode(Constants.PaymentProvider.MyGate);
+			base.LoadBureauDetails(Constants.PaymentProvider.MyGate);
+		//	bureauCode = Tools.BureauCode(Constants.PaymentProvider.MyGate);
 		}
 
 		public override void Close()

@@ -317,7 +317,8 @@ namespace PCIBusiness
 
 		public TransactionTokenEx() : base()
 		{
-			bureauCode                            = Tools.BureauCode(Constants.PaymentProvider.TokenEx);
+			base.LoadBureauDetails(Constants.PaymentProvider.TokenEx);
+		//	bureauCode                            = Tools.BureauCode(Constants.PaymentProvider.TokenEx);
 			ServicePointManager.Expect100Continue = true;
 			ServicePointManager.SecurityProtocol  = SecurityProtocolType.Tls12;
 		}

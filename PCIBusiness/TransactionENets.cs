@@ -209,7 +209,8 @@ namespace PCIBusiness
 
 		public TransactionENets() : base()
 		{
-			bureauCode = Tools.BureauCode(Constants.PaymentProvider.eNETS);
+			base.LoadBureauDetails(Constants.PaymentProvider.eNETS);
+		//	bureauCode = Tools.BureauCode(Constants.PaymentProvider.eNETS);
 
 		//	Force TLS 1.2
 			ServicePointManager.Expect100Continue = true;

@@ -301,7 +301,8 @@ namespace PCIBusiness
 
 		public TransactionPayU() : base()
 		{
-			bureauCode = Tools.BureauCode(Constants.PaymentProvider.PayU);
+			base.LoadBureauDetails(Constants.PaymentProvider.PayU);
+		//	bureauCode = Tools.BureauCode(Constants.PaymentProvider.PayU);
 		}
 	}
 }

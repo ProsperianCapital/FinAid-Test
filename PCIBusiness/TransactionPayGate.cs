@@ -318,7 +318,8 @@ namespace PCIBusiness
 
 		public TransactionPayGate() : base()
 		{
-			bureauCode = Tools.BureauCode(Constants.PaymentProvider.PayGate);
+			base.LoadBureauDetails(Constants.PaymentProvider.PayGate);
+		//	bureauCode = Tools.BureauCode(Constants.PaymentProvider.PayGate);
 
 		//	Force TLS 1.2
 			ServicePointManager.Expect100Continue = true;
