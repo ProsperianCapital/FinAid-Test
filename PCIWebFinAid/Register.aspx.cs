@@ -759,18 +759,18 @@ namespace PCIWebFinAid
 
 					errNo = miscList.ExecQuery(sql,0);
 
-					Tools.LogInfo("Register.btnNext_Click/11","errNo="+errNo.ToString()+ " ("+sql+")",244);
+//					Tools.LogInfo("Register.btnNext_Click/11","errNo="+errNo.ToString()+ " ("+sql+")",244);
 
 					SetErrorDetail("btnNext_Click/30020",errNo,"Unable to update information (pageNo="+pageNo.ToString()+")",sql);
 
-//					if ( errNo == 0 && pageNo == 5 )
-//					{
-//						sql   = "exec WP_ContractApplicationC"
-//						      +     " @RegistrationPage = '5'"
-//						      +     ",@ContractCode     =" + Tools.DBString(contractCode);
-//						errNo = miscList.ExecQuery(sql,0);
-//						SetErrorDetail(errNo,30025,"Unable to update information",sql);
-//					}			
+					if ( errNo == 0 && pageNo == 5 )
+					{
+						sql   = "exec WP_ContractApplicationC"
+						      +     " @RegistrationPage ='5'"
+						      +     ",@ContractCode     =" + Tools.DBString(contractCode);
+						errNo = miscList.ExecQuery(sql,0);
+						SetErrorDetail("btnNext_Click/30025",errNo,"Unable to update final information (pageNo=5)",sql);
+					}			
 
 					if ( errNo == 0 || pageNo > 180 )
 					{
