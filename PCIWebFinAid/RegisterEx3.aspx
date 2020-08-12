@@ -530,15 +530,19 @@ function OptSelect(p)
 
 <!-- 3d Secure -->
 <asp:Panel runat="server" id="pnl3d" style="border:1px solid red;background-color:aqua;color:black;padding:10px">
+<asp:Literal runat="server" ID="lbl100500">
 PLEASE NOTE: You will shortly be re-directed to your bank's secure payment page to pay your
 once-off Card Verification Fee of $0.10 (10 US Cents).
+</asp:Literal>
 <br /><br />
+<asp:Literal runat="server" ID="lbl100501">
 If you are not re-directed within 5 seconds, please click the button below to pay the
 Card Verification Fee manually.
+</asp:Literal>
 <br /><br />
 <asp:Button runat="server" ID="btn3d" Text="Pay Now" OnClick="btn3d_Click" />
 <script type='text/javascript'>
-setTimeout(function(){GetElt('btn3d').click()},7000);
+setTimeout(function(){GetElt('btn3d').click()},8000);
 </script>
 </asp:Panel>
 <br />
@@ -724,6 +728,9 @@ function TokenFinish()
 	if ( GetElt('txIFrameCC') == null )
 		return true;
 
+//	ALL returns other then the one above must be FALSE
+//	Only return TRUE if TokenEx is turned OFF (ie. the iFrame object is NULL)
+
 	var err = 'Invalid card number and/or CVV';
 
 	try
@@ -732,7 +739,7 @@ function TokenFinish()
 		if ( txCC.isValid && v.length >= 3 && ToInteger(v) > 0 )
 		{
 			txFrame.tokenize();
-			return true;
+			return false; // This MUST be false!
 		}
 	}
 	catch (x)

@@ -1012,6 +1012,24 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Panel pnl3d;
         
         /// <summary>
+        /// lbl100500 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lbl100500;
+        
+        /// <summary>
+        /// lbl100501 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lbl100501;
+        
+        /// <summary>
         /// btn3d control.
         /// </summary>
         /// <remarks>

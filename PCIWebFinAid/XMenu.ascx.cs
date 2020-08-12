@@ -20,19 +20,27 @@ namespace PCIWebFinAid
 			userCode        = Tools.NullToString(sessionUserCode);
 			applicationCode = Tools.NullToString(sessionAppCode);
 			if ( userCode.Length < 1 || applicationCode.Length < 1 )
+			{
+				Tools.LogInfo("LoadMenu/10","userCode="+userCode+", applicationCode="+applicationCode,222);
 				return 10;
-
+			}
 			List<MenuItem> menuList;
 
 			using (MiscList mList = new MiscList())
 			{
-				int ret = mList.ExecQuery("exec sp_Get_BackOfficeMenuB @UserCode="        + Tools.DBString(userCode)
-				                                                   + ",@ApplicationCode=" + Tools.DBString(applicationCode),0);
-				if ( ret != 0 )
+				string sql = "exec sp_Get_BackOfficeMenuB @UserCode="        + Tools.DBString(userCode)
+				                                      + ",@ApplicationCode=" + Tools.DBString(applicationCode);
+				int    ret = mList.ExecQuery(sql,0);
+				if ( ret  != 0 )
+				{
+					Tools.LogInfo("LoadMenu/20","ret="+ret.ToString()+" ("+sql+")",222);
 					return 20;
+				}
 				if ( mList.EOF )
+				{
+					Tools.LogInfo("LoadMenu/30","No data ("+sql+")",222);
 					return 30;
-
+				}
 				string   level1 = "X";
 				string   level2 = "X";
 				string   level3 = "X";
