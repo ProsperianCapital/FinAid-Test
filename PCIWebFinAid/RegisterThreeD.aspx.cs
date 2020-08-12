@@ -7,6 +7,7 @@ namespace PCIWebFinAid
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
+			string sql;
 			string transRef  = WebTools.RequestValueString(Request,"TransRef");
 			string peachID   = WebTools.RequestValueString(Request,"id");
 			string peachURL  = WebTools.RequestValueString(Request,"resourcePath");
@@ -25,9 +26,9 @@ namespace PCIWebFinAid
 
 			using (TransactionPeach trans = new TransactionPeach())
 			{
-				int    ret   = trans.ThreeDSecureCheck(peachID);
+				int ret      = trans.ThreeDSecureCheck(peachID);
 				lblData.Text = "<p>Transaction<br />"
-				             + " - Contract Id : <b>" + transRef + "</b><br />"
+				             + " - Contract Code : <b>" + transRef + "</b><br />"
 				             + " - Card Holder : <b>" + trans.CardHolder + "</b><br />"
 				             + " - Card Number : <b>" + trans.CardNumber + "</b><br />"
 				             + " - Currency : <b>" + trans.Currency + "</b><br />"
@@ -40,7 +41,13 @@ namespace PCIWebFinAid
 				lblErr.Text      = lblData.Text;
 				pnlOK.Visible    = ( ret == 0 );
 				pnlError.Visible = ( ret != 0 );
+				sql              = "exec sp_WP_PaymentRegister3DSec @ContractCode=" + Tools.DBString(transRef)
+				                                                + ",@ReferenceNumber=" + Tools.DBString(peachID)
+				                                                + ",@Status=" + Tools.DBString(trans.ResultCode);
 			}
+
+			using (MiscList mList = new MiscList())
+				mList.ExecQuery(sql,0,"",false,true);
 		}
 	}
 }

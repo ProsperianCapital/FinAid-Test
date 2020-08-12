@@ -24,7 +24,6 @@ namespace PCIWebFinAid
 //	3d Secure stuff
 //	See SPR "sp_WP_Get_ProductInfo"
 		private string   bureauCodeToken;
-		private string   tokenURL;
 		private string   tokenMID;
 		private string   tokenKey;
 		private string   bureauCodePayment;
@@ -64,7 +63,7 @@ namespace PCIWebFinAid
 				bureauCodeToken     = WebTools.ViewStateString(ViewState,"BureauCodeToken");
 				bureauCodePayment   = WebTools.ViewStateString(ViewState,"BureauCodePayment");
 				paymentURL          = WebTools.ViewStateString(ViewState,"PaymentURL");
-				tokenURL            = WebTools.ViewStateString(ViewState,"TokenURL");
+//				tokenURL            = WebTools.ViewStateString(ViewState,"TokenURL");
 				tokenMID            = WebTools.ViewStateString(ViewState,"TokenMID");
 				tokenKey            = WebTools.ViewStateString(ViewState,"TokenKey");
 				paymentMID          = WebTools.ViewStateString(ViewState,"PaymentMID");
@@ -603,7 +602,7 @@ namespace PCIWebFinAid
 			ViewState["PaymentURL"]        = null;
 			ViewState["PaymentMID"]        = null;
 			ViewState["PaymentKey"]        = null;
-			ViewState["TokenURL"]          = null;
+//			ViewState["TokenURL"]          = null;
 			ViewState["TokenMID"]          = null;
 			ViewState["TokenKey"]          = null;
 			ViewState["PaymentCurrency"]   = null;
@@ -651,7 +650,7 @@ namespace PCIWebFinAid
 							else
 							{
 								bureauCodeToken   = miscList.GetColumn("TokenBureauCode");
-								tokenURL          = miscList.GetColumn("TokenBureauURL");
+//								tokenURL          = miscList.GetColumn("TokenBureauURL");
 								tokenMID          = miscList.GetColumn("TokenBureauUserName");
 								tokenKey          = miscList.GetColumn("TokenBureauUserSaveKey");
 								bureauCodePayment = miscList.GetColumn("3DsecBureauCode");
@@ -675,10 +674,10 @@ namespace PCIWebFinAid
 //	TokenEx
 								if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 								{
-									tokenURL       = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
+//									tokenURL       = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
 									tokenMID       = "4311038889209736";
-//									tokenKey       = "bDjxBnxQFfv7mrFtPJA24sGGbNBYvUF7JMnlNjwq";
 									tokenKey       = "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
+//									tokenKey       = "bDjxBnxQFfv7mrFtPJA24sGGbNBYvUF7JMnlNjwq";
 								}
 //	Peach
 								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
@@ -692,7 +691,7 @@ namespace PCIWebFinAid
 
 								ViewState["BureauCodeToken"]   = bureauCodeToken;
 								ViewState["BureauCodePayment"] = bureauCodePayment;
-								ViewState["TokenURL"]          = tokenURL;
+//								ViewState["TokenURL"]          = tokenURL;
 								ViewState["TokenMID"]          = tokenMID;
 								ViewState["TokenKey"]          = tokenKey;
 								ViewState["PaymentURL"]        = paymentURL;
@@ -791,8 +790,8 @@ namespace PCIWebFinAid
 			if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 				if ( tokenMID.Length < 1 || tokenKey.Length < 1 )
 				{
-					string x = "tokenMID="+tokenMID + ", tokenKey="+tokenKey + ", tokenURL=" + tokenURL;
-					SetErrorDetail("btn3d_Click",26020,"Invalid token provider MID/URL/Key",x,2,2,null,false,239);
+					string x = "tokenMID="+tokenMID + ", tokenKey="+tokenKey;
+					SetErrorDetail("btn3d_Click",26020,"Invalid token provider MID/Key",x,2,2,null,false,239);
 					return;
 				}
 
@@ -807,7 +806,7 @@ namespace PCIWebFinAid
 				payment.TokenizerCode      = bureauCodeToken;
 				payment.TokenizerID        = tokenMID;
 				payment.TokenizerKey       = tokenKey;
-				payment.TokenizerURL       = tokenURL;
+			//	payment.TokenizerURL       = tokenURL;
 			//	Customer
 				payment.CardNumber         = txtCCNumber.Text;
 				payment.CardToken          = txToken.Value;
