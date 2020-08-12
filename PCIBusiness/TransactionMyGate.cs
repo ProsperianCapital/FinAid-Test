@@ -6,6 +6,9 @@ using System.IO;
 
 namespace PCIBusiness
 {
+//	MyGate no longer exist.
+//	See www.wirecard.com
+
 	public class TransactionMyGate : Transaction
 	{
 //	v1

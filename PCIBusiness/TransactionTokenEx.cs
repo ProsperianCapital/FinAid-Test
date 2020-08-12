@@ -22,7 +22,8 @@ namespace PCIBusiness
 		{
 			int    ret  = 10;
 			string pURL = "https://test.oppwa.com/v1/registrations";
-			string tURL = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
+//			string tURL = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
+			string tURL = BureauURL;
 			strResult   = "";
 			payRef      = "";
 			resultCode  = "999.999.999";
@@ -36,6 +37,8 @@ namespace PCIBusiness
 					tURL = payment.TokenizerURL;
 				if ( tranPeach == null )
 					tranPeach = new TransactionPeach();
+
+				tURL = tURL + "/TransparentGatewayAPI/Detokenize";
 
 				Tools.LogInfo("TransactionTokenEx.PostHTML/10","URL=" + pURL + ", URL data=" + xmlSent,221);
 
@@ -225,7 +228,8 @@ namespace PCIBusiness
 		public override int DeleteToken(Payment payment)
 		{
 			xmlSent = Tools.XMLCell("Token",payment.CardToken);
-			return PostXML("https://test-api.tokenex.com/TokenServices.svc/REST/DeleteToken",payment);
+			return PostXML(BureauURL + "/TokenServices.svc/REST/DeleteToken",payment);
+		//	return PostXML("https://test-api.tokenex.com/TokenServices.svc/REST/DeleteToken",payment);
 		}
 
 		public int GetTokenCardAndCVV(Payment payment)
@@ -252,7 +256,8 @@ namespace PCIBusiness
 			payToken = "";
 			xmlSent  = Tools.XMLCell("Data",payment.CardNumber)
 			         + Tools.XMLCell("TokenScheme","sixTOKENfour");
-			int ret  = PostXML("https://test-api.tokenex.com/TokenServices.svc/REST/Tokenize",payment);
+//			int ret  = PostXML("https://test-api.tokenex.com/TokenServices.svc/REST/Tokenize",payment);
+			int ret  = PostXML(BureauURL + "/TokenServices.svc/REST/Tokenize",payment);
 			if ( ret == 0 )
 				payToken = Tools.XMLNode(xmlResult,"Token");
 			return ret;

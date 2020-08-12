@@ -95,10 +95,12 @@ namespace PCIBusiness
 			string tranDesc = "";
 
 			if ( Tools.NullToString(url).Length == 0 )
-				if ( Tools.SystemIsLive() )
-					url = "https://www.paygenius.co.za";
-				else
-					url = "https://developer.paygenius.co.za";
+				url = BureauURL;
+
+//				if ( Tools.SystemIsLive() )
+//					url = "https://www.paygenius.co.za";
+//				else
+//					url = "https://developer.paygenius.co.za";
 
 			ret = 20;
 			if ( url.EndsWith("/") )
@@ -222,7 +224,8 @@ namespace PCIBusiness
 //			Testing only!
 			try
 			{
-				string         url        = ( live == 0 ? "https://developer.paygenius.co.za/pg/api/v2/util/validate" : "https://www.paygenius.co.za/pg/api/v2/util/validate" );
+//				string         url        = ( live == 0 ? "https://developer.paygenius.co.za/pg/api/v2/util/validate" : "https://www.paygenius.co.za/pg/api/v2/util/validate" );
+				string         url        = BureauURL + "/pg/api/v2/util/validate";
 				string         key        = ( live == 0 ? "f1a7d3b1-e90b-42c0-a304-459382a47aba" : "bb3a0012-74a5-4e74-bc46-03afa3c30850" );
 				string         data       = "{\"data\":\"value\"}";
 				byte[]         page       = Encoding.UTF8.GetBytes(data);

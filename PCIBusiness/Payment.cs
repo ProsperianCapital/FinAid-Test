@@ -75,11 +75,11 @@ namespace PCIBusiness
 			get { return  Tools.NullToString(tokenizerID); }
 			set { tokenizerID = Tools.NullToString(value); }
 		}
-		public string    TokenizerURL
-		{
-			get { return  Tools.NullToString(tokenizerURL); }
-			set { tokenizerURL = Tools.NullToString(value); }
-		}
+//		public string    TokenizerURL
+//		{
+//			get { return  Tools.NullToString(tokenizerURL); }
+//			set { tokenizerURL = Tools.NullToString(value); }
+//		}
 
 //		Payment Provider stuff
 		public string    BureauCode
@@ -185,17 +185,29 @@ namespace PCIBusiness
 					return "";
 				}
 
-//	Testing
-				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.T24) )
-					return "https://payment.ccp.boarding.transact24.com/PaymentCard";
-				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGenius) )
-					return "https://developer.paygenius.co.za";
-				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate) )
-					return "https://secure.paygate.co.za/payhost/process.trans";
-				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS) )
-					return "https://uat-api.nets.com.sg:9065/GW2/TxnReqListener";
-//				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
-//					return "https://test.oppwa.com/v1/registrations";
+				return "";
+			}
+		}
+
+		public string    TokenizerURL
+		{
+			set { tokenizerURL = value.Trim(); }
+			get
+			{
+				if ( Tools.NullToString(tokenizerURL).Length > 0 )
+					return tokenizerURL;
+
+				else if ( Tools.SystemIsLive() )
+				{
+					if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+						return "https://api.tokenex.com";
+				}
+
+				else
+				{
+					if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+						return "https://test-api.tokenex.com";
+				}
 
 				return "";
 			}

@@ -39,6 +39,10 @@ namespace PCIBusiness
 		{
 			get { return     Tools.NullToString(bureauCode); }
 		}
+		public  virtual     string BureauURL
+		{
+			get { return     Tools.NullToString(bureauURL); }
+		}
 		public  string      PaymentToken
 		{
 			get { return     Tools.NullToString(payToken); }
@@ -166,9 +170,38 @@ namespace PCIBusiness
 		{
 			bureauCode = Tools.BureauCode(bureau);
 			bureauURL  = Tools.ConfigValue(bureauCode+"/URL");
-			if ( bureauURL.Length < 1 )
+
+			if ( bureauURL.Length > 0 )
+				return;
+
+			if ( Tools.SystemIsLive() )
+			{
+				if ( bureau == Constants.PaymentProvider.Peach )
+					bureauURL = "https://www.oppwa.com/v1";
+				else if ( bureau == Constants.PaymentProvider.PayGate )
+					bureauURL = "https://secure.paygate.co.za/payhost/process.trans";
+				else if ( bureau == Constants.PaymentProvider.TokenEx )
+					bureauURL = "https://api.tokenex.com";
+			}
+			else
+			{
 				if ( bureau == Constants.PaymentProvider.Peach )
 					bureauURL = "https://test.oppwa.com/v1";
+				else if ( bureau == Constants.PaymentProvider.Ecentric )
+					bureauURL = "https://sandbox.ecentricswitch.co.za:8443/paymentgateway/v1";
+				else if ( bureau == Constants.PaymentProvider.eNETS )
+					bureauURL = "https://uat-api.nets.com.sg:9065/GW2/TxnReqListener";
+				else if ( bureau == Constants.PaymentProvider.PayGate )
+					bureauURL = "https://secure.paygate.co.za/payhost/process.trans";
+				else if ( bureau == Constants.PaymentProvider.PayGenius )
+					bureauURL = "https://developer.paygenius.co.za";
+				else if ( bureau == Constants.PaymentProvider.PayU )
+					bureauURL = "https://staging.payu.co.za";
+				else if ( bureau == Constants.PaymentProvider.T24 )
+					bureauURL = "https://payment.ccp.transact24.com";
+				else if ( bureau == Constants.PaymentProvider.TokenEx )
+					bureauURL = "https://test-api.tokenex.com";
+			}
 		}
 
       public override void Close()

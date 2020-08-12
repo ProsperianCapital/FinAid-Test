@@ -13,6 +13,11 @@ namespace PCIBusiness
 		string cardNumber;
 		string cardHolder;
 
+//		public  override string BureauURL
+//		{
+//			get { return "https://test.oppwa.com/v1"; }
+//		}
+
 		public string   Currency
 		{
 			get { return Tools.NullToString(currency); }
@@ -72,7 +77,7 @@ namespace PCIBusiness
 			byte   err = 0;
 			int    ret = 10;
 //			string url = "https://test.oppwa.com/v1";
-			string url = bureauURL;
+			string url = BureauURL;
 			strResult  = "";
 			payRef     = "";
 			resultCode = "999.999.888";
@@ -96,7 +101,7 @@ namespace PCIBusiness
 				if ( payment.TokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 				{
 					ret                             = 30;
-					request                         = (HttpWebRequest)HttpWebRequest.Create(payment.TokenizerURL);
+					request                         = (HttpWebRequest)HttpWebRequest.Create(payment.TokenizerURL+"/TransparentGatewayAPI/Detokenize");
 					request.Headers["TX_URL"]       = url;
 					request.Headers["TX_TokenExID"] = payment.TokenizerID;  // "4311038889209736";
 					request.Headers["TX_APIKey"]    = payment.TokenizerKey; // "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
@@ -230,14 +235,14 @@ namespace PCIBusiness
 					pURL = payment.ProviderURL;
 				else
 				//	pURL = "https://test.oppwa.com/v1/registrations";
-					pURL = bureauURL + "/registrations";
+					pURL = BureauURL + "/registrations";
 
 				ret = 20;
 
 				if ( payment.TokenizerURL.Length > 0 ) // The TOKENIZER/THIRD PARTY (TokenEx)
-					tURL = payment.TokenizerURL;
-				else if ( bureauCodeTokenizer == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
-					tURL = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
+					tURL = payment.TokenizerURL + "/TransparentGatewayAPI/Detokenize";
+//				else if ( bureauCodeTokenizer == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+//					tURL = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
 				else
 				{
 					Tools.LogInfo("TransactionPeach.CardPaymentThirdParty/20","Unknown Third Party Tokenizer (" + bureauCodeTokenizer + "), data=" + xmlSent,221);
@@ -437,7 +442,7 @@ namespace PCIBusiness
 
 			try
 			{
-				string         url               = bureauURL + "/threeDSecure/" + transID + "?entityId=8ac7a4c772b77ddf0172b7ed1cd206df";
+				string         url               = BureauURL + "/threeDSecure/" + transID + "?entityId=8ac7a4c772b77ddf0172b7ed1cd206df";
 				HttpWebRequest request           = (HttpWebRequest)HttpWebRequest.Create(url);
 				request.Method                   = "GET";
 				request.Headers["Authorization"] = "Bearer OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";

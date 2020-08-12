@@ -73,6 +73,8 @@ namespace PCIBusiness
 
 			try
 			{
+				if ( url.Length < 1 )
+					url = BureauURL;
 				if ( ! url.ToUpper().EndsWith("WSDL") )
 					url = url + "/service/PayUAPI?wsdl";
 

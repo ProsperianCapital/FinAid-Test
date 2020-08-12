@@ -14,6 +14,7 @@ namespace PCIBusiness
 		private X509Certificate2Collection certs;
 		private string                     xmlHeader;
 		private string                     tranStatus;
+		private string                     nsURL;
 
 		public  bool Successful
 		{
@@ -31,7 +32,7 @@ namespace PCIBusiness
 //
 //				xmlSent = xmlHeader.Replace("#TransRef#",Tools.XMLSafe(payment.MerchantReference))
 //				        + "<s:Body>"
-//				        + "<AddCardRequest xmlns='http://www.ecentricswitch.co.za/paymentgateway/v1'>"
+//				        + "<AddCardRequest xmlns='" + nsURL + "'>"
 //				        +	"<MerchantID>" + Tools.XMLSafe(payment.ProviderKey) + "</MerchantID>"
 //				        +	"<MerchantUserID>" + Tools.XMLSafe(payment.ProviderUserID) + "</MerchantUserID>"
 //				        +	"<Card>"
@@ -55,7 +56,7 @@ namespace PCIBusiness
 //					ret      = 400;
 //					xmlSent  = xmlHeader.Replace("#TransRef#",Tools.XMLSafe(payment.MerchantReference))
 //					         + "<s:Body xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>"
-//					         + "<PaymentRequest xmlns='http://www.ecentricswitch.co.za/paymentgateway/v1'>"
+//					         + "<PaymentRequest xmlns='" + nsURL + "'>"
 //					         +   "<MerchantID>" + Tools.XMLSafe(payment.ProviderKey) + "</MerchantID>"
 //					         +   "<TransactionID>" + Tools.XMLSafe(payment.TransactionID) + "</TransactionID>"
 //					         +   "<OrderNumber>" + Tools.XMLSafe(payment.MerchantReference) + "</OrderNumber>"
@@ -110,7 +111,8 @@ namespace PCIBusiness
 
 				xmlSent  = xmlHeader.Replace("#TransRef#",Tools.XMLSafe(payment.MerchantReference))
 				         + "<s:Body>"
-				         + "<AddCardRequest xmlns='http://www.ecentricswitch.co.za/paymentgateway/v1'>"
+//				         + "<AddCardRequest xmlns='http://www.ecentricswitch.co.za/paymentgateway/v1'>"
+				         + "<AddCardRequest xmlns='" + nsURL + "'>"
 				         +   "<MerchantID>" + Tools.XMLSafe(payment.ProviderKey) + "</MerchantID>"
 				         +   "<MerchantUserID>" + Tools.XMLSafe(payment.ProviderUserID) + "</MerchantUserID>"
 				         +   "<Card>"
@@ -162,7 +164,7 @@ namespace PCIBusiness
 			{
 				xmlSent = xmlHeader.Replace("#TransRef#",Tools.XMLSafe(payment.MerchantReference))
 				        + "<s:Body xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>"
-				        + "<PaymentRequest xmlns='http://www.ecentricswitch.co.za/paymentgateway/v1'>"
+				        + "<PaymentRequest xmlns='" + nsURL + "'>"
 				        +   "<MerchantID>" + Tools.XMLSafe(payment.ProviderKey) + "</MerchantID>"
 				        +   "<TransactionID>" + Tools.XMLSafe(payment.TransactionID) + "</TransactionID>"
 				        +   "<OrderNumber>" + Tools.XMLSafe(payment.MerchantReference) + "</OrderNumber>"
@@ -212,7 +214,8 @@ namespace PCIBusiness
 			int ret = 10;
 
 			if ( Tools.NullToString(url).Length == 0 )
-				url = "https://sandbox.ecentricswitch.co.za:8443/paymentgateway/v1";
+				url = BureauURL;
+			//	url = "https://sandbox.ecentricswitch.co.za:8443/paymentgateway/v1";
 
 			try
 			{
@@ -281,9 +284,10 @@ namespace PCIBusiness
 		//	cert1 = X509Certificate.CreateFromCertFile("C:\\Dev\\Prosperian\\Application\\PCIWebRTR\\Certificates\\ECentricRoot.cer");
 		//	cert2 = X509Certificate.CreateFromCertFile("C:\\Dev\\Prosperian\\Application\\PCIWebRTR\\Certificates\\ECentricClient.cer");
 
+			byte   err      = 10;
 			string certName = "";
 			string certPwd  = "";
-			byte   err      = 10;
+			nsURL           = "http://www.ecentricswitch.co.za/paymentgateway/v1";
 
 			base.LoadBureauDetails(Constants.PaymentProvider.Ecentric);
 
@@ -291,7 +295,7 @@ namespace PCIBusiness
 			{
 				xmlHeader  = "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/'>"
 				           + "<s:Header>"
-				           +	"<MessageHeader xmlns='http://www.ecentricswitch.co.za/paymentgateway/v1'>"
+				           +	"<MessageHeader xmlns='" + nsURL + "'>"
 				           +		"<MessageDateTime>" + Tools.DateToString(System.DateTime.Now,7,0)
 				                                      + "T"
 				                                      + Tools.DateToString(System.DateTime.Now,0,5) + "</MessageDateTime>"

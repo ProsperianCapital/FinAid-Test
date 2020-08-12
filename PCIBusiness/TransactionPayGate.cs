@@ -36,7 +36,7 @@ namespace PCIBusiness
 				Tools.LogInfo("TransactionPayGate.GetToken/10","Merchant Ref=" + payment.MerchantReference,10);
 
 				xmlSent = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'"
-				        +                  " xmlns:pay='http://www.paygate.co.za/PayHOST'>"
+				        +                  " xmlns:pay='" + nsURL + "'>"
 				        + "<soapenv:Header />"
 				        + "<soapenv:Body>"
 				        + "<pay:SingleVaultRequest>"
@@ -75,7 +75,7 @@ namespace PCIBusiness
 				Tools.LogInfo("TransactionPayGate.DeleteToken/10","Merchant Ref=" + payment.MerchantReference,10);
 
 				xmlSent = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'"
-				        +                  " xmlns:pay='http://www.paygate.co.za/PayHOST'>"
+				        +                  " xmlns:pay='" + nsURL + "'>"
 				        + "<soapenv:Header />"
 				        + "<soapenv:Body>"
 				        + "<pay:SingleVaultRequest>"
@@ -116,7 +116,7 @@ namespace PCIBusiness
 			{
 				if ( payment.TransactionType == (byte)Constants.TransactionType.ManualPayment ) // Manual card payment
 					xmlSent = "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'"
-					        +                  " xmlns:pay='http://www.paygate.co.za/PayHOST'>"
+					        +                  " xmlns:pay='" + nsURL + "'>"
 					        + "<soapenv:Header />"
 					        + "<soapenv:Body>"
 					        + "<pay:SinglePaymentRequest>"
@@ -186,7 +186,7 @@ namespace PCIBusiness
 		{
 			if ( section == 1 )
 				return "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'"
-				     +                  " xmlns:pay='http://www.paygate.co.za/PayHOST'>"
+				     +                  " xmlns:pay='" + nsURL + "'>"
 				     + "<soapenv:Header />"
 				     + "<soapenv:Body>"
 				     + "<pay:SinglePaymentRequest>"
@@ -220,9 +220,10 @@ namespace PCIBusiness
 			string url    = payment.ProviderURL;
 			keyValuePairs = "";
 
-			if ( Tools.NullToString(url).Length == 0 )
+			if ( Tools.NullToString(url).Length < 1 )
 //				PayGate use the same URL for live and test
-				url = "https://secure.paygate.co.za/payhost/process.trans";
+//				url = "https://secure.paygate.co.za/payhost/process.trans";
+				url = BureauURL;
 
 			try
 			{
