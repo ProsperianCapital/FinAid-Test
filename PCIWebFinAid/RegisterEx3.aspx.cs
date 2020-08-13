@@ -36,12 +36,16 @@ namespace PCIWebFinAid
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
 //	TokenEx card number validation version. 3 configuration variables are needed in Web.Config.
-//	The ones below are the test values:
 
 //	<appSettings>
+//	TEST
 //		<add key="TokenEx/Id"     value="4311038889209736" />
 //		<add key="TokenEx/Key"    value="njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I" />
 //		<add key="TokenEx/Script" value="https://test-htp.tokenex.com/iframe/iframe-v3.min.js" />
+//	LIVE
+//		<add key="TokenEx/Id"     value="7244633025631206" />
+//		<add key="TokenEx/Key"    value="mhNAk5YtxnBjDJhaXRTGCv5buBSBdZYghxHiVE4D" />
+//		<add key="TokenEx/Script" value="https://htp.tokenex.com/iframe/iframe-v3.min.js" />
 //	</appSettings>
 
 			SetErrorDetail("",-888);
@@ -658,7 +662,7 @@ namespace PCIWebFinAid
 								paymentMID        = miscList.GetColumn("PaymentBureauUserPassword");
 								paymentKey        = miscList.GetColumn("PaymentBureauUserSaveKey");
 								paymentCurrency   = miscList.GetColumn("TransactionalCurrencyCode");
-//								paymentAmount     = "031"; // miscList.GetColumn("TransactionalAmount");
+								paymentAmount     = "010"; // miscList.GetColumn("TransactionalAmount");
 
 								if ( paymentURL.Length < 1 || paymentMID.Length < 1 || paymentKey.Length < 1 )
 									Tools.LogInfo("RegisterEx3.LoadContractCode",sql+" ->"
@@ -671,23 +675,25 @@ namespace PCIWebFinAid
 									            + ", paymentKey="       +paymentKey
 									            + ", paymentCurrency="  +paymentCurrency,224);
 //	TESTING
-//	TokenEx
-								if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+								if ( ! Tools.SystemIsLive() )
 								{
-//									tokenURL       = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
-									tokenMID       = "4311038889209736";
-									tokenKey       = "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
-//									tokenKey       = "bDjxBnxQFfv7mrFtPJA24sGGbNBYvUF7JMnlNjwq";
-								}
+									if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+									{
+//	TokenEx
+//										tokenURL       = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
+										tokenMID       = "4311038889209736";
+										tokenKey       = "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
+//										tokenKey       = "bDjxBnxQFfv7mrFtPJA24sGGbNBYvUF7JMnlNjwq";
+									}
 //	Peach
-								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
-//								paymentURL        = "https://test.oppwa.com/v1";
-								paymentMID        = "8ac7a4c772b77ddf0172b7ed1cd206df";
-								paymentKey        = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
+									bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
+//									paymentURL        = "https://test.oppwa.com/v1";
+									paymentMID        = "8ac7a4c772b77ddf0172b7ed1cd206df";
+									paymentKey        = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
 //	Transaction
-								paymentCurrency   = "ZAR";
-								paymentAmount     = "010";
+									paymentCurrency   = "ZAR";
 //	TESTING
+								}
 
 								ViewState["BureauCodeToken"]   = bureauCodeToken;
 								ViewState["BureauCodePayment"] = bureauCodePayment;
