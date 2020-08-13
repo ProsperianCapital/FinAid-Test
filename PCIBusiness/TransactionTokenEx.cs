@@ -238,6 +238,7 @@ namespace PCIBusiness
 			string timeStamp = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
 			string payLoad   = payment.ProviderUserID + "|" + timeStamp + "|" + txScheme;
 			string authKey   = Tools.GenerateHMAC(payLoad,payment.ProviderKey);
+			string url       = ( Tools.SystemIsLive() ? "https://" : "https://test-" ) + "htp.tokenex.com/api/sdk/TokenizeWithCVV";
 			xmlSent          = Tools.JSONPair("tokenexid",        payment.ProviderUserID,1,"{")
 			                 + Tools.JSONPair("timestamp",        timeStamp)
 			                 + Tools.JSONPair("authenticationKey",authKey)
@@ -245,7 +246,8 @@ namespace PCIBusiness
 			                 + Tools.JSONPair("tokenScheme",      txScheme)
 			                 + Tools.JSONPair("cvv",              payment.CardCVV,1,"","}");
 			payToken         = "";
-			int ret          = PostJSON("https://test-htp.tokenex.com/api/sdk/TokenizeWithCVV",payment);
+//			int ret          = PostJSON("https://test-htp.tokenex.com/api/sdk/TokenizeWithCVV",payment);
+			int ret          = PostJSON(url,payment);
 			if ( ret == 0 )
 				payToken = Tools.JSONValue(strResult,"Token");
 			return ret;
