@@ -777,6 +777,7 @@ function TokenSetup()
 	{
 alert('TX/1');
 		txFrame = new TokenEx.Iframe("txIFrameCC", txConfig);
+alert(txFrame);
 		txFrame.on("load", function() { alert('TX/2'); });
 //		txFrame.on("focus", function() { util.log("Iframe focus") });
 //		txFrame.on("blur", function() { util.log("Iframe blur") });

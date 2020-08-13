@@ -1072,10 +1072,10 @@ namespace PCIWebFinAid
 								      +     ",@PaymentBureauToken =" + Tools.DBString(txToken.Value)
 								      +     ",@CardExpieryMonth ="   + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
 								      +     ",@CardExpieryYear ="    + Tools.DBString(WebTools.ListValue(lstCCYear).ToString())
+								      +     ",@CardCVV ="            + Tools.DBString(txtCCCVV.Text)
 								      +     ",@ReferenceNumber ="    + Tools.DBString(txReference.Value,47)
 								      +     ",@TransactionStatusCode = ''"
 								      +     ",@CardTokenisationStatusCode = '007'";
-//								      +     ",@CardCVV ="            + Tools.DBString(txtCCCVV.Text)
 								errNo = miscList.ExecQuery(sql,0,"",false,true);
 								SetErrorDetail("btnNext_Click/30070",(errNo==0?0:30070),"Unable to update card token (sp_TokenEx_Ins_CardToken)",sql);
 							}
