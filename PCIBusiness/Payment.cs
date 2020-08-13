@@ -199,13 +199,13 @@ namespace PCIBusiness
 
 				else if ( Tools.SystemIsLive() )
 				{
-					if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+					if ( tokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 						return "https://api.tokenex.com";
 				}
 
 				else
 				{
-					if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+					if ( tokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 						return "https://test-api.tokenex.com";
 				}
 
