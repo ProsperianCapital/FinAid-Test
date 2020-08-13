@@ -258,8 +258,8 @@ namespace PCIWebFinAid
 				try
 				{
 					sql = "exec sp_Check_IPLocation"
-					    + " @ProductCode=" + Tools.DBString(productCode)
-					    + ",@IPAddress="   + Tools.DBString(WebTools.ClientIPAddress(Request,1));
+					    +     " @ProductCode=" + Tools.DBString(productCode)
+					    +     ",@IPAddress="   + Tools.DBString(WebTools.ClientIPAddress(Request,1));
 					if ( miscList.ExecQuery(sql,0) != 0 )
 						SetErrorDetail("CheckIP",91010,"Internal database error (sp_Check_IPLocation)",sql);
 					else if ( miscList.EOF )
@@ -470,24 +470,24 @@ namespace PCIWebFinAid
 
 //	Title
 					sql   = "exec sp_WP_Get_Title"
-					      + " @LanguageCode="        + Tools.DBString(languageCode)
-					      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
+					      +     " @LanguageCode="        + Tools.DBString(languageCode)
+					      +     ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					logNo = 40;
 					errNo =  WebTools.ListBind(lstTitle,sql,null,"TitleCode","TitleDescription","","");
 					SetErrorDetail("LoadLabels/40",errNo,"Unable to load titles",sql);
 
 //	Employment Status
 					sql   = "exec sp_WP_Get_EmploymentStatus"
-					      + " @LanguageCode="        + Tools.DBString(languageCode)
-					      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
+					      +     " @LanguageCode="        + Tools.DBString(languageCode)
+					      +     ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					logNo = 50;
 					errNo = WebTools.ListBind(lstStatus,sql,null,"EmploymentStatusCode","EmploymentStatusDescription");
 					SetErrorDetail("LoadLabels/50",errNo,"Unable to load employment statuses",sql);
 
 //	Pay Date
 					sql   = "exec sp_WP_Get_PayDate"
-					      + " @LanguageCode="        + Tools.DBString(languageCode)
-					      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
+					      +     " @LanguageCode="        + Tools.DBString(languageCode)
+					      +     ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					logNo = 60;
 					errNo = WebTools.ListBind(lstPayDay,sql,null,"PayDateCode","PayDateDescription");
 					SetErrorDetail("LoadLabels/60",errNo,"Unable to load pay dates",sql);
@@ -505,10 +505,10 @@ namespace PCIWebFinAid
 
 //	But we need the details
 					sql = "exec sp_WP_Get_WebsiteProductOptionA"
-					    + " @ProductOptionCode='0'" // Return ALL product options
-					    + ",@ProductCode="         + Tools.DBString(productCode)
-					    + ",@LanguageCode="        + Tools.DBString(languageCode)
-					    + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
+					    +     " @ProductOptionCode='0'" // Return ALL product options
+					    +     ",@ProductCode="         + Tools.DBString(productCode)
+					    +     ",@LanguageCode="        + Tools.DBString(languageCode)
+					    +     ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					int    opt;
 					string F = "";
 					logNo    = 70;
@@ -525,9 +525,9 @@ namespace PCIWebFinAid
 
 //	Payment Method
 					sql   = "exec sp_WP_Get_PaymentMethod"
-					      + " @ProductCode="         + Tools.DBString(productCode)
-					      + ",@LanguageCode="        + Tools.DBString(languageCode)
-					      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
+					      +     " @ProductCode="         + Tools.DBString(productCode)
+					      +     ",@LanguageCode="        + Tools.DBString(languageCode)
+					      +     ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					logNo = 80;
 					errNo = WebTools.ListBind(lstPayment,sql,null,"PaymentMethodCode","PaymentMethodDescription");
 					SetErrorDetail("LoadLabels/80",errNo,"Unable to load payment methods",sql);
@@ -766,8 +766,8 @@ namespace PCIWebFinAid
 					if ( errNo == 0 && pageNo == 5 )
 					{
 						sql   = "exec WP_ContractApplicationC"
-						      +     " @RegistrationPage ='5'"
-						      +     ",@ContractCode     =" + Tools.DBString(contractCode);
+						      +     " @RegistrationPage = '5'"
+						      +     ",@ContractCode =" + Tools.DBString(contractCode);
 						errNo = miscList.ExecQuery(sql,0);
 						SetErrorDetail("btnNext_Click/30025",errNo,"Unable to update final information (pageNo=5)",sql);
 					}			
@@ -780,10 +780,10 @@ namespace PCIWebFinAid
 						{
 							int h = Tools.StringToInt(txtIncome.Text,true);
 							sql   = "exec sp_WP_Get_ProductOptionA"
-							      + " @ProductCode ="         + Tools.DBString(productCode)
-							      + ",@LanguageCode ="        + Tools.DBString(languageCode)
-							      + ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode)
-							      + ",@Income ="              + h.ToString();
+							      +     " @ProductCode ="         + Tools.DBString(productCode)
+							      +     ",@LanguageCode ="        + Tools.DBString(languageCode)
+							      +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode)
+							      +     ",@Income ="              + h.ToString();
 							errNo = WebTools.ListBind(lstOptions,sql,null,"ProductOptionCode","ProductOptionDescription");
 							SetErrorDetail("btnNext_Click/30030",errNo,"Unable to obtain product options",sql);
 						}
@@ -1015,8 +1015,8 @@ namespace PCIWebFinAid
 
 							errNo = 30200;
 							sql   = "exec sp_WP_Get_ProductEmail"
-							      + " @ProductCode="  + Tools.DBString(productCode)
-							      + ",@LanguageCode=" + Tools.DBString(languageCode);
+							      +     " @ProductCode="  + Tools.DBString(productCode)
+							      +     ",@LanguageCode=" + Tools.DBString(languageCode);
 							if ( miscList.ExecQuery(sql,0) == 0 )
 								if ( miscList.EOF )
 									errNo = 30210;
