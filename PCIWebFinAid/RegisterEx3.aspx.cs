@@ -44,7 +44,7 @@ namespace PCIWebFinAid
 //		<add key="TokenEx/Script" value="https://test-htp.tokenex.com/iframe/iframe-v3.min.js" />
 //	LIVE
 //		<add key="TokenEx/Id"     value="7244633025631206" />
-//		<add key="TokenEx/Key"    value="mhNAk5YtxnBjDJhaXRTGCv5buBSBdZYghxHiVE4D" />
+//		<add key="TokenEx/Key"    value="" />
 //		<add key="TokenEx/Script" value="https://htp.tokenex.com/iframe/iframe-v3.min.js" />
 //	</appSettings>
 
@@ -55,7 +55,6 @@ namespace PCIWebFinAid
 			pnl3d.Visible   = false;
 //			lblRefresh.Text = "";
 //			lbl3d.Text      = "";
-//			tokenExMode     = Tools.StringToInt(Tools.ConfigValue("TokenEx/Mode"));
 
 			if ( Page.IsPostBack )
 			{
@@ -903,7 +902,7 @@ namespace PCIWebFinAid
 
 			if ( pageNo < 1 )
 			{
-				SetErrorDetail("btnNext_Click",30010,"Page numbering error","The internal page number is " + pageNo.ToString());
+				SetErrorDetail("btnNext_Click/30010",30010,"Page numbering error","The internal page number is " + pageNo.ToString());
 				return;
 			}
 			if ( pageNo > 180 ) // Testing
@@ -997,6 +996,7 @@ namespace PCIWebFinAid
 								lblTx.Text          = WebTools.JavaScriptSource("TokenSetup()");
 //	[TESTING]
 //								txConcatenatedString.Value = data;
+								Tools.LogInfo("RegisterEx3.btnNext_Click/30035","TX Id="+txID.Value+", TX Key="+apiKey+", data="+data,233);
 //	[TESTING]
 							}
 //	TokenEx End
@@ -1026,7 +1026,7 @@ namespace PCIWebFinAid
 							                      +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
 
 							string w = " (looking for ProductOption="+productOption+" and PaymentMethod="+payMethod+")";
-							Tools.LogInfo("RegisterEx3.btnNext_Click/50",sql+w,logDebug);
+							Tools.LogInfo("RegisterEx3.btnNext_Click/30040",sql+w,logDebug);
 
 							if ( miscList.ExecQuery(sql,0) == 0 )
 								while ( ! miscList.EOF )
@@ -1037,7 +1037,7 @@ namespace PCIWebFinAid
 									       miscList.GetColumn("PaymentMethodCode").ToUpper() == payMethod.ToUpper()  )   ||
 									       miscList.GetColumn("PaymentMethodCode") == "*" )
 									{
-										Tools.LogInfo("RegisterEx3.btnNext_Click/51",w+" (match)",logDebug);
+										Tools.LogInfo("RegisterEx3.btnNext_Click/30045",w+" (match)",logDebug);
 										lblCCMandate.Text = miscList.GetColumn("CollectionMandateText",0);
 										int k             = lblCCMandate.Text.IndexOf("\n"); // Do NOT use Environment.NewLine here!
 										if ( k > 0 && lblCCMandate.Text.Length > k+1 )
@@ -1049,12 +1049,12 @@ namespace PCIWebFinAid
 										lblp6Mandate.Text     = lblCCMandate.Text;
 										break;
 									}
-									Tools.LogInfo("RegisterEx3.btnNext_Click/52",w,logDebug);
+									Tools.LogInfo("RegisterEx3.btnNext_Click/30050",w,logDebug);
 									miscList.NextRow();
 								}
 
 							if ( lblCCMandate.Text.Length < 1 )
-								SetErrorDetail("btnNext_Click/30040",30040,"Unable to retrieve collection mandate",sql+" (looking for ProductOption="+productOption+" and PaymentMethod="+payMethod+"). SQL failed or returned no data or<br />the CollectionMandateText column was missing/empty/NULL");
+								SetErrorDetail("btnNext_Click/30060",30045,"Unable to retrieve collection mandate",sql+" (looking for ProductOption="+productOption+" and PaymentMethod="+payMethod+"). SQL failed or returned no data or<br />the CollectionMandateText column was missing/empty/NULL");
 						}
 						else if ( pageNo == 6 || pageNo > 180 )
 						{
@@ -1062,7 +1062,7 @@ namespace PCIWebFinAid
 							      +     " @RegistrationPage = '5'"
 							      +     ",@ContractCode =" + Tools.DBString(contractCode);
 							errNo = miscList.ExecQuery(sql,0,"",false,true);
-							SetErrorDetail("btnNext_Click/30050",(errNo==0?0:30050),"Unable to update information (WP_ContractApplicationC)",sql);
+							SetErrorDetail("btnNext_Click/30065",(errNo==0?0:30065),"Unable to update information (WP_ContractApplicationC)",sql);
 
 							if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 							{
@@ -1078,7 +1078,7 @@ namespace PCIWebFinAid
 								      +     ",@TransactionStatusCode = ''"
 								      +     ",@CardTokenisationStatusCode = '007'";
 								errNo = miscList.ExecQuery(sql,0,"",false,true);
-								SetErrorDetail("btnNext_Click/30053",(errNo==0?0:30053),"Unable to update card token (sp_TokenEx_Ins_CardToken)",sql);
+								SetErrorDetail("btnNext_Click/30070",(errNo==0?0:30070),"Unable to update card token (sp_TokenEx_Ins_CardToken)",sql);
 							}
 							lbl100325.Text = "";
 							sql = "exec sp_WP_Get_WebsiteProductOptionA"
@@ -1087,16 +1087,16 @@ namespace PCIWebFinAid
 							    +     ",@LanguageCode ="        + Tools.DBString(languageCode)
 							    +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
 							if ( miscList.ExecQuery(sql,0) != 0 )
-								SetErrorDetail("btnNext_Click/30060",30060,"Internal database error (sp_WP_Get_WebsiteProductOptionA)",sql);
+								SetErrorDetail("btnNext_Click/30060",30080,"Internal database error (sp_WP_Get_WebsiteProductOptionA)",sql);
 							else if ( miscList.EOF )
-								SetErrorDetail("btnNext_Click/30061",30061,"No product option data returned (sp_WP_Get_WebsiteProductOptionA)",sql);
+								SetErrorDetail("btnNext_Click/30061",30081,"No product option data returned (sp_WP_Get_WebsiteProductOptionA)",sql);
 							else
 							{
 								lbl100325.Text = miscList.GetColumn("FieldValue");
 								if ( lbl100325.Text.Length > 0 )
 									lbl100325.Text = lbl100325.Text.Replace(Environment.NewLine,"<br />");
 								else
-									SetErrorDetail("btnNext_Click/30062",30062,"Product option data is empty/blank (sp_WP_Get_WebsiteProductOptionA, column 'FieldValue')",sql,2,2);
+									SetErrorDetail("btnNext_Click/30062",30082,"Product option data is empty/blank (sp_WP_Get_WebsiteProductOptionA, column 'FieldValue')",sql,2,2);
 							}
 
 							string refundPolicy       = "";
@@ -1118,7 +1118,7 @@ namespace PCIWebFinAid
 								lblp6CancellationPolicy.Text = cancellationPolicy.Replace(Environment.NewLine,"<br />");
 							}
 							if ( refundPolicy.Length < 1 || moneyBackPolicy.Length < 1 || cancellationPolicy.Length < 1 )
-								SetErrorDetail("btnNext_Click/30080",30080,"Unable to retrieve product policy text",sql);
+								SetErrorDetail("btnNext_Click/30085",30080,"Unable to retrieve product policy text",sql);
 
 							sql = ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) ? txToken.Value : txtCCNumber.Text ).Trim(); // Tokenized as SIXxxxxxxFOUR
 							if ( sql.Length > 6 )
@@ -1321,17 +1321,17 @@ namespace PCIWebFinAid
 														Tools.LogException("RegisterEx3.aspx/84","Mail send failure, errNo=" + errNo.ToString() + " (" + txtEMail.Text+")",ex3);
 												}
 										}
-										SetErrorDetail("btnNext_Click",errNo,"Unable to send confirmation email (5 failed attempts)","");
+										SetErrorDetail("btnNext_Click/30205",errNo,"Unable to send confirmation email (5 failed attempts)","");
 										smtp  = null;
 										errNo = 0;
 									}
 									catch (Exception ex4)
 									{
-										SetErrorDetail("btnNext_Click",errNo,"Unable to send confirmation email (SMTP error)",ex4.Message,2,2,ex4);
+										SetErrorDetail("btnNext_Click/30210",errNo,"Unable to send confirmation email (SMTP error)",ex4.Message,2,2,ex4);
 										errNo = 0;
 									}
 
-							SetErrorDetail("btnNext_Click",errNo,"Unable to send confirmation email (SQL error)",sql);
+							SetErrorDetail("btnNext_Click/30215",errNo,"Unable to send confirmation email (SQL error)",sql);
 							pnl3d.Visible = true;
 
 //	This does not postback but does a redirect. ViewState is lost!
@@ -1344,11 +1344,11 @@ namespace PCIWebFinAid
 				catch (Exception ex5)
 				{
 					if ( ex5.Message != "XYZ" )
-						SetErrorDetail("btnNext_Click",errNo,"Internal database error ; please try again later",ex5.Message,2,2,ex5);
+						SetErrorDetail("btnNext_Click/30320",errNo,"Internal database error ; please try again later",ex5.Message,2,2,ex5);
 				}
 
 			if ( lblError.Text.Length == 0 && errNo + pdfErr > 0 )
-				SetErrorDetail("btnNext_Click",30330,"Internal error ; please try again later","errNo=" + errNo.ToString() + "<br />pdfErr=" + pdfErr.ToString());
+				SetErrorDetail("btnNext_Click/30330",30330,"Internal error ; please try again later","errNo=" + errNo.ToString() + "<br />pdfErr=" + pdfErr.ToString());
 
 			if ( lblError.Text.Length == 0 ) // No errors, can continue
 			{
