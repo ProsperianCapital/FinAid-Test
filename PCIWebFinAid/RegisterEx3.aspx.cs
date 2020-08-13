@@ -987,7 +987,7 @@ namespace PCIWebFinAid
 //	[TESTING]
 								string apiKey       = Tools.ConfigValue("TokenEx/Key");
 								txID.Value          = Tools.ConfigValue("TokenEx/Id");
-								txOrigin.Value      = Request.Url.GetLeftPart(UriPartial.Authority);
+								txOrigin.Value      = Request.Url.GetLeftPart(UriPartial.Authority) + ",https://www.eservsecure.com";
 								txTimestamp.Value   = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
 //								txTokenScheme.Value = "sixTOKENfour";
 								string data         = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
@@ -995,7 +995,13 @@ namespace PCIWebFinAid
 								lblTx.Text          = WebTools.JavaScriptSource("TokenSetup()");
 //	[TESTING]
 //								txConcatenatedString.Value = data;
-								Tools.LogInfo("RegisterEx3.btnNext_Click/30035","TX Id="+txID.Value+", TX Key="+apiKey+", data="+data,233);
+								Tools.LogInfo("RegisterEx3.btnNext_Click/30035","Id="+txID.Value
+								                                             +", Key="+apiKey
+								                                             +", Origin="+txOrigin.Value
+								                                             +", TimeStamp="+txTimestamp.Value
+								                                             +", TokenScheme="+txTokenScheme.Value
+								                                             +", Concat="+data
+								                                             +", HMAC="+txHMAC.Value,233);
 //	[TESTING]
 							}
 //	TokenEx End
