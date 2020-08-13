@@ -676,13 +676,12 @@ namespace PCIWebFinAid
 //	TESTING
 								if ( ! Tools.SystemIsLive() )
 								{
+									bureauCodeToken = Tools.BureauCode(Constants.PaymentProvider.TokenEx);
 									if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 									{
 //	TokenEx
-//										tokenURL       = "https://test-api.tokenex.com/TransparentGatewayAPI/Detokenize";
-										tokenMID       = "4311038889209736";
-										tokenKey       = "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
-//										tokenKey       = "bDjxBnxQFfv7mrFtPJA24sGGbNBYvUF7JMnlNjwq";
+										tokenMID = "4311038889209736";
+										tokenKey = "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
 									}
 //	Peach
 									bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
