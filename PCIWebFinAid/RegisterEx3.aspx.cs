@@ -985,10 +985,14 @@ namespace PCIWebFinAid
 //	Mobile API key = bDjxBnxQFfv7mrFtPJA24sGGbNBYvUF7JMnlNjwq
 //	TokenEx Id     = 4311038889209736
 //	[TESTING]
+								string uThis        = Request.Url.GetLeftPart(UriPartial.Authority);
+								string uRefer       = Request.UrlReferrer.GetLeftPart(UriPartial.Authority);
+								if ( uRefer.Length  > 0 && uRefer.ToUpper() != uThis.ToUpper() )
+									uThis            = uRefer + "," + uThis; // Referring URL MUST be first in the list
+								txOrigin.Value      = uThis;
+//								txOrigin.Value      = "https://www.eservsecure.com," + Request.Url.GetLeftPart(UriPartial.Authority);
 								string apiKey       = Tools.ConfigValue("TokenEx/Key");
 								txID.Value          = Tools.ConfigValue("TokenEx/Id");
-//								txOrigin.Value      = Request.Url.GetLeftPart(UriPartial.Authority) + ",https://www.eservsecure.com";
-								txOrigin.Value      = "https://www.eservsecure.com," + Request.Url.GetLeftPart(UriPartial.Authority);
 								txTimestamp.Value   = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
 //								txTokenScheme.Value = "sixTOKENfour";
 								string data         = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
