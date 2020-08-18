@@ -885,7 +885,8 @@ namespace PCIWebFinAid
 						//	This always throws a "thread aborted" exception ... ignore it
 							System.Web.HttpContext.Current.Response.Clear();
 							System.Web.HttpContext.Current.Response.Write(trans.ThreeDSecureHTML);
-							System.Web.HttpContext.Current.Response.End();
+							Context.ApplicationInstance.CompleteRequest();
+						//	System.Web.HttpContext.Current.Response.End();
 						}
 						catch
 						{ }
