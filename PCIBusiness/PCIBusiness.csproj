@@ -70,6 +70,7 @@
     <Compile Include="BaseList.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Mail.cs" />
+    <Compile Include="Message.cs" />
     <Compile Include="MiscData.cs" />
     <Compile Include="MiscList.cs" />
     <Compile Include="Payment.cs" />
@@ -83,6 +84,7 @@
     </Compile>
     <Compile Include="Provider.cs" />
     <Compile Include="Providers.cs" />
+    <Compile Include="SMS.cs" />
     <Compile Include="StdDisposable.cs" />
     <Compile Include="Stock.cs" />
     <Compile Include="StockHistory.cs" />

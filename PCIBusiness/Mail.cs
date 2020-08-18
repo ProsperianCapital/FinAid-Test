@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 namespace PCIBusiness
 {
-	public class Mail : StdDisposable
+	public class Mail : Message
 	{
 		private SmtpClient  smtp;
 		private MailMessage msg;
@@ -64,7 +64,7 @@ namespace PCIBusiness
 			set {	msg.Body = value.Trim(); }
 		}
 
-		public byte Send()
+		public override int Send()
 		{
 			if ( smtp == null )
 				return 10;
@@ -111,8 +111,9 @@ namespace PCIBusiness
 			return 90;
 		}
 
-		public void Clear()
+		public override void Clear()
 		{
+			base.Clear();
 			msg.CC.Clear();
 			msg.Bcc.Clear();
 			msg.To.Clear();
@@ -131,20 +132,27 @@ namespace PCIBusiness
 
 		public Mail()
 		{
+			msg                 = new MailMessage();
 			string smtpServer   = Tools.ConfigValue("SMTP-Server");
 			string smtpUser     = Tools.ConfigValue("SMTP-User");
 			string smtpPassword = Tools.ConfigValue("SMTP-Password");
 			string smtpBCC      = Tools.ConfigValue("SMTP-BCC");
 			int    smtpPort     = Tools.StringToInt(Tools.ConfigValue("SMTP-Port"));
-//			mailSender          = smtpUser;
-			msg                 = new MailMessage();
-			smtp                = new SmtpClient(smtpServer);
 
-			if ( smtpPort > 0 )
-				smtp.Port = smtpPort;
-			smtp.UseDefaultCredentials = false;
-			smtp.Credentials           = new NetworkCredential(smtpUser,smtpPassword);
-//			msg.Sender                 = new MailAddress(smtpUser);
+			if ( smtpServer.Length   == 0 ) smtpServer   = Tools.ConfigValue("SMTP/Server");
+			if ( smtpUser.Length     == 0 ) smtpUser     = Tools.ConfigValue("SMTP/User");
+			if ( smtpPassword.Length == 0 ) smtpPassword = Tools.ConfigValue("SMTP/Password");
+			if ( smtpBCC.Length      == 0 ) smtpBCC      = Tools.ConfigValue("SMTP/BCC");
+			if ( smtpPort            == 0 ) smtpPort     = Tools.StringToInt(Tools.ConfigValue("SMTP/Port"));
+
+			if ( smtpServer.Length > 0 )
+			{
+				smtp = new SmtpClient(smtpServer);
+				if ( smtpPort > 0 )
+					smtp.Port = smtpPort;
+				smtp.UseDefaultCredentials = false;
+				smtp.Credentials           = new NetworkCredential(smtpUser,smtpPassword);
+			}
 		}
 	}
 }
