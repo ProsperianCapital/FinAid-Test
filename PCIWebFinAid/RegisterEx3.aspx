@@ -793,9 +793,9 @@ alert('TX/4');
 		txFrame.load();
 alert('TX/5');
 	}
-	catch (ex)
+	catch (x)
 	{
-		alert(ex.message);
+		alert(x.message);
 	}
 }
 </script>

@@ -221,7 +221,7 @@ namespace PCIWebFinAid
 					             + "<br />&nbsp;&nbsp;Version " + SystemDetails.AppVersion
 					             + "<br />&nbsp;&nbsp;(c) " + PCIBusiness.SystemDetails.Owner
 					             + "<br />&nbsp;&nbsp;<a href='" + x1 + "'>" + x1 + "</a></p></body></html>";
-					byte k = mail.Send();
+					int k = mail.Send();
 					if ( k == 0 )
 						lblError.Text = "Email successfully sent to " + txtData.Text.Trim();
 					else

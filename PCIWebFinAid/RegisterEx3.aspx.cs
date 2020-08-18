@@ -987,7 +987,8 @@ namespace PCIWebFinAid
 //	[TESTING]
 								string apiKey       = Tools.ConfigValue("TokenEx/Key");
 								txID.Value          = Tools.ConfigValue("TokenEx/Id");
-								txOrigin.Value      = Request.Url.GetLeftPart(UriPartial.Authority) + ",https://www.eservsecure.com";
+//								txOrigin.Value      = Request.Url.GetLeftPart(UriPartial.Authority) + ",https://www.eservsecure.com";
+								txOrigin.Value      = "https://www.eservsecure.com," + Request.Url.GetLeftPart(UriPartial.Authority);
 								txTimestamp.Value   = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
 //								txTokenScheme.Value = "sixTOKENfour";
 								string data         = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
