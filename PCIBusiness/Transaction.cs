@@ -177,7 +177,7 @@ namespace PCIBusiness
 			if ( Tools.SystemIsLive() )
 			{
 				if ( bureau == Constants.PaymentProvider.Peach )
-					bureauURL = "https://www.oppwa.com/v1";
+					bureauURL = "https://oppwa.com/v1";
 				else if ( bureau == Constants.PaymentProvider.PayGate )
 					bureauURL = "https://secure.paygate.co.za/payhost/process.trans";
 				else if ( bureau == Constants.PaymentProvider.TokenEx )

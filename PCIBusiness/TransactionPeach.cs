@@ -13,11 +13,6 @@ namespace PCIBusiness
 		string cardNumber;
 		string cardHolder;
 
-//		public  override string BureauURL
-//		{
-//			get { return "https://test.oppwa.com/v1"; }
-//		}
-
 		public string   Currency
 		{
 			get { return Tools.NullToString(currency); }
@@ -234,7 +229,6 @@ namespace PCIBusiness
 				if ( payment.ProviderURL.Length > 0 )  // The PAYMENT provider (Peach)
 					pURL = payment.ProviderURL;
 				else
-				//	pURL = "https://test.oppwa.com/v1/registrations";
 					pURL = BureauURL + "/registrations";
 
 				ret = 20;
