@@ -432,14 +432,24 @@ namespace PCIBusiness
 
 		public int ThreeDSecureCheck(string transID)
 		{
-			int ret = 10;
+		//	Test
+			string entityId = "8ac7a4c772b77ddf0172b7ed1cd206df";
+			string key      = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
+			int    ret      = 10;
+
+			if ( Tools.SystemIsLive() )
+			{
+			//	Live
+				entityId = "8acda4c87292fabb01729dcf96701262";
+				key      = "OGFjZGE0Y2Q3MjkyZjQ2ZjAxNzI5ZGFhYzM3ZjdiN2J8QjhCZHNTNmVhcQ==";
+			}
 
 			try
 			{
-				string         url               = BureauURL + "/threeDSecure/" + transID + "?entityId=8ac7a4c772b77ddf0172b7ed1cd206df";
+				string         url               = BureauURL + "/threeDSecure/" + transID + "?entityId=" + entityId;
 				HttpWebRequest request           = (HttpWebRequest)HttpWebRequest.Create(url);
 				request.Method                   = "GET";
-				request.Headers["Authorization"] = "Bearer OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
+				request.Headers["Authorization"] = "Bearer " + key;
 				using ( HttpWebResponse response = (HttpWebResponse)request.GetResponse() )
 				{
 					ret                     = 60;
