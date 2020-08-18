@@ -33,6 +33,7 @@ namespace PCIWebFinAid
 		{
 			sessionGeneral            = null;
 			Session["SessionGeneral"] = null;
+			Session["BackDoor"]       = null;
 			SessionClearData();
 		}
 
@@ -101,6 +102,20 @@ namespace PCIWebFinAid
 				return 0;
 			}
 
+			if ( ( sessionMode == 4 || sessionMode == 19 ) && sessionGeneral == null )
+			{
+				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
+				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
+					backDoor = Session["BackDoor"].ToString();
+				if ( backDoor != ((int)Constants.SystemPassword.BackDoor).ToString() )
+				{
+					StartOver(10);
+					return 10;
+				}
+				Session["BackDoor"] = backDoor.ToString();
+				sessionMode         = 99;
+			}
+
 			if ( sessionMode == 99 && sessionGeneral == null )
 			{
 				sessionGeneral            = new SessionGeneral();
@@ -110,17 +125,17 @@ namespace PCIWebFinAid
 				ApplicationCode           = "001";
 			}
 
-			else if ( sessionMode == 4 && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )
-			{
-				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
-				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
-					backDoor = Session["BackDoor"].ToString();
-				if ( backDoor != ((int)PCIBusiness.Constants.SystemPassword.BackDoor).ToString() )
-				{
-					StartOver(10);
-					return 10;
-				}
-			}
+//			else if ( ( sessionMode == 4 || sessionMode == 19 ) && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )
+//			{
+//				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
+//				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
+//					backDoor = Session["BackDoor"].ToString();
+//				if ( backDoor != ((int)PCIBusiness.Constants.SystemPassword.BackDoor).ToString() )
+//				{
+//					StartOver(10);
+//					return 10;
+//				}
+//			}
 
 			else if ( sessionMode == 19 && sessionGeneral != null && ! sessionGeneral.AdminUser )
 			{

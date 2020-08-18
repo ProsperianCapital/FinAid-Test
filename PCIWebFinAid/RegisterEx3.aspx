@@ -775,23 +775,23 @@ function TokenSetup()
 
 	try
 	{
-alert('TX/1');
+//		alert('TX/1');
 		txFrame = new TokenEx.Iframe("txIFrameCC", txConfig);
-alert(txFrame);
-		txFrame.on("load", function() { alert('TX/2'); });
+//		alert(txFrame);
+//		txFrame.on("load", function() { alert('TX/2'); });
 //		txFrame.on("focus", function() { util.log("Iframe focus") });
 //		txFrame.on("blur", function() { util.log("Iframe blur") });
 //		txFrame.on("change", function() { txCC = null; });
 		txFrame.on("validate", function (data) { txCC = data; });
 //		txFrame.on("cardTypeChange", function (data) { util.log("Iframe cardTypeChange:" + JSON.stringify(data)); });
-		txFrame.on("tokenize", function (data) { if (data.token) { alert('TX/3'); SetEltValue('lblError','');
+		txFrame.on("tokenize", function (data) { if (data.token) { SetEltValue('lblError','');
 																					  SetEltValue('txToken',data.token);
 																					  SetEltValue('txReference',data.referenceNumber);
 																					  frmRegister.submit(); } });
 		txFrame.on("error", function (data) { SetEltValue('txToken','');SetEltValue('txReference','');SetEltValue('lblError',data.error) }); //major error occured
-alert('TX/4');
+//		alert('TX/4');
 		txFrame.load();
-alert('TX/5');
+//		alert('TX/5');
 	}
 	catch (x)
 	{

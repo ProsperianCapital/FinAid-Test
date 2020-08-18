@@ -42,6 +42,7 @@ namespace PCIWebFinAid
 		{
 			sessionGeneral            = null;
 			Session["SessionGeneral"] = null;
+			Session["BackDoor"]       = null;
 			SessionClearData();
 		}
 
