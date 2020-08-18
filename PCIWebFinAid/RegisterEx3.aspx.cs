@@ -661,7 +661,7 @@ namespace PCIWebFinAid
 								paymentMID        = miscList.GetColumn("PaymentBureauUserPassword");
 								paymentKey        = miscList.GetColumn("PaymentBureauUserSaveKey");
 								paymentCurrency   = miscList.GetColumn("TransactionalCurrencyCode");
-								paymentAmount     = "010"; // miscList.GetColumn("TransactionalAmount");
+								paymentAmount     = "031"; // miscList.GetColumn("TransactionalAmount");
 
 								if ( paymentURL.Length < 1 || paymentMID.Length < 1 || paymentKey.Length < 1 )
 									Tools.LogInfo("RegisterEx3.LoadContractCode",sql+" ->"
@@ -874,7 +874,7 @@ namespace PCIWebFinAid
 				payment.CurrencyCode       = paymentCurrency;
 				payment.PaymentAmount      = Tools.StringToInt(paymentAmount);
 				if ( payment.PaymentAmount < 1 )
-					payment.PaymentAmount   = 100; // 100 cents
+					payment.PaymentAmount   = 031; // 31 cents
 
 				using (TransactionPeach trans = new TransactionPeach())
 					if ( trans.ThreeDSecurePayment(payment) == 0 )
