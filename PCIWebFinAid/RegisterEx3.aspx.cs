@@ -835,6 +835,7 @@ namespace PCIWebFinAid
 							//	This always throws a "thread aborted" exception ... ignore it
 							System.Web.HttpContext.Current.Response.Clear();
 							System.Web.HttpContext.Current.Response.Write(trans.ThreeDSecureHTML);
+							System.Web.HttpContext.Current.Response.Flush();
 							System.Web.HttpContext.Current.Response.End();
 						}
 						catch
@@ -873,7 +874,7 @@ namespace PCIWebFinAid
 				payment.CurrencyCode       = paymentCurrency;
 				payment.PaymentAmount      = Tools.StringToInt(paymentAmount);
 				if ( payment.PaymentAmount < 1 )
-					payment.PaymentAmount   = 031; // 31 cents
+					payment.PaymentAmount   = 100; // 100 cents
 
 				using (TransactionPeach trans = new TransactionPeach())
 					if ( trans.ThreeDSecurePayment(payment) == 0 )
@@ -885,8 +886,9 @@ namespace PCIWebFinAid
 						//	This always throws a "thread aborted" exception ... ignore it
 							System.Web.HttpContext.Current.Response.Clear();
 							System.Web.HttpContext.Current.Response.Write(trans.ThreeDSecureHTML);
-							Context.ApplicationInstance.CompleteRequest();
-						//	System.Web.HttpContext.Current.Response.End();
+							System.Web.HttpContext.Current.Response.Flush();
+							System.Web.HttpContext.Current.Response.End();
+						//	Context.ApplicationInstance.CompleteRequest();
 						}
 						catch
 						{ }
