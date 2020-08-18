@@ -590,7 +590,7 @@ namespace PCIBusiness
 				//	       + "</script>";
 				//	Ver 2
 					d3Form = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
-					       + "<form name='frm3D' action='" + d3URL + "'>" // + "' class='paymentWidgets'>"
+					       + "<form method='POST' name='frm3D' action='" + d3URL + "'>" // + "' class='paymentWidgets'>"
 					       + d3Form
 					       + "</form></body></html>";
 					Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/50","PayRef=" + payRef + ", " + d3Form,221);
