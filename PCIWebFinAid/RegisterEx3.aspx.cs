@@ -1001,12 +1001,12 @@ namespace PCIWebFinAid
 //	[TESTING]
 //								txConcatenatedString.Value = data;
 								Tools.LogInfo("RegisterEx3.btnNext_Click/30035","Id="+txID.Value
-								                                             +", Key="+apiKey
-								                                             +", Origin="+txOrigin.Value
-								                                             +", TimeStamp="+txTimestamp.Value
-								                                             +", TokenScheme="+txTokenScheme.Value
-								                                             +", Concat="+data
-								                                             +", HMAC="+txHMAC.Value,233);
+								                                             +"; Key="+apiKey
+								                                             +"; Origin="+txOrigin.Value
+								                                             +"; TimeStamp="+txTimestamp.Value
+								                                             +"; TokenScheme="+txTokenScheme.Value
+								                                             +"; Concat="+data
+								                                             +"; HMAC="+txHMAC.Value,233);
 //	[TESTING]
 							}
 //	TokenEx End
