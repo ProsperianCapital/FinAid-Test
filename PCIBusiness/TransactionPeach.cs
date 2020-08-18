@@ -574,7 +574,7 @@ namespace PCIBusiness
 				{
 					d3Parms[k,1] = Tools.JSONValue(d3Parm,"name");
 					d3Parms[k,2] = Tools.JSONValue(d3Parm,"value");
-					d3Form       = d3Form + "<input type='text' name='" + d3Parms[k,1] + "' value='" + d3Parms[k,2] + "' />";
+					d3Form       = d3Form + "<input type='hidden' name='" + d3Parms[k,1] + "' value='" + d3Parms[k,2] + "' />";
 					k++;
 					d3Parm       = Tools.JSONValue(strResult,"parameters",k);
 				}
@@ -582,15 +582,15 @@ namespace PCIBusiness
 				if ( d3Form.Length > 0 )
 				{
 				//	Ver 1
-				//	d3Form = "<form name='frm3d' action='" + d3URL + "' class='paymentWidgets'>"
+				//	d3Form = "<form name='frm3D' action='" + d3URL + "' class='paymentWidgets'>"
 				//	       + d3Form
 				//	       + "</form>"
 				//	       + "<script type='text/javascript'>"
-				//	       + "document.frm3d.submit();"
+				//	       + "document.frm3D.submit();"
 				//	       + "</script>";
 				//	Ver 2
 					d3Form = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
-					       + "<form name='frm3D' action='" + d3URL + "' class='paymentWidgets'>"
+					       + "<form name='frm3D' action='" + d3URL + "'>" // + "' class='paymentWidgets'>"
 					       + d3Form
 					       + "</form></body></html>";
 					Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/50","PayRef=" + payRef + ", " + d3Form,221);
