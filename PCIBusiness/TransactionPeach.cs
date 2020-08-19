@@ -433,10 +433,8 @@ namespace PCIBusiness
 		public int ThreeDSecureCheck(string transID)
 		{
 			int    ret      = 10;
-			string key      = Tools.ConfigValue("Peach/Key");
-			string entityId = Tools.ConfigValue("Peach/Id/3d");
-			if ( entityId.Length < 1 )
-				entityId = Tools.ConfigValue("Peach/Id");
+			string key      = Tools.ProviderCredentials("Peach","Key");
+			string entityId = Tools.ProviderCredentials("Peach","Id","3d");
 
 			if ( ! Tools.SystemIsLive() ) // Test
 			{

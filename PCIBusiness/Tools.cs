@@ -820,7 +820,7 @@ namespace PCIBusiness
 
 			if ( logSeverity < 1 )
 			{
-				int h = Tools.StringToInt(Tools.ConfigValue("LogSeverity"));
+				int h = Tools.StringToInt(ConfigValue("LogSeverity"));
 				if ( h > 0 && h < byte.MaxValue )
 					logSeverity = (byte)h;
 				else
@@ -957,6 +957,27 @@ namespace PCIBusiness
 			if ( dateOfBirth.Day > theDate.Day )
 				return diff - 1;
 			return diff;
+		}
+
+//		public static string ProviderId(string providerName,string keySubType="")
+//		{
+//			return ProviderCredentials(providerName,"Id",keySubType);
+//		}
+
+//		public static string ProviderKey(string providerName,string keySubType="")
+//		{
+//			return ProviderCredentials(providerName,"Key",keySubType);
+//		}
+
+		public static string ProviderCredentials(string providerName,string keyType,string keySubType="")
+		{
+			string keyValue = "";
+			string keyName  = providerName + "/" + keyType;
+			if ( keySubType.Length > 0 )
+				keyValue = ConfigValue(keyName+"/"+keySubType);
+			if ( keyValue.Length < 1 )
+				keyValue = ConfigValue(keyName);
+			return keyValue;
 		}
 
 		public static string ConfigValue(string configName)
