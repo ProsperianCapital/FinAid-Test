@@ -85,9 +85,11 @@ namespace PCIBusiness
 			int    ret = 10;
 			string url = payment.ProviderURL;
 
-			if ( Tools.NullToString(url).Length == 0 && ! Tools.SystemIsLive() )
-			//	url = "https://uat-api.nets.com.sg:9065/GW2/TxnReqListener";
+			if ( Tools.NullToString(url).Length == 0 )
 				url = BureauURL;
+
+			if ( Tools.NullToString(url).Length == 0 )
+				return 20;
 
 			ret        = 30;
 			acsUrl     = "";

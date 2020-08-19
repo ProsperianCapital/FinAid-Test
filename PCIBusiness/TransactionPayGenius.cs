@@ -97,11 +97,6 @@ namespace PCIBusiness
 			if ( Tools.NullToString(url).Length == 0 )
 				url = BureauURL;
 
-//				if ( Tools.SystemIsLive() )
-//					url = "https://www.paygenius.co.za";
-//				else
-//					url = "https://developer.paygenius.co.za";
-
 			ret = 20;
 			if ( url.EndsWith("/") )
 				url = url.Substring(0,url.Length-1);

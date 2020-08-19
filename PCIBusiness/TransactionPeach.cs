@@ -98,8 +98,8 @@ namespace PCIBusiness
 					ret                             = 30;
 					request                         = (HttpWebRequest)HttpWebRequest.Create(payment.TokenizerURL+"/TransparentGatewayAPI/Detokenize");
 					request.Headers["TX_URL"]       = url;
-					request.Headers["TX_TokenExID"] = payment.TokenizerID;  // "4311038889209736";
-					request.Headers["TX_APIKey"]    = payment.TokenizerKey; // "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
+					request.Headers["TX_TokenExID"] = payment.TokenizerID;
+					request.Headers["TX_APIKey"]    = payment.TokenizerKey;
 				}
 				else
 					request                         = (HttpWebRequest)HttpWebRequest.Create(url);
@@ -432,16 +432,18 @@ namespace PCIBusiness
 
 		public int ThreeDSecureCheck(string transID)
 		{
-		//	Test
-			string entityId = "8ac7a4c772b77ddf0172b7ed1cd206df";
-			string key      = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
 			int    ret      = 10;
+			string key      = Tools.ConfigValue("Peach/Key");
+			string entityId = Tools.ConfigValue("Peach/Id/3d");
+			if ( entityId.Length < 1 )
+				entityId = Tools.ConfigValue("Peach/Id");
 
-			if ( Tools.SystemIsLive() )
+			if ( ! Tools.SystemIsLive() ) // Test
 			{
-			//	Live
-				entityId = "8acda4c87292fabb01729dcf96701262";
-				key      = "OGFjZGE0Y2Q3MjkyZjQ2ZjAxNzI5ZGFhYzM3ZjdiN2J8QjhCZHNTNmVhcQ==";
+				if ( entityId.Length < 1 )
+					entityId = "8ac7a4c772b77ddf0172b7ed1cd206df";
+				if ( key.Length < 1 )
+					key      = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
 			}
 
 			try
