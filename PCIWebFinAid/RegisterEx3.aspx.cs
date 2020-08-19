@@ -39,12 +39,10 @@ namespace PCIWebFinAid
 
 //	<appSettings>
 //	TEST
-//		<add key="TokenEx/Id"     value="4311038889209736" />
-//		<add key="TokenEx/Key"    value="njSRwZVKotSSbDAZtLBIXYrCznNUx2oOZFMVZp7I" />
+//		<add key="TokenEx/Id"
+//		<add key="TokenEx/Key/Iframe"
 //		<add key="TokenEx/Script" value="https://test-htp.tokenex.com/iframe/iframe-v3.min.js" />
 //	LIVE
-//		<add key="TokenEx/Id"     value="7244633025631206" />
-//		<add key="TokenEx/Key"    value="" />
 //		<add key="TokenEx/Script" value="https://htp.tokenex.com/iframe/iframe-v3.min.js" />
 //	</appSettings>
 
@@ -674,23 +672,25 @@ namespace PCIWebFinAid
 									            + ", paymentKey="       +paymentKey
 									            + ", paymentCurrency="  +paymentCurrency,224);
 //	TESTING
-								if ( ! Tools.SystemIsLive() )
+								if ( ! Tools.SystemIsLive() && bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 								{
-//	TokenEx
-									bureauCodeToken   = Tools.BureauCode(Constants.PaymentProvider.TokenEx);
-									tokenMID          = "4311038889209736";
-									tokenKey          = "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
-//	Peach
-									bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
-									paymentMID        = "8ac7a4c772b77ddf0172b7ed1cd206df";
-									paymentKey        = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
-									paymentCurrency   = "ZAR";
-//	TESTING
+									if ( tokenMID.Length < 1 )
+										tokenMID          = Tools.ProviderCredentials("TokenEx","Id");
+									if ( tokenKey.Length < 1 )
+										tokenKey          = Tools.ProviderCredentials("TokenEx","Key","API");
 								}
-
+								if ( ! Tools.SystemIsLive() && bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.Peach) )
+								{
+									if ( paymentMID.Length < 1 )
+										paymentMID          = Tools.ProviderCredentials("Peach","Id","3d");
+									if ( paymentKey.Length < 1 )
+										paymentKey          = Tools.ProviderCredentials("Peach","Key");
+								}
+								if ( ! Tools.SystemIsLive() && paymentCurrency.Length < 1 )
+									paymentCurrency = "ZAR";
+//	TESTING
 								ViewState["BureauCodeToken"]   = bureauCodeToken;
 								ViewState["BureauCodePayment"] = bureauCodePayment;
-//								ViewState["TokenURL"]          = tokenURL;
 								ViewState["TokenMID"]          = tokenMID;
 								ViewState["TokenKey"]          = tokenKey;
 								ViewState["PaymentURL"]        = paymentURL;
@@ -991,8 +991,8 @@ namespace PCIWebFinAid
 									uThis            = uRefer + "," + uThis; // Referring URL MUST be first in the list
 								txOrigin.Value      = uThis;
 //								txOrigin.Value      = "https://www.eservsecure.com," + Request.Url.GetLeftPart(UriPartial.Authority);
-								string apiKey       = Tools.ConfigValue("TokenEx/Key");
-								txID.Value          = Tools.ConfigValue("TokenEx/Id");
+								txID.Value          = Tools.ProviderCredentials("TokenEx","Id");
+								string apiKey       = Tools.ProviderCredentials("TokenEx","Key","Iframe");
 								txTimestamp.Value   = Tools.DateToString(System.DateTime.Now,5,2).Replace(" ","");
 //								txTokenScheme.Value = "sixTOKENfour";
 								string data         = txID.Value + "|" + txOrigin.Value + "|" + txTimestamp.Value + "|" + txTokenScheme.Value;
