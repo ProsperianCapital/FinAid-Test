@@ -476,7 +476,7 @@ namespace PCIBusiness
 				Tools.LogException("TransactionPeach.ThreeDSecureCheck/199","Ret="+ret.ToString()+", Result="+strResult,ex2);
 			}
 
-			Tools.LogInfo ("TransactionPeach.ThreeDSecureCheck/210","Ret="+ret.ToString()+", Result="+strResult,255);
+			Tools.LogInfo ("TransactionPeach.ThreeDSecureCheck/210","Ret="+ret.ToString()+", Result="+strResult,221);
 
 			resultCode = Tools.JSONValue(strResult,"code");
 			resultMsg  = Tools.JSONValue(strResult,"description");
