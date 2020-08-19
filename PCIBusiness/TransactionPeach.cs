@@ -476,6 +476,8 @@ namespace PCIBusiness
 				Tools.LogException("TransactionPeach.ThreeDSecureCheck/199","Ret="+ret.ToString()+", Result="+strResult,ex2);
 			}
 
+			Tools.LogInfo ("TransactionPeach.ThreeDSecureCheck/210","Ret="+ret.ToString()+", Result="+strResult,255);
+
 			resultCode = Tools.JSONValue(strResult,"code");
 			resultMsg  = Tools.JSONValue(strResult,"description");
 			currency   = Tools.JSONValue(strResult,"currency");
@@ -496,12 +498,16 @@ namespace PCIBusiness
 
 			try
 			{
+				if ( payment.TokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+					xmlSent = "{{{" + Tools.URLString(payment.CardToken) + "}}}";
+				else
+					xmlSent = Tools.URLString(payment.CardNumber);
+
 				d3Form  = "";
 				xmlSent = "entityId="               + Tools.URLString(payment.ProviderUserID)
 				        + "&amount="                + Tools.URLString(payment.PaymentAmountDecimal)
 				        + "&currency="              + Tools.URLString(payment.CurrencyCode)
-//			           + "&paymentBrand="          + Tools.URLString(payment.CardType.ToUpper())
-			           + "&card.number=[XXXX]"
+			           + "&card.number="           + xmlSent
 			           + "&card.holder="           + Tools.URLString(payment.CardName)
 			           + "&card.expiryMonth="      + Tools.URLString(payment.CardExpiryMM)
 			           + "&card.expiryYear="       + Tools.URLString(payment.CardExpiryYYYY)
@@ -510,12 +516,12 @@ namespace PCIBusiness
 				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
 			           + "&shopperResultUrl="      + Tools.URLString(Tools.ConfigValue("SystemURL")+"/RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference));
 
-				if ( payment.TokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
-					xmlSent = xmlSent.Replace("=[XXXX]","={{{" + Tools.URLString(payment.CardToken) + "}}}");
-				//	xmlSent = xmlSent + "{{{" + Tools.URLString(payment.CardToken) + "}}}";
-				else
-					xmlSent = xmlSent.Replace("=[XXXX]","="+Tools.URLString(payment.CardNumber));
-				//	xmlSent = xmlSent + Tools.URLString(payment.CardNumber);
+//				if ( payment.TokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
+//					xmlSent = xmlSent.Replace("=[XXXX]","={{{" + Tools.URLString(payment.CardToken) + "}}}");
+//				//	xmlSent = xmlSent + "{{{" + Tools.URLString(payment.CardToken) + "}}}";
+//				else
+//					xmlSent = xmlSent.Replace("=[XXXX]","="+Tools.URLString(payment.CardNumber));
+//				//	xmlSent = xmlSent + Tools.URLString(payment.CardNumber);
 
 				Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
@@ -600,7 +606,7 @@ namespace PCIBusiness
 				//	       + "</script>";
 				//	Ver 2
 					d3Form = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
-					       + "<form method='POST' name='frm3D' action='" + d3URL + "'>" // + "' class='paymentWidgets'>"
+					       + "<form name='frm3D' method='POST' action='" + d3URL + "'>"
 					       + d3Form
 					       + "</form></body></html>";
 					Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/50","PayRef=" + payRef + ", " + d3Form,221);
@@ -618,7 +624,6 @@ namespace PCIBusiness
 		public TransactionPeach() : base()
 		{
 			d3Form                                = "";
-//			bureauCode                            = Tools.BureauCode(Constants.PaymentProvider.Peach);
 			ServicePointManager.Expect100Continue = true;
 			ServicePointManager.SecurityProtocol  = SecurityProtocolType.Tls12;
 			base.LoadBureauDetails(Constants.PaymentProvider.Peach);
