@@ -821,7 +821,7 @@ namespace PCIWebFinAid
 					payment.PaymentAmount   = 031; // 31 cents
 
 				using (TransactionPeach trans = new TransactionPeach())
-					if (trans.ThreeDSecurePayment(payment) == 0)
+					if ( trans.ThreeDSecurePayment(payment) == 0 )
 						try
 						{
 							//	Ver 1
@@ -835,8 +835,10 @@ namespace PCIWebFinAid
 						}
 						catch
 						{ }
+					else if ( trans.PaymentReference.Length > 0 )
+						Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=288&id=" + trans.PaymentReference);
 					else
-						Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&id=" + trans.PaymentReference);
+						Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=299");
 			}
 		}
 		protected void btn3d_ClickPeachDirect(Object sender, EventArgs e)
