@@ -676,19 +676,14 @@ namespace PCIWebFinAid
 //	TESTING
 								if ( ! Tools.SystemIsLive() )
 								{
-									bureauCodeToken = Tools.BureauCode(Constants.PaymentProvider.TokenEx);
-									if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
-									{
 //	TokenEx
-										tokenMID = "4311038889209736";
-										tokenKey = "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
-									}
+									bureauCodeToken   = Tools.BureauCode(Constants.PaymentProvider.TokenEx);
+									tokenMID          = "4311038889209736";
+									tokenKey          = "54md8h1OmLe9oJwYdp182pCxKF0MUnWzikTZSnOi";
 //	Peach
 									bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Peach);
-//									paymentURL        = "https://test.oppwa.com/v1";
 									paymentMID        = "8ac7a4c772b77ddf0172b7ed1cd206df";
 									paymentKey        = "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
-//	Transaction
 									paymentCurrency   = "ZAR";
 //	TESTING
 								}
