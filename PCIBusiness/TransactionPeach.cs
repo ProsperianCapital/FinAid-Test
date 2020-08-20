@@ -435,6 +435,9 @@ namespace PCIBusiness
 			int    ret      = 10;
 			string key      = Tools.ProviderCredentials("Peach","Key");
 			string entityId = Tools.ProviderCredentials("Peach","Id","3d");
+			strResult       = "";
+			resultCode      = "";
+			resultMsg       = "Internal failure";
 
 			if ( ! Tools.SystemIsLive() ) // Test
 			{
@@ -475,6 +478,9 @@ namespace PCIBusiness
 				Tools.LogInfo     ("TransactionPeach.ThreeDSecureCheck/198","Ret="+ret.ToString()+", Result="+strResult,255);
 				Tools.LogException("TransactionPeach.ThreeDSecureCheck/199","Ret="+ret.ToString()+", Result="+strResult,ex2);
 			}
+
+			if ( strResult == null )
+				strResult = "";
 
 			Tools.LogInfo ("TransactionPeach.ThreeDSecureCheck/210","Ret="+ret.ToString()+", Result="+strResult,221);
 
