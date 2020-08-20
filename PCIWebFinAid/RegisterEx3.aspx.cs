@@ -79,7 +79,7 @@ namespace PCIWebFinAid
 			}
 			else
 			{
-				txScript.Text       = "<script src='" + Tools.ConfigValue("TokenEx/Script") + "'></script>";
+				txScript.Text       = "<script src='" + Tools.ProviderCredentials("TokenEx","Script") + "'></script>";
 				lblJS.Text          = WebTools.JavaScriptSource("NextPage(0,null)");
 				productCode         = WebTools.RequestValueString(Request,"PC");  // ProductCode");
 				languageCode        = WebTools.RequestValueString(Request,"LC");  // LanguageCode");
@@ -659,7 +659,7 @@ namespace PCIWebFinAid
 								paymentMID        = miscList.GetColumn("PaymentBureauUserPassword");
 								paymentKey        = miscList.GetColumn("PaymentBureauUserSaveKey");
 								paymentCurrency   = miscList.GetColumn("TransactionalCurrencyCode");
-								paymentAmount     = "031"; // miscList.GetColumn("TransactionalAmount");
+								paymentAmount     = "100"; // miscList.GetColumn("TransactionalAmount");
 
 								if ( paymentURL.Length < 1 || paymentMID.Length < 1 || paymentKey.Length < 1 )
 									Tools.LogInfo("RegisterEx3.LoadContractCode",sql+" ->"
@@ -776,6 +776,43 @@ namespace PCIWebFinAid
 			return err.Length;
 		}
 
+		private void Send3dForm(Payment payment)
+		{
+			if ( payment == null )
+				return;
+
+		//	Peach
+			payment.BureauCode         = Tools.BureauCode(Constants.PaymentProvider.Peach);
+			payment.ProviderUserID     = paymentMID;
+			payment.ProviderKey        = paymentKey;
+			payment.ProviderURL        = paymentURL;
+			payment.PaymentDescription = "Prosperian Initial Payment";
+			if ( payment.PaymentAmount < 1 )
+				payment.PaymentAmount   = 100; // 100 cents
+			if ( payment.CurrencyCode.Length < 1 )
+				payment.CurrencyCode    = "ZAR";
+
+			using (TransactionPeach trans = new TransactionPeach())
+				if ( trans.ThreeDSecurePayment(payment) == 0 )
+					try
+					{
+					//	Ver 1
+					//	lbl3d.Text = trans.ThreeDSecureHTML;
+					//	Ver 2
+					//	This always throws a "thread aborted" exception ... ignore it
+						System.Web.HttpContext.Current.Response.Clear();
+						System.Web.HttpContext.Current.Response.Write(trans.ThreeDSecureHTML);
+						System.Web.HttpContext.Current.Response.Flush();
+						System.Web.HttpContext.Current.Response.End();
+					}
+					catch
+					{ }
+				else if ( trans.PaymentReference.Length > 0 )
+					Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=288&id=" + trans.PaymentReference);
+				else
+					Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=299");
+		}
+
 		protected void btn3d_Click(Object sender, EventArgs e)
 		{
 //			Payment to Peach via TokenEx if we only have a token
@@ -796,49 +833,22 @@ namespace PCIWebFinAid
 
 			using (Payment payment = new Payment())
 			{
-			//	Peach
-				payment.BureauCode         = Tools.BureauCode(Constants.PaymentProvider.Peach);
-				payment.ProviderUserID     = paymentMID;
-				payment.ProviderKey        = paymentKey;
-				payment.ProviderURL        = paymentURL;
 			//	TokenEx ... might not be needed
-				payment.TokenizerCode      = bureauCodeToken;
-				payment.TokenizerID        = tokenMID;
-				payment.TokenizerKey       = tokenKey;
-			//	payment.TokenizerURL       = tokenURL;
+				payment.TokenizerCode     = bureauCodeToken;
+				payment.TokenizerID       = tokenMID;
+				payment.TokenizerKey      = tokenKey;
 			//	Customer
-				payment.CardNumber         = txtCCNumber.Text;
-				payment.CardToken          = txToken.Value;
-				payment.CardName           = txtCCName.Text;
-				payment.CardExpiryMM       = WebTools.ListValue(lstCCMonth).ToString();
-				payment.CardExpiryYYYY     = WebTools.ListValue(lstCCYear).ToString();
-				payment.CardCVV            = txtCCCVV.Text;
-				payment.MerchantReference  = contractCode;
-				payment.PaymentDescription = "Prosperian Initial Payment";
-				payment.CurrencyCode       = paymentCurrency;
-				payment.PaymentAmount      = Tools.StringToInt(paymentAmount);
-				if ( payment.PaymentAmount < 1 )
-					payment.PaymentAmount   = 031; // 31 cents
+				payment.CardNumber        = txtCCNumber.Text;
+				payment.CardToken         = txToken.Value;
+				payment.CardName          = txtCCName.Text;
+				payment.CardExpiryMM      = WebTools.ListValue(lstCCMonth).ToString();
+				payment.CardExpiryYYYY    = WebTools.ListValue(lstCCYear).ToString();
+				payment.CardCVV           = txtCCCVV.Text;
+				payment.MerchantReference = contractCode;
+				payment.CurrencyCode      = paymentCurrency;
+				payment.PaymentAmount     = Tools.StringToInt(paymentAmount);
 
-				using (TransactionPeach trans = new TransactionPeach())
-					if ( trans.ThreeDSecurePayment(payment) == 0 )
-						try
-						{
-							//	Ver 1
-							//	lbl3d.Text = trans.ThreeDSecureHTML;
-							//	Ver 2
-							//	This always throws a "thread aborted" exception ... ignore it
-							System.Web.HttpContext.Current.Response.Clear();
-							System.Web.HttpContext.Current.Response.Write(trans.ThreeDSecureHTML);
-							System.Web.HttpContext.Current.Response.Flush();
-							System.Web.HttpContext.Current.Response.End();
-						}
-						catch
-						{ }
-					else if ( trans.PaymentReference.Length > 0 )
-						Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=288&id=" + trans.PaymentReference);
-					else
-						Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=299");
+				Send3dForm(payment);
 			}
 		}
 		protected void btn3d_ClickPeachDirect(Object sender, EventArgs e)
@@ -853,44 +863,21 @@ namespace PCIWebFinAid
 
 			using (Payment payment = new Payment())
 			{
-			//	Peach
-				payment.BureauCode         = Tools.BureauCode(Constants.PaymentProvider.Peach);
-				payment.ProviderUserID     = paymentMID;
-				payment.ProviderKey        = paymentKey;
-				payment.ProviderURL        = paymentURL;
-				payment.TokenizerCode      = "";
+			//	Tokenizer (isn't one)
+				payment.TokenizerCode     = "";
+				payment.TokenizerID       = "";
+				payment.TokenizerKey      = "";
 			//	Customer
-				payment.CardNumber         = txtCCNumber.Text;
-			//	payment.CardToken          = 
-				payment.CardName           = txtCCName.Text;
-				payment.CardExpiryMM       = WebTools.ListValue(lstCCMonth).ToString();
-				payment.CardExpiryYYYY     = WebTools.ListValue(lstCCYear).ToString();
-				payment.CardCVV            = txtCCCVV.Text;
-				payment.MerchantReference  = contractCode;
-				payment.PaymentDescription = "Prosperian Initial Payment";
-				payment.CurrencyCode       = paymentCurrency;
-				payment.PaymentAmount      = Tools.StringToInt(paymentAmount);
-				if ( payment.PaymentAmount < 1 )
-					payment.PaymentAmount   = 031; // 31 cents
+				payment.CardNumber        = txtCCNumber.Text;
+				payment.CardName          = txtCCName.Text;
+				payment.CardExpiryMM      = WebTools.ListValue(lstCCMonth).ToString();
+				payment.CardExpiryYYYY    = WebTools.ListValue(lstCCYear).ToString();
+				payment.CardCVV           = txtCCCVV.Text;
+				payment.MerchantReference = contractCode;
+				payment.CurrencyCode      = paymentCurrency;
+				payment.PaymentAmount     = Tools.StringToInt(paymentAmount);
 
-				using (TransactionPeach trans = new TransactionPeach())
-					if ( trans.ThreeDSecurePayment(payment) == 0 )
-						try
-						{
-						//	Ver 1
-						//	lbl3d.Text = trans.ThreeDSecureHTML;
-						//	Ver 2
-						//	This always throws a "thread aborted" exception ... ignore it
-							System.Web.HttpContext.Current.Response.Clear();
-							System.Web.HttpContext.Current.Response.Write(trans.ThreeDSecureHTML);
-							System.Web.HttpContext.Current.Response.Flush();
-							System.Web.HttpContext.Current.Response.End();
-						//	Context.ApplicationInstance.CompleteRequest();
-						}
-						catch
-						{ }
-					else
-						Response.Redirect("RegisterThreeD.aspx?TransRef="+contractCode.ToString()+"&id="+trans.PaymentReference);
+				Send3dForm(payment);
 			}
 		}
 
