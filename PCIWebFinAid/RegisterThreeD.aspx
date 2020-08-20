@@ -12,33 +12,12 @@
 </head>
 <body>
 
-<asp:PlaceHolder runat="server" ID="pnlOK">
 <div class="Header3">
-	Success! Thank You ...
+Thank You ...
 </div>
 <p style="color:red;font-weight:bold">
 <br />
-An initial verification payment has been processed on your account.
-</p><p>
-<asp:Literal runat="server" ID="lblData"></asp:Literal>
+Your application has been successfully received.
 </p>
-</asp:PlaceHolder>
-
-<asp:PlaceHolder runat="server" ID="pnlError">
-<div class="Header3">
-	Oops! Error ...
-</div>
-<p style="color:red;font-weight:bold">
-<br />
-Something seems to have gone wrong.
-</p><p>
-<asp:Literal runat="server" ID="lblErr"></asp:Literal>
-</p>
-</asp:PlaceHolder>
-
-<br />
-<hr />
-<input type="button" class="Button" value="Home" onclick="JavaScript:location.href='RegisterEx3.aspx'" />
-
 </body>
 </html>
