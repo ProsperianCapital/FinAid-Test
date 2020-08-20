@@ -516,13 +516,6 @@ namespace PCIBusiness
 				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
 			           + "&shopperResultUrl="      + Tools.URLString(Tools.ConfigValue("SystemURL")+"/RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference));
 
-//				if ( payment.TokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
-//					xmlSent = xmlSent.Replace("=[XXXX]","={{{" + Tools.URLString(payment.CardToken) + "}}}");
-//				//	xmlSent = xmlSent + "{{{" + Tools.URLString(payment.CardToken) + "}}}";
-//				else
-//					xmlSent = xmlSent.Replace("=[XXXX]","="+Tools.URLString(payment.CardNumber));
-//				//	xmlSent = xmlSent + Tools.URLString(payment.CardNumber);
-
 				Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
 				ret    = PostHTML((byte)Constants.TransactionType.ThreeDSecurePayment,payment);
@@ -605,11 +598,16 @@ namespace PCIBusiness
 				//	       + "document.frm3D.submit();"
 				//	       + "</script>";
 				//	Ver 2
-					d3Form = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
-					       + "<form name='frm3D' method='POST' action='" + d3URL + "'>"
-					       + d3Form
-					       + "</form></body></html>";
-					Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/50","PayRef=" + payRef + ", " + d3Form,221);
+					d3Form     = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
+					           + "<form name='frm3D' method='POST' action='" + d3URL + "'>"
+					           + d3Form
+					           + "</form></body></html>";
+					string sql = "exec sp_WP_PaymentRegister3DSec @ContractCode="    + Tools.DBString(payment.MerchantReference)
+				              +                                ",@ReferenceNumber=" + Tools.DBString(payRef)
+				              +                                ",@Status='77'"; // Means payment pending
+					using (MiscList mList = new MiscList())
+						mList.ExecQuery(sql,0,"",false,true);
+					Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/50","PayRef=" + payRef + "; SQL=" + sql + "; " + d3Form,221);
 					return 0;
 				}
 				Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/60","ResultCode="+ResultCode + ", payRef=" + payRef,221);
