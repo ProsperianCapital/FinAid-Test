@@ -458,7 +458,6 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
-
 /* Not complete
 
 		public static int EMailContractConfirmation(string contractCode,string cardNumber,ControlCollection controls)
