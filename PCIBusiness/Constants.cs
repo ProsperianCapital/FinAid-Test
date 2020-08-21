@@ -186,6 +186,12 @@ namespace PCIBusiness
 			PDF = 32			
 		}
 
+		public enum HttpMethod : int
+		{
+			Get  = 1,
+			Post = 2			
+		}
+
 		public enum TechnicalQuery : byte
 		{
 		//	Values greater than 99 need the system password
