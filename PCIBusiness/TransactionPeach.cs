@@ -498,12 +498,20 @@ namespace PCIBusiness
 			return ret;
 		}
 
-		public int ThreeDSecurePayment(Payment payment)
+		public int ThreeDSecurePayment(Payment payment,Uri postBackURL)
 		{
-			int ret = 10;
+			int    ret = 10;
+			string url = "";
 
 			try
 			{
+				if ( postBackURL == null )
+					url = Tools.ConfigValue("SystemURL");
+				else
+					url = postBackURL.GetLeftPart(UriPartial.Authority);
+				if ( ! url.EndsWith("/") )
+					url = url + "/";
+
 				if ( payment.TokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 					xmlSent = "{{{" + Tools.URLString(payment.CardToken) + "}}}";
 				else
@@ -520,7 +528,8 @@ namespace PCIBusiness
 			           + "&card.cvv="              + Tools.URLString(payment.CardCVV)
 				        + "&merchantTransactionId=" + Tools.URLString(payment.MerchantReference)
 				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
-			           + "&shopperResultUrl="      + Tools.URLString(Tools.ConfigValue("SystemURL")+"/RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference));
+			           + "&shopperResultUrl="      + Tools.URLString(url+"RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference));
+//			           + "&shopperResultUrl="      + Tools.URLString(Tools.ConfigValue("SystemURL")+"/RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference));
 
 				Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
 
