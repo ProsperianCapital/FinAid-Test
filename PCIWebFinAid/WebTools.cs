@@ -11,10 +11,15 @@ namespace PCIWebFinAid
 	{
 		static short debugMode = -888;
 
-		public static string RequestValueString (HttpRequest req,string parmName)
+		public static string RequestValueString (HttpRequest req,string parmName,byte method=0)
 		{
+		//	Method = 0, Anything
+		//	Method = 1, GET
+		//	Method = 2, POST
 			try
 			{
+				if ( method == (byte)PCIBusiness.Constants.HttpMethod.Post ) // Must be HTML form variables
+					return PCIBusiness.Tools.ObjectToString(req.Form[parmName]);
 				return PCIBusiness.Tools.ObjectToString(req[parmName]);
 			}
 			catch

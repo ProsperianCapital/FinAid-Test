@@ -18,7 +18,7 @@ namespace PCIWebFinAid
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
 			if ( Page.IsPostBack )
-				ReturnJSON(101,"Internal error");
+				SendJSON(10001,"Internal error");
 			else
 				QueryData();
 		}
@@ -27,23 +27,23 @@ namespace PCIWebFinAid
 		{
 			try
 			{
-				contractCode     = WebTools.RequestValueString(Request,"ContractCode");
-				string userCode  = WebTools.RequestValueString(Request,"UserCode");
-				string passWord  = WebTools.RequestValueString(Request,"UserPassword");
-				string secretKey = WebTools.RequestValueString(Request,"SecretKey");
-				queryName        = WebTools.RequestValueString(Request,"QueryName");
+				contractCode     = WebTools.RequestValueString(Request,"ContractCode",(byte)Constants.HttpMethod.Post);
+				string userCode  = WebTools.RequestValueString(Request,"UserCode",    (byte)Constants.HttpMethod.Post);
+				string passWord  = WebTools.RequestValueString(Request,"UserPassword",(byte)Constants.HttpMethod.Post);
+				string secretKey = WebTools.RequestValueString(Request,"SecretKey",   (byte)Constants.HttpMethod.Post);
+				queryName        = WebTools.RequestValueString(Request,"QueryName",   (byte)Constants.HttpMethod.Post);
 
 				if ( secretKey != "7e6415a7cb790238fd12430a0ce419b3" )
-					return ReturnJSON(102,"Invalid secret key");
+					return SendJSON(10005,"Invalid secret key");
 
 				if ( contractCode.ToUpper() != "TEST" && userCode.ToUpper() != "TEST" )
-					return ReturnJSON(103,"Invalid contract code");
+					return SendJSON(10002,"Invalid contract code");
 
 				if ( passWord.ToUpper() != "TEST" )
-					return ReturnJSON(104,"Invalid password");
+					return SendJSON(10003,"Invalid password");
 
 				if ( queryName.ToUpper() != "TEST" )
-					return ReturnJSON(105,"Invalid query");
+					return SendJSON(10004,"Invalid query");
 
 				if ( contractCode.Length < 1 )
 					contractCode = userCode;
@@ -61,10 +61,8 @@ namespace PCIWebFinAid
 				            + Tools.JSONPair("AccountNumber","11223344",1,"{")
 				            + Tools.JSONPair("AccountType","Investment")
 				            + Tools.JSONPair("AccountBalance","112093.76",11,"","}") + "]";
-				return ReturnJSON(0,"",json.ToString());
+				return SendJSON(77777,"",json.ToString());
 			}
-			catch (ThreadAbortException)
-			{ }
 			catch (Exception ex)
 			{
 				Tools.LogException("UIApplicationQuery.QueryData","",ex);
@@ -73,7 +71,7 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
-		private int ReturnJSON(int errCode,string errMessage,string json="")
+		private int SendJSON(int errCode,string errMessage,string json="")
 		{
 			contractCode = Tools.NullToString(contractCode);
 			json         = Tools.JSONPair("ErrorCode",errCode.ToString(),1,"{",",")
@@ -93,12 +91,15 @@ namespace PCIWebFinAid
 				Response.Flush();
 				Response.End();
 			}
-			catch (ThreadAbortException)
+			catch
 			{ }
-			catch (Exception ex)
-			{
-				Tools.LogException("UIApplicationQuery.ReturnJSON/2",log,ex);
-			}
+
+//			catch (ThreadAbortException)
+//			{ }
+//			catch (Exception ex)
+//			{
+//				Tools.LogException("UIApplicationQuery.ReturnJSON/2",log,ex);
+//			}
 
 			return errCode;
 		}

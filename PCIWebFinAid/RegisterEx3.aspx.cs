@@ -659,7 +659,7 @@ namespace PCIWebFinAid
 								paymentMID        = miscList.GetColumn("PaymentBureauUserPassword");
 								paymentKey        = miscList.GetColumn("PaymentBureauUserSaveKey");
 								paymentCurrency   = miscList.GetColumn("TransactionalCurrencyCode");
-								paymentAmount     = "100"; // miscList.GetColumn("TransactionalAmount");
+								paymentAmount     = "0"; // miscList.GetColumn("TransactionalAmount");
 
 								if ( paymentURL.Length < 1 || paymentMID.Length < 1 || paymentKey.Length < 1 )
 									Tools.LogInfo("RegisterEx3.LoadContractCode",sql+" ->"
@@ -786,11 +786,18 @@ namespace PCIWebFinAid
 			payment.ProviderUserID     = paymentMID;
 			payment.ProviderKey        = paymentKey;
 			payment.ProviderURL        = paymentURL;
-			payment.PaymentDescription = "Prosperian Initial Payment";
-			if ( payment.PaymentAmount < 1 )
-				payment.PaymentAmount   = 100; // 100 cents
+			payment.PaymentDescription = "CareAssist Verification";
 			if ( payment.CurrencyCode.Length < 1 )
 				payment.CurrencyCode    = "ZAR";
+			if ( payment.PaymentAmount < 1 )
+				if ( payment.CurrencyCode == "USD" ||
+				     payment.CurrencyCode == "GBP" ||
+				     payment.CurrencyCode == "AUD" ||
+				     payment.CurrencyCode == "NZD" ||
+				     payment.CurrencyCode == "EUR" )
+					payment.PaymentAmount   = 010; //  10 cents
+				else
+					payment.PaymentAmount   = 100; // 100 cents
 
 			using (TransactionPeach trans = new TransactionPeach())
 				if ( trans.ThreeDSecurePayment(payment,Request.UrlReferrer) == 0 )
