@@ -265,13 +265,13 @@ namespace PCIWebFinAid
 					}
 					else
 					{
-						Tools.LogInfo     ("RegisterEx3.LoadGoogleAnalytics/1","Failed to load Google UA code");
+						Tools.LogInfo     ("RegisterEx3.LoadGoogleAnalytics/1","Failed to load Google UA code",233);
 						Tools.LogException("RegisterEx3.LoadGoogleAnalytics/2",sql,null);
 					}
 				}
 				catch (Exception ex)
 				{
-					Tools.LogInfo     ("RegisterEx3.LoadGoogleAnalytics/8","Failed to load Google UA code");
+					Tools.LogInfo     ("RegisterEx3.LoadGoogleAnalytics/8","Failed to load Google UA code",233);
 					Tools.LogException("RegisterEx3.LoadGoogleAnalytics/9",sql,ex);
 				}
 		}
@@ -365,9 +365,6 @@ namespace PCIWebFinAid
 							controlID    = "";
 							logNo        = 15;
 							errNo        = 0;
- 
-//							if ( logNo <= 10 )
-//								Tools.LogInfo("RegisterEx3.LoadLabels/15","Row 1, FieldCode="+fieldCode+", FieldValue="+fieldValue,logDebug);
 
 						//	Common
 							if ( fieldCode == "100119" )      // Next
@@ -751,7 +748,7 @@ namespace PCIWebFinAid
 					if ( txtCCNumber.Visible && txtCCNumber.Text.Length < 12 )
 						err = err + "Invalid credit/debit card number<br />";
 				}
-				else if ( txToken.Value.Trim().Length < 12 )
+				else if ( txToken.Value.Length < 12 )
 					err = err + "Invalid credit/debit card number [Token]<br />";
 				txtCCName.Text = txtCCName.Text.Trim();
 				if ( txtCCName.Visible && txtCCName.Text.Length < 3 )
@@ -835,6 +832,11 @@ namespace PCIWebFinAid
 				{
 					string x = "tokenMID="+tokenMID + ", tokenKey="+tokenKey;
 					SetErrorDetail("btn3d_Click",26020,"Invalid token provider MID/Key",x,2,2,null,false,239);
+					return;
+				}
+				else if ( txToken.Value.Length < 12 )
+				{
+					SetErrorDetail("btn3d_Click",26021,"Invalid credit/debit card number","txToken="+txToken.Value,2,2,null,false);
 					return;
 				}
 
@@ -1000,7 +1002,7 @@ namespace PCIWebFinAid
 								                                             +"; TimeStamp="+txTimestamp.Value
 								                                             +"; TokenScheme="+txTokenScheme.Value
 								                                             +"; Concat="+data
-								                                             +"; HMAC="+txHMAC.Value,233);
+								                                             +"; HMAC="+txHMAC.Value,10);
 //	[TESTING]
 							}
 //	TokenEx End

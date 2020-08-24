@@ -723,6 +723,8 @@ SetEltValue('hdnBrowser',navigator.userAgent.toString());
 var txFrame;
 var txCC;
 
+frmRegister.action = 'RegisterEx3.aspx';
+
 function TokenFinish()
 {
 	if ( GetElt('txIFrameCC') == null )
@@ -787,6 +789,7 @@ function TokenSetup()
 		txFrame.on("tokenize", function (data) { if (data.token) { SetEltValue('lblError','');
 																					  SetEltValue('txToken',data.token);
 																					  SetEltValue('txReference',data.referenceNumber);
+																					  frmRegister.action = 'RegisterEx3.aspx?PageNo=6'
 																					  frmRegister.submit(); } });
 		txFrame.on("error", function (data) { SetEltValue('txToken','');SetEltValue('txReference','');SetEltValue('lblError',data.error) }); //major error occured
 //		alert('TX/4');
