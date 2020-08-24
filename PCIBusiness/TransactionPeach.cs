@@ -85,7 +85,8 @@ namespace PCIBusiness
 				if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
 					url = url + "/" + payment.CardToken + "/payments";
 				else if ( transactionType == (byte)Constants.TransactionType.ThreeDSecurePayment )
-					url = url + "/threeDSecure";
+				//	url = url + "/threeDSecure";
+					url = url + "/payments";
 
 				Tools.LogInfo("TransactionPeach.PostHTML/10","URL=" + url + ", URL data=" + xmlSent,221);
 
@@ -449,7 +450,8 @@ namespace PCIBusiness
 
 			try
 			{
-				string         url               = BureauURL + "/threeDSecure/" + transID + "?entityId=" + entityId;
+			//	string         url               = BureauURL + "/threeDSecure/" + transID + "?entityId=" + entityId;
+				string         url               = BureauURL + "/payments/"     + transID + "?entityId=" + entityId;
 				HttpWebRequest request           = (HttpWebRequest)HttpWebRequest.Create(url);
 				request.Method                   = "GET";
 				request.Headers["Authorization"] = "Bearer " + key;
@@ -521,6 +523,7 @@ namespace PCIBusiness
 				xmlSent = "entityId="               + Tools.URLString(payment.ProviderUserID)
 				        + "&amount="                + Tools.URLString(payment.PaymentAmountDecimal)
 				        + "&currency="              + Tools.URLString(payment.CurrencyCode)
+			           + "&paymentType=DB"
 			           + "&card.number="           + xmlSent
 			           + "&card.holder="           + Tools.URLString(payment.CardName)
 			           + "&card.expiryMonth="      + Tools.URLString(payment.CardExpiryMM)
@@ -622,7 +625,7 @@ namespace PCIBusiness
 				              +                                ",@Status='77'"; // Means payment pending
 					using (MiscList mList = new MiscList())
 						mList.ExecQuery(sql,0,"",false,true);
-					Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/50","PayRef=" + payRef + "; SQL=" + sql + "; " + d3Form,221);
+					Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/50","PayRef=" + payRef + "; SQL=" + sql + "; " + d3Form,10);
 					return 0;
 				}
 				Tools.LogInfo("TransactionPeach.ThreeDSecurePayment/60","ResultCode="+ResultCode + ", payRef=" + payRef,221);
