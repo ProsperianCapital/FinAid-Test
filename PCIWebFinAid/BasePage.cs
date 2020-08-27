@@ -93,7 +93,17 @@ namespace PCIWebFinAid
 			string pageName = System.IO.Path.GetFileNameWithoutExtension(Page.AppRelativeVirtualPath);
 			if ( Tools.NullToString(pageName).Length < 1 )
 				pageName = "BasePage";
-			method      = ( Tools.NullToString(method).Length > 0 ? method+"[SetErrorDetail]." : "SetErrorDetail/" ) + errCode.ToString();
+
+//	This will put (eg) "PCIWebFinAid." in front of the page name
+//			try
+//			{
+//				string x = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+//				pageName = x + "." + pageName;
+//			}		
+//			catch
+//			{ }	
+
+			method = ( Tools.NullToString(method).Length > 0 ? method+"[SetErrorDetail]." : "SetErrorDetail/" ) + errCode.ToString();
 			if ( errPriority < 10 )
 				errPriority = 10;
 			Tools.LogInfo(pageName+"."+method,errBrief+" ("+errDetail+")",errPriority);
