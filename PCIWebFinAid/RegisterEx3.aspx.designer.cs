@@ -40,6 +40,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.HiddenField hdnPageNo;
         
         /// <summary>
+        /// hdn3dTries control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdn3dTries;
+        
+        /// <summary>
         /// hdnBrowser control.
         /// </summary>
         /// <remarks>

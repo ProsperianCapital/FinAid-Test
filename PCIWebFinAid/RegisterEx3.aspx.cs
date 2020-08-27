@@ -10,7 +10,7 @@ namespace PCIWebFinAid
 {
 	public partial class RegisterEx3 : BasePage
 	{
-		private   byte   logDebug = 40; // 240;
+		private   byte   logDebug = 40; // Make this bigger to log very detailed debug messages
 		private   string productCode;
 		private   string languageCode;
 		private   string languageDialectCode;
@@ -38,12 +38,10 @@ namespace PCIWebFinAid
 //	TokenEx card number validation version. 3 configuration variables are needed in Web.Config.
 
 //	<appSettings>
-//	TEST
-//		<add key="TokenEx/Id"
-//		<add key="TokenEx/Key/Iframe"
-//		<add key="TokenEx/Script" value="https://test-htp.tokenex.com/iframe/iframe-v3.min.js" />
-//	LIVE
-//		<add key="TokenEx/Script" value="https://htp.tokenex.com/iframe/iframe-v3.min.js" />
+//		<add key="TokenEx/Id" value="x" />
+//		<add key="TokenEx/Key/Iframe" value="x" />
+//		<add key="TokenEx/Script" value="https://test-htp.tokenex.com/iframe/iframe-v3.min.js" /> (TEST)
+//		<add key="TokenEx/Script" value="https://htp.tokenex.com/iframe/iframe-v3.min.js" /> (LIVE)
 //	</appSettings>
 
 			SetErrorDetail("",-888);
@@ -64,7 +62,6 @@ namespace PCIWebFinAid
 				bureauCodeToken     = WebTools.ViewStateString(ViewState,"BureauCodeToken");
 				bureauCodePayment   = WebTools.ViewStateString(ViewState,"BureauCodePayment");
 				paymentURL          = WebTools.ViewStateString(ViewState,"PaymentURL");
-//				tokenURL            = WebTools.ViewStateString(ViewState,"TokenURL");
 				tokenMID            = WebTools.ViewStateString(ViewState,"TokenMID");
 				tokenKey            = WebTools.ViewStateString(ViewState,"TokenKey");
 				paymentMID          = WebTools.ViewStateString(ViewState,"PaymentMID");
@@ -79,12 +76,12 @@ namespace PCIWebFinAid
 			}
 			else
 			{
+				hdn3dTries.Value    = "0";
 				txScript.Text       = "<script src='" + Tools.ProviderCredentials("TokenEx","Script") + "'></script>";
 				lblJS.Text          = WebTools.JavaScriptSource("NextPage(0,null)");
 				productCode         = WebTools.RequestValueString(Request,"PC");  // ProductCode");
 				languageCode        = WebTools.RequestValueString(Request,"LC");  // LanguageCode");
 				languageDialectCode = WebTools.RequestValueString(Request,"LDC"); // LanguageDialectCode");
-//				hdnReferURL.Value   = WebTools.ClientReferringURL(Request,11);
 
 				if ( ! Tools.SystemIsLive() )
 				{
@@ -507,7 +504,7 @@ namespace PCIWebFinAid
 
 					if ( btnNext.Text.Length  < 1 || btnBack2.Text.Length < 1 || btnAgree.Text.Length < 1 )
 						Tools.LogInfo("RegisterEx3.LoadLabels/37","Unable to load some or all button labels ("
-						             + btnNext.Text + "/" + btnBack2.Text + "/" + btnAgree.Text + ")");
+						             + btnNext.Text + "/" + btnBack2.Text + "/" + btnAgree.Text + ")",logDebug);
 
 					if ( btnNext.Text.Length  < 1 ) btnNext.Text  = "NEXT";
 //					if ( btnBack1.Text.Length < 1 ) btnBack1.Text = "BACK";
@@ -795,6 +792,13 @@ namespace PCIWebFinAid
 					payment.PaymentAmount   = 010; //  10 cents
 				else
 					payment.PaymentAmount   = 100; // 100 cents
+
+			int try3d        = Tools.StringToInt(hdn3dTries.Value) + 1;
+			hdn3dTries.Value = try3d.ToString();
+			Tools.LogInfo("RegisterEx3.Send3dForm","Contract " + payment.MerchantReference + " (try " + try3d.ToString() + ")",222);
+
+//			if ( try3d > 1 )
+//				Tools.LogInfo("RegisterEx3.Send3dForm","Contract " + payment.MerchantReference + " (try " + try3d.ToString() + ")",222);
 
 			using (TransactionPeach trans = new TransactionPeach())
 				if ( trans.ThreeDSecurePayment(payment,Request.UrlReferrer) == 0 )

@@ -217,13 +217,13 @@ namespace PCIWebFinAid
 					}
 					else
 					{
-						Tools.LogInfo     ("Register.LoadGoogleAnalytics/1","Failed to load Google UA code");
+						Tools.LogInfo     ("Register.LoadGoogleAnalytics/1","Failed to load Google UA code",logDebug);
 						Tools.LogException("Register.LoadGoogleAnalytics/2",sql,null);
 					}
 				}
 				catch (Exception ex)
 				{
-					Tools.LogInfo     ("Register.LoadGoogleAnalytics/8","Failed to load Google UA code");
+					Tools.LogInfo     ("Register.LoadGoogleAnalytics/8","Failed to load Google UA code",logDebug);
 					Tools.LogException("Register.LoadGoogleAnalytics/9",sql,ex);
 				}
 		}
@@ -461,7 +461,7 @@ namespace PCIWebFinAid
 
 					if ( btnNext.Text.Length  < 1 || btnBack2.Text.Length < 1 || btnAgree.Text.Length < 1 )
 						Tools.LogInfo("Register.LoadLabels/37","Unable to load some or all button labels ("
-						             + btnNext.Text + "/" + btnBack2.Text + "/" + btnAgree.Text + ")");
+						             + btnNext.Text + "/" + btnBack2.Text + "/" + btnAgree.Text + ")",logDebug);
 
 					if ( btnNext.Text.Length  < 1 ) btnNext.Text  = "NEXT";
 //					if ( btnBack1.Text.Length < 1 ) btnBack1.Text = "BACK";
@@ -758,8 +758,6 @@ namespace PCIWebFinAid
 					             + ",@CardCVVCode ="     + Tools.DBString(txtCCCVV.Text,47);
 
 					errNo = miscList.ExecQuery(sql,0);
-
-//					Tools.LogInfo("Register.btnNext_Click/11","errNo="+errNo.ToString()+ " ("+sql+")",244);
 
 					SetErrorDetail("btnNext_Click/30020",errNo,"Unable to update information (pageNo="+pageNo.ToString()+")",sql);
 

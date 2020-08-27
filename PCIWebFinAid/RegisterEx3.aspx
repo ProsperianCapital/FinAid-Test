@@ -243,18 +243,17 @@ function OptSelect(p)
 		else if ( p == 4 )
 			h = 'PRODUCT NAME: GOLD<br /><br />Up To $300 CA$HBack<br />Your annual registration fee is equal to 1<br />month’s subscription fee<br />Monthly Fee: $29.95';
 	SetEltValue('lblOption',h);
-//	SetEltValue('hdnOption',h);
 }
 </script>
 
 <form id="frmRegister" runat="server">
 
 <asp:HiddenField runat="server" id="hdnPageNo" value="1" />
+<asp:HiddenField runat="server" id="hdn3dTries" />
 <asp:HiddenField runat="server" id="hdnBrowser" />
 <asp:HiddenField runat="server" id="hdn100002" />
 <asp:HiddenField runat="server" id="hdn100137" />
 <asp:HiddenField runat="server" id="hdn100187" />
-<!-- HiddenField run@t="server" id="hdnReferURL" -->
 
 <div class="Header3">
 	<asp:Literal runat="server" ID="lblReg"></asp:Literal><asp:Literal runat="server" ID="lblRegConf"></asp:Literal>
@@ -532,6 +531,12 @@ function OptSelect(p)
 <asp:Panel runat="server" id="pnl3d" style="border:1px solid red;background-color:aqua;color:black;padding:10px">
 <script type='text/javascript'>
 var tOut = setTimeout(function(){GetElt('btn3d').click()},6000);
+//	Disable "Back"
+history.pushState(null, document.title, location.href);
+window.addEventListener('popstate', function (event)
+{
+	history.pushState(null, document.title, location.href);
+});
 </script>
 <asp:Literal runat="server" ID="lbl100500">
 PLEASE NOTE: You will shortly be re-directed to your bank's secure payment page to pay your
