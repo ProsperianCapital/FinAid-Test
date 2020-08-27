@@ -107,7 +107,7 @@ namespace PCIBusiness
 
 			try
 			{
-				Tools.LogInfo("TransactionEcentric.GetToken/10","Merchant Ref=" + payment.MerchantReference,199);
+				Tools.LogInfo("TransactionEcentric.GetToken/10","Merchant Ref=" + payment.MerchantReference,10);
 
 				xmlSent  = xmlHeader.Replace("#TransRef#",Tools.XMLSafe(payment.MerchantReference))
 				         + "<s:Body>"
@@ -158,7 +158,7 @@ namespace PCIBusiness
 			payRef   = "";
 //			authCode = "";
 
-			Tools.LogInfo("TransactionEcentric.TokenPayment/10","Merchant Ref=" + payment.MerchantReference,199);
+			Tools.LogInfo("TransactionEcentric.TokenPayment/10","Merchant Ref=" + payment.MerchantReference,10);
 
 			try
 			{
@@ -230,10 +230,10 @@ namespace PCIBusiness
 				webRequest.Accept      = "text/xml";
 				webRequest.Method      = "POST";
 
-				Tools.LogInfo("TransactionEcentric.CallWebService/10","URL=" + url);
+				Tools.LogInfo("TransactionEcentric.CallWebService/10","URL=" + url,10);
 				ret                           = 20;
             webRequest.ClientCertificates = certs;
-				Tools.LogInfo("TransactionEcentric.CallWebService/20","Cert count=" + certs.Count.ToString());
+				Tools.LogInfo("TransactionEcentric.CallWebService/20","Cert count=" + certs.Count.ToString(),10);
 
 				using (Stream stream = webRequest.GetRequestStream())
 				{
@@ -254,7 +254,7 @@ namespace PCIBusiness
 					}
 				}
 
-				Tools.LogInfo("TransactionEcentric.CallWebService/50","XML Rec="+strResult,255);
+				Tools.LogInfo("TransactionEcentric.CallWebService/50","XML Rec="+strResult,50);
 
 				ret        = 150;
 				xmlResult  = new XmlDocument();

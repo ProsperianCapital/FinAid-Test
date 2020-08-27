@@ -116,7 +116,7 @@ namespace PCIBusiness
 			return ret;
 		}
 
-		public static DateTime StringToDate(string theDate,byte dateFormat)
+		public static DateTime StringToDate(string theDate,byte dateFormat,byte timeFormat=0)
 		{
 			DateTime ret = Constants.DateNull;
 			string   dd  = "";
@@ -150,6 +150,14 @@ namespace PCIBusiness
 				if ( theDate.Length == 19 )
 					ss = theDate.Substring(17,2);
 			}
+			else if ( dateFormat == 0 && timeFormat == 3 && theDate.Length == 5 )
+			{
+				dd = "31";
+				mm = "12";
+				yy = "1999";
+				hh = theDate.Substring(0,2);	
+				mi = theDate.Substring(3,2);
+			}
 
 			try
 			{
@@ -174,16 +182,16 @@ namespace PCIBusiness
 
 		public static string DateToString(DateTime whatDate,byte dateFormat,byte timeFormat=0,bool quotes=false)
 		{
+			if ( whatDate.CompareTo(Constants.DateNull) <= 0 )
+				if ( dateFormat == 19 ) // for SQL
+					return "NULL";
+				else
+					return "";
+
 			string theDate = "" ;
 			string theTime = "" ;
 
-			if ( whatDate.CompareTo(Constants.DateNull) <= 0 && dateFormat == 19 ) // for SQL
-				return "NULL";
-
-			if ( whatDate.CompareTo(Constants.DateNull) <= 0 )
-				return "";
-
-			if ( dateFormat == 1 )        // DD/MM/YYYY
+			if       ( dateFormat ==  1 ) // DD/MM/YYYY
 				theDate = whatDate.ToString("dd/MM/yyyy",CultureInfo.InvariantCulture);
 			else if  ( dateFormat ==  2 ) // YYYY/MM/DD
 				theDate = whatDate.ToString("yyyy/MM/dd",CultureInfo.InvariantCulture);
@@ -808,7 +816,7 @@ namespace PCIBusiness
 			LogWrite("LogFileErrors",component,msg);
 		}
 
-		public static void LogInfo(string component, string msg, byte severity=10)
+		public static void LogInfo(string component, string msg, byte severity=10, Object caller=null)
 		{
 		// Use this routine to log debugging/info messages
 		//	To decide which messages to write, adjust the severity below
@@ -828,7 +836,19 @@ namespace PCIBusiness
 			}
 
 			if ( severity >= logSeverity )
-				LogWrite("LogFileInfo",component,msg);
+			{
+				string h = "";
+				if ( caller != null )
+				{
+					h      = caller.ToString();
+					int  k = h.IndexOf(",");
+					if ( k > 0 )
+						h = h.Substring(0,k).Trim();
+					if ( h.Length > 0 )
+						h = h + ".";
+				}
+				LogWrite("LogFileInfo",h+component,msg);
+			}
 		}
 
 		public static bool CheckEMail(string email,byte mode=2)
@@ -958,16 +978,6 @@ namespace PCIBusiness
 				return diff - 1;
 			return diff;
 		}
-
-//		public static string ProviderId(string providerName,string keySubType="")
-//		{
-//			return ProviderCredentials(providerName,"Id",keySubType);
-//		}
-
-//		public static string ProviderKey(string providerName,string keySubType="")
-//		{
-//			return ProviderCredentials(providerName,"Key",keySubType);
-//		}
 
 		public static string ProviderCredentials(string providerName,string keyType,string keySubType="")
 		{

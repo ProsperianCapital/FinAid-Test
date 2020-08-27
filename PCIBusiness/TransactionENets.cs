@@ -44,7 +44,7 @@ namespace PCIBusiness
 			int ret = 10;
 			payRef  = "";
 
-			Tools.LogInfo("TransactionENets.CardPayment/10","Merchant Ref=" + payment.MerchantReference,199);
+			Tools.LogInfo("TransactionENets.CardPayment/10","Merchant Ref=" + payment.MerchantReference,10);
 
 			try
 			{
