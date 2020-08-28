@@ -9,12 +9,17 @@
 <!--#include file="IncludeMainAdmin.htm" -->
 </head>
 <body>
+<form id="frmUI" runat="server">
 <ascx:XHeader runat="server" ID="ascxXHeader" />
-<p style="color:red;font-size:large">
+<br />
+<p style="color:red;font-size:16px">
 Oops, something seems to have gone badly wrong. Please click the link below to continue.
-</p><p>
+</p>
+<br />
+<p>
 <a href="pgLogon.aspx">Propserian BackOffice Login</a>
 </p>
 <ascx:XFooter runat="server" ID="ascxXFooter" />
+</form>
 </body>
 </html>
