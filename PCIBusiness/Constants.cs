@@ -32,7 +32,8 @@ namespace PCIBusiness
 		{
 			Login     = 901317,
 			BackDoor  = 615702,
-			Technical = 463228
+			Technical = 463228,
+			MobileDev = 183206
 		}
 
 		public enum DBColumnStatus : byte
