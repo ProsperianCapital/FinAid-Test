@@ -21,6 +21,7 @@ namespace PCIBusiness
 				return null;
 			}
 
+			string         descr;
 			string         level1   = "X";
 			string         level2   = "X";
 			string         level3   = "X" ;
@@ -33,9 +34,10 @@ namespace PCIBusiness
 
 			while ( ! dbConn.EOF )
 			{
-				if ( dbConn.ColString("Level1ItemDescription") != level1 )
+				descr = dbConn.ColString("Level1ItemDescription");
+				if ( descr.Length > 0 && descr != level1 )
 				{
-					level1      = dbConn.ColString("Level1ItemDescription");
+					level1      = descr;
 					level2      = "X";
 					level3      = "X";
 					level4      = "X";
@@ -44,9 +46,10 @@ namespace PCIBusiness
 					menu1.LoadData(dbConn);
 					menuList.Add(menu1);
 				}
-				if ( dbConn.ColString("Level2ItemDescription") != level2 )
+				descr = dbConn.ColString("Level2ItemDescription");
+				if ( descr.Length > 0 && descr != level2 )
 				{
-					level2      = dbConn.ColString("Level2ItemDescription");
+					level2      = descr;
 					level3      = "X";
 					level4      = "X";
 					menu2       = new MenuItem();
@@ -54,18 +57,20 @@ namespace PCIBusiness
 					menu2.LoadData(dbConn);
 					menu1.SubItems.Add(menu2);
 				}
-				if ( dbConn.ColString("Level3ItemDescription") != level3 )
+				descr = dbConn.ColString("Level3ItemDescription");
+				if ( descr.Length > 0 && descr != level3 )
 				{
-					level3      = dbConn.ColString("Level3ItemDescription");
+					level3      = descr;
 					level4      = "X";
 					menu3       = new MenuItem();
 					menu3.Level = 3;
 					menu3.LoadData(dbConn);
 					menu2.SubItems.Add(menu3);
 				}
-				if ( dbConn.ColString("Level4ItemDescription") != level4 )
+				descr = dbConn.ColString("Level4ItemDescription");
+				if ( descr.Length > 0 && descr != level4 )
 				{
-					level4      = dbConn.ColString("Level4ItemDescription");
+					level4      = descr;
 //					level5      = "X"; // We don't have 5 levels
 					menu4       = new MenuItem();
 					menu4.Level = 4;
