@@ -99,7 +99,7 @@ namespace PCIWebFinAid
 //			}
 			if ( txtID.Text.ToUpper() == "XADMIN" && txtPW.Text.ToUpper() == "X8Y3Z7" )
 			{
-				SessionSave("256","Paul Kilfoil","P");
+				SessionSave("013","Paul Kilfoil","P");
 				WebTools.Redirect(Response,sessionGeneral.StartPage);
 				return;
 			}

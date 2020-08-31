@@ -24,74 +24,87 @@ namespace PCIWebFinAid
 				Tools.LogInfo("LoadMenu/10","userCode="+userCode+", applicationCode="+applicationCode,222);
 				return 10;
 			}
+
+//	Ver 1
+//			List<XMenuItem> menuList;
+//
+//			using (MiscList mList = new MiscList())
+//			{
+//				string sql = "exec sp_Get_BackOfficeMenuB @UserCode="        + Tools.DBString(userCode)
+//				                                      + ",@ApplicationCode=" + Tools.DBString(applicationCode);
+//				int    ret = mList.ExecQuery(sql,0);
+//				if ( ret  != 0 )
+//				{
+//					Tools.LogInfo("LoadMenu/20","ret="+ret.ToString()+" ("+sql+")",222);
+//					return 20;
+//				}
+//				if ( mList.EOF )
+//				{
+//					Tools.LogInfo("LoadMenu/30","No data ("+sql+")",222);
+//					return 30;
+//				}
+//				string    level1 = "X";
+//				string    level2 = "X";
+//				string    level3 = "X";
+//				string    level4 = "X";
+//				XMenuItem menu1  = null;
+//				XMenuItem menu2  = null;
+//				XMenuItem menu3  = null;
+//				XMenuItem menu4  = null;
+//				menuList         = new List<XMenuItem>();
+//
+//				while ( ! mList.EOF )
+//				{
+//					if ( mList.GetColumn("Level1ItemDescription") != level1 )
+//					{
+//						level1 = mList.GetColumn("Level1ItemDescription");
+//						level2 = "X";
+//						level3 = "X";
+//						level4 = "X";
+//						menu1  = new XMenuItem();
+//						menu1.Setup(1,mList);
+//						menuList.Add(menu1);
+//					}
+//					if ( mList.GetColumn("Level2ItemDescription") != level2 )
+//					{
+//						level2 = mList.GetColumn("Level2ItemDescription");
+//						level3 = "X";
+//						level4 = "X";
+//						menu2  = new XMenuItem();
+//						menu2.Setup(2,mList);
+//						menu1.SubItems.Add(menu2);
+//					}
+//					if ( mList.GetColumn("Level3ItemDescription") != level3 )
+//					{
+//						level3 = mList.GetColumn("Level3ItemDescription");
+//						level4 = "X";
+//						menu3  = new XMenuItem();
+//						menu3.Setup(3,mList);
+//						menu2.SubItems.Add(menu3);
+//					}
+//					if ( mList.GetColumn("Level4ItemDescription") != level4 )
+//					{
+//						level4 = mList.GetColumn("Level4ItemDescription");
+//	//					level5 = "X"; // We don't have 5 levels
+//						menu4  = new XMenuItem();
+//						menu4.Setup(4,mList);
+//						menu3.SubItems.Add(menu4);
+//					}
+//					mList.NextRow();
+//				}
+//			}
+
+//	Ver 2
 			List<MenuItem> menuList;
+			using ( MenuItems menuItems = new MenuItems() )
+				menuList = menuItems.LoadMenu(userCode,applicationCode);
 
-			using (MiscList mList = new MiscList())
+			if ( menuList == null || menuList.Count < 1 )
 			{
-				string sql = "exec sp_Get_BackOfficeMenuB @UserCode="        + Tools.DBString(userCode)
-				                                      + ",@ApplicationCode=" + Tools.DBString(applicationCode);
-				int    ret = mList.ExecQuery(sql,0);
-				if ( ret  != 0 )
-				{
-					Tools.LogInfo("LoadMenu/20","ret="+ret.ToString()+" ("+sql+")",222);
-					return 20;
-				}
-				if ( mList.EOF )
-				{
-					Tools.LogInfo("LoadMenu/30","No data ("+sql+")",222);
-					return 30;
-				}
-				string   level1 = "X";
-				string   level2 = "X";
-				string   level3 = "X";
-				string   level4 = "X";
-				MenuItem menu1  = null;
-				MenuItem menu2  = null;
-				MenuItem menu3  = null;
-				MenuItem menu4  = null;
-				menuList        = new List<MenuItem>();
-
-				while ( ! mList.EOF )
-				{
-					if ( mList.GetColumn("Level1ItemDescription") != level1 )
-					{
-						level1 = mList.GetColumn("Level1ItemDescription");
-						level2 = "X";
-						level3 = "X";
-						level4 = "X";
-						menu1  = new MenuItem();
-						menu1.Setup(1,mList);
-						menuList.Add(menu1);
-					}
-					if ( mList.GetColumn("Level2ItemDescription") != level2 )
-					{
-						level2 = mList.GetColumn("Level2ItemDescription");
-						level3 = "X";
-						level4 = "X";
-						menu2  = new MenuItem();
-						menu2.Setup(2,mList);
-						menu1.SubItems.Add(menu2);
-					}
-					if ( mList.GetColumn("Level3ItemDescription") != level3 )
-					{
-						level3 = mList.GetColumn("Level3ItemDescription");
-						level4 = "X";
-						menu3  = new MenuItem();
-						menu3.Setup(3,mList);
-						menu2.SubItems.Add(menu3);
-					}
-					if ( mList.GetColumn("Level4ItemDescription") != level4 )
-					{
-						level4 = mList.GetColumn("Level4ItemDescription");
-//						level5 = "X"; // We don't have 5 levels
-						menu4  = new MenuItem();
-						menu4.Setup(4,mList);
-						menu3.SubItems.Add(menu4);
-					}
-					mList.NextRow();
-				}
+				Tools.LogInfo("LoadMenu/12","Menu is NULL/empty, userCode="+userCode+", applicationCode="+applicationCode,222);
+				return 12;
 			}
-	
+
 			StringBuilder str     = new StringBuilder();
 			StringBuilder sub     = new StringBuilder();
 			StringBuilder mobi    = new StringBuilder();

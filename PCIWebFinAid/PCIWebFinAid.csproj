@@ -271,7 +271,7 @@
     <Compile Include="Menu.ascx.designer.cs">
       <DependentUpon>Menu.ascx</DependentUpon>
     </Compile>
-    <Compile Include="MenuItem.cs" />
+    <Compile Include="XMenuItem.cs" />
     <Compile Include="pgContractLookUp.aspx.cs">
       <DependentUpon>pgContractLookUp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

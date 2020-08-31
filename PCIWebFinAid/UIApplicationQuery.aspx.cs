@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Threading;
+using System.Collections.Generic;
 using PCIBusiness;
 
 //	Developed by:
@@ -234,10 +235,67 @@ namespace PCIWebFinAid
 
 		private int GetMenuStructure()
 		{
-			if ( CheckParameters("App,Country,Lang,Dialect") > 0 )
+			if ( CheckParameters("App,User") > 0 )
 				return errorCode;
 
-			SetError(12308,"Not implemented yet");
+			List<MenuItem> menuList;
+			using ( MenuItems menuItems = new MenuItems() )
+				menuList = menuItems.LoadMenu(userCode,applicationCode);
+
+			if ( menuList == null || menuList.Count < 1 )
+			{
+				SetError(12310,"Internal error retrieving menu structure");
+				return 0;
+			}
+
+			int k = 0;
+			json.Append("\"Menu"+(++k).ToString()+"\":[");
+			foreach (MenuItem m1 in menuList)
+			{
+				json.Append ( Tools.JSONPair("MenuLevel","1",11,"{")
+				            + Tools.JSONPair("MenuDescription",m1.Description)
+				            + Tools.JSONPair("MenuImage",m1.ImageName) );
+				if ( m1.SubItems.Count > 0 )
+				{
+					json.Append("\"Menu"+(++k).ToString()+"\":[");
+					foreach (MenuItem m2 in m1.SubItems)
+					{
+						json.Append ( Tools.JSONPair("MenuLevel","2",11,"{")
+						            + Tools.JSONPair("MenuDescription",m2.Description) );
+						if ( m2.SubItems.Count > 0 )
+						{
+							json.Append("\"Menu"+(++k).ToString()+"\":[");
+							foreach (MenuItem m3 in m2.SubItems)
+							{
+								json.Append ( Tools.JSONPair("MenuLevel","3",11,"{")
+								            + Tools.JSONPair("MenuDescription",m3.Description) );
+								if ( m3.SubItems.Count > 0 )
+								{
+									json.Append("\"Menu"+(++k).ToString()+"\":[");
+									foreach (MenuItem m4 in m3.SubItems)
+										json.Append ( Tools.JSONPair("MenuLevel","4",11,"{")
+										            + Tools.JSONPair("MenuDescription",m4.Description)
+										            + Tools.JSONPair("Url",m4.URL,1,"","},") );
+									JSONAppend("],");
+								}
+								else
+									json.Append ( Tools.JSONPair("Url",m3.URL) );
+								JSONAppend("},");
+							}
+							JSONAppend("],");
+						}
+						else
+							json.Append ( Tools.JSONPair("Url",m2.URL) );
+						JSONAppend("},");
+					}
+					JSONAppend("],");
+				}
+				else
+					json.Append ( Tools.JSONPair("Url",m1.URL) );
+				JSONAppend("},");
+			}
+			JSONAppend("],");
+
 			return 0;
 		}
 
@@ -248,6 +306,13 @@ namespace PCIWebFinAid
 
 			SetError(12309,"Not implemented yet");
 			return 0;
+		}
+
+		private void JSONAppend(string term)
+		{
+			while ( json.ToString().EndsWith(" ") || json.ToString().EndsWith(",") )
+				json.Remove(json.Length-1,1);
+			json.Append(term);
 		}
 
 		private int GetTestData()

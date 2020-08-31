@@ -801,7 +801,7 @@ namespace PCIWebFinAid
 //				Tools.LogInfo("RegisterEx3.Send3dForm","Contract " + payment.MerchantReference + " (try " + try3d.ToString() + ")",222);
 
 			using (TransactionPeach trans = new TransactionPeach())
-				if ( trans.ThreeDSecurePayment(payment,Request.UrlReferrer) == 0 )
+				if ( trans.ThreeDSecurePayment(payment,Request.UrlReferrer,languageCode,languageDialectCode) == 0 )
 					try
 					{
 					//	Ver 1
