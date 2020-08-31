@@ -95,7 +95,7 @@ namespace PCIBusiness
 				if ( url.Contains("/payments") && ! xmlSent.Contains("paymentType=") )
 					xmlSent = xmlSent.Replace("&amount=","&paymentType=DB&amount=");
 
-				Tools.LogInfo("PostHTML/10","URL=" + url + ", URL data=" + xmlSent,221,this);
+				Tools.LogInfo("PostHTML/10","URL=" + url + ", URL data=" + xmlSent,10,this);
 
 				ret                   = 20;
 				byte[]         buffer = Encoding.UTF8.GetBytes(xmlSent);
@@ -148,7 +148,7 @@ namespace PCIBusiness
 				err = 2;
 				if ( strResult == null )
 					strResult = "";
-				Tools.LogInfo     ("PostHTML/198","Ret="+ret.ToString()+", Result="+strResult,255,this);
+				Tools.LogInfo     ("PostHTML/198","Ret="+ret.ToString()+", Result="+strResult,222,this);
 				Tools.LogException("TransactionPeach.PostHTML/199","Ret="+ret.ToString()+", Result="+strResult,ex2);
 			}
 
