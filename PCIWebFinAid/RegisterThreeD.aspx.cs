@@ -27,7 +27,7 @@ namespace PCIWebFinAid
 					sql       = sql + Tools.DBString(peachCode);
 				}
 
-				Tools.LogInfo("RegisterThreeD.PageLoad/5",sql,222);
+//				Tools.LogInfo("RegisterThreeD.PageLoad/5",sql,222);
 
 				using (MiscList mList = new MiscList())
 				{
@@ -50,7 +50,7 @@ namespace PCIWebFinAid
 							 +     ",@LanguageDialectCode=" + Tools.DBString(ldc)
 							 +     ",@Page='S'";
 
-						Tools.LogInfo("RegisterThreeD.PageLoad/10",sql,222);
+//						Tools.LogInfo("RegisterThreeD.PageLoad/10",sql,222);
 
 						ret = mList.ExecQuery(sql,0);
 						if ( ret == 0 && ! mList.EOF )
@@ -58,7 +58,7 @@ namespace PCIWebFinAid
 							{
 								fieldCode  = mList.GetColumn("WebsiteFieldCode");
 								fieldValue = mList.GetColumn("WebsiteFieldValue");
-								Tools.LogInfo("RegisterThreeD.PageLoad/15","WebsiteFieldCode="+fieldCode+" ("+fieldValue+")",222);
+//								Tools.LogInfo("RegisterThreeD.PageLoad/15","WebsiteFieldCode="+fieldCode+" ("+fieldValue+")",222);
 								ctlLabel  = (Literal)FindControl("lbl"+fieldCode);
 								if ( ctlLabel   != null )
 									ctlLabel.Text = fieldValue.Replace(Environment.NewLine,"<br />");
@@ -73,7 +73,7 @@ namespace PCIWebFinAid
 							               + ", Peach Result Code=" + peachCode
 							               + ", Ret="               + ret.ToString()
 							               + ", SQL="               + sql;
-							Tools.LogException("RegisterThreeD.PageLoad/20",sql);
+//							Tools.LogException("RegisterThreeD.PageLoad/20",sql);
 							Tools.LogInfo     ("RegisterThreeD.PageLoad/25",sql,222);
 						}
 					}
