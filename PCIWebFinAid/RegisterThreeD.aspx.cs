@@ -23,7 +23,7 @@ namespace PCIWebFinAid
 				using (TransactionPeach trans = new TransactionPeach())
 				{
 					ret       = trans.ThreeDSecureCheck(peachID);
-					peachCode = Tools.DBString(trans.ResultCode);
+					peachCode = trans.ResultCode;
 					sql       = sql + Tools.DBString(peachCode);
 				}
 
