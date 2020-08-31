@@ -499,7 +499,7 @@ namespace PCIBusiness
 			return ret;
 		}
 
-		public int ThreeDSecurePayment(Payment payment,Uri postBackURL)
+		public int ThreeDSecurePayment(Payment payment,Uri postBackURL,string languageCode="",string languageDialectCode="")
 		{
 			int    ret = 10;
 			string url = "";
@@ -619,9 +619,13 @@ namespace PCIBusiness
 					           + "<form name='frm3D' method='POST' action='" + d3URL + "'>"
 					           + d3Form
 					           + "</form></body></html>";
-					string sql = "exec sp_WP_PaymentRegister3DSec @ContractCode="    + Tools.DBString(payment.MerchantReference)
-				              +                                ",@ReferenceNumber=" + Tools.DBString(payRef)
-				              +                                ",@Status='77'"; // Means payment pending
+					string sql = "exec sp_WP_PaymentRegister3DSecA @ContractCode="    + Tools.DBString(payment.MerchantReference)
+				              +                                 ",@ReferenceNumber=" + Tools.DBString(payRef)
+				              +                                 ",@Status='77'"; // Means payment pending
+					if ( languageCode.Length > 0 )
+						sql = sql + ",@LanguageCode="        + Tools.DBString(languageCode);
+					if ( languageDialectCode.Length > 0 )
+						sql = sql + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 					using (MiscList mList = new MiscList())
 						mList.ExecQuery(sql,0,"",false,true);
 					Tools.LogInfo("ThreeDSecurePayment/50","PayRef=" + payRef + "; SQL=" + sql + "; " + d3Form,10,this);
