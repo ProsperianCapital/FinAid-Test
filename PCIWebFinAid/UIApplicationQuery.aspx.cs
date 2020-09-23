@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Xml;
+using System.Web;
 using System.Text;
 using System.Threading;
 using System.Collections.Generic;
@@ -13,6 +15,10 @@ namespace PCIWebFinAid
 {
 	public partial class UIApplicationQuery : BasePageBackOffice
 	{
+		private byte          inputDataType;
+		private string        inputDataJSON;
+		private XmlDocument   inputDataXML;
+
 		private int           errorCode;
 		private string        errorMsg;
 		private StringBuilder json;
@@ -42,8 +48,40 @@ namespace PCIWebFinAid
 		{
 			try
 			{
-				errorCode           = 0;
-				errorMsg            = "";
+				string secretKey   = "";
+				string contentType = Request.ContentType.Trim().ToUpper();
+				inputDataType      = (byte)Constants.WebDataType.FormPost;
+				errorCode          = 0;
+				errorMsg           = "";
+
+				if ( contentType.Contains("JSON") || contentType.Contains("XML") )
+				{
+					System.IO.Stream strIn = Request.InputStream;
+					int              ch    = strIn.ReadByte();
+					inputDataJSON          = "";
+
+					while ( ch >= 0 )		
+					{
+						inputDataJSON = inputDataJSON + (Convert.ToChar(ch)).ToString();
+						ch            = strIn.ReadByte();
+					}
+					strIn.Close();
+					strIn         = null;
+					inputDataJSON = inputDataJSON.Replace(Environment.NewLine,"");
+
+					if ( contentType.Contains("JSON") )
+						inputDataType = (byte)Constants.WebDataType.JSON;
+
+					else if ( contentType.Contains("XML") )
+						try
+						{
+							inputDataType = (byte)Constants.WebDataType.XML;
+							inputDataXML  = new XmlDocument();
+							inputDataXML.LoadXml(inputDataJSON);
+						}
+						catch
+						{ }
+				}
 
 				queryName           = ParmValue("QueryName");
 				applicationCode     = ParmValue("ApplicationCode");
@@ -51,17 +89,17 @@ namespace PCIWebFinAid
 				languageCode        = ParmValue("LanguageCode");
 				languageDialectCode = ParmValue("LanguageDialectCode");
 				userCode            = ParmValue("UserCode");
-				string secretKey    = ParmValue("SecretKey");
+				secretKey           = ParmValue("SecretKey");
 
-//				string contractCode = ParmValue("ContractCode");
-
-				Tools.LogInfo("UIApplicationQuery.QueryData/10","queryName="+queryName
-				                                             +", applicationCode"+applicationCode
-				                                             +", countryCode"+countryCode
-				                                             +", languageCode"+languageCode
-				                                             +", languageDialectCode"+languageDialectCode
-				                                             +", userCode"+userCode,10);
-
+				if ( inputDataType != (byte)Constants.WebDataType.FormPost )
+					Tools.LogInfo("UIApplicationQuery.QueryData/10","dataType="+inputDataType.ToString()
+					                                             +", queryName="+queryName
+					                                             +", applicationCode"+applicationCode
+					                                             +", countryCode"+countryCode
+					                                             +", languageCode"+languageCode
+					                                             +", languageDialectCode"+languageDialectCode
+					                                             +", userCode"+userCode,220);
+	
 				if ( Tools.SystemLiveTestOrDev() != Constants.SystemMode.Development && secretKey != "7e6415a7cb790238fd12430a0ce419b3" )
 					return SendJSON(10005,"Invalid secret key");
 
@@ -379,21 +417,34 @@ namespace PCIWebFinAid
 			return errCode;
 		}
 
-		private string ParmValue(string parmName)
+		private string ParmValue(string parmName) // ,byte parmType=0,Object parmData=null)
 		{
-			if ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development )
-				return WebTools.RequestValueString(Request,parmName);
-			return WebTools.RequestValueString(Request,parmName,(byte)Constants.HttpMethod.Post);
+			try
+			{
+				if ( inputDataType == (byte)Constants.WebDataType.JSON ) // && ! String.IsNullOrEmpty(inputDataJSON) )
+					return Tools.JSONValue(inputDataJSON,parmName);
+
+				if ( inputDataType == (byte)Constants.WebDataType.XML ) // && inputDataXML != null )
+					return Tools.XMLNode(inputDataXML,parmName);
+
+				if ( inputDataType == (byte)Constants.WebDataType.FormPost )
+					return WebTools.RequestValueString(Request,parmName,(byte)Constants.HttpMethod.Post);
+
+				if ( inputDataType == (byte)Constants.WebDataType.FormGetOrPost ||
+				     Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development )
+					return WebTools.RequestValueString(Request,parmName);
+			}
+			catch (Exception ex)
+			{
+				Tools.LogException("ParmValue","parmName="+parmName+", inputDataType="+inputDataType.ToString(),ex,this);
+			}
+			return "";
 		}
 
 		public override void CleanUp()
 		{
-			json = null;
+			json         = null;
+			inputDataXML = null;
 		}
-
-//		public UIApplicationQuery()
-//		{
-//			json = new StringBuilder();
-//		}
 	}
 }

@@ -73,21 +73,21 @@ namespace PCIWebFinAid
 							               + ", Peach Result Code=" + peachCode
 							               + ", Ret="               + ret.ToString()
 							               + ", SQL="               + sql;
-//							Tools.LogException("RegisterThreeD.PageLoad/20",sql);
-							Tools.LogInfo     ("RegisterThreeD.PageLoad/25",sql,222);
+//							Tools.LogException("PageLoad/20",sql,this);
+							Tools.LogInfo     ("PageLoad/25",sql,222,this);
 						}
 					}
 					else
 					{
-						Tools.LogException("RegisterThreeD.PageLoad/30","Ret="+ret.ToString()+" ("+sql+")");
-						Tools.LogInfo     ("RegisterThreeD.PageLoad/35","Ret="+ret.ToString()+" ("+sql+")",222);
+						Tools.LogException("PageLoad/30","Ret="+ret.ToString()+" ("+sql+")",null,this);
+						Tools.LogInfo     ("PageLoad/35","Ret="+ret.ToString()+" ("+sql+")",222,this);
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("RegisterThreeD.PageLoad/90","",ex);
-				Tools.LogInfo     ("RegisterThreeD.PageLoad/95",ex.Message,222);
+				Tools.LogException("PageLoad/90","",ex,this);
+				Tools.LogInfo     ("PageLoad/95",ex.Message,222,this);
 			}
 		}
 	}

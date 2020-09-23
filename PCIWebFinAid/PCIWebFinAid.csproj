@@ -89,6 +89,7 @@
     <Content Include="LWelcome.aspx" />
     <Content Include="Menu.ascx" />
     <Content Include="UIApplicationQuery.aspx" />
+    <Content Include="UIApplicationTest.aspx" />
     <Content Include="XFooter.ascx" />
     <Content Include="XHeader.ascx" />
     <Content Include="XHome.aspx" />
@@ -270,6 +271,13 @@
     </Compile>
     <Compile Include="Menu.ascx.designer.cs">
       <DependentUpon>Menu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UIApplicationTest.aspx.cs">
+      <DependentUpon>UIApplicationTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UIApplicationTest.aspx.designer.cs">
+      <DependentUpon>UIApplicationTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="XMenuItem.cs" />
     <Compile Include="pgContractLookUp.aspx.cs">
