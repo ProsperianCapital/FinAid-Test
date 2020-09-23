@@ -212,6 +212,22 @@ namespace PCIBusiness
 			ServerVariables =  14
 		}
 
+
+		public enum MessageType : byte
+		{
+			EMail    = 1,
+			SMS      = 2,
+			WhatsApp = 3
+		}
+
+		public enum WebDataType : byte
+		{
+			FormGetOrPost = 1,
+			FormPost      = 2,
+			JSON          = 3,
+			XML           = 4
+		}
+
 //		public enum PaymentType : byte
 //		{
 //			Tokens      = 10,

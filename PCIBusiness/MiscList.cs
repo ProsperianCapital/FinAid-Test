@@ -55,7 +55,7 @@ namespace PCIBusiness
 				returnCode = 39999;
 				if ( returnMessage.Length < 1 )
 					returnMessage = "Internal SQL error/2";
-				Tools.LogException("MiscList.UpdateQuery",sql,ex);
+				Tools.LogException("UpdateQuery",sql,ex,this);
 			}
 			finally
 			{
@@ -88,7 +88,7 @@ namespace PCIBusiness
 			{
 				err = ex.Message;
 			}
-			Tools.LogException("MiscList.ExecQuery",err + " (DataClass=" + dataClass + ", SQL=" + sqlQuery + ")");
+			Tools.LogException("ExecQuery",err + " (DataClass=" + dataClass + ", SQL=" + sqlQuery + ")",null,this);
 			return 0;
 		}
 
@@ -211,7 +211,7 @@ namespace PCIBusiness
 
 			try
 			{
-				Tools.LogInfo("MiscList.Download/10","Create CSV file",severity);
+				Tools.LogInfo("Download/10","Create CSV file",severity,this);
 
 				if ( sql.Length > 0 )
 					if ( ExecQuery(sql,0) != 0 )
@@ -224,7 +224,7 @@ namespace PCIBusiness
 				fileName = Tools.CreateFile(ref fileOut,userCode+"-"+dataName,(format==(int)Constants.DataFormat.CSV?"csv":"pdf"));
 				if ( fileName.Length == 0 || fileOut == null )
 				{
-					Tools.LogException("MiscList.Download/50","Cannot create output file (" + userCode+"-"+dataName + ")");
+					Tools.LogException("Download/50","Cannot create output file (" + userCode+"-"+dataName + ")",null,this);
 					return 50;
 				}
 
@@ -267,7 +267,7 @@ namespace PCIBusiness
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("MiscList.Download/90","",ex);
+				Tools.LogException("Download/90","",ex,this);
 			}
 			finally
 			{

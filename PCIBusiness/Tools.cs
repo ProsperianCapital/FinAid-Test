@@ -668,21 +668,29 @@ namespace PCIBusiness
 			return "C:\\Temp\\Error-X.txt";
 		}
 
-		private static void LogWrite(string settingName, string component, string msg)
+		private static void LogWrite(string settingName, string component, string msg, Object caller)
 		{
 		// Use this routine to log internal errors ...
-			int          k       = 0;
-			string       fName1  = "";
+			string       fNameX  = "";
 			FileStream   fHandle = null;
 			StreamWriter fOut    = null;
 
 			try
 			{
-				fName1 = Tools.LogFileName(settingName,System.DateTime.Now);
-				if ( File.Exists(fName1) )
-					fHandle = File.Open(fName1, FileMode.Append);
+				if ( caller != null )
+				{
+					string h = caller.ToString();
+					int    p = h.IndexOf(",");
+					if ( p > 0 )
+						h = h.Substring(0,p).Trim();
+					if ( h.Length > 0 )
+						component = h + "." + component;
+				}
+				fNameX = Tools.LogFileName(settingName,System.DateTime.Now);
+				if ( File.Exists(fNameX) )
+					fHandle = File.Open(fNameX, FileMode.Append);
 				else
-					fHandle = File.Open(fName1, FileMode.Create);
+					fHandle = File.Open(fNameX, FileMode.Create);
 				fOut = new StreamWriter(fHandle,System.Text.Encoding.Default);
 				fOut.WriteLine( "[v" + SystemDetails.AppVersion + ", " + Tools.DateToString(System.DateTime.Now,1,1,false) + "] " + component + " : " + msg);
 			}
@@ -693,7 +701,7 @@ namespace PCIBusiness
 			catch (Exception ex)
 			{
 				if ( settingName.Length > 0 ) // To prevent recursion ...
-					LogWrite("","Tools.LogWrite","fName = '" + fName1 + "', k = " + k.ToString() + ", Error = " + ex.Message);
+					LogWrite("","Tools.LogWrite","fName = '" + fNameX + "', Error = " + ex.Message,SystemDetails.AppID);
 			}
 			finally
 			{
@@ -802,7 +810,7 @@ namespace PCIBusiness
 //			LogWrite("LogFileErrors",component,msg);
 //		}
 
-		public static void LogException(string component, string msg, Exception ex=null)
+		public static void LogException(string component, string msg, Exception ex=null, Object caller=null)
 		{
 			if ( ex != null )
 			{
@@ -813,7 +821,7 @@ namespace PCIBusiness
 				else
 					msg = ex.Message + msg + " : [" + ex.ToString() + "]";
 			}
-			LogWrite("LogFileErrors",component,msg);
+			LogWrite("LogFileErrors",component,msg,caller);
 		}
 
 		public static void LogInfo(string component, string msg, byte severity=10, Object caller=null)
@@ -836,19 +844,22 @@ namespace PCIBusiness
 			}
 
 			if ( severity >= logSeverity )
-			{
-				string h = "";
-				if ( caller != null )
-				{
-					h      = caller.ToString();
-					int  k = h.IndexOf(",");
-					if ( k > 0 )
-						h = h.Substring(0,k).Trim();
-					if ( h.Length > 0 )
-						h = h + ".";
-				}
-				LogWrite("LogFileInfo",h+component,msg);
-			}
+				LogWrite("LogFileInfo",component,msg,caller);
+
+//			{
+//				string h = "";
+//				if ( caller != null )
+//				{
+//					h      = caller.ToString();
+//					int  k = h.IndexOf(",");
+//					if ( k > 0 )
+//						h = h.Substring(0,k).Trim();
+//					if ( h.Length > 0 )
+//						h = h + ".";
+//				}
+//				LogWrite("LogFileInfo",h+component,msg,caller);
+//			}
+
 		}
 
 		public static bool CheckEMail(string email,byte mode=2)

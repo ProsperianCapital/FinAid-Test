@@ -20,6 +20,8 @@ namespace PCIBusiness
 		protected string messageCode;
 		protected string messageBody;
 
+		private DBConn   dbConn;
+
 		public string ProviderAddress
 		{
 			get { return Tools.NullToString(providerAddress); }
@@ -66,8 +68,40 @@ namespace PCIBusiness
 
 		public abstract int Send();
 
+		public abstract byte LoadProvider();
+
+		public abstract string Recipient { get; }
+
+		public byte UpdateStatus()
+		{
+			if ( messageCode.Length < 1 )
+				return 4;
+
+			try
+			{
+				string sql = "exec sp_eMailStatus_Upd @Key = "           + Tools.DBString(messageCode)
+				           +                        ",@StatusCode = "    + Tools.DBString(resultCode)
+				           +                        ",@StatusMessage = " + Tools.DBString(resultMsg);
+
+				if ( ! Tools.OpenDB(ref dbConn) )
+					return 1;
+				else if ( ! dbConn.Execute(sql,true) )
+					return 2;
+				return 0;
+			}
+			catch (Exception ex)
+			{ }
+			finally
+			{
+				Tools.CloseDB(ref dbConn);
+			}
+			return 3;
+		}
+
 		public virtual void Clear()
 		{
+			Tools.CloseDB(ref dbConn);
+			dbConn       = null;
 			messageBody  = "";
 			messageCode  = "";
 			resultMsg    = "";
@@ -84,6 +118,7 @@ namespace PCIBusiness
 		public Message()
 		{
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+			messageCode                          = "";
 		}
 	}
 }

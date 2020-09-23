@@ -18,6 +18,10 @@ namespace PCIBusiness
 			get { return Tools.NullToString(phoneNumber); }
 			set { phoneNumber = value.Trim().Replace(" ",""); }
 		}
+		public override string Recipient
+		{
+			get { return Tools.NullToString(phoneNumber); }
+		}
 
 		public override void Clear()
 		{
@@ -79,12 +83,12 @@ namespace PCIBusiness
 				if ( resultOK.ToUpper() == "TRUE" )
 					return 0;
 
-				Tools.LogInfo("SMS.Send/199",resultData,229);
+				Tools.LogInfo("Send/199",resultData,229,this);
 				return 199;
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("SMS.Send/301","ret="+ret.ToString()+", "+resultData+"",ex);
+				Tools.LogException("Send/301","ret="+ret.ToString()+", "+resultData+"",ex,this);
 				resultMsg = ex.Message;
 			}
 			return ret;
@@ -133,20 +137,27 @@ namespace PCIBusiness
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("SMS.Send","ret="+resultCode.ToString(),ex);
+				Tools.LogException("SendV1","ret="+resultCode.ToString(),ex,this);
 				resultMsg = ex.Message;
 			}
 			return ret;
 		}
 
+		public override byte LoadProvider()
+		{
+			providerAddress  = "https://platform.clickatell.com/messages/http/send";
+			providerPassword = "E8gSxksaQpmEDZ4OvabmlQ==";
+			return 0;
+		}
+
 		public SMS()
 		{
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-			providerAddress  = "https://platform.clickatell.com/messages/http/send";
+		//	providerAddress  = "https://platform.clickatell.com/messages/http/send";
 		//	providerAddress  = "https://platform.clickatell.com/messages";
 		//	providerAddress  = "https://platform.clickatell.com/v1/message";
 		//	providerPassword = "-03qEod-S2KbSMLcooBm1w==";
-			providerPassword = "E8gSxksaQpmEDZ4OvabmlQ==";
+		//	providerPassword = "E8gSxksaQpmEDZ4OvabmlQ==";
 		//	json             = "{ #messages#: [{#channel#:#sms#,#to#:#@PHONE@#,#content#:#@MSG@#}] }";
 		//	json             = json.Replace("#","\"");
 		}

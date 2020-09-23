@@ -8,14 +8,16 @@ namespace PCIBusiness
 	{
 		private SmtpClient  smtp;
 		private MailMessage msg;
-//		private string      mailSender;
+		private string      provider;
 
 		private void AddMail(MailAddressCollection mailList,string mail)
 		{
 			try
 			{
-				mail = Tools.NullToString(mail);
-				if ( mail.Length > 5 && ( mail.Contains(",") || mail.Contains(";") ) )
+				mail = Tools.NullToString(mail).Replace(" ","").Replace(">","").Replace("<","");
+				if ( mail.Length < 5 || ! mail.Contains("@") )
+				{ }
+				else if ( mail.Contains(",") || mail.Contains(";") )
 				{
 					mail          = mail.Replace(";",",");
 					string[] mArr = mail.Split(',');
@@ -23,18 +25,31 @@ namespace PCIBusiness
 						if ( mArr[k].Length > 5 )
 							mailList.Add(mArr[k].Trim());
 				}
-				else if ( Tools.CheckEMail(mail) )
+				else // if ( Tools.CheckEMail(mail) )
 					mailList.Add(mail);
 			}
 			catch
 			{ }
 		}
 
+		public  string Provider
+		{
+			get { return Tools.NullToString(provider); }
+			set
+			{
+				provider = value.Trim();
+			}
+		}
+
+		public override string Recipient
+		{
+			get { return msg.To.ToString(); }
+		}
+
 		public  string BCC
 		{
 			set { AddMail(msg.Bcc,value); }
 		}
-
 		public  string CC
 		{
 			set { AddMail(msg.CC,value); }
@@ -66,49 +81,74 @@ namespace PCIBusiness
 
 		public override int Send()
 		{
-			if ( smtp == null )
-				return 10;
-			if ( msg == null )
-				return 20;
-			if ( msg.Body.Length < 10 )
-				return 30;
-			if ( msg.To.Count < 1 )
-				return 40;
+			int err = 0;
 
-			if ( msg.Sender == null )
-				try
-				{
-					msg.Sender = new MailAddress(Tools.ConfigValue("SMTP-User"));
-				}
-				catch
-				{ }
+			while ( err == 0 )
+			{
+				err = 10;
+				if ( msg == null )
+					break;
 
-			if ( msg.Sender == null )
-				try
-				{
-					msg.Sender = new MailAddress(Tools.ConfigValue("SMTP-From"));
-				}
-				catch
-				{ }
+				err = 20;
+				if ( smtp == null )
+					LoadProvider();
 
-			if ( msg.From == null )
-				msg.From = msg.Sender;
+				err = 30;
+				if ( smtp == null )
+					break;
 
-			msg.IsBodyHtml = msg.Body.ToUpper().Contains("<HTML");
+				err = 40;
+				if ( msg.Body.Length < 10 )
+					break;
 
-			for ( int q = 1 ; q < 6 ; q++ ) // Try 5 times before quitting with an error
-				try
-				{
-					smtp.Send(msg);
-					return 0;
-				}
-				catch (Exception ex)
-				{
-					if ( q >= 3 ) // Log an error on the 3'rd failed attempt
-						Tools.LogException("Mail.Send","EMail failure (try " + q.ToString() + "), to " + msg.To.ToString(), ex);
-				}
+				err = 50;
+				if ( msg.To.Count < 1 )
+					break;
 
-			return 90;
+//				if ( msg.Sender == null )
+//					try
+//					{
+//						msg.Sender = new MailAddress(smtpSender);
+//					//	msg.Sender = new MailAddress(Tools.ConfigValue("SMTP-From"));
+//					}
+//					catch
+//					{ }
+
+//				if ( msg.Sender == null )
+//					try
+//					{
+//						msg.Sender = new MailAddress(Tools.ConfigValue("SMTP-User"));
+//					}
+//					catch
+//					{ }
+
+				err = 60;
+				if ( msg.From == null )
+					msg.From = msg.Sender;
+
+				err = 70;
+				msg.IsBodyHtml = msg.Body.ToUpper().Contains("<HTML");
+
+				for ( int q = 1 ; q < 6 ; q++ ) // Try 5 times before quitting with an error
+					try
+					{
+						err = 999;
+						smtp.Send(msg);
+						return 0;
+					}
+					catch (Exception ex)
+					{
+						if ( q > 3 ) // Log an error on the 4'th failed attempt
+							Tools.LogException("Send/10","EMail failure (try " + q.ToString() + "), to " + msg.To.ToString(), ex, this);
+					}
+
+				break;
+			}
+
+			if ( err > 0 && err < 999 )
+				Tools.LogException("Send/20","EMail failure (err=" + err.ToString() + "), to " + msg.To.ToString(), null, this);
+
+			return err;
 		}
 
 		public override void Clear()
@@ -123,6 +163,50 @@ namespace PCIBusiness
 			msg.Body    = "";
 		}
 
+		public override byte LoadProvider()
+		{
+			providerAddress   = Tools.ConfigValue("SMTP-Server");
+			providerID        = Tools.ConfigValue("SMTP-User");
+			providerPassword  = Tools.ConfigValue("SMTP-Password");
+			string smtpSender = Tools.ConfigValue("SMTP-Sender");
+//			string smtpBCC    = Tools.ConfigValue("SMTP-BCC");
+			int    smtpPort   = Tools.StringToInt(Tools.ConfigValue("SMTP-Port"));
+
+			if ( providerAddress.Length  == 0 ) providerAddress  = Tools.ConfigValue("SMTP/Server");
+			if ( providerID.Length       == 0 ) providerID       = Tools.ConfigValue("SMTP/User");
+			if ( providerPassword.Length == 0 ) providerPassword = Tools.ConfigValue("SMTP/Password");
+			if ( smtpSender.Length       == 0 ) smtpSender       = Tools.ConfigValue("SMTP/Sender");
+//			if ( smtpBCC.Length          == 0 ) smtpBCC          = Tools.ConfigValue("SMTP/BCC");
+			if ( smtpPort                == 0 ) smtpPort         = Tools.StringToInt(Tools.ConfigValue("SMTP/Port"));
+
+			string smtpData = providerAddress + " / " + providerID
+			                                  + " / " + providerPassword
+			                                  + " / " + smtpSender
+			                                  + " / " + smtpPort;
+
+			if ( providerAddress.Length > 5 && smtpSender.Length > 5 )
+				try
+				{
+					Tools.LogInfo("LoadProvider/10","Loading SMTP ... " + smtpData,222,this);
+					msg.Sender = new MailAddress(smtpSender);
+					smtp       = new SmtpClient(providerAddress);
+					if ( smtpPort > 0 )
+						smtp.Port = smtpPort;
+					smtp.UseDefaultCredentials = false;
+				//	smtp.EnableSsl             = false;
+					smtp.Credentials           = new NetworkCredential(providerID,providerPassword);
+					return 0;
+				}
+				catch (Exception ex)
+				{
+					Tools.LogException("LoadProvider/20",smtpData,ex,this);
+					return 20;
+				}
+
+			Tools.LogException("LoadProvider/30","Invalid SMTP credentials (" + smtpData + ")",null,this);
+			return 30;
+		}
+
 		public override void Close()
 		{
 			Clear();
@@ -132,27 +216,7 @@ namespace PCIBusiness
 
 		public Mail()
 		{
-			msg                 = new MailMessage();
-			string smtpServer   = Tools.ConfigValue("SMTP-Server");
-			string smtpUser     = Tools.ConfigValue("SMTP-User");
-			string smtpPassword = Tools.ConfigValue("SMTP-Password");
-			string smtpBCC      = Tools.ConfigValue("SMTP-BCC");
-			int    smtpPort     = Tools.StringToInt(Tools.ConfigValue("SMTP-Port"));
-
-			if ( smtpServer.Length   == 0 ) smtpServer   = Tools.ConfigValue("SMTP/Server");
-			if ( smtpUser.Length     == 0 ) smtpUser     = Tools.ConfigValue("SMTP/User");
-			if ( smtpPassword.Length == 0 ) smtpPassword = Tools.ConfigValue("SMTP/Password");
-			if ( smtpBCC.Length      == 0 ) smtpBCC      = Tools.ConfigValue("SMTP/BCC");
-			if ( smtpPort            == 0 ) smtpPort     = Tools.StringToInt(Tools.ConfigValue("SMTP/Port"));
-
-			if ( smtpServer.Length > 0 )
-			{
-				smtp = new SmtpClient(smtpServer);
-				if ( smtpPort > 0 )
-					smtp.Port = smtpPort;
-				smtp.UseDefaultCredentials = false;
-				smtp.Credentials           = new NetworkCredential(smtpUser,smtpPassword);
-			}
+			msg = new MailMessage();
 		}
 	}
 }

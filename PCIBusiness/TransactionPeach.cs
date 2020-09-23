@@ -149,7 +149,7 @@ namespace PCIBusiness
 				if ( strResult == null )
 					strResult = "";
 				Tools.LogInfo     ("PostHTML/198","Ret="+ret.ToString()+", Result="+strResult,222,this);
-				Tools.LogException("TransactionPeach.PostHTML/199","Ret="+ret.ToString()+", Result="+strResult,ex2);
+				Tools.LogException("PostHTML/199","Ret="+ret.ToString()+", Result="+strResult,ex2,this);
 			}
 
 			ret        = 200;
@@ -188,11 +188,12 @@ namespace PCIBusiness
 				if ( payToken.Length < 1 && ret == 0 )
 					ret = 247;
 
-				Tools.LogInfo("GetToken/20","ResultCode="+ResultCode + ", payRef=" + payRef + ", payToken=" + payToken,221,this);
+				if ( ret > 0 )
+					Tools.LogInfo("GetToken/20","ResultCode="+ResultCode + ", payRef=" + payRef + ", payToken=" + payToken,221,this);
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("TransactionPeach.GetToken/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+				Tools.LogException("GetToken/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex,this);
 			}
 			return ret;
 		}
@@ -269,7 +270,7 @@ namespace PCIBusiness
 				ret = 30;
 				SetUpPaymentXML(payment,(byte)Constants.TransactionType.CardPaymentThirdParty);
 
-				Tools.LogInfo("CardPaymentThirdParty/30","pURL=" + pURL + ", tURL=" + tURL + ", data=" + xmlSent,221,this);
+				Tools.LogInfo("CardPaymentThirdParty/30","pURL=" + pURL + ", tURL=" + tURL + ", data=" + xmlSent,10,this);
 
 				ret                              = 40;
 				byte[]         buffer            = Encoding.UTF8.GetBytes(xmlSent);
@@ -314,8 +315,8 @@ namespace PCIBusiness
 				err = 2;
 				if ( strResult == null )
 					strResult = "";
-				Tools.LogInfo     ("CardPaymentThirdParty/998","Ret="+ret.ToString()+", Result="+strResult,255,this);
-				Tools.LogException("TransactionPeach.CardPaymentThirdParty/999","Ret="+ret.ToString()+", Result="+strResult,ex2);
+				Tools.LogInfo     ("CardPaymentThirdParty/998","Ret="+ret.ToString()+", Result="+strResult,222,this);
+				Tools.LogException("CardPaymentThirdParty/999","Ret="+ret.ToString()+", Result="+strResult,ex2,this);
 			}
 
 			ret        = 200;
@@ -326,7 +327,7 @@ namespace PCIBusiness
 			if ( Successful && err == 0 )
 			{
 				ret = 0;
-				Tools.LogInfo("CardPaymentThirdParty/220","(Succeed) Result="+strResult,221,this);
+				Tools.LogInfo("CardPaymentThirdParty/220","(Succeed) Result="+strResult,10,this);
 			}
 			else
 				Tools.LogInfo("CardPaymentThirdParty/230","(Fail/" + err.ToString() + ") Result="+strResult,221,this);
@@ -391,7 +392,7 @@ namespace PCIBusiness
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("TransactionPeach.CardPayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+				Tools.LogException("CardPayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex,this);
 			}
 			return ret;
 		}
@@ -417,11 +418,12 @@ namespace PCIBusiness
 				if ( payRef.Length < 1 && ret == 0 )
 					ret = 249;
 
-				Tools.LogInfo("TokenPayment/20","ResultCode="+ResultCode + ", payRef=" + payRef,221,this);
+				if ( ret > 0 )
+					Tools.LogInfo("TokenPayment/20","ResultCode="+ResultCode + ", payRef=" + payRef,221,this);
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("TransactionPeach.TokenPayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+				Tools.LogException("TokenPayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex,this);
 			}
 			return ret;
 		}
@@ -477,13 +479,13 @@ namespace PCIBusiness
 				if ( strResult == null )
 					strResult = "";
 				Tools.LogInfo     ("ThreeDSecureCheck/198","Ret="+ret.ToString()+", Result="+strResult,222,this);
-				Tools.LogException("TransactionPeach.ThreeDSecureCheck/199","Ret="+ret.ToString()+", Result="+strResult,ex2);
+				Tools.LogException("ThreeDSecureCheck/199","Ret="+ret.ToString()+", Result="+strResult,ex2,this);
 			}
 
 			if ( strResult == null )
 				strResult = "";
 
-			Tools.LogInfo ("ThreeDSecureCheck/210","Ret="+ret.ToString()+", Result="+strResult,221,this);
+			Tools.LogInfo ("ThreeDSecureCheck/210","Ret="+ret.ToString()+", Result="+strResult,10,this);
 
 			resultCode = Tools.JSONValue(strResult,"code");
 			resultMsg  = Tools.JSONValue(strResult,"description");
@@ -522,23 +524,24 @@ namespace PCIBusiness
 				xmlSent = "entityId="               + Tools.URLString(payment.ProviderUserID)
 				        + "&amount="                + Tools.URLString(payment.PaymentAmountDecimal)
 				        + "&currency="              + Tools.URLString(payment.CurrencyCode)
-			           + "&card.number="           + xmlSent
-			           + "&card.holder="           + Tools.URLString(payment.CardName)
-			           + "&card.expiryMonth="      + Tools.URLString(payment.CardExpiryMM)
-			           + "&card.expiryYear="       + Tools.URLString(payment.CardExpiryYYYY)
-			           + "&card.cvv="              + Tools.URLString(payment.CardCVV)
+				        + "&card.number="           + xmlSent
+				        + "&card.holder="           + Tools.URLString(payment.CardName)
+				        + "&card.expiryMonth="      + Tools.URLString(payment.CardExpiryMM)
+				        + "&card.expiryYear="       + Tools.URLString(payment.CardExpiryYYYY)
+				        + "&card.cvv="              + Tools.URLString(payment.CardCVV)
 				        + "&merchantTransactionId=" + Tools.URLString(payment.MerchantReference)
 				        + "&descriptor="            + Tools.URLString(payment.PaymentDescription)
-			           + "&shopperResultUrl="      + Tools.URLString(url+"RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference));
-//			           + "&paymentType=DB"
-//			           + "&shopperResultUrl="      + Tools.URLString(Tools.ConfigValue("SystemURL")+"/RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference));
+				        + "&shopperResultUrl="      + Tools.URLString(url+"RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference));
+//				        + "&paymentType=DB"
+//				        + "&shopperResultUrl="      + Tools.URLString(Tools.ConfigValue("SystemURL")+"/RegisterThreeD.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference));
 
 				Tools.LogInfo("ThreeDSecurePayment/10","Post="+xmlSent+", Key="+payment.ProviderKey,10,this);
 
 				ret    = PostHTML((byte)Constants.TransactionType.ThreeDSecurePayment,payment);
 				payRef = Tools.JSONValue(strResult,"id");
 
-				Tools.LogInfo("ThreeDSecurePayment/20","strResult="+strResult,222,this);
+				if ( ret > 0 )
+					Tools.LogInfo("ThreeDSecurePayment/20","strResult="+strResult,222,this);
 
 /*				
 //	TESTING
@@ -635,7 +638,7 @@ namespace PCIBusiness
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("TransactionPeach.ThreeDSecurePayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+				Tools.LogException("ThreeDSecurePayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex,this);
 			}
 			return ret;
 		}

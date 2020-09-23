@@ -493,11 +493,10 @@ namespace PCIBusiness
 
 		public int DeleteToken()
 		{
-//			int processMode = Tools.StringToInt(Tools.ConfigValue("ProcessMode"));
-			int retProc     = 59020;
-			int retSQL      = 59020;
-			sql             = "";
-			Tools.LogInfo("Payment.DeleteToken/10","Token=" + CardToken,10);
+			int retProc = 59020;
+			int retSQL  = 59020;
+			sql         = "";
+			Tools.LogInfo("DeleteToken/10","Token=" + CardToken,10,this);
 
 			if ( transaction == null || transaction.BureauCode != bureauCode )
 			{
@@ -516,10 +515,10 @@ namespace PCIBusiness
 			                                + ",@Token = "             + Tools.DBString(CardToken)
 			                                + ",@StatusName = "        + Tools.DBString(transaction.ResultStatus)
 			                                + ",@StatusDesc = "        + Tools.DBString(transaction.ResultMessage);
-				Tools.LogInfo("Payment.DeleteToken/20","SQL=" + sql,10);
+				Tools.LogInfo("DeleteToken/20","SQL=" + sql,10,this);
 				retSQL = ExecuteSQLUpdate();
 			}
-			Tools.LogInfo("Payment.DeleteToken/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString(),40);
+			Tools.LogInfo("DeleteToken/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString(),40,this);
 			return retProc;
 		}
 
@@ -529,7 +528,7 @@ namespace PCIBusiness
 			int retProc     = 64020;
 			int retSQL      = 64020;
 			sql             = "";
-			Tools.LogInfo("Payment.GetToken/10","Merchant Ref=" + merchantReference,10);
+			Tools.LogInfo("GetToken/10","Merchant Ref=" + merchantReference,10,this);
 
 			if ( transaction == null || transaction.BureauCode != bureauCode )
 			{
@@ -568,10 +567,10 @@ namespace PCIBusiness
 			                                 + ",@BureauResultSoap = "            + Tools.DBString(transaction.XMLResult,3)
 			                                 + ",@TransactionStatusCode = "       + Tools.DBString(transaction.ResultCode)
 		                                    + ",@CardTokenisationStatusCode = '" + ( retProc == 0 ? "007'" : "001'" );
-				Tools.LogInfo("Payment.GetToken/20","SQL=" + sql,20);
+				Tools.LogInfo("GetToken/20","SQL=" + sql,20,this);
 				retSQL = ExecuteSQLUpdate();
 			}
-			Tools.LogInfo("Payment.GetToken/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString(),40);
+			Tools.LogInfo("GetToken/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString(),40,this);
 			return retProc;
 		}
 
@@ -580,7 +579,7 @@ namespace PCIBusiness
 			int retProc   = 37020;
 			int retSQL    = 37020;
 			returnMessage = "Invalid payment provider";
-			Tools.LogInfo("Payment.ProcessPayment/10","Merchant Ref=" + merchantReference,10);
+			Tools.LogInfo("ProcessPayment/10","Merchant Ref=" + merchantReference,10,this);
 
 			if ( transaction == null || transaction.BureauCode != bureauCode )
 			{
@@ -611,7 +610,7 @@ namespace PCIBusiness
 			}
 
 			if ( transactionType == (byte)Constants.TransactionType.ManualPayment ) // Manual card payment
-				Tools.LogInfo("Payment.ProcessPayment/20","Manual card payment",20);
+				Tools.LogInfo("ProcessPayment/20","Manual card payment",20,this);
 
 			else if ( processMode == (int)Constants.ProcessMode.FullUpdate         ||
 			          processMode == (int)Constants.ProcessMode.UpdatePaymentStep1 ||
@@ -619,12 +618,12 @@ namespace PCIBusiness
 			{
 				sql = "exec sp_Upd_CardPayment @MerchantReference = " + Tools.DBString(merchantReference)
 			                              + ",@TransactionStatusCode = '77'";
-				Tools.LogInfo("Payment.ProcessPayment/30","SQL 1=" + sql,20);
+				Tools.LogInfo("ProcessPayment/30","SQL 1=" + sql,20,this);
 				retSQL = ExecuteSQLUpdate();
-				Tools.LogInfo("Payment.ProcessPayment/40","SQL 1 complete",20);
+				Tools.LogInfo("ProcessPayment/40","SQL 1 complete",20,this);
 			}
 			else
-				Tools.LogInfo("Payment.ProcessPayment/50","SQL 1 skipped",20);
+				Tools.LogInfo("ProcessPayment/50","SQL 1 skipped",20,this);
 
 			if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
 				retProc    = transaction.TokenPayment(this);
@@ -638,7 +637,7 @@ namespace PCIBusiness
 
 			if ( transactionType == (byte)Constants.TransactionType.ManualPayment ) // Manual card payment
 			{
-				Tools.LogInfo("Payment.ProcessPayment/60","Manual card payment, retProc=" + retProc.ToString() + ", acsUrl=" + transaction.ThreeDacsUrl,199);
+				Tools.LogInfo("ProcessPayment/60","Manual card payment, retProc=" + retProc.ToString() + ", acsUrl=" + transaction.ThreeDacsUrl,199,this);
 				if ( transaction.ThreeDRequired )
 					if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS) )
 						threeDForm = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
@@ -659,12 +658,12 @@ namespace PCIBusiness
 			{
 				sql = "exec sp_Upd_CardPayment @MerchantReference = " + Tools.DBString(merchantReference)
 			                              + ",@TransactionStatusCode = " + Tools.DBString(transaction.ResultCode);
-				Tools.LogInfo("Payment.ProcessPayment/70","SQL 2=" + sql,20);
+				Tools.LogInfo("ProcessPayment/70","SQL 2=" + sql,20,this);
 				retSQL = ExecuteSQLUpdate();
-				Tools.LogInfo("Payment.ProcessPayment/80","SQL 2 complete",20);
+				Tools.LogInfo("ProcessPayment/80","SQL 2 complete",20,this);
 			}
 			else
-				Tools.LogInfo("Payment.ProcessPayment/90","SQL 2 skipped",20);
+				Tools.LogInfo("ProcessPayment/90","SQL 2 skipped",20,this);
 
 			return retProc;
 		}

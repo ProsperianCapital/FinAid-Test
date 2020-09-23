@@ -17,7 +17,7 @@ namespace PCIBusiness
 			err = ExecuteSQL(null,false,true);
 			if ( err > 0 )
 			{
-				Tools.LogException("MenuItems.LoadMenu/5","err="+err.ToString()+" ("+sql+")");
+				Tools.LogException("LoadMenu/5","err="+err.ToString()+" ("+sql+")",null,this);
 				return null;
 			}
 
