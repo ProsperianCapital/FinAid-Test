@@ -49,13 +49,58 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.RadioButton rdoWeb;
         
         /// <summary>
-        /// txtIn control.
+        /// rdoForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIn;
+        protected global::System.Web.UI.WebControls.RadioButton rdoForm;
+        
+        /// <summary>
+        /// txtJSON control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtJSON;
+        
+        /// <summary>
+        /// txtXML control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtXML;
+        
+        /// <summary>
+        /// txtWeb control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtWeb;
+        
+        /// <summary>
+        /// txtForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtForm;
+        
+        /// <summary>
+        /// txtURL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtURL;
         
         /// <summary>
         /// btnOK control.

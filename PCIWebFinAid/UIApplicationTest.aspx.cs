@@ -16,11 +16,53 @@ namespace PCIWebFinAid
 		protected override void PageLoad(object sender, EventArgs e)
 		{
 			if ( ! Page.IsPostBack )
-				txtIn.Text = Tools.JSONPair("UserName","SheilaColeman@getLost.net",1,"{") + Environment.NewLine
-					        + Tools.JSONPair("UserPassword","hello4goodbye") + Environment.NewLine
-					        + Tools.JSONPair("QueryName","FinTechLogOn") + Environment.NewLine
-					        + Tools.JSONPair("SecretKey","7e6415a7cb790238fd12430a0ce419b3") + Environment.NewLine
-					        + Tools.JSONPair("ApplicationCode","001",1,"","}");
+			{
+				string[] uName = { "UserName"       , "SheilaColeman@getLost.net" };
+				string[] uPwd  = { "UserPassword"   , "hello4goodbye" };
+				string[] query = { "QueryName"      , "FinTechLogOn" };
+				string[] key   = { "SecretKey"      , "7e6415a7cb790238fd12430a0ce419b3" };
+				string[] app   = { "ApplicationCode", "001" };
+
+				txtURL.Text  = TargetURL;
+
+				txtJSON.Text = Tools.JSONPair(uName[0],uName[1],1,"{") + Environment.NewLine
+					          + Tools.JSONPair(uPwd [0],uPwd [1]      ) + Environment.NewLine
+					          + Tools.JSONPair(query[0],query[1]      ) + Environment.NewLine
+					          + Tools.JSONPair(key  [0],key  [1]      ) + Environment.NewLine
+					          + Tools.JSONPair(app  [0],app  [1],1,"","}");
+
+				txtXML.Text  = "<Test>"
+				             + Tools.XMLCell(uName[0],uName[1]) + Environment.NewLine
+					          + Tools.XMLCell(uPwd [0],uPwd [1]) + Environment.NewLine
+					          + Tools.XMLCell(query[0],query[1]) + Environment.NewLine
+					          + Tools.XMLCell(key  [0],key  [1]) + Environment.NewLine
+					          + Tools.XMLCell(app  [0],app  [1]) + Environment.NewLine
+				             + "</Test>";
+
+				txtWeb.Text  = uName[0] + "=" + uName[1] + "&" + Environment.NewLine
+				             + uPwd[0]  + "=" + uPwd[1]  + "&" + Environment.NewLine
+				             + query[0] + "=" + query[1] + "&" + Environment.NewLine
+				             + key[0]   + "=" + key[1]   + "&" + Environment.NewLine
+				             + app[0]   + "=" + app[1];
+
+				txtForm.Text = "<html><body onload='document.forms[\"frmTest\"].submit()'>" + Environment.NewLine
+				             + "<form name='frmTest' method='POST' action='" + TargetURL + "'>" + Environment.NewLine
+				             + "<input type='hidden' name='" + uName[0] + "' value='" + uName[1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + uPwd[0]  + "' value='" + uPwd[1]  + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + query[0] + "' value='" + query[1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + key[0]   + "' value='" + key[1]   + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + app[0]   + "' value='" + app[1]   + "' />" + Environment.NewLine
+				             + "</form></body></html>";
+			}
+		}
+
+		private string TargetURL
+		{
+			get
+			{
+				string url = Request.Url.GetLeftPart(UriPartial.Authority);
+				return url + ( url.EndsWith("/") ? "" : "/" ) + "UIApplicationQuery.aspx";
+			}
 		}
 
 		protected void btnOK_Click(Object sender, EventArgs e)
@@ -31,25 +73,36 @@ namespace PCIWebFinAid
 
 			try
 			{
-				byte[]         page       = Encoding.UTF8.GetBytes(txtIn.Text.Trim());
-				string         url        = Request.Url.GetLeftPart(UriPartial.Authority);
-				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url+(url.EndsWith("/")?"":"/")+"UIApplicationQuery.aspx");
+				if ( rdoForm.Checked )
+				{
+					System.Web.HttpContext.Current.Response.Clear();
+					System.Web.HttpContext.Current.Response.Write(txtForm.Text.Trim());
+					System.Web.HttpContext.Current.Response.Flush();
+					System.Web.HttpContext.Current.Response.End();
+					return;
+				}
+
+				byte[]         page;
+				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(TargetURL);
 				webRequest.Method         = "POST";
 
 				if ( rdoJSON.Checked )
 				{
 					webRequest.ContentType = "application/json;charset=\"utf-8\"";
 					webRequest.Accept      = "application/json";
+					page                   = Encoding.UTF8.GetBytes(txtJSON.Text.Trim());
 				}
 				else if ( rdoXML.Checked )
 				{
 					webRequest.ContentType = "text/xml;charset=\"utf-8\"";
 					webRequest.Accept      = "text/xml";
+					page                   = Encoding.UTF8.GetBytes(txtXML.Text.Trim());
 				}
 				else if ( rdoWeb.Checked )
 				{
 					webRequest.ContentType = "application/x-www-form-urlencoded";
 					webRequest.Accept      = "application/x-www-form-urlencoded";
+					page                   = Encoding.UTF8.GetBytes(txtWeb.Text.Trim().Replace(Environment.NewLine,""));
 				}
 				else
 					return;
