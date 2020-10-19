@@ -135,6 +135,16 @@ namespace PCIBusiness
 			{ }
 			return 0;
 		}
+		public long GetColumnLong(string colName,byte errorMode=1)
+		{
+			try
+			{
+				return dbConn.ColBig(colName,0,errorMode);
+			}
+			catch
+			{ }
+			return 0;
+		}
 		public DateTime GetColumnDate(string colName,byte errorMode=1)
 		{
 			try

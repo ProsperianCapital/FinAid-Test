@@ -8,7 +8,6 @@ namespace PCIBusiness
 	{
 		private SmtpClient  smtp;
 		private MailMessage msg;
-		private string      provider;
 
 		private void AddMail(MailAddressCollection mailList,string mail)
 		{
@@ -32,14 +31,11 @@ namespace PCIBusiness
 			{ }
 		}
 
-		public  string Provider
-		{
-			get { return Tools.NullToString(provider); }
-			set
-			{
-				provider = value.Trim();
-			}
-		}
+//		public  string Provider
+//		{
+//			get { return Tools.NullToString(provider); }
+//			set { provider = value.Trim(); }
+//		}
 
 		public override string Recipient
 		{
@@ -56,6 +52,16 @@ namespace PCIBusiness
 		}
 		public  string To
 		{
+			get
+			{
+				string x = "";
+				if ( msg.To != null )
+					foreach ( MailAddress add in msg.To )
+						x = x + add.Address + ", ";
+				if ( x.EndsWith(", ") )
+					x = x.Substring(0,x.Length-2).Trim();
+				return x;
+			}
 			set { AddMail(msg.To,value); }
 		}
 		public  string ReplyTo
@@ -81,27 +87,33 @@ namespace PCIBusiness
 
 		public override int Send()
 		{
-			int err = 0;
+			int err    = 0;
+			resultCode = "0";
 
 			while ( err == 0 )
 			{
 				err = 10;
+				if ( provider == null )
+					if ( LoadProvider() != 0 )
+						break;
+
+				err = 20;
 				if ( msg == null )
 					break;
 
-				err = 20;
+				err = 30;
 				if ( smtp == null )
 					LoadProvider();
 
-				err = 30;
+				err = 40;
 				if ( smtp == null )
 					break;
 
-				err = 40;
+				err = 50;
 				if ( msg.Body.Length < 10 )
 					break;
 
-				err = 50;
+				err = 60;
 				if ( msg.To.Count < 1 )
 					break;
 
@@ -122,11 +134,11 @@ namespace PCIBusiness
 //					catch
 //					{ }
 
-				err = 60;
+				err = 70;
 				if ( msg.From == null )
 					msg.From = msg.Sender;
 
-				err = 70;
+				err = 80;
 				msg.IsBodyHtml = msg.Body.ToUpper().Contains("<HTML");
 
 				for ( int q = 1 ; q < 6 ; q++ ) // Try 5 times before quitting with an error
@@ -134,6 +146,7 @@ namespace PCIBusiness
 					{
 						err = 999;
 						smtp.Send(msg);
+						Tools.LogInfo("Send/5","(Success) Mail to "+msg.To.ToString(),Constants.LogSeverity,this);
 						return 0;
 					}
 					catch (Exception ex)
@@ -148,6 +161,8 @@ namespace PCIBusiness
 			if ( err > 0 && err < 999 )
 				Tools.LogException("Send/20","EMail failure (err=" + err.ToString() + "), to " + msg.To.ToString(), null, this);
 
+			resultCode = err.ToString();
+//			Tools.LogInfo("Send/25","(Failure (" + resultCode + ")) Mail to "+To,Constants.LogSeverity,this);
 			return err;
 		}
 
@@ -165,46 +180,38 @@ namespace PCIBusiness
 
 		public override byte LoadProvider()
 		{
-			providerAddress   = Tools.ConfigValue("SMTP-Server");
-			providerID        = Tools.ConfigValue("SMTP-User");
-			providerPassword  = Tools.ConfigValue("SMTP-Password");
-			string smtpSender = Tools.ConfigValue("SMTP-Sender");
-//			string smtpBCC    = Tools.ConfigValue("SMTP-BCC");
-			int    smtpPort   = Tools.StringToInt(Tools.ConfigValue("SMTP-Port"));
+			byte ret = base.LoadProvider();
 
-			if ( providerAddress.Length  == 0 ) providerAddress  = Tools.ConfigValue("SMTP/Server");
-			if ( providerID.Length       == 0 ) providerID       = Tools.ConfigValue("SMTP/User");
-			if ( providerPassword.Length == 0 ) providerPassword = Tools.ConfigValue("SMTP/Password");
-			if ( smtpSender.Length       == 0 ) smtpSender       = Tools.ConfigValue("SMTP/Sender");
-//			if ( smtpBCC.Length          == 0 ) smtpBCC          = Tools.ConfigValue("SMTP/BCC");
-			if ( smtpPort                == 0 ) smtpPort         = Tools.StringToInt(Tools.ConfigValue("SMTP/Port"));
+			if ( ret > 0 )
+				return ret;
 
-			string smtpData = providerAddress + " / " + providerID
-			                                  + " / " + providerPassword
-			                                  + " / " + smtpSender
-			                                  + " / " + smtpPort;
+//			string smtpData = provider.BureauCode + " / " + provider.BureauType
+//			                                      + " / " + provider.BureauURL
+//			                                      + " / " + provider.MerchantUserID
+//			                                      + " / " + provider.MerchantPassword
+//			                                      + " / " + provider.Sender
+//			                                      + " / " + provider.Port.ToString();
 
-			if ( providerAddress.Length > 5 && smtpSender.Length > 5 )
+			if ( provider.BureauURL.Length > 5 && provider.MerchantUserID.Length > 5 )
 				try
 				{
-					Tools.LogInfo("LoadProvider/10","Loading SMTP ... " + smtpData,222,this);
-					msg.Sender = new MailAddress(smtpSender);
-					smtp       = new SmtpClient(providerAddress);
-					if ( smtpPort > 0 )
-						smtp.Port = smtpPort;
+//					Tools.LogInfo("LoadProvider/10","Provider ... " + smtpData,Constants.LogSeverity,this);
+					msg.Sender = new MailAddress(provider.Sender);
+					smtp       = new SmtpClient (provider.BureauURL);
+					if ( provider.Port > 0 )
+						smtp.Port = provider.Port;
 					smtp.UseDefaultCredentials = false;
 				//	smtp.EnableSsl             = false;
-					smtp.Credentials           = new NetworkCredential(providerID,providerPassword);
+					smtp.Credentials           = new NetworkCredential(provider.MerchantUserID,provider.MerchantPassword);
 					return 0;
 				}
 				catch (Exception ex)
 				{
-					Tools.LogException("LoadProvider/20",smtpData,ex,this);
-					return 20;
+					Tools.LogException("LoadProvider/30","Bureau "+provider.BureauCode,ex,this);
+					return 30;
 				}
 
-			Tools.LogException("LoadProvider/30","Invalid SMTP credentials (" + smtpData + ")",null,this);
-			return 30;
+			return 40;
 		}
 
 		public override void Close()

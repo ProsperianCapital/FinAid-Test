@@ -23,6 +23,10 @@ namespace PCIBusiness
 		{
 			get { return "<br />"; }
 		}
+		public static byte LogSeverity
+		{
+			get { return 233; }
+		}
 //		public static string TextBreak
 //		{
 //			return { Environment.NewLine; }
@@ -71,6 +75,14 @@ namespace PCIBusiness
 //			PayFast    = xx
 		}
 
+		public enum MessageProvider : int
+		{
+			GlobalSMS  = 1,
+			ClickaTell = 2,
+			SendGrid   = 3,
+			SocketLabs = 4
+		}
+
 		public enum TradingProvider : int
 		{
 			InteractiveBrokers = 1,
@@ -105,6 +117,7 @@ namespace PCIBusiness
 			Development = 1,
 			Test        = 2,
 			Live        = 3
+//			Debug       = 4
 		}
 		public enum ProcessMode : int
 		{

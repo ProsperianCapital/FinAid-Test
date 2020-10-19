@@ -32,19 +32,41 @@ namespace PCIBusiness
 		public override int Send()
 		{
 			string resultData = "";
-			int    ret        = 10;
+			int    ret        = 0;
 			resultMsg         = "Missing/invalid phone number and/or message";
 
 			if ( PhoneNumber.Length < 10 || MessageBody.Length < 3 )
-				return ret;
+				return 10;
+
+			if ( provider == null )
+				if ( LoadProvider() != 0 )
+					return 15;
 
 			try
 			{
-				resultMsg      = "";
 				ret            = 20;
-				string sendURL = ProviderAddress + "?apiKey=" + Tools.URLString(providerPassword)
-				                                 + "&to=" + Tools.URLString(phoneNumber)
-				                                 + "&content=" + Tools.URLString(messageBody);
+				resultMsg      = "Missing/invalid message provider details";
+				string sendURL = provider.BureauURL;
+
+				Tools.LogInfo("Send/5","SMS to "+phoneNumber,Constants.LogSeverity,this);
+
+				if ( ProviderCode == (int)Constants.MessageProvider.ClickaTell )
+					sendURL = sendURL + "?apiKey="  + Tools.URLString(provider.MerchantKey)
+				                     + "&to="      + Tools.URLString(phoneNumber)
+				                     + "&content=" + Tools.URLString(messageBody);
+
+				else if ( ProviderCode == (int)Constants.MessageProvider.GlobalSMS )
+					sendURL = sendURL + "?key="      + Tools.URLString(provider.MerchantKey)
+				                     + "&contacts=" + Tools.URLString(phoneNumber)
+				                     + "&msg="      + Tools.URLString(messageBody)
+				                     + "&senderid=" + Tools.URLString(provider.MerchantUserID)
+				                     + "&type=text";
+				else
+					return 25;
+
+				Tools.LogInfo("Send/88","Provider = " + ProviderCode.ToString() + ", sendURL = " + sendURL,Constants.LogSeverity,this);
+
+				resultMsg                    = "";
 				ret                          = 30;
 				HttpWebRequest webReq        = (HttpWebRequest)WebRequest.Create(sendURL);
 				ret                          = 60;
@@ -55,35 +77,48 @@ namespace PCIBusiness
 
 				string resultOK = "false";
 
-				if ( resultData.Length > 0 && resultData.StartsWith("{") ) // JSON
+				if ( ProviderCode == (int)Constants.MessageProvider.GlobalSMS )
 				{
-					resultID     = Tools.JSONValue(resultData,"apiMessageId");
-					resultOK     = Tools.JSONValue(resultData,"accepted");
-					resultCode   = Tools.JSONValue(resultData,"errorCode");
-					resultDetail = Tools.JSONValue(resultData,"errorDescription");
-					resultMsg    = Tools.JSONValue(resultData,"error");
+					resultOK     = "true";
+					resultDetail = resultData;
+					resultCode   = resultData;
+					if ( resultCode.EndsWith("<br />") )
+						resultCode = (" "+resultCode).Substring(0,resultCode.Length-5).Trim();
+					if ( resultCode.StartsWith("<br />") )
+						resultCode = (resultCode+" ").Substring(6).Trim();
 				}
-				else if ( resultData.Length > 0 && resultData.StartsWith("<") ) // XML
+				else if ( ProviderCode == (int)Constants.MessageProvider.ClickaTell )
 				{
-					XmlDocument h = new XmlDocument();
-					h.Load(resultData);
-					resultID      = Tools.XMLNode(h,"apiMessageId");
-					resultOK      = Tools.XMLNode(h,"accepted");
-					resultCode    = Tools.XMLNode(h,"errorCode");
-					resultDetail  = Tools.XMLNode(h,"errorDescription");
-					resultMsg     = Tools.XMLNode(h,"error");
-					h             = null;
+					if ( resultData.Length > 0 && resultData.StartsWith("{") ) // JSON
+					{
+						resultID     = Tools.JSONValue(resultData,"apiMessageId");
+						resultOK     = Tools.JSONValue(resultData,"accepted");
+						resultCode   = Tools.JSONValue(resultData,"errorCode");
+						resultDetail = Tools.JSONValue(resultData,"errorDescription");
+						resultMsg    = Tools.JSONValue(resultData,"error");
+					}
+					else if ( resultData.Length > 0 && resultData.StartsWith("<") ) // XML
+					{
+						XmlDocument h = new XmlDocument();
+						h.Load(resultData);
+						resultID      = Tools.XMLNode(h,"apiMessageId");
+						resultOK      = Tools.XMLNode(h,"accepted");
+						resultCode    = Tools.XMLNode(h,"errorCode");
+						resultDetail  = Tools.XMLNode(h,"errorDescription");
+						resultMsg     = Tools.XMLNode(h,"error");
+						h             = null;
+					}
+					if ( resultID.ToUpper()     == "NULL" ) resultID     = "";
+					if ( resultCode.ToUpper()   == "NULL" ) resultCode   = "";
+					if ( resultDetail.ToUpper() == "NULL" ) resultDetail = "";
+					if ( resultMsg.ToUpper()    == "NULL" ) resultMsg    = "";
 				}
 
-				if ( resultID.ToUpper()     == "NULL" ) resultID     = "";
-				if ( resultCode.ToUpper()   == "NULL" ) resultCode   = "";
-				if ( resultDetail.ToUpper() == "NULL" ) resultDetail = "";
-				if ( resultMsg.ToUpper()    == "NULL" ) resultMsg    = "";
+				Tools.LogInfo("Send/199","SMS to "+phoneNumber + " ("+resultData+")",Constants.LogSeverity,this);
 
 				if ( resultOK.ToUpper() == "TRUE" )
 					return 0;
 
-				Tools.LogInfo("Send/199",resultData,229,this);
 				return 199;
 			}
 			catch (Exception ex)
@@ -94,7 +129,7 @@ namespace PCIBusiness
 			return ret;
 		}
 
-
+/*
 		public int SendV1()
 		{
 			int ret = 10;
@@ -142,13 +177,27 @@ namespace PCIBusiness
 			}
 			return ret;
 		}
-
-		public override byte LoadProvider()
-		{
-			providerAddress  = "https://platform.clickatell.com/messages/http/send";
-			providerPassword = "E8gSxksaQpmEDZ4OvabmlQ==";
-			return 0;
-		}
+*/
+//		public override byte LoadProvider()
+//		{
+//			providerAddress  = "";
+//			providerUserName = "";
+//			providerPassword = "";
+//			
+//			if ( ProviderCode == (int)Constants.SMSProvider.ClickaTell )
+//			{
+//				providerAddress  = "https://platform.clickatell.com/messages/http/send";
+//				providerPassword = "E8gSxksaQpmEDZ4OvabmlQ==";
+//			}
+//			else if ( ProviderCode == (int)Constants.SMSProvider.GlobalSMS )
+//			{
+//			//	providerAddress  = "http://148.251.196.36/app/smsXmlApi";
+//				providerAddress  = "http://148.251.196.36/app/smsapi/index.php";
+//				providerUserName = "PCI";
+//				providerPassword = "fuspQ2M6";
+//			}
+//			return 0;
+//		}
 
 		public SMS()
 		{
