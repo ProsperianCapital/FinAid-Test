@@ -252,7 +252,7 @@ namespace PCIWebFinAid
 			if ( userName.Length < 3 || passWord.Length < 3 )
 				return SetError(11101,"Invalid user name and/or password");
 
-			json.Append ( Tools.JSONPair("UserCode","71349")
+			json.Append ( Tools.JSONPair("UserCode","013")
 			            + Tools.JSONPair("UserDisplayName","Sheila Coleman")
 			            + Tools.JSONPair("CountryCode","RSA")
 			            + Tools.JSONPair("LanguageCode","ENG")
@@ -295,7 +295,10 @@ namespace PCIWebFinAid
 					if ( mList.EOF )
 						return SetError(11204,"No data returned: SQL sp_FinTechGeteWalletList");
 
-					int k = 0;
+					int    k = 0;
+					int    p1;
+					int    p2;
+					string bal;
 
 					json.Append ( Tools.JSONPair("HeadingText1"               ,mList.GetColumn("HeadingText1"))
 					            + Tools.JSONPair("HeadingText2"               ,mList.GetColumn("HeadingText2"))
@@ -309,10 +312,19 @@ namespace PCIWebFinAid
 						k++;
 						if ( k > 1 )
 							json.Append(",");
+
+						bal = mList.GetColumn("Balance");
+						p1  = bal.LastIndexOf(",");
+						p2  = bal.LastIndexOf(".");
+						if ( p1 > p2 && bal.Length > p1 + 3 )
+							bal = bal.Substring(0,p1+3);
+						if ( p2 > p1 && bal.Length > p2 + 3 )
+							bal = bal.Substring(0,p2+3);
+
 						json.Append ( Tools.JSONPair("eWalletAccountCode"      ,mList.GetColumn("eWalletAccountCode"), 1, "{")
 					               + Tools.JSONPair("FlagImageCode"           ,mList.GetColumn("FlagImageCode"))
 					               + Tools.JSONPair("CUR"                     ,mList.GetColumn("CUR"))
-					               + Tools.JSONPair("Balance"                 ,mList.GetColumn("Balance"), 11)
+					               + Tools.JSONPair("Balance"                 ,bal, 11)
 					               + Tools.JSONPair("AccountIconImageCode"    ,mList.GetColumn("AccountIconImageCode"))
 					               + Tools.JSONPair("AssociationIconImageCode",mList.GetColumn("AssociationIconImageCode"), 1, "", "}") );
 						mList.NextRow();
