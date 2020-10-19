@@ -19,6 +19,8 @@ function SetType()
 
 <form id="frmHome" runat="server">
 
+	<asp:Label runat="server" ID="lblVer" style="border:1px solid #000000;padding:10px;float:right;background-color:lightgreen"></asp:Label>
+
 	<div class="Header3">
 	Prosperian Integration Testing
 	</div>

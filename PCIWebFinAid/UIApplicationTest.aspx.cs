@@ -24,6 +24,7 @@ namespace PCIWebFinAid
 				string[] app   = { "ApplicationCode", "001" };
 
 				txtURL.Text  = TargetURL;
+				lblVer.Text  = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
 
 				txtJSON.Text = Tools.JSONPair(uName[0],uName[1],1,"{") + Environment.NewLine
 					          + Tools.JSONPair(uPwd [0],uPwd [1]      ) + Environment.NewLine
