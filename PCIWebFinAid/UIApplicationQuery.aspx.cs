@@ -140,6 +140,9 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechDashboard").ToUpper() )
 					Dashboard();
 
+				else if ( queryName == ("FinTechGeteWalletList").ToUpper() )
+					GetEWalletList();
+
 				else
 					SetError(10007,"Invalid query name");
 
@@ -149,7 +152,7 @@ namespace PCIWebFinAid
 			{ }
 			catch (Exception ex)
 			{
-				Tools.LogException("UIApplicationQuery.QueryData/9","",ex);
+				Tools.LogException("QueryData/9","",ex,this);
 			}
 
 			return 0;
@@ -269,6 +272,61 @@ namespace PCIWebFinAid
 				return SetError(11102,"Invalid verification code");
 
 			return 0;
+		}
+
+		private int GetEWalletList()
+		{
+			if ( CheckParameters("App,User,Country,Lang,Dialect") > 0 )
+				return errorCode;
+
+			using (MiscList mList = new MiscList())
+				try
+				{
+					sql = "exec sp_FinTechGeteWalletList"
+					    +     " @AppplicationCode="    + Tools.DBString(applicationCode)
+					    +     ",@UserCode="            + Tools.DBString(userCode)
+					    +     ",@CountryCode="         + Tools.DBString(countryCode)
+					    +     ",@LanguageCode="        + Tools.DBString(languageCode)
+					    +     ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
+
+					if ( mList.ExecQuery(sql,0) != 0 )
+						return SetError(11202,"Internal error: SQL sp_FinTechGeteWalletList");
+
+					if ( mList.EOF )
+						return SetError(11204,"No data returned: SQL sp_FinTechGeteWalletList");
+
+					int k = 0;
+
+					json.Append ( Tools.JSONPair("HeadingText1"               ,mList.GetColumn("HeadingText1"))
+					            + Tools.JSONPair("HeadingText2"               ,mList.GetColumn("HeadingText2"))
+					            + Tools.JSONPair("AccountNumberLabelText"     ,mList.GetColumn("AccountNumberLabelText"))
+					            + Tools.JSONPair("AccountDescriptionLabelText",mList.GetColumn("AccountDescriptionLabelText"))
+					            + Tools.JSONPair("AccountHolderLabelText"     ,mList.GetColumn("AccountHolderLabelText"))
+					            + "\"Accounts\": [" );
+
+					while ( ! mList.EOF )
+					{
+						k++;
+						if ( k > 1 )
+							json.Append(",");
+						json.Append ( Tools.JSONPair("eWalletAccountCode"      ,mList.GetColumn("eWalletAccountCode"), 1, "{")
+					               + Tools.JSONPair("FlagImageCode"           ,mList.GetColumn("FlagImageCode"))
+					               + Tools.JSONPair("CUR"                     ,mList.GetColumn("CUR"))
+					               + Tools.JSONPair("Balance"                 ,mList.GetColumn("Balance"), 11)
+					               + Tools.JSONPair("AccountIconImageCode"    ,mList.GetColumn("AccountIconImageCode"))
+					               + Tools.JSONPair("AssociationIconImageCode",mList.GetColumn("AssociationIconImageCode"), 1, "", "}") );
+						mList.NextRow();
+					}
+					json.Append("]");
+
+					return 0;
+				}
+				catch (Exception ex)
+				{
+					Tools.LogException("GetEWalletList",sql,ex,this);
+				}
+
+			return SetError(11206,"Internal error: SQL sp_FinTechGeteWalletList");
 		}
 
 		private int GetMenuStructure()
@@ -411,7 +469,7 @@ namespace PCIWebFinAid
 			{ }
 			catch (Exception ex)
 			{
-				Tools.LogException("UIApplicationQuery.SendJSON/9","",ex);
+				Tools.LogException("SendJSON/9","",ex,this);
 			}
 
 			return errCode;
