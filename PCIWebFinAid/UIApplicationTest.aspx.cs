@@ -21,7 +21,7 @@ namespace PCIWebFinAid
 				string[] uPwd  = { "UserPassword"   , "hello4goodbye" };
 				string[] query = { "QueryName"      , "FinTechLogOn" };
 				string[] key   = { "SecretKey"      , "7e6415a7cb790238fd12430a0ce419b3" };
-				string[] app   = { "ApplicationCode", "001" };
+				string[] app   = { "ApplicationCode", "003" };
 
 				txtURL.Text  = TargetURL;
 				lblVer.Text  = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
