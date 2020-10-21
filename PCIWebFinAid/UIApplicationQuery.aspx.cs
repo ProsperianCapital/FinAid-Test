@@ -201,7 +201,7 @@ namespace PCIWebFinAid
 
 		private int GetApplicationCode()
 		{
-			json.Append ( Tools.JSONPair("ApplicationCode","001") );
+			json.Append ( Tools.JSONPair("ApplicationCode","003") );
 			return 0;
 		}
 
@@ -316,9 +316,9 @@ namespace PCIWebFinAid
 						bal = mList.GetColumn("Balance");
 						p1  = bal.LastIndexOf(",");
 						p2  = bal.LastIndexOf(".");
-						if ( p1 > p2 && bal.Length > p1 + 3 )
+						if ( p1 > 0 && p1 > p2 && bal.Length > p1 + 3 )
 							bal = bal.Substring(0,p1+3);
-						if ( p2 > p1 && bal.Length > p2 + 3 )
+						if ( p2 > 0 && p2 > p1 && bal.Length > p2 + 3 )
 							bal = bal.Substring(0,p2+3);
 
 						json.Append ( Tools.JSONPair("eWalletAccountCode"      ,mList.GetColumn("eWalletAccountCode"), 1, "{")
