@@ -152,8 +152,8 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechGetPageInfoCreateNeweWallet").ToUpper() )
 					GetPageInfoCreateNeweWallet();
 
-				else if ( queryName == ("FinTechGeteWalletAccountFundingMethodList").ToUpper() )
-					GeteWalletAccountFundingMethodList();
+				else if ( queryName == ("FinTechGeteWalletFundingMethodList").ToUpper() )
+					GeteWalletFundingMethodList();
 
 				else if ( queryName == ("FinTechCreateNeweWalletAccount").ToUpper() )
 					CreateNeweWalletAccount();
@@ -476,7 +476,7 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
-		private int GeteWalletAccountFundingMethodList()
+		private int GeteWalletFundingMethodList()
 		{
 			if ( CheckParameters("App,Country,Lang,Dialect,User") > 0 )
 				return errorCode;
