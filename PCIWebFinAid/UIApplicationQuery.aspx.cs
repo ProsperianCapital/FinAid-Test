@@ -143,6 +143,27 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechGeteWalletList").ToUpper() )
 					GetEWalletList();
 
+				else if ( queryName == ("FinTechGetPageInfoCreateNeweWallet").ToUpper() )
+					GetPageInfoCreateNeweWallet();
+
+				else if ( queryName == ("FinTechGeteWalletAccountCURList").ToUpper() )
+					GeteWalletAccountCURList();
+
+				else if ( queryName == ("FinTechGetPageInfoCreateNeweWallet").ToUpper() )
+					GetPageInfoCreateNeweWallet();
+
+				else if ( queryName == ("FinTechGeteWalletAccountFundingMethodList").ToUpper() )
+					GeteWalletAccountFundingMethodList();
+
+				else if ( queryName == ("FinTechCreateNeweWalletAccount").ToUpper() )
+					CreateNeweWalletAccount();
+
+				else if ( queryName == ("FinTechGetPageInfoEditeWalletAccountDescription").ToUpper() )
+					GetPageInfoEditeWalletAccountDescription();
+
+				else if ( queryName == ("FinTechEditeWalletAccountDescription").ToUpper() )
+					EditeWalletAccountDescription();
+
 				else
 					SetError(10007,"Invalid query name");
 
@@ -182,19 +203,19 @@ namespace PCIWebFinAid
 				parmsRequired = "," + parmsRequired.Trim().ToUpper() + ",";
 
 				if ( parmsRequired.Contains(",APP,")     && applicationCode.Length < 1 )
-					SetError(11001,"Parameter ApplicationCode is missing");
+					SetError(11005,"Parameter ApplicationCode is missing");
 				if ( parmsRequired.Contains(",COUNTRY,") && countryCode.Length < 1 )
-					SetError(11002,"Parameter CountryCode is missing");
+					SetError(11010,"Parameter CountryCode is missing");
 				if ( parmsRequired.Contains(",LANG,")    && languageCode.Length < 1 )
-					SetError(11003,"Parameter LanguageCode is missing");
+					SetError(11015,"Parameter LanguageCode is missing");
 				if ( parmsRequired.Contains(",DIALECT,") && languageDialectCode.Length < 1 )
-					SetError(11004,"Parameter LanguageDialectCode is missing");
+					SetError(11020,"Parameter LanguageDialectCode is missing");
 				if ( parmsRequired.Contains(",USER,")    && userCode.Length < 1 )
-					SetError(11005,"Parameter UserCode is missing");
+					SetError(11025,"Parameter UserCode is missing");
 			}
 			catch (Exception ex)
 			{
-				SetError(19999,"Internal error 19999");
+				SetError(11099,"Internal error 19999");
 			}
 			return errorCode;
 		}
@@ -250,7 +271,7 @@ namespace PCIWebFinAid
 			string passWord = ParmValue("UserPassword");
 
 			if ( userName.Length < 3 || passWord.Length < 3 )
-				return SetError(11101,"Invalid user name and/or password");
+				return SetError(11105,"Invalid user name and/or password");
 
 			json.Append ( Tools.JSONPair("UserCode","013")
 			            + Tools.JSONPair("UserDisplayName","Sheila Coleman")
@@ -269,7 +290,7 @@ namespace PCIWebFinAid
 			string twoFA = ParmValue("2FAChannelCode");
 
 			if ( twoFA != ((int)Constants.SystemPassword.MobileDev).ToString() )
-				return SetError(11102,"Invalid verification code");
+				return SetError(11205,"Invalid verification code");
 
 			return 0;
 		}
@@ -290,10 +311,10 @@ namespace PCIWebFinAid
 					    +     ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 
 					if ( mList.ExecQuery(sql,0) != 0 )
-						return SetError(11202,"Internal error: SQL sp_FinTechGeteWalletList");
+						return SetError(11305,"Internal error: SQL sp_FinTechGeteWalletList");
 
 					if ( mList.EOF )
-						return SetError(11204,"No data returned: SQL sp_FinTechGeteWalletList");
+						return SetError(11310,"No data returned: SQL sp_FinTechGeteWalletList");
 
 					int    k = 0;
 					int    p1;
@@ -322,6 +343,7 @@ namespace PCIWebFinAid
 							bal = bal.Substring(0,p2+3);
 
 						json.Append ( Tools.JSONPair("eWalletAccountCode"      ,mList.GetColumn("eWalletAccountCode"), 1, "{")
+					               + Tools.JSONPair("eWalletDescription"      ,mList.GetColumn("eWalletDescription"))
 					               + Tools.JSONPair("FlagImageCode"           ,mList.GetColumn("FlagImageCode"))
 					               + Tools.JSONPair("CUR"                     ,mList.GetColumn("CUR"))
 					               + Tools.JSONPair("Balance"                 ,bal, 11)
@@ -338,7 +360,7 @@ namespace PCIWebFinAid
 					Tools.LogException("GetEWalletList",sql,ex,this);
 				}
 
-			return SetError(11206,"Internal error: SQL sp_FinTechGeteWalletList");
+			return SetError(11380,"Internal error: SQL sp_FinTechGeteWalletList");
 		}
 
 		private int GetMenuStructure()
@@ -352,7 +374,7 @@ namespace PCIWebFinAid
 
 			if ( menuList == null || menuList.Count < 1 )
 			{
-				SetError(12310,"Internal error retrieving menu structure");
+				SetError(11405,"Internal error retrieving menu structure");
 				return 0;
 			}
 
@@ -416,7 +438,113 @@ namespace PCIWebFinAid
 			if ( CheckParameters("App,Country,Lang,Dialect,User") > 0 )
 				return errorCode;
 
-			SetError(12309,"Not implemented yet");
+			SetError(11505,"Not implemented yet");
+			return 0;
+		}
+
+		private int GetPageInfoCreateNeweWallet()
+		{
+			if ( CheckParameters("App,Country,Lang,Dialect,User") > 0 )
+				return errorCode;
+
+			json.Append ( Tools.JSONPair("CurrencyListText","Select Currency")
+			            + Tools.JSONPair("FundingMethodText","Select Funding Method/Source")
+			            + Tools.JSONPair("AccountNumberText","Account Number")
+			            + Tools.JSONPair("DescriptionText","Description of eWallet")
+			            + Tools.JSONPair("CreateButtonText","CREATE") );
+			return 0;
+		}
+
+		private int GeteWalletAccountCURList()
+		{
+			if ( CheckParameters("App,Country,Lang,Dialect,User") > 0 )
+				return errorCode;
+
+			json.Append("\"Currencies\":[");
+			json.Append ( Tools.JSONPair("CurrencyCode","ZAR",1,"{")
+			            + Tools.JSONPair("CurrencyDescription","SA Rand",1,"","},") );
+			json.Append ( Tools.JSONPair("CurrencyCode","USD",1,"{")
+			            + Tools.JSONPair("CurrencyDescription","US Dollar",1,"","},") );
+			json.Append ( Tools.JSONPair("CurrencyCode","EUR",1,"{")
+			            + Tools.JSONPair("CurrencyDescription","Euro",1,"","},") );
+			json.Append ( Tools.JSONPair("CurrencyCode","GBP",1,"{")
+			            + Tools.JSONPair("CurrencyDescription","Pound Sterling",1,"","},") );
+			json.Append ( Tools.JSONPair("CurrencyCode","SIK",1,"{")
+			            + Tools.JSONPair("CurrencyDescription","Solomon Islands Kowrie",1,"","}") );
+			json.Append("]");
+
+			return 0;
+		}
+
+		private int GeteWalletAccountFundingMethodList()
+		{
+			if ( CheckParameters("App,Country,Lang,Dialect,User") > 0 )
+				return errorCode;
+
+			json.Append("\"FundingMethods\":[");
+			json.Append ( Tools.JSONPair("FundingMethodCode","XYZ",1,"{")
+			            + Tools.JSONPair("FundingMethodDescription","Cash under my bed",1,"","},") );
+			json.Append ( Tools.JSONPair("FundingMethodCode","GHT",1,"{")
+			            + Tools.JSONPair("FundingMethodDescription","Inheritance",1,"","},") );
+			json.Append ( Tools.JSONPair("FundingMethodCode","DER",1,"{")
+			            + Tools.JSONPair("FundingMethodDescription","Robbed a bank",1,"","},") );
+			json.Append ( Tools.JSONPair("FundingMethodCode","FAW",1,"{")
+			            + Tools.JSONPair("FundingMethodDescription","Got lucky in Las Vegas",1,"","}") );
+			json.Append("]");
+
+			return 0;
+		}
+
+		private int GetPageInfoEditeWalletAccountDescription()
+		{
+			if ( CheckParameters("App,Country,Lang,Dialect,User") > 0 )
+				return errorCode;
+
+			json.Append ( Tools.JSONPair("SelectListLabelText","Select eWallet")
+			            + Tools.JSONPair("DescriptionFieldText","New Description")
+			            + Tools.JSONPair("ConfirmButtonText","CONFIRM") );
+
+			return 0;
+		}
+
+		private int CreateNeweWalletAccount()
+		{
+			if ( CheckParameters("App,Country,Lang,Dialect,User") > 0 )
+				return errorCode;
+
+			string cur   = ParmValue("CurrencyCode");
+			string fund  = ParmValue("FundingMethodCode");
+			string eCode = ParmValue("eWalletAccountCode");
+			string eDesc = ParmValue("eWalletDescription");
+
+			if ( cur.Length < 1 )
+				return SetError(11605,"Parameter CurrencyCode is missing");
+			if ( fund.Length < 1 )
+				return SetError(11610,"Parameter FundingMethodCode is missing");
+			if ( eCode.Length < 1 )
+				return SetError(11615,"Parameter eWalletAccountCode is missing");
+			if ( eDesc.Length < 1 )
+				return SetError(11620,"Parameter eWalletDescription is missing");
+
+			return 0;
+		}
+
+		private int EditeWalletAccountDescription()
+		{
+			if ( CheckParameters("App,Country,Lang,Dialect,User") > 0 )
+				return errorCode;
+
+			string eCode = ParmValue("eWalletAccountCode");
+			string eDesc = ParmValue("eWalletDescription");
+
+			if ( eCode.Length < 1 )
+				return SetError(11705,"Parameter eWalletAccountCode is missing");
+			if ( eDesc.Length < 1 )
+				return SetError(11710,"Parameter eWalletDescription is missing");
+
+			if ( eDesc.Length < 1 )
+				return 11610;
+
 			return 0;
 		}
 
