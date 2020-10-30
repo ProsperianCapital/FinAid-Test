@@ -204,7 +204,7 @@ namespace PCIBusiness
 				//	smtp.EnableSsl             = false;
 					smtp.Credentials           = new NetworkCredential(provider.MerchantUserID,provider.MerchantPassword);
 				//	SendGrid testing
-				//	smtp.Credentials           = new NetworkCredential("apikey","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");
+				//	For SendGrid, the NetworkCredential userName must equal "apikey" (the actual string "apikey")
 					return 0;
 				}
 				catch (Exception ex)
