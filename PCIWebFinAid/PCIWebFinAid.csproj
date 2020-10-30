@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AJAXProcess.aspx" />
+    <Content Include="CAFooter.ascx" />
     <Content Include="CAHeader.ascx" />
     <Content Include="CALogin.aspx" />
     <Content Include="Footer.ascx" />
@@ -136,6 +137,7 @@
     <Content Include="CSS\atlanta-webfont.woff" />
     <Content Include="ImagesCA\CA-Assist1.jpg" />
     <Content Include="ImagesCA\CA-Assist2.jpg" />
+    <Content Include="ImagesCA\CA-Assist3.jpg" />
     <Content Include="ImagesCA\CA-Gold.png" />
     <Content Include="ImagesCA\CA-Silver.png" />
     <Content Include="ImagesCA\CA-Bronze.png" />
@@ -195,6 +197,13 @@
     </Compile>
     <Compile Include="BasePageLogin.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CAFooter.ascx.cs">
+      <DependentUpon>CAFooter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CAFooter.ascx.designer.cs">
+      <DependentUpon>CAFooter.ascx</DependentUpon>
     </Compile>
     <Compile Include="CAHeader.ascx.cs">
       <DependentUpon>CAHeader.ascx</DependentUpon>

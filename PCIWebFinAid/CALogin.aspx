@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="CALogin.aspx.cs" Inherits="PCIWebFinAid.CALogin" %>
 <%@ Register TagPrefix="ascx" TagName="Header" Src="CAHeader.ascx" %>
-<%@ Register TagPrefix="ascx" TagName="Footer" Src="Footer.ascx" %>
+<%@ Register TagPrefix="ascx" TagName="Footer" Src="CAFooter.ascx" %>
 
 <!DOCTYPE html>
 
@@ -8,7 +8,7 @@
 <head runat="server">
 	<!--#include file="IncludeMain.htm" -->
 	<title>CareAssist Africa - Instant Help When You Need It Most</title>
-	<link rel="stylesheet" href="CSS/CAFinAid.css" type="text/css" />
+	<link rel="stylesheet" href="CSS/CAFinAid.css?v=3" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
 	<!--
 	<style>
@@ -33,15 +33,15 @@
 	CareAssist provides Emergency Mobile Response and a Legal Access Service<br />
 	on subscription with a FREE Emergency CASH Reward for loyal subscribers.
 	</p>
-	<div style="margin:0 auto;display:block;width:1100px">
-	<img src="ImagesCA/CA-Gold.png"   style="width:360px" />
-	<img src="ImagesCA/CA-Silver.png" style="width:360px" />
-	<img src="ImagesCA/CA-Bronze.png" style="width:360px" />
+	<div style="margin:0 auto;display:block;width:100%">
+	<img src="ImagesCA/CA-Gold.png"   style="width:33%" />
+	<img src="ImagesCA/CA-Silver.png" style="width:33%" />
+	<img src="ImagesCA/CA-Bronze.png" style="width:33%" />
 	</div>
 
 	<div style="position:relative">
 	<img src="ImagesCA/CA-Assist2.jpg" style="width:100%" />
-	<div style="color:#FFFFFF; font-family:Sans-serif; position:absolute; top:10px; left:50px;width:99%">
+	<div style="color:#FFFFFF; font-family:Sans-serif; position:absolute; top:10px; left:5%; width:95%">
 		<p style="font-size:35px; font-weight:400; line-height:1.4em; letter-spacing:0.8px">
 		HOW IT WORKS
 		</p><p style="font-size:19px;font-weight:300;line-height:1.6em">
@@ -49,7 +49,7 @@
 		Application & Legal Assistance Service with an<br />
 		Emergency CASH Reward for loyal subscribers.
 		</p>
-		<div style="margin-right:180px;font-size:19px;font-weight:300;line-height:1.6em;float:right">
+		<div style="margin-right:120px;font-size:19px;font-weight:300;line-height:1.6em;float:right">
 		Only 3 Minutes Easy<br />Online Application.<br />Select your option below.
 		<p style="font-size:24px;font-weight:300;line-height:1.6em">
 		GOLD<br />
@@ -78,19 +78,16 @@
 	<p style="color: #F88742;font-family:Sans-serif;font-size: 35px;font-weight: 400;line-height: 1.4em;letter-spacing: 0.8px;text-align:center">
 	YOUR SUBSCRIPTION BENEFITS
 	</p>
-	<!--
-	<div style="margin:0 auto;display:block;width:1100px">
-	-->
-	<div style="display:flex;margin:auto;width:1100px">
+	<div style="display:flex;margin:auto;width:100%">
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
 		<img src="ImagesCA/isos.png" style="width:290px" />
 		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Mobile Response</figcaption>
 	</figure> 
-	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:295px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
+	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
 		<img src="ImagesCA/Legal.jpg" style="width:290px" />
 		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Legal Access</figcaption>
 	</figure> 
-	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:300px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
+	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
 		<img src="ImagesCA/Loyalty.png" style="width:290px" />
 		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Cash Reward</figcaption>
 	</figure> 
@@ -132,7 +129,40 @@
 	We reserve the right to amend any of the terms and conditions of our service offering, including price, at any time, and such changes will be reflected in the content of this website.
 	</p>
 	</div>
+
+	<div>
+	<img src="ImagesCA/CA-Assist3.jpg" style="width:99%" />
+	</div>
+
+	<p></p>
+	<div style="float:left;width:10%">&nbsp;</div>
+	<div style="float:left;width:20%">
+		<img src="Images/LogoENG.png" style="height:30px" />
+		<p>
+		CareAssist is rendered by LifeStyle Direct Financial Services (Pty) Ltd, duly registered in South Africa (company registration no 2009/008897/07).
+		We comply fully with applicable laws and regulations and with international marketing and consumer service best practise guidelines.
+		</p>
+	</div>
+	<div style="float:left;width:10%">&nbsp;</div>
+	<div style="float:left;width:20%">
+		<p style="color:#FF7400;font-family:Sans-serif;font-size:18px;font-weight:600;letter-spacing:0.8px">
+		CONTACT US
+		</p><p><b>
+		Customer Support
+		</b></p><p><b>
+		Corporate Office
+		</b></p>
+	</div>
+	<div style="float:left;width:10%">&nbsp;</div>
+	<div style="float:left;width:20%">
+		<p style="color:#FF7400;font-family:Sans-serif;font-size:18px;font-weight:600;letter-spacing:0.8px">
+		SITE MAP
+		</p>
+	</div>
+	<div style="float:left;width:10%">&nbsp;</div>
+
 	<asp:HiddenField runat="server" ID="hdnVer" />
 </form>
+<ascx:Footer runat="server" ID="ascxFooter" />
 </body>
 </html>

@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CAHeader.ascx.cs" Inherits="PCIWebFinAid.CAHeader" %>
 
 <div class="Header1">
-	<table class="Header1a" style="width:100%">
+	<table class="Header1a" style="width:99%">
 	<tr>
 		<td style="width:20%">
 			<img src="Images/LogoENG.png" /></td>
