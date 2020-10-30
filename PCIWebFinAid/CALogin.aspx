@@ -8,7 +8,7 @@
 <head runat="server">
 	<!--#include file="IncludeMain.htm" -->
 	<title>CareAssist Africa - Instant Help When You Need It Most</title>
-	<link rel="stylesheet" href="CSS/CAFinAid.css?v=3" type="text/css" />
+	<link rel="stylesheet" href="CSS/CAFinAid.css?v=6" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />
 	<!--
 	<style>
