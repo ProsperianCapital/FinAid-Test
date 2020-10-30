@@ -115,6 +115,7 @@ namespace PCIBusiness
 				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.MyGate)    ) transaction = new TransactionMyGate();
 				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGenius) ) transaction = new TransactionPayGenius();
 				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate)   ) transaction = new TransactionPayGate();
+				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.FNB)       ) transaction = new TransactionFNB();
 				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Ecentric)  ) transaction = new TransactionEcentric();
 				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS)     ) transaction = new TransactionENets();
 				   else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach)     ) transaction = new TransactionPeach();

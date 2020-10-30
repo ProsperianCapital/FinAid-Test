@@ -542,6 +542,8 @@ namespace PCIBusiness
 					transaction = new TransactionMyGate();
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate) )
 					transaction = new TransactionPayGate();
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.FNB) )
+					transaction = new TransactionFNB();
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGenius) )
 					transaction = new TransactionPayGenius();
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Ecentric) )
@@ -593,6 +595,8 @@ namespace PCIBusiness
 					transaction = new TransactionMyGate();
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate) )
 					transaction = new TransactionPayGate();
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.FNB) )
+					transaction = new TransactionFNB();
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGenius) )
 					transaction = new TransactionPayGenius();
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Ecentric) )

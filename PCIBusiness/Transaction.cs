@@ -182,6 +182,8 @@ namespace PCIBusiness
 					bureauURL = "https://secure.paygate.co.za/payhost/process.trans";
 				else if ( bureau == Constants.PaymentProvider.TokenEx )
 					bureauURL = "https://api.tokenex.com";
+				else if ( bureau == Constants.PaymentProvider.FNB )
+					bureauURL = "https://pay.ms.fnb.co.za/eCommerce/v2";
 			}
 			else
 			{
@@ -201,6 +203,8 @@ namespace PCIBusiness
 					bureauURL = "https://payment.ccp.transact24.com";
 				else if ( bureau == Constants.PaymentProvider.TokenEx )
 					bureauURL = "https://test-api.tokenex.com";
+				else if ( bureau == Constants.PaymentProvider.FNB )
+					bureauURL = "https://sandbox.ms.fnb.co.za/eCommerce/v2";
 			}
 		}
 

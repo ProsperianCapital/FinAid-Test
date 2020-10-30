@@ -69,7 +69,8 @@ namespace PCIBusiness
 			eNETS      = 20,
 			Peach      = 21,
 			TokenEx    = 22,
-			SatchelPay = 23
+			SatchelPay = 23,
+			FNB        = 24
 //	Not implemented yet
 //			DinersClub = xx
 //			PayFast    = xx

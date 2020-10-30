@@ -203,6 +203,8 @@ namespace PCIBusiness
 					smtp.UseDefaultCredentials = false;
 				//	smtp.EnableSsl             = false;
 					smtp.Credentials           = new NetworkCredential(provider.MerchantUserID,provider.MerchantPassword);
+				//	SendGrid testing
+				//	smtp.Credentials           = new NetworkCredential("apikey","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");
 					return 0;
 				}
 				catch (Exception ex)
