@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AJAXProcess.aspx" />
+    <Content Include="CAHeader.ascx" />
+    <Content Include="CALogin.aspx" />
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
@@ -115,6 +117,7 @@
     <Content Include="JS\Utils.js" />
     <Content Include="JS\Calendar.js" />
     <Content Include="JS\Timeout.js" />
+    <Content Include="CSS\CAFinAid.css" />
     <Content Include="CSS\FinAid.css" />
     <Content Include="CSS\BackOffice.css" />
     <Content Include="CSS\Calendar.css" />
@@ -131,6 +134,14 @@
     <Content Include="CSS\raleway-semibold-webfont.svg" />
     <Content Include="CSS\raleway-medium-webfont.svg" />
     <Content Include="CSS\atlanta-webfont.woff" />
+    <Content Include="ImagesCA\CA-Assist1.jpg" />
+    <Content Include="ImagesCA\CA-Assist2.jpg" />
+    <Content Include="ImagesCA\CA-Gold.png" />
+    <Content Include="ImagesCA\CA-Silver.png" />
+    <Content Include="ImagesCA\CA-Bronze.png" />
+    <Content Include="ImagesCA\isos.png" />
+    <Content Include="ImagesCA\Legal.jpg" />
+    <Content Include="ImagesCA\Loyalty.png" />
     <Content Include="Images\DownArrow.png" />
     <Content Include="Images\LightG.png" />
     <Content Include="Images\LightR.png" />
@@ -184,6 +195,20 @@
     </Compile>
     <Compile Include="BasePageLogin.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CAHeader.ascx.cs">
+      <DependentUpon>CAHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CAHeader.ascx.designer.cs">
+      <DependentUpon>CAHeader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CALogin.aspx.cs">
+      <DependentUpon>CALogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CALogin.aspx.designer.cs">
+      <DependentUpon>CALogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="ContractLookup.aspx.cs">
       <DependentUpon>ContractLookup.aspx</DependentUpon>
