@@ -240,7 +240,6 @@ namespace PCIWebFinAid
 				return 0;
 			}
 
-
 		private void ReplaceControlText(string ctlID,string fieldValue,Control subControl=null)
 		{
 			Control ctl = FindControl(ctlID);

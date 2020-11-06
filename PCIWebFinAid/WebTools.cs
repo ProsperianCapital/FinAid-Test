@@ -462,6 +462,75 @@ namespace PCIWebFinAid
 			{ }
 			return 0;
 		}
+		public static byte ReplaceControlText(Page webPage,string ctlID,string fieldValue,Control subControl=null)
+		{
+			Control ctl = webPage.FindControl(ctlID);
+			if ( ctl == null && subControl != null )
+				ctl    = subControl.FindControl(ctlID);
+			if ( ctl == null )
+				return 10;
+			else if (ctl.GetType()  == typeof(Literal))
+				((Literal)ctl).Text   = fieldValue;
+			else if (ctl.GetType()  == typeof(Label))
+				((Label)ctl).Text     = fieldValue;
+			else if (ctl.GetType()  == typeof(TableCell))
+				((TableCell)ctl).Text = fieldValue;
+			else if (ctl.GetType()  == typeof(Button))
+				((Button)ctl).Text    = fieldValue;
+			else if (ctl.GetType()  == typeof(CheckBox))
+				((CheckBox)ctl).Text  = fieldValue;
+			else if (ctl.GetType()  == typeof(HyperLink))
+				((HyperLink)ctl).Text = fieldValue;
+			else
+				return 20;
+			return 0;
+		}
+
+		public static byte ReplaceImage ( Page    webPage,
+		                                  string  ctlID,
+		                                  string  imgFileName,
+		                                  string  imgTooltip,
+		                                  string  imgHyperlink="",
+		                                  int     imgHeight=0,
+		                                  int     imgWidth=0,
+		                                  Control subControl=null)
+		{
+			try
+			{
+				Image ctl = (Image)webPage.FindControl("P"+ctlID);
+				if ( ctl == null && subControl != null )
+					ctl    = (Image)subControl.FindControl("P"+ctlID);
+				if ( ctl == null )
+					return 10;
+				if ( ctl.GetType() != typeof(Image) )
+					return 20;
+				ctl.ToolTip   = imgTooltip;
+				ctl.ImageUrl  = "ImagesCA/" + imgFileName;
+				if ( imgHeight > 0 )
+					ctl.Height = imgHeight;
+				else if ( imgWidth > 0 )
+					ctl.Width  = imgWidth;
+
+				if ( imgHyperlink.Length < 1 )
+					return 0;
+
+				HyperLink lnk = (HyperLink)webPage.FindControl("H"+ctlID);
+				if ( lnk == null && subControl != null )
+					lnk    = (HyperLink)subControl.FindControl("H"+ctlID);
+				if ( lnk == null )
+					return 30;
+				if ( lnk.GetType() != typeof(HyperLink) )
+					return 40;
+				lnk.NavigateUrl = imgHyperlink;
+				return 0;
+			}
+			catch (Exception ex)
+			{
+				PCIBusiness.Tools.LogException("WebTools.ReplaceImage","",ex);
+			}
+			return 90;
+		}
+
 
 /* Not complete
 

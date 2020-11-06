@@ -514,15 +514,15 @@ namespace PCIWebFinAid
 
 			string cur   = ParmValue("CurrencyCode");
 			string fund  = ParmValue("FundingMethodCode");
-			string eCode = ParmValue("eWalletAccountCode");
+//			string eCode = ParmValue("eWalletAccountCode");
 			string eDesc = ParmValue("eWalletDescription");
 
 			if ( cur.Length < 1 )
 				return SetError(11605,"Parameter CurrencyCode is missing");
 			if ( fund.Length < 1 )
 				return SetError(11610,"Parameter FundingMethodCode is missing");
-			if ( eCode.Length < 1 )
-				return SetError(11615,"Parameter eWalletAccountCode is missing");
+//			if ( eCode.Length < 1 )
+//				return SetError(11615,"Parameter eWalletAccountCode is missing");
 			if ( eDesc.Length < 1 )
 				return SetError(11620,"Parameter eWalletDescription is missing");
 
@@ -541,9 +541,6 @@ namespace PCIWebFinAid
 				return SetError(11705,"Parameter eWalletAccountCode is missing");
 			if ( eDesc.Length < 1 )
 				return SetError(11710,"Parameter eWalletDescription is missing");
-
-			if ( eDesc.Length < 1 )
-				return 11610;
 
 			return 0;
 		}

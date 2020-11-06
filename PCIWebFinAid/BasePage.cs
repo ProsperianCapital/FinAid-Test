@@ -131,7 +131,7 @@ namespace PCIWebFinAid
 				catch {}
 			else
 				lblError.Text = errBrief;
-			lblError.Visible = ( lblError.Text.Length > 0 );
+			lblError.Visible = ( lblError.Text.Length > 0 && lblError.Enabled );
 
 			if ( lblErrorDtl == null || detailMode == 0 ) // Do not log a detailed message at all
 				return;
