@@ -7,6 +7,7 @@ namespace PCIWebFinAid
 {
 	public partial class CAHome : BasePage
 	{
+		byte   errPriority;
 		int    ret;
 		string sql;
 
@@ -27,10 +28,11 @@ namespace PCIWebFinAid
 		string foregroundColour;
 		string headerCode;
 		string footerCode;
-		string blocked;
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
+			errPriority = 241; // Log everything
+
 			if ( Page.IsPostBack )
 			{
 				productCode         = hdnProductCode.Value;
@@ -61,9 +63,9 @@ namespace PCIWebFinAid
 					ret = 10010;
 					sql = "exec sp_WP_Get_ProductWebsiteInfo @ProductURL = 'www.careassistza.com'";
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadStaticDetails", 10020, "Internal database error (sp_WP_Get_ProductWebsiteInfo failed)", sql, 1, 1);
+						SetErrorDetail("LoadStaticDetails", 10020, "Internal database error (sp_WP_Get_ProductWebsiteInfo failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadStaticDetails", 10030, "Internal database error (sp_WP_Get_ProductWebsiteInfo no data returned)", sql, 1, 1);
+						SetErrorDetail("LoadStaticDetails", 10030, "Internal database error (sp_WP_Get_ProductWebsiteInfo no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 					{
 						ret              = 10040;
@@ -81,15 +83,16 @@ namespace PCIWebFinAid
 						foregroundColour = mList.GetColumn("WebsiteTextColour");
 						headerCode       = mList.GetColumn("WebsiteHeaderColour");
 						footerCode       = mList.GetColumn("WebsiteFooterColour");
-						blocked          = mList.GetColumn("Blocked");
+					//	blocked          = mList.GetColumn("Blocked");
+						Tools.LogInfo("LoadStaticDetails/10040","Product="+productCode+"/"+countryCode+"/"+currencyCode,errPriority,this);
 					}
 
 					ret = 10050;
 					sql = "exec sp_WP_Get_ProductLanguageInfo @ProductCode=" + Tools.DBString(productCode);
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadStaticDetails", 10060, "Internal database error (sp_WP_Get_ProductLanguageInfo failed)", sql, 1, 1);
+						SetErrorDetail("LoadStaticDetails", 10060, "Internal database error (sp_WP_Get_ProductLanguageInfo failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadStaticDetails", 10070, "Internal database error (sp_WP_Get_ProductLanguageInfo no data returned)", sql, 1, 1);
+						SetErrorDetail("LoadStaticDetails", 10070, "Internal database error (sp_WP_Get_ProductLanguageInfo no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 					{
 						string       lCode;
@@ -101,8 +104,9 @@ namespace PCIWebFinAid
 							ret          = 10080;
 							lCode        = mList.GetColumn("LanguageCode");
 							lDialectCode = mList.GetColumn("LanguageDialectCode");
-							blocked      = mList.GetColumn("Blocked");
-							lstLang.Items.Add(new System.Web.UI.WebControls.ListItem(lCode,lCode));
+						//	blocked      = mList.GetColumn("Blocked");
+							Tools.LogInfo("LoadStaticDetails/10080","Language="+lCode+"/"+lDialectCode,errPriority,this);
+							lstLang.Items.Add(new System.Web.UI.WebControls.ListItem(lCode,lDialectCode));
 							if ( mList.GetColumn("DefaultIndicator").ToUpper() == "Y" )
 							{
 								ret                   = 10090;
@@ -147,9 +151,9 @@ namespace PCIWebFinAid
 					ret = 10110;
 					sql = "exec sp_WP_Get_ProductContent" + stdParms;
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10120, "Internal database error (sp_WP_Get_ProductContent failed)", sql, 1, 1);
+						SetErrorDetail("LoadDynamicDetails", 10120, "Internal database error (sp_WP_Get_ProductContent failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10130, "Internal database error (sp_WP_Get_ProductContent no data returned)", sql, 1, 1);
+						SetErrorDetail("LoadDynamicDetails", 10130, "Internal database error (sp_WP_Get_ProductContent no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 						while ( ! mList.EOF )
 						{
@@ -157,26 +161,28 @@ namespace PCIWebFinAid
 							fieldCode  = mList.GetColumn("WebsiteFieldCode");
 						//	fieldName  = mList.GetColumn("WebsiteFieldName");
 							fieldValue = mList.GetColumn("WebsiteFieldValue");
-							blocked    = mList.GetColumn("Blocked");
+						//	blocked    = mList.GetColumn("Blocked");
+							Tools.LogInfo("LoadDynamicDetails/10140","FieldCode="+fieldCode,errPriority,this);
 							err        = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,ascxHeader);
 							if ( err != 0 )
-								SetErrorDetail("LoadDynamicDetails", 10150, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString());
+								SetErrorDetail("LoadDynamicDetails", 10150, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString(), 2, 2, null, false, errPriority);
 							mList.NextRow();
 						}
 
 					ret = 10160;
 					sql = "exec sp_WP_Get_ProductImageInfo" + stdParms;
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10170, "Internal database error (sp_WP_Get_ProductImageInfo failed)", sql, 1, 1);
+						SetErrorDetail("LoadDynamicDetails", 10170, "Internal database error (sp_WP_Get_ProductImageInfo failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10180, "Internal database error (sp_WP_Get_ProductImageInfo no data returned)", sql, 1, 1);
+						SetErrorDetail("LoadDynamicDetails", 10180, "Internal database error (sp_WP_Get_ProductImageInfo no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 						while ( ! mList.EOF )
 						{
 							ret        = 10190;
 							fieldCode  = mList.GetColumn("ImageCode");
 							fieldValue = mList.GetColumn("ImageFileName");
-							blocked    = mList.GetColumn("Blocked");
+						//	blocked    = mList.GetColumn("Blocked");
+							Tools.LogInfo("LoadDynamicDetails/10190","ImageCode="+fieldCode+"/"+fieldValue,errPriority,this);
 							err        = WebTools.ReplaceImage(this.Page,fieldCode,fieldValue,
 							                                   mList.GetColumn("ImageMouseHoverText"),
 							                                   mList.GetColumn("ImageHyperLink"),
@@ -184,7 +190,7 @@ namespace PCIWebFinAid
 							                                   mList.GetColumnInt("ImageWidth"),
 							                                   ascxHeader);
 							if ( err != 0 )
-								SetErrorDetail("LoadDynamicDetails", 10200, "Unrecognized HTML control ("+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceImage('"+fieldCode+"') => "+err.ToString());
+								SetErrorDetail("LoadDynamicDetails", 10200, "Unrecognized Image code ("+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceImage('"+fieldCode+"') => "+err.ToString(), 2, 2, null, false, errPriority);
 							mList.NextRow();
 						}
 
@@ -192,9 +198,9 @@ namespace PCIWebFinAid
 					XHIW.Text = "";
 					sql       = "exec sp_WP_Get_ProductHIWInfo" + stdParms;
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10220, "Internal database error (sp_WP_Get_ProductHIWInfo failed)", sql, 1, 1);
+						SetErrorDetail("LoadDynamicDetails", 10220, "Internal database error (sp_WP_Get_ProductHIWInfo failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10230, "Internal database error (sp_WP_Get_ProductHIWInfo no data returned)", sql, 1, 1);
+						SetErrorDetail("LoadDynamicDetails", 10230, "Internal database error (sp_WP_Get_ProductHIWInfo no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 						while ( ! mList.EOF )
 						{
@@ -202,11 +208,13 @@ namespace PCIWebFinAid
 							fieldCode  = mList.GetColumn("Serial");
 							fieldHead  = mList.GetColumn("HIWHeader");
 							fieldValue = mList.GetColumn("HIWDetail");
+						//	blocked    = mList.GetColumn("Blocked");
+							Tools.LogInfo("LoadDynamicDetails/10240","HIW="+fieldCode+"/"+fieldHead,errPriority,this);
 							if ( "0123456789".Contains(fieldHead.Substring(0,1)) )
-								XHIW.Text = XHIW.Text + "<p class='HIWHead1'>" + fieldHead + "</p>"
+								XHIW.Text = XHIW.Text + "<p class='HIWHead1'>"   + fieldHead  + "</p>"
 								                      + "<p class='HIWDetail1'>" + fieldValue + "</p>";
 							else
-								XHIW.Text = XHIW.Text + "<p class='HIWHead2'>" + fieldHead + "</p>"
+								XHIW.Text = XHIW.Text + "<p class='HIWHead2'>"   + fieldHead  + "</p>"
 								                      + "<p class='HIWDetail2'>" + fieldValue + "</p>";
 							mList.NextRow();
 						}
@@ -215,19 +223,20 @@ namespace PCIWebFinAid
 					ret = 10250;
 					sql = "exec sp_WP_Get_ProductLegalDocumentInfo" + stdParms;
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10260, "Internal database error (sp_WP_Get_ProductLegalDocumentInfo failed)", sql, 1, 1);
+						SetErrorDetail("LoadDynamicDetails", 10260, "Internal database error (sp_WP_Get_ProductLegalDocumentInfo failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10270, "Internal database error (sp_WP_Get_ProductLegalDocumentInfo no data returned)", sql, 1, 1);
+						SetErrorDetail("LoadDynamicDetails", 10270, "Internal database error (sp_WP_Get_ProductLegalDocumentInfo no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 						while ( ! mList.EOF )
 						{
 							ret        = 10280;
 							fieldCode  = mList.GetColumn("Serial");
 							fieldValue = mList.GetColumn("WebsiteFieldValue");
-							blocked    = mList.GetColumn("Blocked");
+						//	blocked    = mList.GetColumn("Blocked");
+							Tools.LogInfo("LoadDynamicDetails/10280","Legal="+fieldCode,errPriority,this);
 							err        = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,ascxHeader);
 							if ( err != 0 )
-								SetErrorDetail("LoadDynamicDetails", 10290, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString());
+								SetErrorDetail("LoadDynamicDetails", 10290, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString(), 2, 2, null, false, errPriority);
 							mList.NextRow();
 						}
 */
