@@ -267,3 +267,28 @@ table td
 	margin-left: 5px;
 	float: right;
 }
+
+.HIWHead1
+{
+	color: #FBDB00;
+	font-family: Montserrat, Sans-serif;
+	font-size: 19px;
+	font-weight: 500;
+	text-transform: capitalize;
+	line-height: 1.2em;
+	letter-spacing: 0.6px;
+}
+
+.HIWDetail1
+{
+	margin-left: 20px;
+}
+
+.HIWHead2
+{
+	font-weight: bold;
+}
+
+.HIWDetail2
+{
+}
