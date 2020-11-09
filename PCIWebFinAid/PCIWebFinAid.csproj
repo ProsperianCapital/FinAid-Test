@@ -137,6 +137,7 @@
     <Content Include="CSS\raleway-semibold-webfont.svg" />
     <Content Include="CSS\raleway-medium-webfont.svg" />
     <Content Include="CSS\atlanta-webfont.woff" />
+    <Content Include="ImagesCA\LogoENG.png" />
     <Content Include="ImagesCA\CA-Assist1.jpg" />
     <Content Include="ImagesCA\CA-Assist2.jpg" />
     <Content Include="ImagesCA\CA-Assist3.jpg" />

@@ -127,6 +127,7 @@ namespace PCIWebFinAid
 				}
 				catch (Exception ex)
 				{
+					PCIBusiness.Tools.LogException("LoadStaticDetails/99","ret="+ret.ToString(),ex,this);
 				}
 
 			hdnProductCode.Value     = productCode;
@@ -184,8 +185,8 @@ namespace PCIWebFinAid
 						//	blocked    = mList.GetColumn("Blocked");
 							Tools.LogInfo("LoadDynamicDetails/10190","ImageCode="+fieldCode+"/"+fieldValue,errPriority,this);
 							err        = WebTools.ReplaceImage(this.Page,fieldCode,fieldValue,
-							                                   mList.GetColumn("ImageMouseHoverText"),
-							                                   mList.GetColumn("ImageHyperLink"),
+							                                   mList.GetColumn   ("ImageMouseHoverText"),
+							                                   mList.GetColumn   ("ImageHyperLink"),
 							                                   mList.GetColumnInt("ImageHeight"),
 							                                   mList.GetColumnInt("ImageWidth"),
 							                                   ascxHeader);
@@ -243,7 +244,7 @@ namespace PCIWebFinAid
 				}
 				catch (Exception ex)
 				{
-					PCIBusiness.Tools.LogException("LoadDynamicDetails","ret="+ret.ToString(),ex,this);
+					PCIBusiness.Tools.LogException("LoadDynamicDetails/99","ret="+ret.ToString(),ex,this);
 				}
 		}
 	}

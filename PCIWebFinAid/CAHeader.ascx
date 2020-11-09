@@ -4,7 +4,7 @@
 	<table class="Header1a" style="width:99%">
 	<tr>
 		<td style="width:20%">
-			<img src="Images/LogoENG.png" /></td>
+			<asp:Image runat="server" ID="P12001" /></td>
 		<td style="width:50%;white-space:nowrap;text-align:center">
 			Instant Help When You Need It Most</td>
 		<td style="width:30%;white-space:nowrap">

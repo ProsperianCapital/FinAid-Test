@@ -17,20 +17,20 @@
 	<asp:HiddenField runat="server" Value="" ID="hdnLangCode" />
 	<asp:HiddenField runat="server" Value="" ID="hdnLangDialectCode" />
 
-	<img src="ImagesCA/CA-Assist1.jpg" style="width:100%" />
+	<asp:Image runat="server" ID="P12002" style="width:100%" /> <!-- CA-Assist1.jpg -->
 	<p style="text-align:center; color:#FFFFFF; font-family:Arial; font-size:35px; font-weight:600; line-height:1.5em; letter-spacing:0.8px; text-shadow:0px 0px 11px #000000; position:absolute; top:100px; left:0px; right:0px">
 	<asp:Literal runat="server" ID="X100002"></asp:Literal>
 	</p><p style="text-align:center; color:#54595F; font-family:Sans-serif; font-size:19px; font-weight:600; line-height:1.6em; letter-spacing:0.8px; text-shadow:0px 0px 51px #FFFFFF; position:absolute; top:210px; left:0px; right:0px">
 	<asp:Literal runat="server" ID="X100004"></asp:Literal>
 	</p>
 	<div style="margin:0 auto;display:block;width:100%">
-	<img src="ImagesCA/CA-Gold.png"   style="width:33%" />
-	<img src="ImagesCA/CA-Silver.png" style="width:33%" />
-	<img src="ImagesCA/CA-Bronze.png" style="width:33%" />
+	<asp:Image runat="server" ID="P12003" style="width:33%" /> <!-- Gold -->
+	<asp:Image runat="server" ID="P12004" style="width:33%" /> <!-- Silver -->
+	<asp:Image runat="server" ID="P12005" style="width:33%" /> <!-- Bronze -->
 	</div>
 
 	<div style="position:relative">
-	<asp:Image runat="server" ID="P120001" style="width:100%" ImageUrl="ImagesCA/CA-Assist2.jpg" />
+	<asp:Image runat="server" ID="P12006" style="width:100%" /> <!-- CA-Assist2.jpg -->
 	<div style="color:#FFFFFF; font-family:Sans-serif; position:absolute; top:10px; left:5%; width:95%">
 		<p style="font-size:35px; font-weight:400; line-height:1.4em; letter-spacing:0.8px">
 		<asp:Literal runat="server" ID="X100045"></asp:Literal>
@@ -68,15 +68,15 @@
 	</p>
 	<div style="display:flex;margin:auto;width:100%">
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
-		<img src="ImagesCA/isos.png" style="width:290px" />
+		<asp:Image runat="server" ID="P12020" style="width:290px" /> <!-- isos -->
 		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Mobile Response</figcaption>
 	</figure> 
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
-		<img src="ImagesCA/Legal.jpg" style="width:290px" />
+		<asp:Image runat="server" ID="P12021" style="width:290px" /> <!-- legal -->
 		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Legal Access</figcaption>
 	</figure> 
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
-		<img src="ImagesCA/Loyalty.png" style="width:290px" />
+		<asp:Image runat="server" ID="P12022" style="width:290px" /> <!-- loyalty -->
 		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Cash Reward</figcaption>
 	</figure> 
 	</div>
@@ -87,13 +87,13 @@
 	</div>
 
 	<div>
-	<img src="ImagesCA/CA-Assist3.jpg" style="width:99%" />
+	<asp:Image runat="server" ID="P12013" style="width:99%" /> <!-- CA-Assist3.jpg -->
 	</div>
 
 	<p></p>
 	<div style="float:left;width:10%">&nbsp;</div>
 	<div style="float:left;width:20%">
-		<img src="Images/LogoENG.png" style="height:30px" />
+		<img src="ImagesCA/LogoENG.png" style="height:30px" />
 		<p>
 		<asp:Literal runat="server" ID="X100040"></asp:Literal>
 		</p>
