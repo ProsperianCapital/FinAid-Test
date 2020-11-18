@@ -74,9 +74,14 @@
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
+    <Content Include="pgChangeAddress.aspx" />
+    <Content Include="pgChangePIN.aspx" />
     <Content Include="pgContractLookUp.aspx" />
     <Content Include="pgTransactionLookUp.aspx" />
+    <Content Include="pgViewCurrentBalances.aspx" />
     <Content Include="pgVieweWallets.aspx" />
+    <Content Include="pgViewMiniStatement.aspx" />
+    <Content Include="pgViewProductActivityLog.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx3.aspx" />
     <Content Include="RegisterThreeD.aspx" />
@@ -318,6 +323,41 @@
     </Compile>
     <Compile Include="Menu.ascx.designer.cs">
       <DependentUpon>Menu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="pgChangeAddress.aspx.cs">
+      <DependentUpon>pgChangeAddress.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgChangeAddress.aspx.designer.cs">
+      <DependentUpon>pgChangeAddress.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgChangePIN.aspx.cs">
+      <DependentUpon>pgChangePIN.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgChangePIN.aspx.designer.cs">
+      <DependentUpon>pgChangePIN.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgViewCurrentBalances.aspx.cs">
+      <DependentUpon>pgViewCurrentBalances.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgViewCurrentBalances.aspx.designer.cs">
+      <DependentUpon>pgViewCurrentBalances.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgViewMiniStatement.aspx.cs">
+      <DependentUpon>pgViewMiniStatement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgViewMiniStatement.aspx.designer.cs">
+      <DependentUpon>pgViewMiniStatement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgViewProductActivityLog.aspx.cs">
+      <DependentUpon>pgViewProductActivityLog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgViewProductActivityLog.aspx.designer.cs">
+      <DependentUpon>pgViewProductActivityLog.aspx</DependentUpon>
     </Compile>
     <Compile Include="UIApplicationTest.aspx.cs">
       <DependentUpon>UIApplicationTest.aspx</DependentUpon>

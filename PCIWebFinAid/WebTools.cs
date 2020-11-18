@@ -505,7 +505,7 @@ namespace PCIWebFinAid
 				if ( ctl.GetType() != typeof(Image) )
 					return 20;
 				ctl.ToolTip   = imgTooltip;
-				ctl.ImageUrl  = ImageFolder() + imgFileName;
+				ctl.ImageUrl  = ImageFolder("ImagesCA") + imgFileName;
 				if ( imgHeight > 0 )
 					ctl.Height = imgHeight;
 				else if ( imgWidth > 0 )
@@ -531,11 +531,14 @@ namespace PCIWebFinAid
 			return 90;
 		}
 
-		public static string ImageFolder()
+		public static string ImageFolder(string defaultDir="")
 		{
 			string folder = PCIBusiness.Tools.ConfigValue("ImageFolder");
 			if ( folder.Length < 1 )
-				return "ImagesCA/";
+				if ( defaultDir.Length < 1 )
+					return "Images/";
+				else
+					folder = defaultDir;
 			if ( folder.EndsWith("/") )
 				return folder;
 			return folder + "/";
