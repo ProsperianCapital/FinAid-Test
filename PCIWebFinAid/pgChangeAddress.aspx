@@ -62,6 +62,7 @@
 <asp:Button runat="server" id="X104237" />
 <br /><br />
 <asp:Label runat="server" ID="X104356" CssClass="Error"></asp:Label>
+<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!--#include file="IncludeErrorDtl.htm" -->
 <ascx:XFooter runat="server" ID="ascxXFooter" />

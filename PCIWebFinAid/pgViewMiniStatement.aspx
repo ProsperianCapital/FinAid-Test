@@ -31,6 +31,7 @@
 <asp:TextBox runat="server" Width="160px" ReadOnly="true" ID="txtBalance"></asp:TextBox>
 <br /><br />
 <asp:Label runat="server" ID="X104126" CssClass="Error"></asp:Label>
+<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!--#include file="IncludeErrorDtl.htm" -->
 <ascx:XFooter runat="server" ID="ascxXFooter" />

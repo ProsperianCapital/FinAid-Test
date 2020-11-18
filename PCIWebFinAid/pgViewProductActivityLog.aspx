@@ -26,6 +26,7 @@
 </asp:Table>
 <br /><br />
 <asp:Label runat="server" ID="X104140" CssClass="Error"></asp:Label>
+<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!--#include file="IncludeErrorDtl.htm" -->
 <ascx:XFooter runat="server" ID="ascxXFooter" />

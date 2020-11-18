@@ -41,6 +41,7 @@
 </table>
 <br /><br />
 <asp:Label runat="server" ID="X104110" CssClass="Error"></asp:Label>
+<asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!-- OLD Start -->
 <div id="div02" style="display:none;visibility:hidden">
