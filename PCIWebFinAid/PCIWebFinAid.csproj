@@ -137,13 +137,16 @@
     <Content Include="CSS\raleway-semibold-webfont.svg" />
     <Content Include="CSS\raleway-medium-webfont.svg" />
     <Content Include="CSS\atlanta-webfont.woff" />
-    <Content Include="ImagesCA\LogoENG.png" />
+    <Content Include="ImagesCA\CA-isos.png" />
+    <Content Include="ImagesCA\CA-Tick.png" />
+    <Content Include="ImagesCA\CA-LifeGuru.png" />
     <Content Include="ImagesCA\CA-Assist1.jpg" />
     <Content Include="ImagesCA\CA-Assist2.jpg" />
     <Content Include="ImagesCA\CA-Assist3.jpg" />
     <Content Include="ImagesCA\CA-Gold.png" />
     <Content Include="ImagesCA\CA-Silver.png" />
     <Content Include="ImagesCA\CA-Bronze.png" />
+    <Content Include="ImagesCA\LogoENG.png" />
     <Content Include="ImagesCA\isos.png" />
     <Content Include="ImagesCA\Legal.jpg" />
     <Content Include="ImagesCA\Loyalty.png" />
