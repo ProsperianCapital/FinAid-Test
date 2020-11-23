@@ -113,13 +113,14 @@ table td
 	border-radius: 5px;
 	outline: none;
 	width: 100px;
-	height: 20px;
+	height: 25px;
 	font-style: normal;
 	font-size: 16px;
 	letter-spacing: 0px;
 	text-align: center;
 	vertical-align: middle;
 	display: inline-block;
+	padding: 4px 0px 0px 0px;
 }
 .TopButtonO
 {
