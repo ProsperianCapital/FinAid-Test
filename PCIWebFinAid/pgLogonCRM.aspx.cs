@@ -36,9 +36,9 @@ namespace PCIWebFinAid
 //					if ( languageCode.Length          < 1 ) languageCode        = "THA";
 //					if ( languageDialectCode.Length   < 1 ) languageDialectCode = "0001";
 				}
-				else if ( productCode.Length         < 1 ||
-				          languageCode.Length        < 1 ||
-					       languageDialectCode.Length < 1 )
+				if ( productCode.Length         < 1 ||
+				     languageCode.Length        < 1 ||
+				     languageDialectCode.Length < 1 )
 				{
 					SetErrorDetail("PageLoad",33088,"Invalid startup values ... system cannot continue","");
 					btnLogin.Text    = "Disabled";
