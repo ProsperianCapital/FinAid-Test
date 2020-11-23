@@ -87,7 +87,7 @@ namespace PCIWebFinAid
 				sql = "exec SP_ClientCRMValidateLoginC"
 				    + " @IPAddress = "   + Tools.DBString(WebTools.ClientIPAddress(Request))
 				    + ",@ClientCode = "  + Tools.DBString(txtID.Text,47)
-				    + ",@Pin = "         + Tools.DBString(txtPW.Text)
+				    + ",@ContractPin = " + Tools.DBString(txtPW.Text)
 				    + ",@ProductCode = " + Tools.DBString(sessionGeneral.ProductCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
 					SetErrorDetail("btnLogin_Click",10020,"Internal database error (SP_ClientCRMValidateLoginC)",sql,1,1);
