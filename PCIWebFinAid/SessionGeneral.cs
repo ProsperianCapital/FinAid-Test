@@ -81,7 +81,7 @@
 					else if ( AccessType == "X" ) // Login not confirmed
 						startPage = "pgLogon.aspx";
 					else
-						startPage = "LWelcome.aspx";
+						startPage = "pgViewProductDashboard.aspx";
 				return startPage;
 			}
 			set { startPage = value.Trim(); }

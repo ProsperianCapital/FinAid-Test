@@ -385,7 +385,8 @@ namespace PCIWebFinAid
 				json.Append ( Tools.JSONPair("MenuLevel","1",11,"{")
 				            + Tools.JSONPair("MenuDescription",m1.Description)
 				            + Tools.JSONPair("MenuImage",m1.ImageName)
-				            + Tools.JSONPair("SubItems",m1.SubItems.Count.ToString(),11) );
+				            + Tools.JSONPair("SubItems",m1.SubItems.Count.ToString(),11)
+				            + Tools.JSONPair("RouterLink",m1.RouterLink) );
 				if ( m1.SubItems.Count > 0 )
 				{
 					json.Append("\"Menu"+(++k).ToString()+"\":[");
@@ -393,7 +394,8 @@ namespace PCIWebFinAid
 					{
 						json.Append ( Tools.JSONPair("MenuLevel","2",11,"{")
 						            + Tools.JSONPair("MenuDescription",m2.Description)
-				                  + Tools.JSONPair("SubItems",m2.SubItems.Count.ToString(),11) );
+				                  + Tools.JSONPair("SubItems",m2.SubItems.Count.ToString(),11)
+				                  + Tools.JSONPair("RouterLink",m2.RouterLink) );
 						if ( m2.SubItems.Count > 0 )
 						{
 							json.Append("\"Menu"+(++k).ToString()+"\":[");
@@ -401,7 +403,8 @@ namespace PCIWebFinAid
 							{
 								json.Append ( Tools.JSONPair("MenuLevel","3",11,"{")
 								            + Tools.JSONPair("MenuDescription",m3.Description)
-				                        + Tools.JSONPair("SubItems",m3.SubItems.Count.ToString(),11) );
+				                        + Tools.JSONPair("SubItems",m3.SubItems.Count.ToString(),11)
+				                        + Tools.JSONPair("RouterLink",m3.RouterLink) );
 								if ( m3.SubItems.Count > 0 )
 								{
 									json.Append("\"Menu"+(++k).ToString()+"\":[");
@@ -409,6 +412,7 @@ namespace PCIWebFinAid
 										json.Append ( Tools.JSONPair("MenuLevel","4",11,"{")
 										            + Tools.JSONPair("MenuDescription",m4.Description)
 				                              + Tools.JSONPair("SubItems","0",11)
+				                              + Tools.JSONPair("RouterLink",m4.RouterLink)
 										            + Tools.JSONPair("Url",m4.URL,1,"","},") );
 									JSONAppend("],");
 								}

@@ -37,10 +37,6 @@ namespace PCIWebFinAid
 						if ( appStatus == "A" )
 							if ( ApplicationCode == "000" )
 								goTo = "Register.aspx";
-//							else if ( appCode == "001" || Tools.StringToInt(appCode) == 1 )
-//								Response.Redirect("Blah.aspx");
-//							else if ( appCode == "002" || Tools.StringToInt(appCode) == 2 )
-//								Response.Redirect("Blah.aspx");
 					}
 
 				Tools.LogInfo("Home.PageLoad/1","url="       + url

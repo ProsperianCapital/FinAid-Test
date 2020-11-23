@@ -12,7 +12,7 @@ namespace PCIWebFinAid
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			lblErr2.Text = "";
+			ApplicationCode = "001"; // BackOffice
 			ShowSecure(false);
 			SetErrorDetail("",-888);
 
@@ -20,10 +20,8 @@ namespace PCIWebFinAid
 				SessionCheck(5);
 			else
 			{
-				if ( ApplicationCode.Length < 2 )
-					ApplicationCode = "001"; // BackOffice
 				SessionCheck(2);
-				ascxXHeader.ShowUser(null);
+				ascxXHeader.ShowUser(null,ApplicationCode);
 				txtID.Focus();
 //				if ( WebTools.RequestValueInt(Request,"ErrNo") == 0 )
 //					WebTools.ClientReferringURL(Request,14);

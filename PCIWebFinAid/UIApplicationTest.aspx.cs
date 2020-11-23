@@ -54,25 +54,25 @@ namespace PCIWebFinAid
 
 				txtWeb.Text  = uName[0] + "=" + uName[1] + "&" + Environment.NewLine
 				             + uCode[0] + "=" + uCode[1] + "&" + Environment.NewLine
-				             + uPwd[0]  + "=" + uPwd[1]  + "&" + Environment.NewLine
+				             + uPwd [0] + "=" + uPwd [1] + "&" + Environment.NewLine
 				             + lCode[0] + "=" + lCode[1] + "&" + Environment.NewLine
 				             + lDial[0] + "=" + lDial[1] + "&" + Environment.NewLine
-				             + coun[0]  + "=" + coun[1]  + "&" + Environment.NewLine
+				             + coun [0] + "=" + coun [1] + "&" + Environment.NewLine
 				             + query[0] + "=" + query[1] + "&" + Environment.NewLine
-				             + key[0]   + "=" + key[1]   + "&" + Environment.NewLine
-				             + app[0]   + "=" + app[1];
+				             + key  [0] + "=" + key  [1] + "&" + Environment.NewLine
+				             + app  [0] + "=" + app  [1];
 
 				txtForm.Text = "<html><body onload='document.forms[\"frmTest\"].submit()'>" + Environment.NewLine
 				             + "<form name='frmTest' method='POST' action='" + TargetURL + "'>" + Environment.NewLine
 				             + "<input type='hidden' name='" + uName[0] + "' value='" + uName[1] + "' />" + Environment.NewLine
 				             + "<input type='hidden' name='" + uCode[0] + "' value='" + uCode[1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + uPwd[0]  + "' value='" + uPwd[1]  + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + uPwd [0] + "' value='" + uPwd [1] + "' />" + Environment.NewLine
 				             + "<input type='hidden' name='" + lCode[0] + "' value='" + lCode[1] + "' />" + Environment.NewLine
 				             + "<input type='hidden' name='" + lDial[0] + "' value='" + lDial[1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + coun[0]  + "' value='" + coun[1]  + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + coun [0] + "' value='" + coun [1] + "' />" + Environment.NewLine
 				             + "<input type='hidden' name='" + query[0] + "' value='" + query[1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + key[0]   + "' value='" + key[1]   + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + app[0]   + "' value='" + app[1]   + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + key  [0] + "' value='" + key  [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + app  [0] + "' value='" + app  [1] + "' />" + Environment.NewLine
 				             + "</form></body></html>";
 			}
 		}

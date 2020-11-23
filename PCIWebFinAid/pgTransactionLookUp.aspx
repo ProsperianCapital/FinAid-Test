@@ -28,11 +28,11 @@
 	</p><p>
 	From Date<br />
 	<asp:TextBox runat="server" ID="txtDate1" Width="80px" MaxLength="10" placeholder="dd/mm/yyyy"></asp:TextBox>
-	<a href="JavaScript:showCalendar(frmLookup.txtDate1)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a>
+	<a href="JavaScript:showCalendar(frmLookup.txtDate1)"><img src="<%=PCIBusiness.Tools.ImageFolder() %>Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a>
 	</p><p>
 	To Date<br />
 	<asp:TextBox runat="server" ID="txtDate2" Width="80px" MaxLength="10" placeholder="dd/mm/yyyy"></asp:TextBox>
-	<a href="JavaScript:showCalendar(frmLookup.txtDate2)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a>
+	<a href="JavaScript:showCalendar(frmLookup.txtDate2)"><img src="<%=PCIBusiness.Tools.ImageFolder() %>Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a>
 	</p><p>
 	<asp:Button runat="server" ID="btnSearch" Text="Search" OnClientClick="JavaScript:ShowBusy('Searching ... Please be patient',null,0)" OnClick="btnSearch_Click" />&nbsp;
 	</p>

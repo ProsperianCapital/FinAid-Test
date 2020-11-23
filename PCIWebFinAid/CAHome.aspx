@@ -26,23 +26,24 @@
 	</p>
 	</div>
 
-	<div style="margin:0 auto;float:left;width:100%;display:inline-block">
+	<div style="margin:0 auto;width:100%;display:inline-block">
 
-	<div style="width:30%;border:1px solid #000000;display:inline-block;padding:10px">
-		<div style="background-color:#FFCC00;color:#FDFEF2;border-radius:50%;height:80px;width:80px;padding:32px;float:left">
-			<div style="font-size:24px">
-			GOLD
+	<div style="width:30%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:25% !important;margin:2px;width:350px;height:210px">
+		<div style="background-color:#FFCC00;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
+			<div style="font-size:10px">&nbsp;</div>
+			<div style="font-size:20px">
+			&nbsp;&nbsp;GOLD
 			</div>
-			<div style="font-size:16px">
+			<div style="font-size:14px">
 			$ 39.95/m
 			</div>
 		</div>
 		<div style="float:right;display:inline-block">
-		<img src="ImagesCA/CA-Tick.png" style="height:30px" />&nbsp;iSOS Mobile Response<br />
-		<img src="ImagesCA/CA-Tick.png" style="height:30px" />&nbsp;LifeGuru Online Coach<br />
-		<img src="ImagesCA/CA-Tick.png" style="height:30px" />&nbsp;Subscription Rewards<br />&nbsp;
+			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;iSOS Mobile Response<br />
+			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;LifeGuru Online Coach<br />
+			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;Subscription Rewards<br />&nbsp;
 		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;width:50%;padding:10px;float:right">
+		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-left:5px;margin-right:5px">
 			<div style="font-size:10px;vertical-align:top">
 			UP TO
 			<span style="font-size:40px">
@@ -55,21 +56,22 @@
 		</div>
 	</div>
 
-	<div style="width:30%;border:1px solid #000000;display:inline-block;padding:10px">
-		<div style="background-color:#A6A6A6;color:#FDFEF2;border-radius:50%;height:80px;width:80px;padding:32px;float:left">
-			<div style="font-size:24px">
+	<div style="width:30%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:25% !important;margin:2px;width:350px;height:210px">
+		<div style="background-color:#A6A6A6;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
+			<div style="font-size:10px">&nbsp;</div>
+			<div style="font-size:20px">
 			SILVER
 			</div>
-			<div style="font-size:16px">
+			<div style="font-size:14px">
 			$ 29.95/m
 			</div>
 		</div>
 		<div style="float:right;display:inline-block">
-		<img src="ImagesCA/CA-Tick.png" style="height:30px" />&nbsp;iSOS Mobile Response<br />
-		<img src="ImagesCA/CA-Tick.png" style="height:30px" />&nbsp;LifeGuru Online Coach<br />
-		<img src="ImagesCA/CA-Tick.png" style="height:30px" />&nbsp;Subscription Rewards<br />&nbsp;
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;iSOS Mobile Response<br />
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;LifeGuru Online Coach<br />
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;Subscription Rewards<br />&nbsp;
 		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;width:50%;padding:10px;float:right">
+		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-left:5px;margin-right:5px">
 			<div style="font-size:10px;vertical-align:top">
 			UP TO
 			<span style="font-size:40px">
@@ -82,21 +84,22 @@
 		</div>
 	</div>
 
-	<div style="width:30%;border:1px solid #000000;display:inline-block;padding:10px">
-		<div style="background-color:#B18135;color:#FDFEF2;border-radius:50%;height:80px;width:80px;padding:32px;float:left">
-			<div style="font-size:24px">
+	<div style="width:30%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:25% !important;margin:2px;width:350px;height:210px">
+		<div style="background-color:#B18135;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
+			<div style="font-size:10px">&nbsp;</div>
+			<div style="font-size:20px">
 			BRONZE
 			</div>
-			<div style="font-size:16px">
+			<div style="font-size:14px">
 			$ 19.95/m
 			</div>
 		</div>
 		<div style="float:right;display:inline-block">
-		<img src="ImagesCA/CA-Tick.png" style="height:30px" />&nbsp;iSOS Mobile Response<br />
-		<img src="ImagesCA/CA-Tick.png" style="height:30px" />&nbsp;LifeGuru Online Coach<br />
-		<img src="ImagesCA/CA-Tick.png" style="height:30px" />&nbsp;Subscription Rewards<br />&nbsp;
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;iSOS Mobile Response<br />
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;LifeGuru Online Coach<br />
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;Subscription Rewards<br />&nbsp;
 		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;width:50%;padding:10px;float:right">
+		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-left:5px;margin-right:5px">
 			<div style="font-size:10px;vertical-align:top">
 			UP TO
 			<span style="font-size:40px">
@@ -109,16 +112,43 @@
 		</div>
 	</div>
 
-	</div>
+	</div> 
+<!-- #F9CF0E
 
-	<div style="position:relative;display:inline-block;width:100%">
-		<asp:Image runat="server" ID="P12006" style="width:100%" />
-		<div style="color:#FFFFFF; font-family:Sans-serif; top:10px; left:5%; width:95%; position:absolute">
-			<p style="font-size:35px; font-weight:400; line-height:1.4em; letter-spacing:0.8px">
+	<div style="position:relative;display:inline-block;width:100%;background-color:#F9CF0E">
+-->
+		<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:100%;position:relative;padding:25px">
+			<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232">
 			<asp:Literal runat="server" ID="X100045">Id 100045</asp:Literal>
-			</p><p style="font-size:19px;font-weight:300;line-height:1.6em">
+			</p><p style="font-size:19px;font-weight:300;line-height:1.6em;color:#272626">
 			<asp:Literal runat="server" ID="X100046">Id 100046</asp:Literal>
 			</p>
+
+			<div style="color:#54595F;font-size:19px;font-weight:600">
+			<img src="ImagesCA/X1.png" style="float:left" />
+			Register
+			<p style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
+			Online 24/7 via this website (Please have your ID Number & Debit/Credit Card details handy).
+			</p>
+			</div>
+			<br />
+			<div style="color:#54595F;font-size:19px;font-weight:600">
+			<img src="ImagesCA/X2.png" style="float:left" />
+			Pay
+			<p style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
+			Your Annual Registration & Monthly Subscription Fees (Via Direct Debit from your Master or VISA card).
+			</p>
+			</div>
+			<br />
+			<div style="color:#54595F;font-size:19px;font-weight:600">
+			<img src="ImagesCA/X3.png" style="float:left" />
+			Enjoy
+			<p style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
+			All your Subscription Benefits (Accessible Online 24/7).
+			</p>
+			</div>
+			<br />
+
 			<div style="margin-right:100px;font-size:19px;font-weight:300;line-height:1.6em;float:right">
 			Only 3 Minutes Easy<br />Online Application.<br />Select your option below.
 			<p style="font-size:24px;font-weight:300;line-height:1.6em">
@@ -142,7 +172,8 @@
 			<asp:Literal runat="server" ID="X105006">Id 105006</asp:Literal>
 			</p>
 		</div>
-	</div>
+<!--
+	</div> -->
 
 	<div>
 	<p style="color: #F88742;font-family:Sans-serif;font-size: 35px;font-weight: 400;line-height: 1.4em;letter-spacing: 0.8px;text-align:center">
@@ -150,15 +181,15 @@
 	</p>
 	<div style="display:flex;margin:auto;width:100%">
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
-		<asp:Image runat="server" ID="P12020" style="width:290px" /> <!-- isos -->
+		<asp:Image runat="server" ID="P12020" style="width:290px" title="Image 12020" /> <!-- isos -->
 		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Mobile Response</figcaption>
 	</figure> 
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
-		<asp:Image runat="server" ID="P12021" style="width:290px" /> <!-- legal -->
+		<asp:Image runat="server" ID="P12021" style="width:290px" title="Image 12021" /> <!-- legal -->
 		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Legal Access</figcaption>
 	</figure> 
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
-		<asp:Image runat="server" ID="P12022" style="width:290px" /> <!-- loyalty -->
+		<asp:Image runat="server" ID="P12022" style="width:290px" title="Image 12022" /> <!-- loyalty -->
 		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Cash Reward</figcaption>
 	</figure> 
 	</div>
@@ -171,8 +202,8 @@
 	<p style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px">
 	<asp:Literal runat="server" ID="X999999">For more, visit...</asp:Literal>
 	</p>
-	<img src="ImagesCA/CA-isos.png" />
-	<img src="ImagesCA/CA-LifeGuru.png" />
+	<img src="<%=PCIBusiness.Tools.ImageFolder() %>ServiceLinkiSOS.png" />
+	<img src="<%=PCIBusiness.Tools.ImageFolder() %>ServiceLinkLifeGuru.png" />
 	<br />
 	<hr />
 

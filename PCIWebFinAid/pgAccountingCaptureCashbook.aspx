@@ -174,9 +174,9 @@ function DeleteMode(show)
 		<td colspan="2">GL Account Dimension</td><td><asp:DropDownList runat="server" ID="lstSGLDimension"></asp:DropDownList></td></tr>
 	<tr>
 		<td>Transaction Start Date</td><td><asp:TextBox runat="server" ID="txtSDate1" MaxLength="10" Width="100px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtSDate1)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td>
+			<a href="JavaScript:showCalendar(frmCashBook.txtSDate1)"><img src="<%=PCIBusiness.Tools.ImageFolder() %>Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td>
 		<td colspan="2">Transaction End Date</td><td><asp:TextBox runat="server" ID="txtSDate2" MaxLength="10" Width="100px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtSDate2)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
+			<a href="JavaScript:showCalendar(frmCashBook.txtSDate2)"><img src="<%=PCIBusiness.Tools.ImageFolder() %>Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
 		<td>Tax Rate</td><td><asp:DropDownList runat="server" ID="lstSTaxRate"></asp:DropDownList></td>
 		<td style="white-space:nowrap">Amount</td><td>&gt;<br /><br />&lt;</td><td>
@@ -243,7 +243,7 @@ function DeleteMode(show)
 	<tr>
 		<td>OBO Company<br /><asp:DropDownList runat="server" ID="lstEOBOCompany"></asp:DropDownList></td>
 		<td>Transaction Date<br /><asp:TextBox runat="server" ID="txtEDate" MaxLength="10" Width="80px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtEDate)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
+			<a href="JavaScript:showCalendar(frmCashBook.txtEDate)"><img src="<%=PCIBusiness.Tools.ImageFolder() %>Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
 		<td>GL Account Code<br /><asp:DropDownList runat="server" ID="lstEGLCode" onchange="JavaScript:SetEltValue('hdnEGLCode',GetListValue(this))"></asp:DropDownList>
 			<asp:HiddenField runat="server" ID="hdnEGLCode" value="" /></td>
@@ -255,7 +255,7 @@ function DeleteMode(show)
 		<td>Currency<br />
 			<asp:DropDownList runat="server" ID="lstECurr"></asp:DropDownList></td>
 		<td>Recon Date<br /><asp:TextBox runat="server" ID="txtERecon" MaxLength="10" Width="80px"></asp:TextBox>
-			<a href="JavaScript:showCalendar(frmCashBook.txtERecon)"><img src="Images/Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
+			<a href="JavaScript:showCalendar(frmCashBook.txtERecon)"><img src="<%=PCIBusiness.Tools.ImageFolder() %>Calendar.gif" title="Pop-up calendar" style="vertical-align:middle" /></a></td></tr>
 	<tr>
 		<td colspan="2">Transaction Description<br /><asp:TextBox runat="server" ID="txtEDesc" Width="485px"></asp:TextBox></td></tr>
 	</table>

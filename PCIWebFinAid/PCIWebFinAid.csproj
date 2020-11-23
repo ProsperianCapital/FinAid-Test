@@ -77,11 +77,13 @@
     <Content Include="pgChangeAddress.aspx" />
     <Content Include="pgChangePIN.aspx" />
     <Content Include="pgContractLookUp.aspx" />
+    <Content Include="pgLogonCRM.aspx" />
     <Content Include="pgTransactionLookUp.aspx" />
     <Content Include="pgViewCurrentBalances.aspx" />
     <Content Include="pgVieweWallets.aspx" />
     <Content Include="pgViewMiniStatement.aspx" />
     <Content Include="pgViewProductActivityLog.aspx" />
+    <Content Include="pgViewProductDashboard.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx3.aspx" />
     <Content Include="RegisterThreeD.aspx" />
@@ -114,6 +116,7 @@
     <Content Include="IncludeLogin2.htm" />
     <Content Include="IncludeMain.htm" />
     <Content Include="IncludeMainAdmin.htm" />
+    <Content Include="IncludeMainCRM.htm" />
     <Content Include="IncludeMainCA.htm" />
     <Content Include="packages.config" />
     <Content Include="Web.config">
@@ -142,6 +145,9 @@
     <Content Include="CSS\raleway-semibold-webfont.svg" />
     <Content Include="CSS\raleway-medium-webfont.svg" />
     <Content Include="CSS\atlanta-webfont.woff" />
+    <Content Include="ImagesCA\X1.png" />
+    <Content Include="ImagesCA\X2.png" />
+    <Content Include="ImagesCA\X3.png" />
     <Content Include="ImagesCA\CA-isos.png" />
     <Content Include="ImagesCA\CA-Tick.png" />
     <Content Include="ImagesCA\CA-LifeGuru.png" />
@@ -338,6 +344,13 @@
     <Compile Include="pgChangePIN.aspx.designer.cs">
       <DependentUpon>pgChangePIN.aspx</DependentUpon>
     </Compile>
+    <Compile Include="pgLogonCRM.aspx.cs">
+      <DependentUpon>pgLogonCRM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgLogonCRM.aspx.designer.cs">
+      <DependentUpon>pgLogonCRM.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pgViewCurrentBalances.aspx.cs">
       <DependentUpon>pgViewCurrentBalances.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -358,6 +371,13 @@
     </Compile>
     <Compile Include="pgViewProductActivityLog.aspx.designer.cs">
       <DependentUpon>pgViewProductActivityLog.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgViewProductDashboard.aspx.cs">
+      <DependentUpon>pgViewProductDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgViewProductDashboard.aspx.designer.cs">
+      <DependentUpon>pgViewProductDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="UIApplicationTest.aspx.cs">
       <DependentUpon>UIApplicationTest.aspx</DependentUpon>

@@ -9,11 +9,7 @@
 			Instant Help When You Need It Most</td>
 		<td style="width:30%;white-space:nowrap">
 			<asp:HyperLink runat="server" ID="X100008" CssClass="TopButton TopButtonO"></asp:HyperLink>&nbsp;
-			<asp:HyperLink runat="server" ID="X100009" CssClass="TopButton TopButtonO"></asp:HyperLink>&nbsp;
-			<!--
-			<a href="#"><div class="TopButton TopButtonO">LOGIN</div></a>&nbsp;
-			<a href="#"><div class="TopButton TopButtonY">REGISTER</div></a>&nbsp;
-			-->
-			<asp:DropDownList runat="server" ID="lstLang" CssClass="TopButton" AutoPostBack="true"></asp:DropDownList>
+			<asp:HyperLink runat="server" ID="X100009" CssClass="TopButton TopButtonY"></asp:HyperLink>&nbsp;
+			<asp:DropDownList runat="server" ID="lstLang" CssClass="TopButton" AutoPostBack="true" style="padding:0px"></asp:DropDownList>
 	</table>
 </div>

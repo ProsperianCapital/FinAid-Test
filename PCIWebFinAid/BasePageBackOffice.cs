@@ -16,17 +16,31 @@ namespace PCIWebFinAid
 		protected SessionGeneral sessionGeneral;
 		protected string         sql;
 
-		protected void SessionSave(string userCode=null,string userName=null,string accessType=null)
+		protected void SessionSave ( string userCode            = null ,
+		                             string userName            = null ,
+		                             string accessType          = null ,
+		                             string contractCode        = null ,
+		                             string productCode         = null ,
+		                             string languageCode        = null ,
+		                             string languageDialectCode = null )
 		{
-			if ( sessionGeneral  == null )
-				sessionGeneral     = new SessionGeneral();
-			if ( userCode        != null )
-				sessionGeneral.UserCode        = Tools.NullToString(userCode);
-			if ( userName        != null )
-				sessionGeneral.UserName        = Tools.NullToString(userName);
-			if ( accessType      != null )
-				sessionGeneral.AccessType      = Tools.NullToString(accessType);
-			Session["SessionGeneral"]         = sessionGeneral;
+			if ( sessionGeneral      == null )
+				sessionGeneral         = new SessionGeneral();
+			if ( userCode            != null )
+				sessionGeneral.UserCode            = Tools.NullToString(userCode);
+			if ( userName            != null )
+				sessionGeneral.UserName            = Tools.NullToString(userName);
+			if ( accessType          != null )
+				sessionGeneral.AccessType          = Tools.NullToString(accessType);
+			if ( contractCode        != null )
+				sessionGeneral.ContractCode        = Tools.NullToString(contractCode);
+			if ( productCode         != null )
+				sessionGeneral.ProductCode         = Tools.NullToString(productCode);
+			if ( languageCode        != null )
+				sessionGeneral.LanguageCode        = Tools.NullToString(languageCode);
+			if ( languageDialectCode != null )
+				sessionGeneral.LanguageDialectCode = Tools.NullToString(languageDialectCode);
+			Session["SessionGeneral"]             = sessionGeneral;
 		}
 
 		protected void SessionClearLogin()
@@ -96,9 +110,11 @@ namespace PCIWebFinAid
 			{
 				if ( sessionGeneral == null )
 					sessionGeneral = new SessionGeneral();
-				else
-					sessionGeneral.Clear();
-				SessionSave(); // applicationCode);
+				sessionGeneral.UserCode     = "";
+				sessionGeneral.UserName     = "";
+				sessionGeneral.ContractCode = "";
+				sessionGeneral.AccessType   = "";
+				SessionSave();
 				return 0;
 			}
 
@@ -178,7 +194,7 @@ namespace PCIWebFinAid
 			{
 				XHeader head = (XHeader)FindControl("ascxXHeader");
 				if ( head   != null )
-					head.ShowUser(sessionGeneral);
+					head.ShowUser(sessionGeneral,ApplicationCode);
 			}
 			catch
 			{ }

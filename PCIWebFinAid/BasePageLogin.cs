@@ -189,7 +189,7 @@ namespace PCIWebFinAid
 			{
 				XHeader head1 = (XHeader)FindControl("ascxXHeader");
 				if ( head1   != null )
-					head1.ShowUser(sessionGeneral);
+					head1.ShowUser(sessionGeneral,ApplicationCode);
 				Header  head2 = (Header) FindControl("ascxHeader");
 				if ( head2   != null )
 					head2.ShowUser(sessionGeneral);

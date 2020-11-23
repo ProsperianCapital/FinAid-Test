@@ -20,7 +20,7 @@ function EditMode(editInsert)
 //	1 : Show, edit
 //	2 : Show, insert
 	HidePopups();
-	var g = '&nbsp;<img src="Images/Close1.png" style="float:right" title="Close" onclick="JavaScript:EditMode(0)" />';
+	var g = '&nbsp;<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" style="float:right" title="Close" onclick="JavaScript:EditMode(0)" />';
 	if ( editInsert == 1 )
 		SetEltValue('lblEditHead','Edit eWallet'+g);
 	else
