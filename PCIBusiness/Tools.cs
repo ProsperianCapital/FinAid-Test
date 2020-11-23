@@ -1436,5 +1436,18 @@ namespace PCIBusiness
 			{ }
 			return "";
 		}
+
+		public static string ImageFolder(string defaultDir="")
+		{
+			string folder = ConfigValue("ImageFolder");
+			if ( folder.Length < 1 )
+				if ( defaultDir.Length < 1 )
+					return "Images/";
+				else
+					folder = defaultDir;
+			if ( folder.EndsWith("/") )
+				return folder;
+			return folder + "/";
+		}
 	}
 }

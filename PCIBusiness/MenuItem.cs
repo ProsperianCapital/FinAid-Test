@@ -10,6 +10,7 @@ namespace PCIBusiness
 		private string menuCode;
 		private string menuName;
 		private string menuDescription;
+		private string routerLink;
 		private string url;
 		private string imageName;
 		private string displayImageOrText;
@@ -43,6 +44,10 @@ namespace PCIBusiness
 		{
 			get { return Tools.NullToString(imageName); }
 		}
+		public string   RouterLink
+		{
+			get { return Tools.NullToString(routerLink); }
+		}
 		public string   URL
 		{
 			get
@@ -71,6 +76,7 @@ namespace PCIBusiness
 			menuName           = dbConn.ColString(x+"ItemDescription");
 			menuDescription    = dbConn.ColString(x+"ItemDescription");
 			url                = dbConn.ColString("URL");
+			routerLink         = dbConn.ColString("RouterLink",0,0);
 			imageName          = dbConn.ColString("MenuLevel1ImageFileName");
 			displayImageOrText = dbConn.ColString("DisplayMenuLevel1Image");
 //	Testing
