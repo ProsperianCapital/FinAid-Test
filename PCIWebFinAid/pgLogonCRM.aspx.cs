@@ -84,21 +84,21 @@ namespace PCIWebFinAid
 
 			using (MiscList mList = new MiscList())
 			{
-				sql = "exec SP_ClientCRMValidateLoginC"
+				sql = "exec SP_ClientCRMValidateLoginD"
 				    + " @IPAddress = "   + Tools.DBString(WebTools.ClientIPAddress(Request))
 				    + ",@ClientCode = "  + Tools.DBString(txtID.Text,47)
 				    + ",@ContractPin = " + Tools.DBString(txtPW.Text)
 				    + ",@ProductCode = " + Tools.DBString(sessionGeneral.ProductCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("btnLogin_Click",10020,"Internal database error (SP_ClientCRMValidateLoginC)",sql,1,1);
+					SetErrorDetail("btnLogin_Click",10020,"Internal database error (SP_ClientCRMValidateLoginD)",sql,1,1);
 				else if ( mList.EOF )
-					SetErrorDetail("btnLogin_Click",10030,"Invalid login and/or PIN","SP_ClientCRMValidateLoginC, no data returned",1,1);
+					SetErrorDetail("btnLogin_Click",10030,"Invalid login and/or PIN","SP_ClientCRMValidateLoginD, no data returned",1,1);
 				else if ( mList.GetColumn("Status") != "S" )
 				{
 					string err = mList.GetColumn("ActionResultMessage");
 					if ( err.Length < 1 )
 						err = "Invalid login and/or PIN";
-					SetErrorDetail("btnLogin_Click",10040,err,"SP_ClientCRMValidateLoginC, Status = '" + mList.GetColumn("Status") + "'",1,1);
+					SetErrorDetail("btnLogin_Click",10040,err,"SP_ClientCRMValidateLoginD, Status = '" + mList.GetColumn("Status") + "'",1,1);
 				}
 				else
 				{

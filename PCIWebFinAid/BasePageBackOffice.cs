@@ -137,7 +137,7 @@ namespace PCIWebFinAid
 				sessionGeneral            = new SessionGeneral();
 				sessionGeneral.UserCode   = "013";
 				sessionGeneral.UserName   = "Samual Briggs";
-				sessionGeneral.AccessType = "P";
+				sessionGeneral.AccessType = "A";
 				ApplicationCode           = "001";
 			}
 

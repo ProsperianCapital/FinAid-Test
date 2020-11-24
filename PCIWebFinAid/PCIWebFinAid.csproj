@@ -84,6 +84,7 @@
     <Content Include="pgViewMiniStatement.aspx" />
     <Content Include="pgViewProductActivityLog.aspx" />
     <Content Include="pgViewProductDashboard.aspx" />
+    <Content Include="pgViewProfile.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx3.aspx" />
     <Content Include="RegisterThreeD.aspx" />
@@ -378,6 +379,13 @@
     </Compile>
     <Compile Include="pgViewProductDashboard.aspx.designer.cs">
       <DependentUpon>pgViewProductDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgViewProfile.aspx.cs">
+      <DependentUpon>pgViewProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgViewProfile.aspx.designer.cs">
+      <DependentUpon>pgViewProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="UIApplicationTest.aspx.cs">
       <DependentUpon>UIApplicationTest.aspx</DependentUpon>

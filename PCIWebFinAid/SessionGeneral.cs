@@ -36,7 +36,7 @@
 		}
 		public  bool    AdminUser
 		{
-			get { return AccessType == "A" || AccessType == "P"; }
+			get { return AccessType == "A"; }
 		}
 		public  string  AccessName
 		{
@@ -44,7 +44,7 @@
 			{
 				if ( AccessType == "N" ) return "Client";
 				if ( AccessType == "A" ) return "Admin";
-				if ( AccessType == "P" ) return "Admin";
+				if ( AccessType == "C" ) return "CRM Agent";
 				if ( AccessType == "X" ) return "Not secure";
 				return "AccessType " + AccessType;
 			}
@@ -74,14 +74,14 @@
 			get
 			{
 				if ( PCIBusiness.Tools.NullToString(startPage).Length < 6 )
-					if ( AccessType == "P" ) // Admin
+					if ( AccessType == "A" ) // Admin
 						startPage = "XHome.aspx";
-					else if ( AccessType == "A" ) // Admin
-						startPage = "LAdmin.aspx";
-					else if ( AccessType == "X" ) // Login not confirmed
-						startPage = "pgLogon.aspx";
-					else
+					else if ( AccessType == "N" ) // Client
 						startPage = "pgViewProductDashboard.aspx";
+					else if ( AccessType == "C" ) // CRM Agent
+						startPage = "pgViewProductDashboard.aspx";
+					else
+						startPage = "pgLogonCRM.aspx";
 				return startPage;
 			}
 			set { startPage = value.Trim(); }
