@@ -14,10 +14,16 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-				LoadDataInitial();
-			else
-				StartOver(12777);
+
+//	Should be
+//			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
+//				LoadDataInitial();
+//			else
+//				StartOver(12777);
+
+//	Testing
+			ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode);
+			LoadDataInitial();
 		}
 
 		private void LoadDataInitial()
