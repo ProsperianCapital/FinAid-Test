@@ -86,6 +86,15 @@
 			}
 			set { startPage = value.Trim(); }
 		}
+		public string   LogonPage
+		{
+			get
+			{
+				if ( AccessType == "A" ) // Admin
+					return "pgLogon.aspx";
+				return "pgLogonCRM.aspx";
+			}
+		}
 		public  string  ProductCode
 		{
 			get { return productCode; }

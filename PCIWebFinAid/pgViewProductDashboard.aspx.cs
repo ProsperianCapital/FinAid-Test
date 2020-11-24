@@ -14,16 +14,10 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-
-//	Should be
-//			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-//				LoadDataInitial();
-//			else
-//				StartOver(12777);
-
-//	Testing
-			ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode);
-			LoadDataInitial();
+			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
+				LoadDataInitial();
+			else
+				StartOver(12777,sessionGeneral.LogonPage);
 		}
 
 		private void LoadDataInitial()
@@ -39,9 +33,9 @@ namespace PCIWebFinAid
 			{
 				sql = "exec sp_WP_Get_DashboardInfo @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("PageLoad",11040,"Internal database error (sp_WP_Get_DashboardInfo failed)",sql,1,1);
+					SetErrorDetail("PageLoad",11840,"Internal database error (sp_WP_Get_DashboardInfo failed)",sql,1,1);
 				else if ( mList.EOF )
-					SetErrorDetail("PageLoad",11050,"Internal database error (sp_WP_Get_DashboardInfo no data returned)",sql,1,1);
+					SetErrorDetail("PageLoad",11850,"Internal database error (sp_WP_Get_DashboardInfo no data returned)",sql,1,1);
 				else
 				{
 					lblName.Text         = mList.GetColumn("ClientName");

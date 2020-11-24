@@ -32,9 +32,10 @@
 		<asp:Label   runat="server" ID="X104014" Font-Bold="true"></asp:Label><br />
 		<asp:Literal runat="server" ID="lblCredit"></asp:Literal><br /><br />
 		<asp:Label   runat="server" ID="X104016" Font-Bold="true"></asp:Label><br />
-		<asp:Literal runat="server" ID="lblDueDate"></asp:Literal><br />
+		<asp:Literal runat="server" ID="lblDueDate"></asp:Literal>
+		<hr />
 		<asp:Literal runat="server" ID="lblDate"></asp:Literal>
-	</td><td>
+	</td><td style="white-space:normal">
 		<asp:Label runat="server" ID="X104018" cssclass="Header4">Welcome to Log On</asp:Label>
 		<br />
 		<table>
