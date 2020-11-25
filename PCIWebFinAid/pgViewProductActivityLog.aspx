@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMainAdmin.htm" -->
+	<!--#include file="IncludeMainCRM.htm" -->
 </head>
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
@@ -16,16 +16,16 @@
 <ascx:XMenu runat="server" ID="ascxXMenu" />
 
 <div class="Header3">
-<asp:Literal runat="server" ID="X104128"></asp:Literal>
+<asp:Literal runat="server" ID="X104128">104128</asp:Literal>
 </div>
 
 <asp:Table runat="server" ID="tblActivity" style="border:1px solid #000000">
 <asp:TableRow>
-	<asp:TableCell ID="X104134" style="border-bottom:1px solid #000000;font-weight:bold"></asp:TableCell>
-	<asp:TableCell ID="X104136" style="border-bottom:1px solid #000000;font-weight:bold"></asp:TableCell></asp:TableRow>
+	<asp:TableCell ID="X104134" style="border-bottom:1px solid #000000;font-weight:bold">104134</asp:TableCell>
+	<asp:TableCell ID="X104136" style="border-bottom:1px solid #000000;font-weight:bold">104136</asp:TableCell></asp:TableRow>
 </asp:Table>
 <br /><br />
-<asp:Label runat="server" ID="X104140" CssClass="Error"></asp:Label>
+<asp:Label runat="server" ID="X104140" CssClass="Error">104140</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!--#include file="IncludeErrorDtl.htm" -->

@@ -5,7 +5,7 @@ using System.Web.UI.WebControls;
 
 namespace PCIWebFinAid
 {
-	public partial class LPay : BasePageLogin
+	public partial class LPay : BasePageCRMv1
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{

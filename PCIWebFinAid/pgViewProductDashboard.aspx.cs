@@ -4,7 +4,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class pgViewProductDashboard : BasePageBackOffice
+	public partial class pgViewProductDashboard : BasePageCRM
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{
@@ -17,7 +17,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(12777,sessionGeneral.LogonPage);
+				StartOver(12777);
 		}
 
 		private void LoadDataInitial()

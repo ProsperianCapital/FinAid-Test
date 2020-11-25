@@ -13,7 +13,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class UIApplicationQuery : BasePageBackOffice
+	public partial class UIApplicationQuery : BasePage
 	{
 		private byte          inputDataType;
 		private string        inputDataJSON;
@@ -299,6 +299,8 @@ namespace PCIWebFinAid
 		{
 			if ( CheckParameters("App,User,Country,Lang,Dialect") > 0 )
 				return errorCode;
+
+			string sql = "";
 
 			using (MiscList mList = new MiscList())
 				try

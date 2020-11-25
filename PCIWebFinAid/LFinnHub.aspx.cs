@@ -7,7 +7,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class LFinnHub : BasePageLogin
+	public partial class LFinnHub : BasePageCRMv1
 	{
 		private struct RefreshData
 		{

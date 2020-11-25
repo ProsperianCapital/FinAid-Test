@@ -5,21 +5,20 @@ using System.Web.UI.WebControls;
 
 namespace PCIWebFinAid
 {
-	public partial class pgViewProductActivityLog : BasePageBackOffice
+	public partial class pgViewProductActivityLog : BasePageCRM
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			if ( SessionCheck(19) != 0 )
+			if ( SessionCheck() != 0 )
 				return;
-			if ( PageCheck()      != 0 )
+			if ( PageCheck()    != 0 )
 				return;
 			if ( Page.IsPostBack )
 				return;
-
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(11888);
+				StartOver(19666);
 		}
 
 		private void LoadDataInitial()

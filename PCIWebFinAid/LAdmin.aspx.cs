@@ -4,7 +4,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class LAdmin : BasePageLogin
+	public partial class LAdmin : BasePageCRMv1
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{

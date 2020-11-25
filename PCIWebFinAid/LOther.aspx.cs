@@ -5,7 +5,7 @@ using System.Web.UI.WebControls;
 
 namespace PCIWebFinAid
 {
-	public partial class LOther : BasePageLogin
+	public partial class LOther : BasePageCRMv1
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{

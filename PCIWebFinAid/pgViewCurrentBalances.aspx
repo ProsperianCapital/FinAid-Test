@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMainAdmin.htm" -->
+	<!--#include file="IncludeMainCRM.htm" -->
 </head>
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
@@ -16,31 +16,31 @@
 <ascx:XMenu runat="server" ID="ascxXMenu" />
 
 <div class="Header3">
-<asp:Literal runat="server" ID="X104095"></asp:Literal>
+<asp:Literal runat="server" ID="X104095">104095</asp:Literal>
 </div>
 
 <table>
 <tr>
-	<td><asp:Literal runat="server" ID="X104096" /></td>
+	<td><asp:Literal runat="server" ID="X104096">104096</asp:Literal></td>
 	<td><asp:TextBox runat="server" Width="160px" ReadOnly="true" ID="txtRegFee"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104106" /></td>
+	<td><asp:Literal runat="server" ID="X104106">104106</asp:Literal></td>
 	<td><asp:TextBox runat="server" Width="160px" ReadOnly="true" ID="txtMonthlyFee"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104098" /></td>
+	<td><asp:Literal runat="server" ID="X104098">104098</asp:Literal></td>
 	<td><asp:TextBox runat="server" Width="160px" ReadOnly="true" ID="txtGrantLimit"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104102" /></td>
+	<td><asp:Literal runat="server" ID="X104102">104102</asp:Literal></td>
 	<td><asp:TextBox runat="server" Width="160px" ReadOnly="true" ID="txtGrantAvail"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104104" /></td>
+	<td><asp:Literal runat="server" ID="X104104">104104</asp:Literal></td>
 	<td><asp:TextBox runat="server" Width="480px" ReadOnly="true" ID="txtGrantStatus"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104108" /></td>
+	<td><asp:Literal runat="server" ID="X104108">104108</asp:Literal></td>
 	<td><asp:TextBox runat="server" Width="160px" ReadOnly="true" ID="txtFeeDate"></asp:TextBox></td></tr>
 </table>
 <br /><br />
-<asp:Label runat="server" ID="X104110" CssClass="Error"></asp:Label>
+<asp:Label runat="server" ID="X104110" CssClass="Error">104110</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!-- OLD Start -->

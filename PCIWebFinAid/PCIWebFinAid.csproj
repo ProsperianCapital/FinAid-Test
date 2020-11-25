@@ -74,6 +74,7 @@
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
+    <Content Include="IncludeMainRegister.htm" />
     <Content Include="pgChangeAddress.aspx" />
     <Content Include="pgChangePIN.aspx" />
     <Content Include="pgContractLookUp.aspx" />
@@ -210,10 +211,19 @@
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="BasePageBackOffice.cs">
+    <Compile Include="BasePageAdmin.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BasePageCRM.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BasePageCRMv1.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BasePageLogin.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BasePageRegister.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CAFooter.ascx.cs">

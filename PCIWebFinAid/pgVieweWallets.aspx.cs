@@ -2,29 +2,25 @@
 // www.PaulKilfoil.co.za
 
 using System;
-using System.Text;
-using System.Web.UI.WebControls;
-using PCIBusiness;
 
 // Error codes 80000-80099
 
 namespace PCIWebFinAid
 {
-	public partial class pgVieweWallets : BasePageBackOffice
+	public partial class pgVieweWallets : BasePageCRM
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{
-			if ( SessionCheck(99) != 0 )
+			if ( SessionCheck() != 0 )
 				return;
-			if ( PageCheck()      != 0 )
+			if ( PageCheck()    != 0 )
 				return;
 			if ( Page.IsPostBack )
 				return;
-			int ret = ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode);
-			if ( ret == 0 )
-				return;
-			Tools.LogInfo("pgVieweWallets.PageLoad","ret="+ret.ToString(),222);
-			StartOver(10888);
+			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
+				LoadDataInitial();
+			else
+				StartOver(17666);
 		}
 
 		private void LoadDataInitial()
@@ -33,6 +29,7 @@ namespace PCIWebFinAid
 
 			SetErrorDetail("",-888);
 			ascxXFooter.JSText = "";
+			LoadLabelText(ascxXMenu);
 		}
 	}
 }
