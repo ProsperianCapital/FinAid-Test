@@ -86,7 +86,8 @@ input[type=text]:focus, input[type=password]:focus, select:focus, textarea:focus
 	color: black;
 	padding: 20px;
 	text-align: center;
-	width: 480px;
+	width: 100%;
+	text-align: left;
 }
 
 @media screen and (max-width: 600px)
