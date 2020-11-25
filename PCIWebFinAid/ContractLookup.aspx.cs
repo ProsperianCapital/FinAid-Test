@@ -6,7 +6,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class ContractLookup : BasePageLogin
+	public partial class ContractLookup : BasePageAdmin
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{

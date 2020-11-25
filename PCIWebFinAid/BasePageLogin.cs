@@ -7,35 +7,40 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using PCIBusiness;
 
-// Error codes 10000-10099
+// Error codes 19000-19099
 
 namespace PCIWebFinAid
 {
 	public abstract class BasePageLogin : BasePage
 	{
 		protected SessionGeneral sessionGeneral;
-		protected HiddenField    hdnTabNo;
-		protected int            tabNo;
-		protected int            maxTab;
 		protected string         sql;
 
-//		protected Button         btnErrorDtl;
-//		protected Label          lblErrorDtl;
-//		protected Label          lblError;
-
-		protected void SessionSave(string userCode=null,string userName=null,string accessType=null,string contractCode=null)
+		protected void SessionSave ( string userCode            = null ,
+		                             string userName            = null ,
+		                             string accessType          = null ,
+		                             string contractCode        = null ,
+		                             string productCode         = null ,
+		                             string languageCode        = null ,
+		                             string languageDialectCode = null )
 		{
-			if ( sessionGeneral  == null )
-				sessionGeneral     = new SessionGeneral();
-			if ( userCode        != null )
-				sessionGeneral.UserCode        = Tools.NullToString(userCode);
-			if ( userName        != null )
-				sessionGeneral.UserName        = Tools.NullToString(userName);
-			if ( accessType      != null )
-				sessionGeneral.AccessType      = Tools.NullToString(accessType);
-			if ( contractCode    != null )
-				sessionGeneral.ContractCode    = Tools.NullToString(contractCode);
-			Session["SessionGeneral"]         = sessionGeneral;
+			if ( sessionGeneral      == null )
+				sessionGeneral         = new SessionGeneral();
+			if ( userCode            != null )
+				sessionGeneral.UserCode            = Tools.NullToString(userCode);
+			if ( userName            != null )
+				sessionGeneral.UserName            = Tools.NullToString(userName);
+			if ( accessType          != null )
+				sessionGeneral.AccessType          = Tools.NullToString(accessType);
+			if ( contractCode        != null )
+				sessionGeneral.ContractCode        = Tools.NullToString(contractCode);
+			if ( productCode         != null )
+				sessionGeneral.ProductCode         = Tools.NullToString(productCode);
+			if ( languageCode        != null )
+				sessionGeneral.LanguageCode        = Tools.NullToString(languageCode);
+			if ( languageDialectCode != null )
+				sessionGeneral.LanguageDialectCode = Tools.NullToString(languageDialectCode);
+			Session["SessionGeneral"]             = sessionGeneral;
 		}
 
 		protected void SessionClearLogin()
@@ -61,7 +66,7 @@ namespace PCIWebFinAid
 //			return 0;
 //		}
 
-		protected byte SessionCheck(byte sessionMode=43)
+		protected byte SessionCheck(byte sessionMode=43) // ,string applicationCode="")
 		{
 			Response.Cache.SetExpires(DateTime.Now);
 			Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -105,32 +110,48 @@ namespace PCIWebFinAid
 			{
 				if ( sessionGeneral == null )
 					sessionGeneral = new SessionGeneral();
-				else
-					sessionGeneral.Clear();
+				sessionGeneral.UserCode     = "";
+				sessionGeneral.UserName     = "";
+				sessionGeneral.ContractCode = "";
+				sessionGeneral.AccessType   = "";
 				SessionSave();
 				return 0;
+			}
+
+			if ( ( sessionMode == 4 || sessionMode == 19 ) && sessionGeneral == null )
+			{
+				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
+				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
+					backDoor = Session["BackDoor"].ToString();
+				if ( backDoor != ((int)Constants.SystemPassword.BackDoor).ToString() )
+				{
+					StartOver(10);
+					return 10;
+				}
+				Session["BackDoor"] = backDoor.ToString();
+				sessionMode         = 99;
 			}
 
 			if ( sessionMode == 99 && sessionGeneral == null )
 			{
 				sessionGeneral            = new SessionGeneral();
-				sessionGeneral.UserCode   = "653";
+				sessionGeneral.UserCode   = "013";
 				sessionGeneral.UserName   = "Samual Briggs";
 				sessionGeneral.AccessType = "A";
-				ApplicationCode           = "002";
+				ApplicationCode           = "001";
 			}
 
-			else if ( sessionMode == 4 && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )
-			{
-				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
-				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
-					backDoor = Session["BackDoor"].ToString();
-				if ( backDoor != ((int)PCIBusiness.Constants.SystemPassword.BackDoor).ToString() )
-				{
-					StartOver(10);
-					return 10;
-				}
-			}
+//			else if ( ( sessionMode == 4 || sessionMode == 19 ) && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )
+//			{
+//				string backDoor = WebTools.RequestValueString(Request,"BackDoor");
+//				if ( backDoor.Length < 1 && Session["BackDoor"] != null )
+//					backDoor = Session["BackDoor"].ToString();
+//				if ( backDoor != ((int)PCIBusiness.Constants.SystemPassword.BackDoor).ToString() )
+//				{
+//					StartOver(10);
+//					return 10;
+//				}
+//			}
 
 			else if ( sessionMode == 19 && sessionGeneral != null && ! sessionGeneral.AdminUser )
 			{
@@ -152,34 +173,18 @@ namespace PCIWebFinAid
 
 			ShowUserDetails();
 			SessionSave();
-			return 0;
-		}
 
-		protected override void StartOver(int errNo,string pageName="")
-		{
-			if ( pageName.Length < 6 )
-				pageName = "Login.aspx";
-			Response.Redirect ( pageName + ( errNo > 0 ? "?ErrNo=" + errNo.ToString() : "" ) , true );
+//			if ( applicationCode.Length > 0 )
+//				SessionSave(applicationCode);
+//			else
+//				SessionSave();
+
+			return 0;
 		}
 
 		protected byte PageCheck()
 		{
-			if ( maxTab > 0 )
-			{
-				tabNo = PCIBusiness.Tools.StringToInt(hdnTabNo.Value);
-				if ( tabNo < 1 || tabNo > maxTab )
-					tabNo = 1;
-				try
-				{
-					Footer foot = (Footer)FindControl("ascxFooter");
-					foot.JSText = WebTools.JavaScriptSource("SetTab("+tabNo.ToString()+","+maxTab.ToString()+")");
-				}
-				catch
-				{
-					if ( FindControl("lblJS") != null )
-						((Literal)FindControl("lblJS")).Text = WebTools.JavaScriptSource("SetTab("+tabNo.ToString()+","+maxTab.ToString()+")");
-				}
-			}
+		//	Check whether user has access to this page here
 			return 0;
 		}
 
@@ -187,78 +192,12 @@ namespace PCIWebFinAid
 		{
 			try
 			{
-				XHeader head1 = (XHeader)FindControl("ascxXHeader");
-				if ( head1   != null )
-					head1.ShowUser(sessionGeneral,ApplicationCode);
-				Header  head2 = (Header) FindControl("ascxHeader");
-				if ( head2   != null )
-					head2.ShowUser(sessionGeneral);
+				XHeader head = (XHeader)FindControl("ascxXHeader");
+				if ( head   != null )
+					head.ShowUser(sessionGeneral,ApplicationCode);
 			}
 			catch
 			{ }
-		}
-
-
-		protected int LoadLabelText(Control subCtl)
-		{
-			if ( sessionGeneral == null )
-				return 10010;
-
-			int    ret = 10020;
-			string fieldCode;
-			string fieldValue;
-
-			using (MiscList mList = new MiscList())
-				try	
-				{
-					sql = "exec sp_WP_Get_ProductWebsiteRegContent @ProductCode=" + Tools.DBString(sessionGeneral.ProductCode)
-					                                           + ",@LanguageCode=" + Tools.DBString(sessionGeneral.LanguageCode)
-					                                           + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
-					                                           + ",@Page='L'";
-					if ( mList.ExecQuery(sql, 0) != 0 )
-						SetErrorDetail("LoadLabelText", 10010, "Internal database error (sp_WP_Get_ProductWebsiteRegContent failed)", sql, 1, 1);
-					else if ( mList.EOF )
-						SetErrorDetail("LoadLabelText", 10020, "Internal database error (sp_WP_Get_ProductWebsiteRegContent no data returned)", sql, 1, 1);
-					else
-						while ( ! mList.EOF )
-						{
-							ret        = 10050;
-							fieldCode  = mList.GetColumn("WebsiteFieldCode");
-							fieldValue = mList.GetColumn("WebsiteFieldValue").Replace(Environment.NewLine,"<br />");
-							ret        = 10060;
-							ReplaceControlText("X"+fieldCode,fieldValue,subCtl);
-							ReplaceControlText("Y"+fieldCode,fieldValue);
-							ReplaceControlText("Z"+fieldCode,fieldValue);
-							mList.NextRow();
-						}
-				}
-				catch (Exception ex)
-				{
-					SetErrorDetail("LoadLabelText", ret, "Internal error (sp_WP_Get_ProductWebsiteRegContent)", "", 2, 2, ex);
-					return ret;
-				}
-				return 0;
-			}
-
-		private void ReplaceControlText(string ctlID,string fieldValue,Control subControl=null)
-		{
-			Control ctl = FindControl(ctlID);
-			if ( ctl == null && subControl != null )
-				ctl    = subControl.FindControl(ctlID);
-			if ( ctl == null )
-				return;
-			else if (ctl.GetType()  == typeof(Literal))
-				((Literal)ctl).Text   = fieldValue;
-			else if (ctl.GetType()  == typeof(Label))
-				((Label)ctl).Text     = fieldValue;
-			else if (ctl.GetType()  == typeof(TableCell))
-				((TableCell)ctl).Text = fieldValue;
-			else if (ctl.GetType()  == typeof(Button))
-				((Button)ctl).Text    = fieldValue;
-			else if (ctl.GetType()  == typeof(CheckBox))
-				((CheckBox)ctl).Text  = fieldValue;
-			else
-				SetErrorDetail("ReplaceControlText", 10030, "Unrecognized HTML control (" + ctlID.ToString() + "/" + fieldValue.ToString() + ")",ctlID.ToString() + ", control type="+ctl.GetType().ToString());
 		}
 	}
 }

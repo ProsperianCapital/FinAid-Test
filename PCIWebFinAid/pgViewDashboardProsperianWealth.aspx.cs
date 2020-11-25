@@ -9,7 +9,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class pgViewDashboardProsperianWealth : BasePageBackOffice
+	public partial class pgViewDashboardProsperianWealth : BasePageAdmin
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{

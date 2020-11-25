@@ -10,7 +10,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class pgAccountingCaptureCashbook : BasePageBackOffice
+	public partial class pgAccountingCaptureCashbook : BasePageAdmin
 	{
 		string cashBook;
 		int    errNo;

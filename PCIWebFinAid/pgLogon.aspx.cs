@@ -8,7 +8,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class pgLogon : BasePageBackOffice
+	public partial class pgLogon : BasePageAdmin
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{

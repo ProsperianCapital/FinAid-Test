@@ -49,13 +49,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X104214;
         
         /// <summary>
-        /// Y104215 control.
+        /// X104215 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Y104215;
+        protected global::System.Web.UI.WebControls.Literal X104215;
         
         /// <summary>
         /// X104216 control.
@@ -148,13 +148,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal lblLine5;
         
         /// <summary>
-        /// Y104226 control.
+        /// X104226 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Y104226;
+        protected global::System.Web.UI.WebControls.Literal X104226;
         
         /// <summary>
         /// Y104216 control.

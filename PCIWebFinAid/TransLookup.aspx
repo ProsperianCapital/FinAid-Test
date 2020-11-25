@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMain.htm" -->
+	<!--#include file="IncludeMainAdmin.htm" -->
 	<title>Transaction Lookup</title>
 	<link rel="stylesheet" href="CSS/FinAid.css" type="text/css" />
 	<link rel="stylesheet" href="CSS/Calendar.css" type="text/css" />
@@ -18,12 +18,6 @@
 <div class="Header3">
 	Transaction Lookup
 </div>
-
-<!--
-<p class="Header4">
-<asp:Literal runat="server" ID="lblSubHead1Label">Transaction Lookup</asp:Literal>
-</p>
--->
 <p>
 Card Number (first 6 and last 4 digits only)<br />
 <asp:TextBox runat="server" ID="txtCard1" Width="54px" MaxLength="6"></asp:TextBox>

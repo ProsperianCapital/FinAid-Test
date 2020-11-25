@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMainAdmin.htm" -->
+<!--#include file="IncludeMainCRM.htm" -->
 </head>
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
@@ -16,24 +16,24 @@
 <ascx:XMenu runat="server" ID="ascxXMenu" />
 
 <div class="Header3">
-<asp:Literal runat="server" ID="X104197"></asp:Literal>
+<asp:Literal runat="server" ID="X104197">104197</asp:Literal>
 </div>
 
 <table>
 <tr>
-	<td><asp:Literal runat="server" ID="X104198" /></td>
+	<td><asp:Literal runat="server" ID="X104198">104198</asp:Literal></td>
 	<td><asp:TextBox runat="server" Width="120px" ID="txtPINOld"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104200" /></td>
+	<td><asp:Literal runat="server" ID="X104200">104200</asp:Literal></td>
 	<td><asp:TextBox runat="server" Width="120px" ID="txtPINNew1"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104202" /></td>
+	<td><asp:Literal runat="server" ID="X104202">104202</asp:Literal></td>
 	<td><asp:TextBox runat="server" Width="120px" ID="txtPINNew2"></asp:TextBox></td></tr>
 </table>
 <br /><br />
-<asp:Button runat="server" id="X104204" />
+<asp:Button runat="server" id="X104204" Text="104204" />
 <br /><br />
-<asp:Label runat="server" ID="X104355" CssClass="Error"></asp:Label>
+<asp:Label runat="server" ID="X104355" CssClass="Error">104355</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!--#include file="IncludeErrorDtl.htm" -->

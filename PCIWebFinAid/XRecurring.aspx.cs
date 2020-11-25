@@ -12,7 +12,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class XRecurring : BasePageBackOffice
+	public partial class XRecurring : BasePageAdmin
 	{
 		private int    timeOut;
 		private int    maxRows;

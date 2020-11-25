@@ -23,7 +23,7 @@ namespace PCIWebFinAid
 		protected virtual void StartOver(int errNo,string pageName="")
 		{
 			if ( pageName.Length < 6 )
-				pageName = "pgLogon.aspx";
+				pageName = "pgLogon.aspx"; // The LOGON ADMIN version
 			Response.Redirect ( pageName + ( errNo > 0 ? "?ErrNo=" + errNo.ToString() : "" ) , true );
 		}
 
@@ -89,6 +89,9 @@ namespace PCIWebFinAid
 				if ( btnErrorDtl != null ) btnErrorDtl.Visible = false;
 				return;
 			}
+
+			if ( lblError == null )
+				lblError = new Label();
 
 			string pageName = System.IO.Path.GetFileNameWithoutExtension(Page.AppRelativeVirtualPath);
 			if ( Tools.NullToString(pageName).Length < 1 )

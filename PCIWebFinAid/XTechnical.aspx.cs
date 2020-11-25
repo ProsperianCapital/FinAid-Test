@@ -10,7 +10,7 @@ using System.IO;
 
 namespace PCIWebFinAid
 {
-	public partial class XTechnical : BasePageBackOffice
+	public partial class XTechnical : BasePageAdmin
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{

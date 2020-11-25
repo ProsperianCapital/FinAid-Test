@@ -15,20 +15,20 @@
 <form id="frmMain" runat="server">
 	<ascx:XMenu runat="server" ID="ascxXMenu"></ascx:XMenu>
 	<div class="Header3">
-	<asp:Literal runat="server" ID="X199999">Dashboard</asp:Literal>
+	<asp:Literal runat="server" ID="X104504">104504</asp:Literal>
 	</div>
 	<table style="overflow-x:auto">
 	<tr>
-		<td class="DataLabel"><asp:Literal runat="server" ID="X199998">Client Code :</asp:Literal></td>
+		<td class="DataLabel"><asp:Literal runat="server" ID="X104500">104500</asp:Literal></td>
 		<td><asp:Literal runat="server" ID="lblClientCode"></asp:Literal></td></tr>
 	<tr>
-		<td class="DataLabel"><asp:Literal runat="server" ID="X199997">Client Name :</asp:Literal></td>
+		<td class="DataLabel"><asp:Literal runat="server" ID="X104501">104501</asp:Literal></td>
 		<td><asp:Literal runat="server" ID="lblName"></asp:Literal></td></tr>
 	<tr>
-		<td class="DataLabel"><asp:Literal runat="server" ID="X199996">Contract Code :</asp:Literal></td>
+		<td class="DataLabel"><asp:Literal runat="server" ID="X104502">104502</asp:Literal></td>
 		<td><asp:Literal runat="server" ID="lblContractCode"></asp:Literal></td></tr>
 	<tr>
-		<td class="DataLabel"><asp:Literal runat="server" ID="X199995">Contract Status :</asp:Literal></td>
+		<td class="DataLabel"><asp:Literal runat="server" ID="X104503">104503</asp:Literal></td>
 		<td><asp:Literal runat="server" ID="lblStatus"></asp:Literal></td></tr>
 	</table>
 

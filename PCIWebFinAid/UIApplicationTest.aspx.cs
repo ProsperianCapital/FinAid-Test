@@ -11,7 +11,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class UIApplicationTest : BasePageBackOffice
+	public partial class UIApplicationTest : BasePage
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{

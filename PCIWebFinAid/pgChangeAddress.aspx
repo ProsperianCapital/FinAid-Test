@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMainAdmin.htm" -->
+<!--#include file="IncludeMainCRM.htm" -->
 </head>
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
@@ -16,52 +16,52 @@
 <ascx:XMenu runat="server" ID="ascxXMenu" />
 
 <div class="Header3">
-<asp:Literal runat="server" ID="X104214"></asp:Literal>
+<asp:Literal runat="server" ID="X104214">104214</asp:Literal>
 </div>
 
-<b><asp:Literal runat="server" ID="Y104215" Text="Lbl 104215" /></b>
+<b><asp:Literal runat="server" ID="X104215">104215</asp:Literal></b>
 <br /><br />
 <table>
 <tr>
-	<td><asp:Literal runat="server" ID="X104216" /></td>
+	<td><asp:Literal runat="server" ID="X104216">104216</asp:Literal></td>
 	<td><asp:Literal runat="server" ID="lblLine1">Current Addr Line 1</asp:Literal></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104218" /></td>
+	<td><asp:Literal runat="server" ID="X104218">104218</asp:Literal></td>
 	<td><asp:Literal runat="server" ID="lblLine2">Current Addr Line 2</asp:Literal></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104220" /></td>
+	<td><asp:Literal runat="server" ID="X104220">104220</asp:Literal></td>
 	<td><asp:Literal runat="server" ID="lblLine3">Current Addr Line 3</asp:Literal></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104222" /></td>
+	<td><asp:Literal runat="server" ID="X104222">104222</asp:Literal></td>
 	<td><asp:Literal runat="server" ID="lblLine4">Current Addr Line 4</asp:Literal></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104224" /></td>
+	<td><asp:Literal runat="server" ID="X104224">104224</asp:Literal></td>
 	<td><asp:Literal runat="server" ID="lblLine5">Current Addr Line 5</asp:Literal></td></tr>
 </table>
 <hr />
-<b><asp:Literal runat="server" ID="Y104226" Text="Lbl 104226" /></b>
+<b><asp:Literal runat="server" ID="X104226">104226</asp:Literal></b>
 <br /><br />
 <table>
 <tr>
-	<td><asp:Literal runat="server" ID="Y104216" /></td>
+	<td><asp:Literal runat="server" ID="Y104216">104216</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtLine1" Width="400px"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="Y104218" /></td>
+	<td><asp:Literal runat="server" ID="Y104218">104218</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtLine2" Width="400px"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="Y104220" /></td>
+	<td><asp:Literal runat="server" ID="Y104220">104220</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtLine3" Width="400px"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="Y104222" /></td>
+	<td><asp:Literal runat="server" ID="Y104222">104222</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtLine4" Width="400px"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="Y104224" /></td>
+	<td><asp:Literal runat="server" ID="Y104224">104224</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtLine5" Width="400px"></asp:TextBox></td></tr>
 </table>
 <br />
-<asp:Button runat="server" id="X104237" />
+<asp:Button runat="server" id="X104237" Text="104237" />
 <br /><br />
-<asp:Label runat="server" ID="X104356" CssClass="Error"></asp:Label>
+<asp:Label runat="server" ID="X104356" CssClass="Error">104356</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!--#include file="IncludeErrorDtl.htm" -->

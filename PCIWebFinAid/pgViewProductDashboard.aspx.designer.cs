@@ -40,22 +40,22 @@ namespace PCIWebFinAid {
         protected global::PCIWebFinAid.XMenu ascxXMenu;
         
         /// <summary>
-        /// X199999 control.
+        /// X104504 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X199999;
+        protected global::System.Web.UI.WebControls.Literal X104504;
         
         /// <summary>
-        /// X199998 control.
+        /// X104500 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X199998;
+        protected global::System.Web.UI.WebControls.Literal X104500;
         
         /// <summary>
         /// lblClientCode control.
@@ -67,13 +67,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal lblClientCode;
         
         /// <summary>
-        /// X199997 control.
+        /// X104501 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X199997;
+        protected global::System.Web.UI.WebControls.Literal X104501;
         
         /// <summary>
         /// lblName control.
@@ -85,13 +85,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal lblName;
         
         /// <summary>
-        /// X199996 control.
+        /// X104502 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X199996;
+        protected global::System.Web.UI.WebControls.Literal X104502;
         
         /// <summary>
         /// lblContractCode control.
@@ -103,13 +103,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal lblContractCode;
         
         /// <summary>
-        /// X199995 control.
+        /// X104503 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X199995;
+        protected global::System.Web.UI.WebControls.Literal X104503;
         
         /// <summary>
         /// lblStatus control.

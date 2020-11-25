@@ -4,7 +4,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class TransLookup : BasePageLogin
+	public partial class TransLookup : BasePageAdmin
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{
