@@ -38,7 +38,9 @@ namespace PCIWebFinAid
 //		Called once in the beginning
 
 			LoadLabelText(ascxXMenu);
+			txtLine1.Focus();
 		}
+
 		protected void btnOK_Click(Object sender, EventArgs e)
 		{
 			string addr1  = txtLine1.Text.Trim();

@@ -25,75 +25,6 @@ namespace PCIWebFinAid
 				return 10;
 			}
 
-//	Ver 1
-//			List<XMenuItem> menuList;
-//
-//			using (MiscList mList = new MiscList())
-//			{
-//				string sql = "exec sp_Get_BackOfficeMenuB @UserCode="        + Tools.DBString(userCode)
-//				                                      + ",@ApplicationCode=" + Tools.DBString(applicationCode);
-//				int    ret = mList.ExecQuery(sql,0);
-//				if ( ret  != 0 )
-//				{
-//					Tools.LogInfo("LoadMenu/20","ret="+ret.ToString()+" ("+sql+")",222);
-//					return 20;
-//				}
-//				if ( mList.EOF )
-//				{
-//					Tools.LogInfo("LoadMenu/30","No data ("+sql+")",222);
-//					return 30;
-//				}
-//				string    level1 = "X";
-//				string    level2 = "X";
-//				string    level3 = "X";
-//				string    level4 = "X";
-//				XMenuItem menu1  = null;
-//				XMenuItem menu2  = null;
-//				XMenuItem menu3  = null;
-//				XMenuItem menu4  = null;
-//				menuList         = new List<XMenuItem>();
-//
-//				while ( ! mList.EOF )
-//				{
-//					if ( mList.GetColumn("Level1ItemDescription") != level1 )
-//					{
-//						level1 = mList.GetColumn("Level1ItemDescription");
-//						level2 = "X";
-//						level3 = "X";
-//						level4 = "X";
-//						menu1  = new XMenuItem();
-//						menu1.Setup(1,mList);
-//						menuList.Add(menu1);
-//					}
-//					if ( mList.GetColumn("Level2ItemDescription") != level2 )
-//					{
-//						level2 = mList.GetColumn("Level2ItemDescription");
-//						level3 = "X";
-//						level4 = "X";
-//						menu2  = new XMenuItem();
-//						menu2.Setup(2,mList);
-//						menu1.SubItems.Add(menu2);
-//					}
-//					if ( mList.GetColumn("Level3ItemDescription") != level3 )
-//					{
-//						level3 = mList.GetColumn("Level3ItemDescription");
-//						level4 = "X";
-//						menu3  = new XMenuItem();
-//						menu3.Setup(3,mList);
-//						menu2.SubItems.Add(menu3);
-//					}
-//					if ( mList.GetColumn("Level4ItemDescription") != level4 )
-//					{
-//						level4 = mList.GetColumn("Level4ItemDescription");
-//	//					level5 = "X"; // We don't have 5 levels
-//						menu4  = new XMenuItem();
-//						menu4.Setup(4,mList);
-//						menu3.SubItems.Add(menu4);
-//					}
-//					mList.NextRow();
-//				}
-//			}
-
 //	Ver 2
 			List<MenuItem> menuList;
 			using ( MenuItems menuItems = new MenuItems() )
@@ -116,8 +47,7 @@ namespace PCIWebFinAid
 			string        tRowEnd = "</td></tr>" + Environment.NewLine;
 
 //	Mobile
-			string        dnArrow = "<img src='Images/DownArrow.png' style='float:right;height:30px' />";
-//			string        upArrow = "<img src='Images/UpArrow.png' style='float:right;height:30px' />";
+			string        dnArrow = "<img src='" + Tools.ImageFolder() + "DownArrow.png' style='float:right;height:30px' />";
 
 			foreach (MenuItem m1 in menuList)
 			{
@@ -171,7 +101,7 @@ namespace PCIWebFinAid
 
 			//	Main menu
 				if ( m1.DisplayImageOrText == "0" )
-					menuRef = "><img src='Images/" + m1.ImageName + "' title='" + m1.Description + "' style='height:75px;width:130px' />";
+					menuRef = "><img src='" + Tools.ImageFolder() + m1.ImageName + "' title='" + m1.Description + "' style='height:75px;width:130px' />";
 				else
 					menuRef = " class='VText'>" + m1.Name;
 
@@ -281,9 +211,8 @@ namespace PCIWebFinAid
 			if ( string.IsNullOrWhiteSpace(mx.URL) )
 				return T + " href=\"JavaScript:alert('You do not have access to this functionality')\"> " + mx.Name + " </a>";
 
-			mx.URL = mx.URL.Replace("{usercode}",userCode);
-			mx.URL = mx.URL.Replace("{UserCode}",userCode);
-			mx.URL = mx.URL.Replace("{USERCODE}",userCode);
+			mx.URL = mx.URL.Replace("{usercode}",userCode).Replace("{UserCode}",userCode);
+			mx.URL = mx.URL.Replace("{USERCODE}",userCode).Replace("{userCode}",userCode);
 			T      = T + " href='" + mx.URL + "'" + ( cssExtra.Length > 0 ? " " + cssExtra : "" );
 
 			if ( mx.URL.ToUpper().StartsWith("HTTP") || mx.URL.ToUpper().StartsWith("WWW") )
@@ -297,7 +226,7 @@ namespace PCIWebFinAid
 			if ( mx.Level > 1 )
 				return T + "> " + mx.Name + " </a>";
 			else if ( mx.DisplayImageOrText == "0" )
-				return T + "><img src='Images/" + mx.ImageName + "' title='" + mx.Description + "' style='height:75px;width:130px' /></a>";
+				return T + "><img src='" + Tools.ImageFolder() + mx.ImageName + "' title='" + mx.Description + "' style='height:75px;width:130px' /></a>";
 			else if ( styleMode == 0 )
 				return T + " class='VText'> " + mx.Name + " </a>";
 			else

@@ -12,6 +12,7 @@ HTML, XML, AJAX, CSS, JavaScript and server-side code developed by
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <script type="text/javascript">
+var startPage   = "pgLogon.aspx";
 var sessionTime = "<% =Session.Timeout %>";
 var userMode    = "<% = ( sessionGeneral == null ? (byte)0 : sessionGeneral.CheckExpiry ) %>";
 var colorOK     = "green";
@@ -19,4 +20,4 @@ var colorErr    = "crimson";
 </script>
 
 <script type="text/javascript" src="JS/Utils.js"></script>
-<script type="text/javascript" src="JS/Timeout.js"></script>
+<script type="text/javascript" src="JS/Timeout.js?v=1"></script>

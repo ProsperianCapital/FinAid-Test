@@ -38,6 +38,7 @@ namespace PCIWebFinAid
 //		Called once in the beginning
 
 			LoadLabelText(ascxXMenu);
+			txtEMailNew1.Focus();
 		}
 
 		protected void btnOK_Click(Object sender, EventArgs e)
