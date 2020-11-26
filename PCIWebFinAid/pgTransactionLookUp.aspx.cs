@@ -4,7 +4,7 @@
 using System;
 using System.Text;
 using PCIBusiness;
- 
+
 namespace PCIWebFinAid
 {
 	public partial class pgTransactionLookUp : BasePageAdmin

@@ -35,10 +35,10 @@ function CheckPIN(n)
 		{
 			ShowElt('imgY'+n,true);
 			var h = GetEltValue('txtPINNew2');
-			if ( n == 1 && h.length > 0 && h != p )
+			if ( n == 1 && h.length > 0 )
 			{
-				ShowElt('imgY2',false);
-				ShowElt('imgN2',true);
+				ShowElt('imgY2',(h==p));
+				ShowElt('imgN2',(h!=p));
 			}
 		}
 	}
