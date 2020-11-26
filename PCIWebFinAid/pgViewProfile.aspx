@@ -54,7 +54,7 @@
 			<asp:TableCell ID="X104368" style="border-bottom:1px solid #000000;font-weight:bold">104368</asp:TableCell></asp:TableRow>
 		</asp:Table>
 		<br />
-		<asp:Label runat="server" ID="X104027" CssClass="Error">104027</asp:Label>
+		<asp:Label runat="server" ID="X104027" CssClass="Info">104027</asp:Label>
 	</td></tr>
 	</table>
 	</div>

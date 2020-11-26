@@ -78,6 +78,9 @@ namespace PCIWebFinAid
 			if ( errCode == 0 )
 				return;
 
+			if ( lblError == null && detailMode == 0 ) // No brief msg holder and no detailed msg
+				return;
+
 			if ( errCode <  0 )
 			{
 				if ( lblError != null )
@@ -120,12 +123,22 @@ namespace PCIWebFinAid
 
 			if ( briefMode == 2 ) // Append
 				lblError.Text = lblError.Text + ( lblError.Text.Length > 0 ? "<br />" : "" ) + errBrief;
+			else if ( briefMode == 101 ) // Overwrite, add in 1 <br /> BEFORE
+				lblError.Text = "<br />" + errBrief;
+			else if ( briefMode == 102 ) // Overwrite, add in 2 <br /> BEFORE
+				lblError.Text = "<br /><br />" + errBrief;
+			else if ( briefMode == 201 ) // Overwrite, add in 1 <br /> AFTER
+				lblError.Text = errBrief + "<br />";
+			else if ( briefMode == 202 ) // Overwrite, add in 2 <br /> AFTER
+				lblError.Text = errBrief + "<br /><br />";
+
 			else if ( briefMode == 23 ) // Use "lblErr2", <p></p>
 				try
 				{
 					((Label)FindControl("lblErr2")).Text = "<p>" + errBrief + "</p>";
 				}
 				catch {}
+
 			else if ( briefMode == 33 ) // Use "lblErr3", <br />
 				try
 				{
@@ -134,6 +147,7 @@ namespace PCIWebFinAid
 				catch {}
 			else
 				lblError.Text = errBrief;
+
 			lblError.Visible = ( lblError.Text.Length > 0 && lblError.Enabled );
 
 			if ( lblErrorDtl == null || detailMode == 0 ) // Do not log a detailed message at all

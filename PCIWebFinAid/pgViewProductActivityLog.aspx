@@ -25,7 +25,7 @@
 	<asp:TableCell ID="X104136" style="border-bottom:1px solid #000000;font-weight:bold">104136</asp:TableCell></asp:TableRow>
 </asp:Table>
 <br /><br />
-<asp:Label runat="server" ID="X104140" CssClass="Error">104140</asp:Label>
+<asp:Label runat="server" ID="X104140" CssClass="Info">104140</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!--#include file="IncludeErrorDtl.htm" -->

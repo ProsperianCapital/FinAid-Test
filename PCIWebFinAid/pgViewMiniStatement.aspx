@@ -28,9 +28,9 @@
 </asp:Table>
 <br />
 <asp:Literal runat="server" ID="X104360">104360</asp:Literal>
-<asp:TextBox runat="server" Width="160px" ReadOnly="true" ID="txtBalance"></asp:TextBox>
+<asp:Label runat="server" CssClass="DataStatic" ID="lblBalance">lblBalance</asp:Label>
 <br /><br />
-<asp:Label runat="server" ID="X104126" CssClass="Error">104126</asp:Label>
+<asp:Label runat="server" ID="X104126" CssClass="Info">104126</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <!--#include file="IncludeErrorDtl.htm" -->

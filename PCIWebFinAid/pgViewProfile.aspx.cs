@@ -6,29 +6,38 @@ namespace PCIWebFinAid
 {
 	public partial class pgViewProfile : BasePageCRM
 	{
-		protected override void PageLoad(object sender, EventArgs e)
+		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
 			if ( SessionCheck() != 0 )
 				return;
 			if ( PageCheck()    != 0 )
 				return;
+
+			ClearData();
+
 			if ( Page.IsPostBack )
 				return;
+
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
 				StartOver(12666);
 		}
 
+		private void ClearData()
+		{
+//		Called every time
+
+			SetErrorDetail("",-888);
+			ascxXFooter.JSText = "";
+			lblDate.Text       = Tools.DateToString(System.DateTime.Now,7,1); // yyyy-mm-dd hh:mm:ss
+		}
+
 		private void LoadDataInitial()
 		{
 //		Called once in the beginning
 
-			SetErrorDetail("",-888);
 			LoadLabelText(ascxXMenu);
-
-			ascxXFooter.JSText = "";
-			lblDate.Text       = Tools.DateToString(System.DateTime.Now,7,1); // yyyy-mm-dd hh:mm:ss
 
 			using (MiscList mList = new MiscList())
 			{

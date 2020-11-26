@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="pgChangePIN.aspx.cs" Inherits="PCIWebFinAid.pgChangePIN" %>
+﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="pgChangeEMail.aspx.cs" Inherits="PCIWebFinAid.pgChangeEMail" %>
 <%@ Register TagPrefix="ascx" TagName="XHeader" Src="XHeader.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="XFooter" Src="XFooter.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="XMenu"   Src="XMenu.ascx" %>
@@ -16,20 +16,18 @@
 <ascx:XMenu runat="server" ID="ascxXMenu" />
 
 <script type="text/javascript">
-function CheckPIN(n)
+function CheckMail(n)
 {
 	try
 	{
 		ShowElt('imgY'+n,false);
 		ShowElt('imgN'+n,false);
-		var p = GetEltValue('txtPINNew'+n);
+		var p = GetEltValue('txtEMailNew'+n).toUpperCase();
 		if ( p.length < 1 )
 			return;
-		if ( p.length < 5 )
+		if ( ! ValidEmail(p) )
 			ShowElt('imgN'+n,true);
-		else if ( p.indexOf(' ') >= 0 )
-			ShowElt('imgN'+n,true);
-		else if ( n == 2 && GetEltValue('txtPINNew1') != p )
+		else if ( n == 2 && GetEltValue('txtEMailNew1').toUpperCase() != p )
 			ShowElt('imgN'+n,true);
 		else
 			ShowElt('imgY'+n,true);
@@ -48,18 +46,18 @@ function CheckPIN(n)
 <table>
 <tr>
 	<td><asp:Literal runat="server" ID="X104198">104198</asp:Literal></td>
-	<td><asp:TextBox runat="server" Width="100px" ID="txtPINOld"></asp:TextBox></td></tr>
+	<td><asp:TextBox runat="server" Width="480px" ID="txtEMailOld" ReadOnly="true"></asp:TextBox></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104200">104200</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="100px" ID="txtPINNew1" OnChange="JavaScript:CheckPIN(1)"></asp:TextBox>&nbsp;
+		<asp:TextBox runat="server" Width="480px" ID="txtEMailNew1" OnChange="JavaScript:CheckMail(1)"></asp:TextBox>&nbsp;
 		<img id="imgY1" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
 		<img id="imgN1" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
 	</td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104202">104202</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="100px" ID="txtPINNew2" OnChange="JavaScript:CheckPIN(2)"></asp:TextBox>&nbsp;
+		<asp:TextBox runat="server" Width="480px" ID="txtEMailNew2" OnChange="JavaScript:CheckMail(2)"></asp:TextBox>&nbsp;
 		<img id="imgY2" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
 		<img id="imgN2" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
 	</td></tr>

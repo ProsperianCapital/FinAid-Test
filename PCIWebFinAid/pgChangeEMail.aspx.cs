@@ -5,9 +5,9 @@ using System.Web.UI.WebControls;
 
 namespace PCIWebFinAid
 {
-	public partial class pgChangePIN : BasePageCRM
+	public partial class pgChangeEMail : BasePageCRM
 	{
-		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
+		protected override void PageLoad(object sender, EventArgs e)
 		{
 			if ( SessionCheck() != 0 )
 				return;
@@ -22,7 +22,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(13666);
+				StartOver(13444);
 		}
 
 		private void ClearData()
@@ -42,14 +42,13 @@ namespace PCIWebFinAid
 
 		protected void btnOK_Click(Object sender, EventArgs e)
 		{
-			string pinOld  = txtPINOld.Text.Trim();
-			string pinNew1 = txtPINNew1.Text.Trim();
-			string pinNew2 = txtPINNew2.Text.Trim();
+			string emailNew1 = txtEMailNew1.Text.Trim().ToUpper();
+			string emailNew2 = txtEMailNew2.Text.Trim().ToUpper();
 
-			if ( pinOld.Length < 5 || pinNew1.Length < 5 || pinNew2.Length < 5 || pinNew1 != pinNew2 )
+			if ( emailNew1 != emailNew2 || ! PCIBusiness.Tools.CheckEMail(emailNew1,1) || ! PCIBusiness.Tools.CheckEMail(emailNew2,1) )
 				return;
 
-			SetErrorDetail("",13667,"[SQL] Update yet to be implemented","",102,0);
+			SetErrorDetail("",13445,"[SQL] Update yet to be implemented","",102,0);
 		}
 	}
 }

@@ -76,6 +76,7 @@
     <Content Include="Home.aspx" />
     <Content Include="IncludeMainRegister.htm" />
     <Content Include="pgChangeAddress.aspx" />
+    <Content Include="pgChangeEMail.aspx" />
     <Content Include="pgChangePIN.aspx" />
     <Content Include="pgContractLookUp.aspx" />
     <Content Include="pgLogonCRM.aspx" />
@@ -347,6 +348,13 @@
     </Compile>
     <Compile Include="pgChangeAddress.aspx.designer.cs">
       <DependentUpon>pgChangeAddress.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgChangeEMail.aspx.cs">
+      <DependentUpon>pgChangeEMail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgChangeEMail.aspx.designer.cs">
+      <DependentUpon>pgChangeEMail.aspx</DependentUpon>
     </Compile>
     <Compile Include="pgChangePIN.aspx.cs">
       <DependentUpon>pgChangePIN.aspx</DependentUpon>
