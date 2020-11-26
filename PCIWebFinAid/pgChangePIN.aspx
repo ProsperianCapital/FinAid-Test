@@ -32,7 +32,15 @@ function CheckPIN(n)
 		else if ( n == 2 && GetEltValue('txtPINNew1') != p )
 			ShowElt('imgN'+n,true);
 		else
+		{
 			ShowElt('imgY'+n,true);
+			var h = GetEltValue('txtPINNew2');
+			if ( n == 1 && h.length > 0 && h != p )
+			{
+				ShowElt('imgY2',false);
+				ShowElt('imgN2',true);
+			}
+		}
 	}
 	catch (x)
 	{
