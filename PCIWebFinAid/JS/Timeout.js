@@ -28,7 +28,12 @@ function CheckSessionTime()
 		if (sessionTime <= 0)
 		{
 			alert("We're sorry, but you took too long. Your session has EXPIRED.");
-			location.href = "XLogin.aspx?ErrNo=104317";
+			if ( startPage == null )
+				location.href = "pgLogonCRM.aspx?ErrNo=199801";
+			else if ( startPage.toString().length < 5 )
+				location.href = "pgLogonCRM.aspx?ErrNo=199802";
+			else
+				location.href = startPage + "?ErrNo=199803";
 			return;
 		}
 		dt1 = new Date();
