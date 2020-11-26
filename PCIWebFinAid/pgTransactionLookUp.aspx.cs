@@ -7,7 +7,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class pgTransactionLookUp : BasePageAdmin
+	public partial class pgTransactionLookUp : BasePageAdmin // Not BasePageBackOffice
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{
