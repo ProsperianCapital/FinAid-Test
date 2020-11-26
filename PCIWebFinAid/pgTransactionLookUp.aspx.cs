@@ -5,8 +5,6 @@ using System;
 using System.Text;
 using PCIBusiness;
 
-// Error codes 30000...30099
-
 namespace PCIWebFinAid
 {
 	public partial class pgTransactionLookUp : BasePageAdmin
