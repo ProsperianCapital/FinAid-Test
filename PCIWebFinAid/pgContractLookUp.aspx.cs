@@ -6,10 +6,12 @@ using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using PCIBusiness;
- 
+
+// Admin
+
 namespace PCIWebFinAid
 {
-	public partial class pgContractLookUp : BasePageAdmin // Not BasePageBackOffice
+	public partial class pgContractLookUp : BasePageAdmin
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{

@@ -4,10 +4,12 @@
 using System;
 using System.Text;
 using PCIBusiness;
- 
+
+// Admin
+
 namespace PCIWebFinAid
 {
-	public partial class pgTransactionLookUp : BasePageAdmin // Not BasePageBackOffice
+	public partial class pgTransactionLookUp : BasePageAdmin
 	{
 		protected override void PageLoad(object sender, EventArgs e)
 		{
