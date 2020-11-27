@@ -862,6 +862,13 @@ namespace PCIBusiness
 
 		}
 
+		public static bool CheckPIN(string pin,byte length=0)
+		{
+			pin   = NullToString(pin);
+			int x = StringToInt(pin);
+			return ( x > 0 && ( pin.Length == length || length < 1 ) );
+		}
+
 		public static bool CheckEMail(string email,byte mode=2)
 		{
 		//	Mode = 1. Exactly 1 address allowed (ie. no commas, semi-colons or spaces).
