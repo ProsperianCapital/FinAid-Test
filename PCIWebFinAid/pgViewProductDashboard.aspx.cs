@@ -42,9 +42,9 @@ namespace PCIWebFinAid
 			{
 				sql = "exec sp_WP_Get_DashboardInfo @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("PageLoad",11840,"Internal database error (sp_WP_Get_DashboardInfo failed)",sql,1,1);
+					SetErrorDetail("LoadDataInitial",11840,"Internal database error (sp_WP_Get_DashboardInfo failed)",sql,1,1);
 				else if ( mList.EOF )
-					SetErrorDetail("PageLoad",11850,"Internal database error (sp_WP_Get_DashboardInfo no data returned)",sql,1,1);
+					SetErrorDetail("LoadDataInitial",11850,"Internal database error (sp_WP_Get_DashboardInfo no data returned)",sql,1,1);
 				else
 				{
 					lblName.Text         = mList.GetColumn("ClientName");
