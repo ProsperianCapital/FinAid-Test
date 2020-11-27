@@ -237,6 +237,25 @@ function ValidCardNumber(cardNo)
 	return false;
 }
 
+function ValidPIN(pin,minLength)
+{
+	try
+	{
+		pin = Trim(pin).toUpperCase();
+		if ( minLength == null || minLength < 1 )
+			minLength = 1;
+		if ( pin.length < minLength )
+			return false;
+		for (var k = 0; k < pin.length; k++)
+			if ( ('0123456789').indexOf(pin.charAt(k)) < 0 )
+				return false;
+		return true;
+	}
+	catch (x)
+	{ }
+	return false;
+}
+
 function ValidEmail(email)
 {
 	try
@@ -257,10 +276,11 @@ function ValidEmail(email)
 			return false;
 		if ( email.substring(k-1,k) == '.' || email.substring(k+1,k+2) == '.' || email.substring(0,1) == '.' || email.substring(email.length-1,email.length) == '.' )
 			return false;
+		return true;
 	}
 	catch (x)
 	{ }
-	return true;
+	return false;
 }
 
 function ShowElt(eltID,show,background,retType)
