@@ -17,62 +17,67 @@ namespace PCIWebFinAid
 		{
 			if ( ! Page.IsPostBack )
 			{
-				string[] uName = { "UserName"           , "SheilaColeman@getLost.net" };
-				string[] uCode = { "UserCode"           , "013" };
-				string[] uPwd  = { "UserPassword"       , "hello4goodbye" };
-				string[] lCode = { "LanguageCode"       , "ENG" };
-				string[] lDial = { "LanguageDialectCode", "0002" };
-				string[] coun  = { "CountryCode"        , "RSA" };
-				string[] query = { "QueryName"          , "FinTechLogOn" };
-				string[] key   = { "SecretKey"          , "7e6415a7cb790238fd12430a0ce419b3" };
-				string[] app   = { "ApplicationCode"    , "003" };
+				string[] uName  = { "UserName"           , "SheilaColeman@getLost.net" };
+				string[] uCode  = { "UserCode"           , "013" };
+				string[] uPwd   = { "UserPassword"       , "hello4goodbye" };
+				string[] lCode  = { "LanguageCode"       , "ENG" };
+				string[] lDial  = { "LanguageDialectCode", "0002" };
+				string[] coun   = { "CountryCode"        , "RSA" };
+				string[] mobile = { "MobileNumber"       , "0842226666" };
+				string[] query  = { "QueryName"          , "FinTechLogOn" };
+				string[] key    = { "SecretKey"          , "7e6415a7cb790238fd12430a0ce419b3" };
+				string[] app    = { "ApplicationCode"    , "003" };
 
 				txtURL.Text  = TargetURL;
 				lblVer.Text  = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
 
-				txtJSON.Text = Tools.JSONPair(uName[0],uName[1],1,"{") + Environment.NewLine
-					          + Tools.JSONPair(uCode[0],uCode[1]      ) + Environment.NewLine
-					          + Tools.JSONPair(uPwd [0],uPwd [1]      ) + Environment.NewLine
-					          + Tools.JSONPair(lCode[0],lCode[1]      ) + Environment.NewLine
-					          + Tools.JSONPair(lDial[0],lDial[1]      ) + Environment.NewLine
-					          + Tools.JSONPair(coun [0],coun [1]      ) + Environment.NewLine
-					          + Tools.JSONPair(query[0],query[1]      ) + Environment.NewLine
-					          + Tools.JSONPair(key  [0],key  [1]      ) + Environment.NewLine
-					          + Tools.JSONPair(app  [0],app  [1],1,"","}");
+				txtJSON.Text = Tools.JSONPair(uName [0],uName [1],1,"{") + Environment.NewLine
+					          + Tools.JSONPair(uCode [0],uCode [1]      ) + Environment.NewLine
+					          + Tools.JSONPair(uPwd  [0],uPwd  [1]      ) + Environment.NewLine
+					          + Tools.JSONPair(lCode [0],lCode [1]      ) + Environment.NewLine
+					          + Tools.JSONPair(lDial [0],lDial [1]      ) + Environment.NewLine
+					          + Tools.JSONPair(coun  [0],coun  [1]      ) + Environment.NewLine
+					          + Tools.JSONPair(mobile[0],mobile[1]      ) + Environment.NewLine
+					          + Tools.JSONPair(query [0],query [1]      ) + Environment.NewLine
+					          + Tools.JSONPair(key   [0],key   [1]      ) + Environment.NewLine
+					          + Tools.JSONPair(app   [0],app   [1],1,"","}");
 
 				txtXML.Text  = "<Test>"
-				             + Tools.XMLCell(uName[0],uName[1]) + Environment.NewLine
-					          + Tools.XMLCell(uCode[0],uCode[1]) + Environment.NewLine
-					          + Tools.XMLCell(uPwd [0],uPwd [1]) + Environment.NewLine
-					          + Tools.XMLCell(lCode[0],lCode[1]) + Environment.NewLine
-					          + Tools.XMLCell(lDial[0],lDial[1]) + Environment.NewLine
-					          + Tools.XMLCell(coun [0],coun [1]) + Environment.NewLine
-					          + Tools.XMLCell(query[0],query[1]) + Environment.NewLine
-					          + Tools.XMLCell(key  [0],key  [1]) + Environment.NewLine
-					          + Tools.XMLCell(app  [0],app  [1]) + Environment.NewLine
+				             + Tools.XMLCell(uName [0],uName [1]) + Environment.NewLine
+					          + Tools.XMLCell(uCode [0],uCode [1]) + Environment.NewLine
+					          + Tools.XMLCell(uPwd  [0],uPwd  [1]) + Environment.NewLine
+					          + Tools.XMLCell(lCode [0],lCode [1]) + Environment.NewLine
+					          + Tools.XMLCell(lDial [0],lDial [1]) + Environment.NewLine
+					          + Tools.XMLCell(coun  [0],coun  [1]) + Environment.NewLine
+					          + Tools.XMLCell(mobile[0],mobile[1]) + Environment.NewLine
+					          + Tools.XMLCell(query [0],query [1]) + Environment.NewLine
+					          + Tools.XMLCell(key   [0],key   [1]) + Environment.NewLine
+					          + Tools.XMLCell(app   [0],app   [1]) + Environment.NewLine
 				             + "</Test>";
 
-				txtWeb.Text  = uName[0] + "=" + uName[1] + "&" + Environment.NewLine
-				             + uCode[0] + "=" + uCode[1] + "&" + Environment.NewLine
-				             + uPwd [0] + "=" + uPwd [1] + "&" + Environment.NewLine
-				             + lCode[0] + "=" + lCode[1] + "&" + Environment.NewLine
-				             + lDial[0] + "=" + lDial[1] + "&" + Environment.NewLine
-				             + coun [0] + "=" + coun [1] + "&" + Environment.NewLine
-				             + query[0] + "=" + query[1] + "&" + Environment.NewLine
-				             + key  [0] + "=" + key  [1] + "&" + Environment.NewLine
-				             + app  [0] + "=" + app  [1];
+				txtWeb.Text  = uName [0] + "=" + uName [1] + "&" + Environment.NewLine
+				             + uCode [0] + "=" + uCode [1] + "&" + Environment.NewLine
+				             + uPwd  [0] + "=" + uPwd  [1] + "&" + Environment.NewLine
+				             + lCode [0] + "=" + lCode [1] + "&" + Environment.NewLine
+				             + lDial [0] + "=" + lDial [1] + "&" + Environment.NewLine
+				             + coun  [0] + "=" + coun  [1] + "&" + Environment.NewLine
+				             + mobile[0] + "=" + mobile[1] + "&" + Environment.NewLine
+				             + query [0] + "=" + query [1] + "&" + Environment.NewLine
+				             + key   [0] + "=" + key   [1] + "&" + Environment.NewLine
+				             + app   [0] + "=" + app   [1];
 
 				txtForm.Text = "<html><body onload='document.forms[\"frmTest\"].submit()'>" + Environment.NewLine
 				             + "<form name='frmTest' method='POST' action='" + TargetURL + "'>" + Environment.NewLine
-				             + "<input type='hidden' name='" + uName[0] + "' value='" + uName[1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + uCode[0] + "' value='" + uCode[1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + uPwd [0] + "' value='" + uPwd [1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + lCode[0] + "' value='" + lCode[1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + lDial[0] + "' value='" + lDial[1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + coun [0] + "' value='" + coun [1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + query[0] + "' value='" + query[1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + key  [0] + "' value='" + key  [1] + "' />" + Environment.NewLine
-				             + "<input type='hidden' name='" + app  [0] + "' value='" + app  [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + uName [0] + "' value='" + uName [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + uCode [0] + "' value='" + uCode [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + uPwd  [0] + "' value='" + uPwd  [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + lCode [0] + "' value='" + lCode [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + lDial [0] + "' value='" + lDial [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + coun  [0] + "' value='" + coun  [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + mobile[0] + "' value='" + mobile[1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + query [0] + "' value='" + query [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + key   [0] + "' value='" + key   [1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + app   [0] + "' value='" + app   [1] + "' />" + Environment.NewLine
 				             + "</form></body></html>";
 			}
 		}

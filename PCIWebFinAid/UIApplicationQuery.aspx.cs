@@ -21,6 +21,8 @@ namespace PCIWebFinAid
 
 		private int           errorCode;
 		private string        errorMsg;
+		private string        sql;
+		private string        sqlSP;
 		private StringBuilder json;
 
 		private string        queryName;
@@ -30,6 +32,7 @@ namespace PCIWebFinAid
 		private string        countryCode;
 		private string        languageCode;
 		private string        languageDialectCode;
+		private string        mobileNumber;
 
 		private enum ResultCode
 		{
@@ -90,6 +93,7 @@ namespace PCIWebFinAid
 				languageDialectCode = ParmValue("LanguageDialectCode");
 				userCode            = ParmValue("UserCode");
 				secretKey           = ParmValue("SecretKey");
+				mobileNumber        = ParmValue("MobileNumber");
 
 				if ( inputDataType != (byte)Constants.WebDataType.FormPost )
 					Tools.LogInfo("UIApplicationQuery.QueryData/10","dataType="+inputDataType.ToString()
@@ -98,7 +102,8 @@ namespace PCIWebFinAid
 					                                             +", countryCode"+countryCode
 					                                             +", languageCode"+languageCode
 					                                             +", languageDialectCode"+languageDialectCode
-					                                             +", userCode"+userCode,220);
+					                                             +", userCode"+userCode
+					                                             +", mobileNumber"+mobileNumber,220);
 	
 				if ( Tools.SystemLiveTestOrDev() != Constants.SystemMode.Development && secretKey != "7e6415a7cb790238fd12430a0ce419b3" )
 					return SendJSON(10005,"Invalid secret key");
@@ -164,6 +169,9 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechEditeWalletAccountDescription").ToUpper() )
 					EditeWalletAccountDescription();
 
+				else if ( queryName == ("FinTechGetiSOSInfo").ToUpper() )
+					GetiSOSInfo();
+
 				else
 					SetError(10007,"Invalid query name");
 
@@ -212,6 +220,8 @@ namespace PCIWebFinAid
 					SetError(11020,"Parameter LanguageDialectCode is missing");
 				if ( parmsRequired.Contains(",USER,")    && userCode.Length < 1 )
 					SetError(11025,"Parameter UserCode is missing");
+				if ( parmsRequired.Contains(",MOBILE,")  && mobileNumber.Length < 8 )
+					SetError(11030,"Parameter MobileNumber is missing");
 			}
 			catch (Exception ex)
 			{
@@ -262,6 +272,66 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
+		private int GetiSOSInfo()
+		{
+			if ( CheckParameters("Mobile") > 0 )
+				return errorCode;
+
+			sqlSP = "sp_iSOS_Get_iSOSAppData";
+
+			using (MiscList mList = new MiscList())
+				try
+				{
+					sql = "exec " + sqlSP + " @MobileNumber=" + Tools.DBString(mobileNumber);
+
+					if ( mList.ExecQuery(sql,0) != 0 )
+						return SetError(12905,"Internal error: SQL " + sqlSP);
+
+					if ( mList.EOF )
+						return SetError(12910,"No data returned: SQL " + sqlSP);
+
+					json.Append ( Tools.JSONPair("ContractCode"            ,mList.GetColumn("ContractCode"))
+					            + Tools.JSONPair("ClientName"              ,mList.GetColumn("ClientName"))
+					            + Tools.JSONPair("CountryCode"             ,mList.GetColumn("CountryCode"))
+					            + Tools.JSONPair("CountryFlagImageCode"    ,mList.GetColumn("CountryFlagImageCode"))
+					            + Tools.JSONPair("CountryFlagImageFileName",mList.GetColumn("CountryFlagImageFileName"))
+					            + Tools.JSONPair("LanguageCode"            ,mList.GetColumn("LanguageCode"))
+					            + "\"Buttons\":[" );
+
+					string buttonText;
+					string colName;
+
+					for ( int k = 1 ; k < 100 ; k++ )
+					{
+						if ( k < 10 )
+							colName = "Button0" + k.ToString();
+						else
+							colName = "Button"  + k.ToString();
+						buttonText = mList.GetColumn(colName+"Text",0);
+						if ( buttonText.Length < 1 )
+							break;
+//						json.Append ( Tools.JSONPair(colName+"Text"         ,buttonText)
+//						            + Tools.JSONPair(colName+"ImageCode"    ,mList.GetColumn(colName+"ImageCode"))
+//						            + Tools.JSONPair(colName+"ImageFileName",mList.GetColumn(colName+"ImageFileName"))
+//						            + Tools.JSONPair(colName+"NumberToDial" ,mList.GetColumn(colName+"NumberToDial")) );
+//	No, create a JSON array rather
+						json.Append ( Tools.JSONPair("Button"       ,k.ToString(),1,"{")
+						            + Tools.JSONPair("Text"         ,buttonText)
+						            + Tools.JSONPair("ImageCode"    ,mList.GetColumn(colName+"ImageCode"))
+						            + Tools.JSONPair("ImageFileName",mList.GetColumn(colName+"ImageFileName"))
+						            + Tools.JSONPair("NumberToDial" ,mList.GetColumn(colName+"NumberToDial"),1,"","},") );
+					}
+					JSONAppend("]");
+					return 0;
+				}
+				catch (Exception ex)
+				{
+					Tools.LogException("GetiSOSInfo",sql,ex,this);
+				}
+
+			return SetError(12999,"Internal error: SQL " + sqlSP);
+		}
+
 		private int LogOn()
 		{
 			if ( CheckParameters("App") > 0 )
@@ -300,23 +370,22 @@ namespace PCIWebFinAid
 			if ( CheckParameters("App,User,Country,Lang,Dialect") > 0 )
 				return errorCode;
 
-			string sql = "";
+			sqlSP = "sp_FinTechGeteWalletList";
 
 			using (MiscList mList = new MiscList())
 				try
 				{
-					sql = "exec sp_FinTechGeteWalletList"
-					    +     " @AppplicationCode="    + Tools.DBString(applicationCode)
-					    +     ",@UserCode="            + Tools.DBString(userCode)
-					    +     ",@CountryCode="         + Tools.DBString(countryCode)
-					    +     ",@LanguageCode="        + Tools.DBString(languageCode)
-					    +     ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
+					sql = "exec " + sqlSP + " @AppplicationCode="    + Tools.DBString(applicationCode)
+					                      + ",@UserCode="            + Tools.DBString(userCode)
+					                      + ",@CountryCode="         + Tools.DBString(countryCode)
+					                      + ",@LanguageCode="        + Tools.DBString(languageCode)
+					                      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 
 					if ( mList.ExecQuery(sql,0) != 0 )
-						return SetError(11305,"Internal error: SQL sp_FinTechGeteWalletList");
+						return SetError(11305,"Internal error: SQL " + sqlSP);
 
 					if ( mList.EOF )
-						return SetError(11310,"No data returned: SQL sp_FinTechGeteWalletList");
+						return SetError(11310,"No data returned: SQL " + sqlSP);
 
 					int    k = 0;
 					int    p1;
@@ -362,7 +431,7 @@ namespace PCIWebFinAid
 					Tools.LogException("GetEWalletList",sql,ex,this);
 				}
 
-			return SetError(11380,"Internal error: SQL sp_FinTechGeteWalletList");
+			return SetError(11380,"Internal error: SQL " + sqlSP);
 		}
 
 		private int GetMenuStructure()

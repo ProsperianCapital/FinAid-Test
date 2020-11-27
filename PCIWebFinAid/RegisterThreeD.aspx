@@ -4,11 +4,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<asp:Literal runat="server" ID="lblGoogleUA"></asp:Literal>
-	<!--#include file="IncludeMainRegister.htm" -->
 	<title>Secure Registration</title>
 	<link rel="stylesheet" href="CSS/FinAid.css" type="text/css" />
-	<link rel="shortcut icon" href="Images/favicon.ico" />
+	<asp:Literal runat="server" ID="lblGoogleUA"></asp:Literal>
+	<!--#include file="IncludeMainSimple.htm" -->
 </head>
 <body>
 

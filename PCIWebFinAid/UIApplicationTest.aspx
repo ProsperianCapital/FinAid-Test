@@ -4,7 +4,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<!--#include file="IncludeMainAdmin.htm" -->
+	<title>Prosperian API : Testing</title>
+	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
+	<!--#include file="IncludeMainSimple.htm" -->
 </head>
 <body>
 <script type="text/javascript">

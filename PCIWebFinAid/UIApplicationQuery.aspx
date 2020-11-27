@@ -6,7 +6,9 @@
 
 <html>
 <head runat="server">
-<!--#include file="IncludeMainAdmin.htm" -->
+	<title>Prosperian API</title>
+	<link rel="stylesheet" href="CSS/BackOffice.css" type="text/css" />
+	<!--#include file="IncludeMainSimple.htm" -->
 </head>
 <body>
 <form id="frmUI" runat="server">
@@ -17,7 +19,7 @@ Oops, something seems to have gone badly wrong. Please click the link below to c
 </p>
 <br />
 <p>
-<a href="pgLogon.aspx">Propserian BackOffice Login</a>
+<a href="pgLogon.aspx">Prosperian BackOffice Login</a>
 </p>
 <ascx:XFooter runat="server" ID="ascxXFooter" />
 </form>

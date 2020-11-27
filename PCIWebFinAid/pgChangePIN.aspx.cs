@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace PCIWebFinAid
 {
@@ -48,12 +46,10 @@ namespace PCIWebFinAid
 			string pinNew1 = txtPINNew1.Text.Trim();
 			string pinNew2 = txtPINNew2.Text.Trim();
 
-			if ( pinNew1 != pinNew2 || pinOld.Length  < MIN_PIN_LENGTH || 
-			                           pinNew1.Length < MIN_PIN_LENGTH ||
-			                           pinNew2.Length < MIN_PIN_LENGTH )
-				return;
-
-			SetErrorDetail("",13667,"[SQL] Update yet to be implemented","",102,0);
+			if ( pinNew1 == pinNew2 && PCIBusiness.Tools.CheckPIN(pinOld ,MIN_PIN_LENGTH)
+			                        && PCIBusiness.Tools.CheckPIN(pinNew1,MIN_PIN_LENGTH)
+			                        && PCIBusiness.Tools.CheckPIN(pinNew2,MIN_PIN_LENGTH) )
+				SetErrorDetail("",13667,"[SQL] Update yet to be implemented","",102,0);
 		}
 	}
 }

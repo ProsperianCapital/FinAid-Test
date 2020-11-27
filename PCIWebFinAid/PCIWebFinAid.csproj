@@ -74,7 +74,6 @@
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
-    <Content Include="IncludeMainRegister.htm" />
     <Content Include="pgChangeAddress.aspx" />
     <Content Include="pgChangeEMail.aspx" />
     <Content Include="pgChangePIN.aspx" />
@@ -117,7 +116,7 @@
     <Content Include="IncludeErrorDtl.htm" />
     <Content Include="IncludeLogin1.htm" />
     <Content Include="IncludeLogin2.htm" />
-    <Content Include="IncludeMain.htm" />
+    <Content Include="IncludeMainSimple.htm" />
     <Content Include="IncludeMainAdmin.htm" />
     <Content Include="IncludeMainCRM.htm" />
     <Content Include="IncludeMainCA.htm" />

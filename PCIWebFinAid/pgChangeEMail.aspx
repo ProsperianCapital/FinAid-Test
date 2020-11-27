@@ -30,7 +30,15 @@ function CheckMail(n)
 		else if ( n == 2 && GetEltValue('txtEMailNew1').toUpperCase() != p )
 			ShowElt('imgN'+n,true);
 		else
+		{
 			ShowElt('imgY'+n,true);
+			var h = GetEltValue('txtEMailNew2').toUpperCase();
+			if ( n == 1 && h.length > 0 )
+			{
+				ShowElt('imgY2',(h==p));
+				ShowElt('imgN2',(h!=p));
+			}
+		}
 	}
 	catch (x)
 	{

@@ -25,9 +25,7 @@ function CheckPIN(n)
 		var p = GetEltValue('txtPINNew'+n);
 		if ( p.length < 1 )
 			return;
-		if ( p.length < <%=MIN_PIN_LENGTH%> )
-			ShowElt('imgN'+n,true);
-		else if ( p.indexOf(' ') >= 0 )
+		if ( ! ValidPIN(p,<%=MIN_PIN_LENGTH%>) )
 			ShowElt('imgN'+n,true);
 		else if ( n == 2 && GetEltValue('txtPINNew1') != p )
 			ShowElt('imgN'+n,true);

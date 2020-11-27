@@ -46,10 +46,9 @@ namespace PCIWebFinAid
 			string emailNew1 = txtEMailNew1.Text.Trim().ToUpper();
 			string emailNew2 = txtEMailNew2.Text.Trim().ToUpper();
 
-			if ( emailNew1 != emailNew2 || ! PCIBusiness.Tools.CheckEMail(emailNew1,1) || ! PCIBusiness.Tools.CheckEMail(emailNew2,1) )
-				return;
-
-			SetErrorDetail("",13445,"[SQL] Update yet to be implemented","",102,0);
+			if ( emailNew1 == emailNew2 && PCIBusiness.Tools.CheckEMail(emailNew1,1)
+			                            && PCIBusiness.Tools.CheckEMail(emailNew2,1) )
+				SetErrorDetail("",13445,"[SQL] Update yet to be implemented","",102,0);
 		}
 	}
 }
