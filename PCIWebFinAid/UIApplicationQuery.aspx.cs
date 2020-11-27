@@ -187,7 +187,7 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
-		private int SetError(int code,string msg="")
+		private int SetError(int code,string msg="",string logInfo="",string logError="")
 		{
 			if ( code > 0 )
 			{
@@ -200,6 +200,13 @@ namespace PCIWebFinAid
 				errorCode = 0;
 				errorMsg  = "";
 			}
+
+			if ( logInfo.Length > 0 )
+				Tools.LogInfo     ("SetError/" + code.ToString(),msg + " (" + logInfo + ")",222,this);
+
+			if ( logError.Length > 0 )
+				Tools.LogException("SetError/" + code.ToString(),msg + " (" + logError + ")",null,this);
+
 			return errorCode;
 		}
 
@@ -284,11 +291,11 @@ namespace PCIWebFinAid
 				{
 					sql = "exec " + sqlSP + " @MobileNumber=" + Tools.DBString(mobileNumber);
 
-					if ( mList.ExecQuery(sql,0) != 0 )
-						return SetError(12905,"Internal error: SQL " + sqlSP);
+					if ( mList.ExecQuery(sql,0,"",false) != 0 )
+						return SetError(12905,"Internal error: SQL " + sqlSP,sql,sql);
 
 					if ( mList.EOF )
-						return SetError(12910,"No data returned: SQL " + sqlSP);
+						return SetError(12910,"No data returned: SQL " + sqlSP,sql,sql);
 
 					json.Append ( Tools.JSONPair("ContractCode"            ,mList.GetColumn("ContractCode"))
 					            + Tools.JSONPair("ClientName"              ,mList.GetColumn("ClientName"))
@@ -329,7 +336,7 @@ namespace PCIWebFinAid
 					Tools.LogException("GetiSOSInfo",sql,ex,this);
 				}
 
-			return SetError(12999,"Internal error: SQL " + sqlSP);
+			return SetError(12999,"Internal error: SQL " + sqlSP,sql,sql);
 		}
 
 		private int LogOn()
@@ -382,10 +389,10 @@ namespace PCIWebFinAid
 					                      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 
 					if ( mList.ExecQuery(sql,0) != 0 )
-						return SetError(11305,"Internal error: SQL " + sqlSP);
+						return SetError(11305,"Internal error: SQL " + sqlSP,sql,sql);
 
 					if ( mList.EOF )
-						return SetError(11310,"No data returned: SQL " + sqlSP);
+						return SetError(11310,"No data returned: SQL " + sqlSP,sql,sql);
 
 					int    k = 0;
 					int    p1;
@@ -431,7 +438,7 @@ namespace PCIWebFinAid
 					Tools.LogException("GetEWalletList",sql,ex,this);
 				}
 
-			return SetError(11380,"Internal error: SQL " + sqlSP);
+			return SetError(11380,"Internal error: SQL " + sqlSP,sql,sql);
 		}
 
 		private int GetMenuStructure()

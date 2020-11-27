@@ -26,7 +26,7 @@ namespace PCIWebFinAid
 				string[] mobile = { "MobileNumber"       , "0842226666" };
 				string[] query  = { "QueryName"          , "FinTechLogOn" };
 				string[] key    = { "SecretKey"          , "7e6415a7cb790238fd12430a0ce419b3" };
-				string[] app    = { "ApplicationCode"    , "003" };
+				string[] app    = { "ApplicationCode"    , "006" };
 
 				txtURL.Text  = TargetURL;
 				lblVer.Text  = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
