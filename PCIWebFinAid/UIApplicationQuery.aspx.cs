@@ -172,6 +172,9 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechGetiSOSInfo").ToUpper() )
 					GetiSOSInfo();
 
+				else if ( queryName == ("FinTechRegisteriSOSEvent").ToUpper() )
+					RegisteriSOSEvent();
+
 				else
 					SetError(10007,"Invalid query name");
 
@@ -279,12 +282,38 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
+		private int RegisteriSOSEvent()
+		{
+			if ( CheckParameters("Mobile") > 0 )
+				return errorCode;
+
+			string buttonCode = ParmValue("ButtonCode");
+			string location   = ParmValue("Location");
+			sqlSP             = "sp_iSOS_Insert_SOSAppRegister";
+
+			using (MiscList mList = new MiscList())
+				try
+				{
+					sql = "exec " + sqlSP + " @MobileNumber=" + Tools.DBString(mobileNumber)
+					                      + ",@ButtonCode="   + Tools.DBString(buttonCode)
+					                      + ",@Location="     + Tools.DBString(location);
+					if ( mList.UpdateQuery(sql) == 0 )
+						return 0;
+				}
+				catch (Exception ex)
+				{
+					Tools.LogException("RegisteriSOSEvent",sql,ex,this);
+				}
+
+			return SetError(13999,"Internal error: SQL " + sqlSP,sql,sql);
+		}
+
 		private int GetiSOSInfo()
 		{
 			if ( CheckParameters("Mobile") > 0 )
 				return errorCode;
 
-			sqlSP = "sp_iSOS_Get_iSOSAppData";
+			sqlSP = "sp_iSOS_Get_iSOSAppDataA";
 
 			using (MiscList mList = new MiscList())
 				try
@@ -295,7 +324,7 @@ namespace PCIWebFinAid
 						return SetError(12905,"Internal error: SQL " + sqlSP,sql,sql);
 
 					if ( mList.EOF )
-						return SetError(12910,"No data returned: SQL " + sqlSP,sql,sql);
+						return SetError(12910,"No data returned: SQL " + sqlSP,sql);
 
 					json.Append ( Tools.JSONPair("ContractCode"            ,mList.GetColumn("ContractCode"))
 					            + Tools.JSONPair("ClientName"              ,mList.GetColumn("ClientName"))
@@ -388,11 +417,11 @@ namespace PCIWebFinAid
 					                      + ",@LanguageCode="        + Tools.DBString(languageCode)
 					                      + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
 
-					if ( mList.ExecQuery(sql,0) != 0 )
+					if ( mList.ExecQuery(sql,0,"",false) != 0 )
 						return SetError(11305,"Internal error: SQL " + sqlSP,sql,sql);
 
 					if ( mList.EOF )
-						return SetError(11310,"No data returned: SQL " + sqlSP,sql,sql);
+						return SetError(11310,"No data returned: SQL " + sqlSP,sql);
 
 					int    k = 0;
 					int    p1;

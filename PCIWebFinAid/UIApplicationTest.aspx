@@ -33,10 +33,10 @@ function SetType()
 	<asp:RadioButton runat="server" id="rdoForm" GroupName="rdoP" onclick="JavaScript:SetType()" />SUBMIT web form
 	<br /><br />
 	Input data<br />
-	<asp:TextBox runat="server" ID="txtJSON" TextMode="MultiLine" Height="140" Width="800px" Rows="8"></asp:TextBox>
-	<asp:TextBox runat="server" ID="txtXML"  TextMode="MultiLine" Height="140" Width="800px" Rows="8" style="visibility:hidden;display:none"></asp:TextBox>
-	<asp:TextBox runat="server" ID="txtWeb"  TextMode="MultiLine" Height="140" Width="800px" Rows="8" style="visibility:hidden;display:none"></asp:TextBox>
-	<asp:TextBox runat="server" ID="txtForm" TextMode="MultiLine" Height="140" Width="800px" Rows="8" style="visibility:hidden;display:none"></asp:TextBox>
+	<asp:TextBox runat="server" ID="txtJSON" TextMode="MultiLine" Height="152" Width="800px" Rows="8"></asp:TextBox>
+	<asp:TextBox runat="server" ID="txtXML"  TextMode="MultiLine" Height="152" Width="800px" Rows="8" style="visibility:hidden;display:none"></asp:TextBox>
+	<asp:TextBox runat="server" ID="txtWeb"  TextMode="MultiLine" Height="152" Width="800px" Rows="8" style="visibility:hidden;display:none"></asp:TextBox>
+	<asp:TextBox runat="server" ID="txtForm" TextMode="MultiLine" Height="152" Width="800px" Rows="8" style="visibility:hidden;display:none"></asp:TextBox>
 	<br /><br />
 	Target URL<br />
 	<asp:TextBox runat="server" ID="txtURL" Width="800px" ReadOnly="True"></asp:TextBox>
