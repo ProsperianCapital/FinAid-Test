@@ -42,9 +42,9 @@ namespace PCIWebFinAid
 			using (MiscList mList = new MiscList())
 			{
 				string balance = "";
-				sql = "exec sp_Get_CRMClientMiniStatementA @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+				sql = "exec sp_Get_CRMClientMiniStatementB @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",11840,"Internal database error (sp_Get_CRMClientMiniStatementA failed)",sql,1,1);
+					SetErrorDetail("LoadDataInitial",11840,"Internal database error (sp_Get_CRMClientMiniStatementB failed)",sql,1,1);
 				else
 					while ( ! mList.EOF )
 					{
@@ -53,11 +53,14 @@ namespace PCIWebFinAid
 						TableCell col2 = new TableCell();
 						TableCell col3 = new TableCell();
 						TableCell col4 = new TableCell();
+//						col1.Text      = Tools.DateToString(mList.GetColumnDate("Date"),7,1); // yyyy-mm-dd hh:mm:ss
 						col1.Text      = mList.GetColumn("Date");
 						col2.Text      = mList.GetColumn("Description");
 						col3.Text      = mList.GetColumn("Amount");
 						col4.Text      = mList.GetColumn("Balance");
 						balance        = col4.Text;
+						col3.HorizontalAlign = HorizontalAlign.Right;
+						col4.HorizontalAlign = HorizontalAlign.Right;
 						row.Cells.Add(col1);
 						row.Cells.Add(col2);
 						row.Cells.Add(col3);
