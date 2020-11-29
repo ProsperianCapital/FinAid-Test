@@ -24,7 +24,7 @@
 	<td><asp:Literal runat="server" ID="X104034">104034</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtAmount" style="width:160px"></asp:TextBox></td></tr>
 <tr>
-	<td colspan="2" class="DataStatic">
+	<td colspan="2" class="DataStatic" style="white-space:normal">
 		<asp:Literal runat="server" ID="X104056">104056</asp:Literal></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104061">104061</asp:Literal></td>
@@ -39,7 +39,7 @@
 	<td><asp:Literal runat="server" ID="X104069">104069</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtBranchName" style="width:360px"></asp:TextBox></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104077">104077</asp:Literal></td>
+	<td><asp:Literal runat="server" ID="X104377">104377</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtBranchCode" style="width:360px"></asp:TextBox></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104073">104073</asp:Literal></td>

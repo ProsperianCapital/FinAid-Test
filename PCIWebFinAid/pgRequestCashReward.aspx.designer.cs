@@ -148,13 +148,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txtBranchName;
         
         /// <summary>
-        /// X104077 control.
+        /// X104377 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104077;
+        protected global::System.Web.UI.WebControls.Literal X104377;
         
         /// <summary>
         /// txtBranchCode control.
