@@ -54,6 +54,25 @@ namespace PCIBusiness
 			return tmp;
 		}
 
+		public static string DecimalToCurrency(decimal theValue)
+		{
+			string tmp = theValue.ToString().Trim();
+			int    k   = tmp.IndexOf(".");
+			if ( theValue == 0 )
+				return "0.00";
+			if ( k < 0 )               // 3478
+				return tmp + ".00";
+			if ( k == tmp.Length-1 )   // 3478.
+				return tmp + "00";
+			if ( k == tmp.Length-2 )   // 3478.1
+				return tmp + "0";
+			if ( k == tmp.Length-3 )   // 3478.19
+				return tmp;
+			if ( k <= tmp.Length-4 )   // 3478.1966
+				return tmp.Substring(0,k+3);
+			return tmp;
+		}
+
 		public static string ObjectToString(Object theValue)
 		{
 			if ( theValue == null ) return "";
