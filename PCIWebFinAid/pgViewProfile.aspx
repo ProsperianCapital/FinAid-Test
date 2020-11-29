@@ -42,7 +42,7 @@
 			<td><asp:Label runat="server" ID="X104019" CssClass="DataLabel">104019</asp:Label></td>
 			<td><asp:Literal runat="server" ID="lblUserName"></asp:Literal></td></tr>
 		<tr>
-			<td><asp:Label runat="server" ID="X104020" CssClass="DataLabel">104020</asp:Label></td>
+			<td></td>
 			<td><asp:Literal runat="server" ID="lblLastLogon"></asp:Literal></td></tr>
 		</table>
 		<br />

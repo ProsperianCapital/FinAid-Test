@@ -44,8 +44,6 @@ namespace PCIWebFinAid
 				sql = "exec sp_Get_CRMClientWelcome @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
 					SetErrorDetail("LoadDataInitial",11040,"Internal database error (sp_Get_CRMClientWelcome failed)",sql,1,1);
-				else if ( mList.EOF )
-					SetErrorDetail("LoadDataInitial",11050,"Internal database error (sp_Get_CRMClientWelcome no data returned)",sql,1,1);
 				else
 				{
 					lblAddress.Text   = mList.GetColumn("Address").Replace(Environment.NewLine,"<br />");
@@ -64,8 +62,6 @@ namespace PCIWebFinAid
 				sql = "exec sp_CRM_GetContractContactLog @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
 					SetErrorDetail("LoadDataInitial",11060,"Internal database error (sp_CRM_GetContractContactLog failed)",sql,1,1);
-				else if ( mList.EOF )
-					SetErrorDetail("LoadDataInitial",11070,"Internal database error (sp_CRM_GetContractContactLog no data returned)",sql,1,1);
 				else
 					while ( ! mList.EOF )
 					{

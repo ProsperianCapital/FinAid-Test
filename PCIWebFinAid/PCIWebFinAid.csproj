@@ -79,6 +79,7 @@
     <Content Include="pgChangePIN.aspx" />
     <Content Include="pgContractLookUp.aspx" />
     <Content Include="pgLogonCRM.aspx" />
+    <Content Include="pgRequestCashReward.aspx" />
     <Content Include="pgTransactionLookUp.aspx" />
     <Content Include="pgViewCurrentBalances.aspx" />
     <Content Include="pgVieweWallets.aspx" />
@@ -368,6 +369,13 @@
     </Compile>
     <Compile Include="pgLogonCRM.aspx.designer.cs">
       <DependentUpon>pgLogonCRM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgRequestCashReward.aspx.cs">
+      <DependentUpon>pgRequestCashReward.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgRequestCashReward.aspx.designer.cs">
+      <DependentUpon>pgRequestCashReward.aspx</DependentUpon>
     </Compile>
     <Compile Include="pgViewCurrentBalances.aspx.cs">
       <DependentUpon>pgViewCurrentBalances.aspx</DependentUpon>
