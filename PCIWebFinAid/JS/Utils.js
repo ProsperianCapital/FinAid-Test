@@ -46,19 +46,26 @@ function ToDate(dd,mm,yy)
 	return null;
 }
 
-function ToInteger(theValue,defaultReturn)
+function ToInteger(theValue,defaultRet)
 {
 	try
 	{
-		if ( defaultReturn == null )
-			defaultReturn = 0;
-		var p = parseInt(theValue,10); // Force base 10
+		var p;
+
+		if ( defaultRet == null )
+			defaultRet = 0;
+
+		for (p = 0; p < theValue.length; p++)
+			if ( ('0123456789.,').indexOf(theValue.charAt(p)) < 0 )
+				return defaultRet;
+
+		p = parseInt(theValue,10); // Force base 10
 		if ( ! isNaN(p) ) // It's an INT
 			return p;
 	}
 	catch (x)
 	{ }
-	return defaultReturn;
+	return defaultRet;
 }
 
 function GetElt(eltID)
@@ -99,13 +106,13 @@ function GetEltValue(eltID)
 
 function GetEltValueInt(eltID)
 {
-	var p = GetElt(eltID);
 	try
 	{
+		var p = GetElt(eltID);
 		var h = Trim(p.innerHTML);
 		if ( h.length == 0 )
 			h = p.value;
-		var k = ToInteger(h);
+		var k = ToInteger(h);   alert(h+' = '+k.toString());
 		if ( k > 0 )
 			return k;
 	}
