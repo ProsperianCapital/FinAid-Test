@@ -42,7 +42,8 @@ namespace PCIWebFinAid
 
 		protected void btnOK_Click(Object sender, EventArgs e)
 		{
-			decimal amt = Tools.StringToDecimal(txtAmount.Text);
+		//	decimal amt = Tools.StringToDecimal(txtAmount.Text);
+			int amt     = Tools.StringToInt(txtAmount.Text);
 
 			if ( amt < 1 || txtBank.Text.Length       < 2
 			             || txtBranchName.Text.Length < 2 
@@ -68,12 +69,12 @@ namespace PCIWebFinAid
 				    +     ",@SWIFTorIBAN="         + Tools.DBString(txtSwift.Text)
 				    +     ",@BranchCode="          + Tools.DBString(txtBranchCode.Text)
 				    +     ",@Access='N'"
-				    +     ",@Amount='"             + Tools.DecimalToCurrency(amt) + "'"
+				    +     ",@Amount='"             + amt.ToString() + "'" // Tools.StringToDecimal(amt)
 				    +     ",@LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
 				    +     ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode);
 
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("btnOK_Click",11840,"Internal database error (sp_CRM_ApplyForEmergencyCash)",sql,1,1);
+					SetErrorDetail("btnOK_Click",11840,"<br /><br />Internal database error (sp_CRM_ApplyForEmergencyCash)",sql,1,1);
 				else if ( ! mList.EOF )
 				{
 					lblError.Text    = "<br /><br />" + mList.GetColumn("ActionResultMessage");
