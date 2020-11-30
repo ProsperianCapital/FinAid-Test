@@ -85,7 +85,7 @@ namespace PCIBusiness
 			set {	msg.Body = value.Trim(); }
 		}
 
-		public override int Send()
+		public override int Send(byte mode=0)
 		{
 			int err    = 0;
 			resultCode = "0";
@@ -93,17 +93,37 @@ namespace PCIBusiness
 			while ( err == 0 )
 			{
 				err = 10;
-				if ( provider == null )
-					if ( LoadProvider() != 0 )
-						break;
+
+//				if ( mode == 67 && smtp == null ) // Load from config
+//				{
+//					err        = 13;
+//					smtp       = new SmtpClient   (Tools.ConfigValue("SMTP-Server"));
+//					int port   = Tools.StringToInt(Tools.ConfigValue("SMTP-Port"));
+//					if ( port > 0 )
+//						smtp.Port = port;
+//					err                        = 16;
+//					smtp.UseDefaultCredentials = false;
+//					smtp.Credentials           = new NetworkCredential(Tools.ConfigValue("SMTP-User"),Tools.ConfigValue("SMTP-Password"));
+//				}
+
+				if ( mode ==  0 && provider == null && LoadProvider() != 0 )
+					break;
+
+				err = 16;
+				if ( mode == 67 && smtp == null && LoadConfig() != 0 )
+					break;
 
 				err = 20;
 				if ( msg == null )
 					break;
 
 				err = 30;
-				if ( smtp == null )
+				if ( mode == 0  && smtp == null )
 					LoadProvider();
+
+				err = 33;
+				if ( mode == 67 && smtp == null )
+					LoadConfig();
 
 				err = 40;
 				if ( smtp == null )
@@ -178,6 +198,43 @@ namespace PCIBusiness
 			msg.Body    = "";
 		}
 
+		public byte LoadConfig()
+		{
+			byte ret = 10;
+
+			try
+			{
+				string smtpData = Tools.ConfigValue("SMTP-Server")
+				        + " / " + Tools.ConfigValue("SMTP-User")
+				        + " / " + Tools.ConfigValue("SMTP-Password")
+				        + " / " + Tools.ConfigValue("SMTP-Port")
+				        + " / " + Tools.ConfigValue("SMTP-From")
+				        + " / " + Tools.ConfigValue("SMTP-BCC");
+				Tools.LogInfo("LoadConfig/10","SMTP Config ... " + smtpData,222,this);
+
+				ret       = 20;
+				smtp      = new SmtpClient (Tools.ConfigValue("SMTP-Server"));
+				ret       = 30;
+				From      = Tools.ConfigValue("SMTP-From");
+				ret       = 40;
+				BCC       = Tools.ConfigValue("SMTP-BCC");
+				ret       = 50;
+				int  port = Tools.StringToInt(Tools.ConfigValue("SMTP-Port"));
+				if ( port > 0 )
+					smtp.Port = port;
+				ret                        = 60;
+				smtp.UseDefaultCredentials = false;
+			//	smtp.EnableSsl             = false;
+				smtp.Credentials           = new NetworkCredential(Tools.ConfigValue("SMTP-User"),Tools.ConfigValue("SMTP-Password"));
+				ret                        = 0;
+			}
+			catch (Exception ex)
+			{
+				Tools.LogException("LoadConfig/90","ret="+ret.ToString(),ex,this);
+			}
+			return ret;
+		}
+
 		public override byte LoadProvider()
 		{
 			byte ret = base.LoadProvider();
@@ -226,6 +283,13 @@ namespace PCIBusiness
 		public Mail()
 		{
 			msg = new MailMessage();
+
+//			if ( Tools.ConfigValue("SMTP-From").Length > 5 )
+//				msg.From   = new MailAddress  (Tools.ConfigValue("SMTP-From"));
+//			if ( Tools.ConfigValue("SMTP-User").Length > 5 )
+//				msg.Sender = new MailAddress  (Tools.ConfigValue("SMTP-User"));
+//			if ( Tools.ConfigValue("SMTP-BCC").Length  > 5 )
+//				BCC = Tools.ConfigValue("SMTP-BCC");
 		}
 	}
 }

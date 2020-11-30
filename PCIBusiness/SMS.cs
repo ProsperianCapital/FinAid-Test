@@ -29,7 +29,7 @@ namespace PCIBusiness
 			phoneNumber = "";
 		}
 
-		public override int Send()
+		public override int Send(byte mode=0)
 		{
 			string resultData = "";
 			int    ret        = 0;

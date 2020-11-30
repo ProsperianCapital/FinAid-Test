@@ -90,7 +90,7 @@ namespace PCIBusiness
 			set { messageBody = value.Trim(); }
 		}
 
-		public abstract int Send();
+		public abstract int Send(byte mode=0);
 
 		public virtual byte LoadProvider()
 		{
