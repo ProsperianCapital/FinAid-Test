@@ -94,13 +94,14 @@ namespace PCIWebFinAid
 
 				using ( Mail msg = new Mail() )
 				{
+					msg.LoadConfig();
 					msg.Heading = "Contract " + txtContractCode.Text;
 					msg.Body    = mailText;
 					msg.To      = txtTo.Text;
 					msg.From    = hdnMailFrom.Value;
 					msg.CC      = txtCC.Text;
 					msg.BCC     = txtBCC.Text;
-					int ret     = msg.Send();
+					int ret     = msg.Send(67);
 					if ( ret == 0 )
 						lblError.Text = "Mail successfully sent to " + txtTo.Text;
 					else

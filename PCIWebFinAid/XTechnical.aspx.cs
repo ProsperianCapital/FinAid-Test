@@ -213,6 +213,7 @@ namespace PCIWebFinAid
 			else if ( action == (byte)PCIBusiness.Constants.TechnicalQuery.EMailSend && txtData.Text.Length > 0 )
 				using (PCIBusiness.Mail mail = new PCIBusiness.Mail())
 				{
+					mail.LoadConfig();
 					x1           = Request.Url.GetLeftPart(UriPartial.Authority);
 					if ( x1.EndsWith("/") )
 						x1        = x1.Substring(0,x1.Length-1);
@@ -233,7 +234,7 @@ namespace PCIWebFinAid
 					             + "<br />&nbsp;&nbsp;Version " + SystemDetails.AppVersion
 					             + "<br />&nbsp;&nbsp;(c) " + PCIBusiness.SystemDetails.Owner
 					             + "<br />&nbsp;&nbsp;<a href='" + x1 + "'>" + x1 + "</a></p></body></html>";
-					int k = mail.Send();
+					int k = mail.Send(67);
 					if ( k == 0 )
 						lblError.Text = "Email successfully sent to " + txtData.Text.Trim();
 					else

@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMainAdmin.htm" -->
+	<!--#include file="IncludeMainSimple.htm" -->
 	<title>Contract Lookup</title>
 	<link rel="stylesheet" href="CSS/FinAid.css" type="text/css" />
 	<link rel="stylesheet" href="CSS/Calendar.css" type="text/css" />
