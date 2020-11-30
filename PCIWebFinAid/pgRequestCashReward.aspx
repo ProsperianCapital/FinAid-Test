@@ -83,7 +83,6 @@ function Validate(pic)
 	<td><asp:Literal runat="server" ID="X104073">104073</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtSwift" style="width:360px"></asp:TextBox></td></tr>
 </table>
-<br />
 <asp:Button runat="server" id="X104048" Text="104048" OnClick="btnOK_Click" />
 <br /><br />
 <asp:Label runat="server" ID="X104050" CssClass="Info">104050</asp:Label>
