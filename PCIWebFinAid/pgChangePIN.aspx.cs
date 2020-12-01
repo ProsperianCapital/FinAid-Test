@@ -21,7 +21,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(13666);
+				StartOver(17010);
 		}
 
 		private void ClearData()
@@ -49,7 +49,7 @@ namespace PCIWebFinAid
 			if ( pinNew1 == pinNew2 && PCIBusiness.Tools.CheckPIN(pinOld ,MIN_PIN_LENGTH)
 			                        && PCIBusiness.Tools.CheckPIN(pinNew1,MIN_PIN_LENGTH)
 			                        && PCIBusiness.Tools.CheckPIN(pinNew2,MIN_PIN_LENGTH) )
-				SetErrorDetail("",27010,"[SQL] Update yet to be implemented","",102,0);
+				SetErrorDetail("",17100,"[SQL] Update yet to be implemented","",102,0);
 		}
 	}
 }

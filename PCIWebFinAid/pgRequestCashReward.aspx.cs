@@ -21,7 +21,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(24100);
+				StartOver(24010);
 		}
 
 		private void ClearData()
@@ -55,28 +55,28 @@ namespace PCIWebFinAid
 			using (MiscList mList = new MiscList())
 			{
 				sqlProc = "sp_CRM_ApplyForEmergencyCash";
-				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
-				                            + ",@ProductBenefitPurposeCode='000'"
-				                            + ",@CB1=''"
-				                            + ",@CB2=''"
-				                            + ",@CB3=''"
-				                            + ",@CB4=''"
-				                            + ",@CB5=''"
+				sql     = "exec " + sqlProc + " @ContractCode="        + Tools.DBString(sessionGeneral.ContractCode)
 				                            + ",@BankName="            + Tools.DBString(txtBank.Text)
 				                            + ",@AccountHolderName="   + Tools.DBString(txtAccName.Text)
 				                            + ",@AccountNumber="       + Tools.DBString(txtAccNumber.Text)
 				                            + ",@BranchName="          + Tools.DBString(txtBranchName.Text)
 				                            + ",@SWIFTorIBAN="         + Tools.DBString(txtSwift.Text)
 				                            + ",@BranchCode="          + Tools.DBString(txtBranchCode.Text)
-				                            + ",@Amount='"             + amt.ToString() + "'" // Tools.StringToDecimal(amt)
+				                            + ",@Amount='"             + amt.ToString() + "'"
 				                            + ",@LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
 				                            + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
-				                            + ",@Access='N'";
+				                            + ",@Access="              + Tools.DBString(sessionGeneral.AccessType)
+				                            + ",@ProductBenefitPurposeCode='000'"
+				                            + ",@CB1=''"
+				                            + ",@CB2=''"
+				                            + ",@CB3=''"
+				                            + ",@CB4=''"
+				                            + ",@CB5=''";
 
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("btnOK_Click",24010,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("btnOK_Click",24100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
-					SetErrorDetail("btnOK_Click",24020,mList.GetColumn("ActionResultMessage"),"",102);
+					SetErrorDetail("btnOK_Click",24110,mList.GetColumn("ActionResultMessage"),"",102);
 			}
 		}
 	}

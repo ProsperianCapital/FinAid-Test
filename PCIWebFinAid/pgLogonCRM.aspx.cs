@@ -74,13 +74,12 @@ namespace PCIWebFinAid
 			}
 //	Testing
 
-			if ( txtID.Text.ToUpper() == "XADMIN" && txtPW.Text.ToUpper() == "X8Y3Z7" )
-			{
-				SessionSave("109337","Ivan Pyotrsky","N","20200304-2054");
-				WebTools.Redirect(Response,sessionGeneral.StartPage);
-				return;
-			}
-//	Testing
+//			if ( txtID.Text.ToUpper() == "XADMIN" && txtPW.Text.ToUpper() == "X8Y3Z7" )
+//			{
+//				SessionSave("109337","Ivan Pyotrsky","N","20200304-2054");
+//				WebTools.Redirect(Response,sessionGeneral.StartPage);
+//				return;
+//			}
 
 			using (MiscList mList = new MiscList())
 			{
@@ -90,15 +89,15 @@ namespace PCIWebFinAid
 				                            + ",@ContractPin = " + Tools.DBString(txtPW.Text)
 				                            + ",@ProductCode = " + Tools.DBString(sessionGeneral.ProductCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("btnLogin_Click",10020,"Internal database error (" + sqlProc + ")",sql,1,1);
+					SetErrorDetail("btnLogin_Click",10110,"Internal database error (" + sqlProc + ")",sql,1,1);
 				else if ( mList.EOF )
-					SetErrorDetail("btnLogin_Click",10030,"Invalid login and/or PIN",sqlProc + ", no data returned",1,1);
+					SetErrorDetail("btnLogin_Click",10120,"Invalid login and/or PIN",sqlProc + ", no data returned",1,1);
 				else if ( mList.GetColumn("Status") != "S" )
 				{
 					string err = mList.GetColumn("ActionResultMessage");
 					if ( err.Length < 1 )
 						err = "Invalid login and/or PIN";
-					SetErrorDetail("btnLogin_Click",10040,err,sqlProc + ", Status = '" + mList.GetColumn("Status") + "'",1,1);
+					SetErrorDetail("btnLogin_Click",10130,err,sqlProc + ", Status = '" + mList.GetColumn("Status") + "'",1,1);
 				}
 				else
 				{

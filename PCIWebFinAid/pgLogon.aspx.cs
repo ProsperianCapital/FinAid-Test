@@ -49,7 +49,7 @@ namespace PCIWebFinAid
 //	Testing
 			if ( xSecure == ((int)Constants.SystemPassword.Login).ToString() )
 			{
-				SessionSave(null,null,"P");
+				SessionSave(null,null,"A");
 				WebTools.Redirect(Response,sessionGeneral.StartPage);
 				return;
 			}
@@ -72,7 +72,7 @@ namespace PCIWebFinAid
 						SetErrorDetail("btnOK_Click",11040,message,sql + " (Status = '" + status + "')",1,1,null,true);
 					else
 					{
-						SessionSave(null,null,"P");
+						SessionSave(null,null,"A");
 						WebTools.Redirect(Response,sessionGeneral.StartPage);
 					}
 				}
@@ -89,16 +89,12 @@ namespace PCIWebFinAid
 				return;
 
 //	Testing
-//			if ( ! Tools.SystemIsLive() && txtID.Text.ToUpper() == "PK" && txtPW.Text.ToUpper() == "PK" )
-//			{
-//				SessionSave("248","Paul Kilfoil","P");
-//				WebTools.Redirect(Response,sessionGeneral.StartPage);
-//				return;
-//			}
-			if ( txtID.Text.ToUpper() == "XADMIN" && txtPW.Text.ToUpper() == "X8Y3Z7" )
+//			if ( txtID.Text.ToUpper() == "XADMIN" && txtPW.Text.ToUpper() == "X8Y3Z7" )
+			if ( ! Tools.SystemIsLive() && txtID.Text.ToUpper() == "PK" && txtPW.Text.ToUpper() == "PK" )
 			{
-				SessionSave("013","Paul Kilfoil","P");
-				WebTools.Redirect(Response,sessionGeneral.StartPage);
+				SetErrorDetail("",-777);
+				SessionSave("013","Paul Kilfoil","A");
+				ShowSecure(true,true);
 				return;
 			}
 //	Testing

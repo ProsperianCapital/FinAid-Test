@@ -22,7 +22,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(13444);
+				StartOver(16010);
 		}
 
 		private void ClearData()
@@ -48,7 +48,7 @@ namespace PCIWebFinAid
 
 			if ( emailNew1 == emailNew2 && PCIBusiness.Tools.CheckEMail(emailNew1,1)
 			                            && PCIBusiness.Tools.CheckEMail(emailNew2,1) )
-				SetErrorDetail("",26010,"[SQL] Update yet to be implemented","",102,0);
+				SetErrorDetail("",16100,"[SQL] Update yet to be implemented","",102,0);
 		}
 	}
 }

@@ -154,10 +154,11 @@ namespace PCIWebFinAid
 				   + "Application code<br />"
 				   + "Application version<br />"
 				   + "Application release date<br />"
-				   + "Application user code<br />"
-				   + "Application user name<br />"
 				   + "DLL version<br />"
 				   + "DLL release date<br /><hr />"
+				   + "Logged on user code<br />"
+				   + "Logged on user name<br />"
+				   + "Logged on user access<br /><hr />"
 				   + "Machine name<br />"
 				   + "Number of processors<br />"
 				   + "System memory<br />"
@@ -167,13 +168,19 @@ namespace PCIWebFinAid
 				   + "Environment.UserName<br />"
 				   + "Environment.UserDomainName<br />"
 				   + "Database version";
+				if ( sessionGeneral == null )
+					x3 = "<br /><br />";
+				else
+					x3 = sessionGeneral.UserCode + "<br />"
+					   + sessionGeneral.UserName + "<br />"
+					   + sessionGeneral.AccessType;
 				x2 = SystemDetails.AppName + "<br />"
 				   + ApplicationCode + "<br />"
 				   + SystemDetails.AppVersion + "<br />"
 				   + SystemDetails.AppDate + "<br />"
-				   + ( sessionGeneral == null ? "<br />" : sessionGeneral.UserCode + "<br />" + sessionGeneral.UserName ) + "<br />"
 				   + PCIBusiness.SystemDetails.AppVersion + "<br />"
 				   + PCIBusiness.SystemDetails.AppDate + "<br /><br />"
+					+ x3 + "<br /><br />"
 				   + Environment.MachineName + "<br />"
 				   + Environment.ProcessorCount.ToString() + "<br />"
 				   + Environment.WorkingSet.ToString() + " bytes<br />"
@@ -207,6 +214,7 @@ namespace PCIWebFinAid
 					PCIBusiness.Tools.CloseDB(ref conn);
 					conn = null;
 				}
+
 				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td>" + tdBlue + "<u>Value</u><br />" + x2 + "</td></tr></table>";
 			}
 

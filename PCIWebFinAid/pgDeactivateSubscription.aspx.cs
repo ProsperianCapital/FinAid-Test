@@ -21,7 +21,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(23300);
+				StartOver(23010);
 		}
 
 		private void ClearData()
@@ -51,7 +51,7 @@ namespace PCIWebFinAid
 				sqlProc = "sp_CRM_GetContractSettlementBalance";
 				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",23210,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("LoadDataInitial",23100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
 				{
 					lblBalance.Text = mList.GetColumn("SettlementBalance");
@@ -63,10 +63,10 @@ namespace PCIWebFinAid
 				sqlProc = "sp_CRM_GetContractCancellationReasonList";
 				sql     = "exec " + sqlProc + " @LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
 				                            + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
-				                            + ",@Access='N'";
+				                            + ",@Access="              + Tools.DBString(sessionGeneral.AccessType);
 
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",23220,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("LoadDataInitial",23110,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else
 					while ( ! mList.EOF )
 					{
@@ -83,7 +83,7 @@ namespace PCIWebFinAid
 
 		protected void btnChange_Click(Object sender, EventArgs e)
 		{
-			SetErrorDetail("btnChange_Click",23010,"Not yet implemented ...","",102);
+			SetErrorDetail("btnChange_Click",23200,"Not yet implemented ...","",102);
 		}
 
 		protected void btnConfirm_Click(Object sender, EventArgs e)
@@ -95,16 +95,16 @@ namespace PCIWebFinAid
 				                            + ",@CancellationReasonCode=" + Tools.DBString(WebTools.ListValue(lstReason,"0"))
 				                            + ",@LanguageCode="           + Tools.DBString(sessionGeneral.LanguageCode)
 				                            + ",@LanguageDialectCode="    + Tools.DBString(sessionGeneral.LanguageDialectCode)
-				                            + ",@Access='N'";
+				                            + ",@Access="                 + Tools.DBString(sessionGeneral.AccessType);
 
 //				Tools.LogInfo("btnConfirm_Click",sql,203,this);
 
 				if ( mList.ExecQuery(sql,0,"",false) != 0 )
-					SetErrorDetail("btnConfirm_Click",23100,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("btnConfirm_Click",23300,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( mList.EOF )
-					SetErrorDetail("btnConfirm_Click",23110,"No data returned (" + sqlProc + ")",sql,102);
+					SetErrorDetail("btnConfirm_Click",23310,"No data returned (" + sqlProc + ")",sql,102);
 				else
-					SetErrorDetail("btnConfirm_Click",23120,mList.GetColumn("ResultMessage"),"",102);
+					SetErrorDetail("btnConfirm_Click",23320,mList.GetColumn("ResultMessage"),"",102);
 			}
 		}
 	}

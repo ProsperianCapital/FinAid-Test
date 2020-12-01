@@ -44,8 +44,8 @@ function Validate(pic)
 </p><p class="DataStatic">
 <asp:Literal runat="server" ID="X104316">104316</asp:Literal>
 </p>
-<asp:Button runat="server" id="X104317" Text="104317" OnClick="btnChange_Click" style="width:175px" />
-<asp:Button runat="server" id="X104314" Text="104314" OnClick="btnConfirm_Click" style="width:175px" />
+<asp:Button runat="server" id="X104317" Text="104317" style="width:160px" OnClick="btnChange_Click" />
+<asp:Button runat="server" id="X104314" Text="104314" style="width:160px" OnClick="btnConfirm_Click" />
 <br /><br />
 <asp:Label runat="server" ID="X104370" CssClass="Info">104370</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
