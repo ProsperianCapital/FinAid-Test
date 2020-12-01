@@ -10,6 +10,8 @@ namespace PCIWebFinAid
 {
 	public abstract class BasePageCRM : BasePageLogin
 	{
+		protected string sqlProc;
+
 		protected override void StartOver(int errNo,string pageName="")
 		{
 			base.StartOver ( errNo, ( pageName.Length > 0 ? pageName : "pgLogonCRM.aspx" ) );

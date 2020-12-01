@@ -21,7 +21,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(15666);
+				StartOver(23300);
 		}
 
 		private void ClearData()
@@ -39,18 +39,19 @@ namespace PCIWebFinAid
 			LoadLabelText(ascxXMenu);
 
 //	Test
-//				lblCurr.Text    = "R";
-//				lblBalance.Text = "8913.76";
-//				lstReason.Items.Add(new System.Web.UI.WebControls.ListItem("123","Lost Interest"));
-//				lstReason.Items.Add(new System.Web.UI.WebControls.ListItem("443","Gave up"));
-//				lstReason.Items.Add(new System.Web.UI.WebControls.ListItem("123","Bugger off"));
+//			lblCurr.Text    = "R";
+//			lblBalance.Text = "8913.76";
+//			lstReason.Items.Add(new System.Web.UI.WebControls.ListItem("123","Lost Interest"));
+//			lstReason.Items.Add(new System.Web.UI.WebControls.ListItem("443","Gave up"));
+//			lstReason.Items.Add(new System.Web.UI.WebControls.ListItem("123","Bugger off"));
 //	Test
 
 			using (MiscList mList = new MiscList())
 			{
-				sql = "exec sp_CRM_GetContractSettlementBalance @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+				sqlProc = "sp_CRM_GetContractSettlementBalance";
+				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",11840,"<br /><br />Internal database error (sp_CRM_GetContractSettlementBalance failed)",sql,1,1);
+					SetErrorDetail("LoadDataInitial",23210,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
 				{
 					lblBalance.Text = mList.GetColumn("SettlementBalance");
@@ -59,13 +60,13 @@ namespace PCIWebFinAid
 
 				System.Web.UI.WebControls.ListItem lItem;
 
-				sql = "exec sp_CRM_GetContractCancellationReasonList"
-				    +     " @LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
-				    +     ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
-				    +     ",@Access='N'";
+				sqlProc = "sp_CRM_GetContractCancellationReasonList";
+				sql     = "exec " + sqlProc + " @LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
+				                            + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
+				                            + ",@Access='N'";
 
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",11840,"<br /><br />Internal database error (sp_CRM_GetContractCancellationReasonList failed)",sql,1,1);
+					SetErrorDetail("LoadDataInitial",23220,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else
 					while ( ! mList.EOF )
 					{
@@ -82,36 +83,29 @@ namespace PCIWebFinAid
 
 		protected void btnChange_Click(Object sender, EventArgs e)
 		{
-			SetErrorDetail("btnChange_Click",11840,"<br /><br />Not yet implemented ...");
+			SetErrorDetail("btnChange_Click",23010,"Not yet implemented ...","",102);
 		}
 
 		protected void btnConfirm_Click(Object sender, EventArgs e)
 		{
-		//	int amt     = Tools.StringToInt(txtAmount.Text);
-
-		//	if ( amt < 1 || txtBank.Text.Length       < 2
-		//	             || txtBranchName.Text.Length < 2 
-		//	             || txtBranchCode.Text.Length < 4
-		//	             || txtAccName.Text.Length    < 2 
-		//	             || txtAccNumber.Text.Length  < 5 )
-		//		return;
-
 			using (MiscList mList = new MiscList())
 			{
-				sql = "exec sp_CRM_LogClientCancellationRequestA"
-				    +     " @ContractCode="           + Tools.DBString(sessionGeneral.ContractCode)
-				    +     ",@CancellationReasonCode=" + Tools.DBString(WebTools.ListValue(lstReason,"0"))
-				    +     ",@LanguageCode="           + Tools.DBString(sessionGeneral.LanguageCode)
-				    +     ",@LanguageDialectCode="    + Tools.DBString(sessionGeneral.LanguageDialectCode)
-				    +     ",@Access='N'";
+				sqlProc = "sp_CRM_LogClientCancellationRequestA";
+				sql     = "exec " + sqlProc + " @ContractCode="           + Tools.DBString(sessionGeneral.ContractCode)
+				                            + ",@CancellationReasonCode=" + Tools.DBString(WebTools.ListValue(lstReason,"0"))
+				                            + ",@LanguageCode="           + Tools.DBString(sessionGeneral.LanguageCode)
+				                            + ",@LanguageDialectCode="    + Tools.DBString(sessionGeneral.LanguageDialectCode)
+				                            + ",@Access='N'";
 
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("btnConfirm_Click",11840,"<br /><br />Internal database error (sp_CRM_LogClientCancellationRequestA)",sql,1,1);
+					SetErrorDetail("btnConfirm_Click",23100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
-				{
-					lblError.Text    = "<br /><br />" + mList.GetColumn("ResultMessage");
-					lblError.Visible = true;
-				}
+					SetErrorDetail("btnConfirm_Click",23110,mList.GetColumn("ResultMessage"),"",102);
+
+//				{
+//					lblError.Text    = "<br /><br />" + mList.GetColumn("ResultMessage");
+//					lblError.Visible = true;
+//				}
 			}
 		}
 	}

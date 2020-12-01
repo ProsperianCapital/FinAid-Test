@@ -21,7 +21,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(15666);
+				StartOver(12010);
 		}
 
 		private void ClearData()
@@ -40,9 +40,10 @@ namespace PCIWebFinAid
 
 			using (MiscList mList = new MiscList())
 			{
-				sql = "exec sp_Get_CRMClientBalancesA @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+				sqlProc = "sp_Get_CRMClientBalancesA";
+				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",11840,"Internal database error (sp_Get_CRMClientBalancesA failed)",sql,1,1);
+					SetErrorDetail("LoadDataInitial",12100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
 				{
 					lblRegFee.Text      = mList.GetColumn("txtRegistrationFeeDue");

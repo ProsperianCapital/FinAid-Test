@@ -22,7 +22,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(18666);
+				StartOver(13010);
 		}
 
 		private void ClearData()
@@ -42,9 +42,10 @@ namespace PCIWebFinAid
 			using (MiscList mList = new MiscList())
 			{
 				string balance = "";
-				sql = "exec sp_Get_CRMClientMiniStatementB @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+				sqlProc = "sp_Get_CRMClientMiniStatementB";
+				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",11840,"Internal database error (sp_Get_CRMClientMiniStatementB failed)",sql,1,1);
+					SetErrorDetail("LoadDataInitial",13100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else
 					while ( ! mList.EOF )
 					{

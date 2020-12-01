@@ -49,7 +49,7 @@ namespace PCIWebFinAid
 			if ( pinNew1 == pinNew2 && PCIBusiness.Tools.CheckPIN(pinOld ,MIN_PIN_LENGTH)
 			                        && PCIBusiness.Tools.CheckPIN(pinNew1,MIN_PIN_LENGTH)
 			                        && PCIBusiness.Tools.CheckPIN(pinNew2,MIN_PIN_LENGTH) )
-				SetErrorDetail("",13667,"[SQL] Update yet to be implemented","",102,0);
+				SetErrorDetail("",27010,"[SQL] Update yet to be implemented","",102,0);
 		}
 	}
 }

@@ -40,7 +40,7 @@ namespace PCIWebFinAid
 				     languageCode.Length        < 1 ||
 				     languageDialectCode.Length < 1 )
 				{
-					SetErrorDetail("PageLoad",33088,"Invalid startup values ... system cannot continue","");
+					SetErrorDetail("PageLoad",10200,"Invalid startup values ... system cannot continue","");
 					btnLogin.Text    = "Disabled";
 					btnLogin.Enabled = false;
 					txtID.Enabled    = false;
@@ -58,7 +58,7 @@ namespace PCIWebFinAid
 
 		protected void btnLogin_Click(Object sender, EventArgs e)
 		{
-			SetErrorDetail("btnLogin_Click",11050,"Invalid user name and/or password","One or both of user name/password is blank",2,2,null,true);
+			SetErrorDetail("btnLogin_Click",10100,"Invalid user name and/or password","One or both of user name/password is blank",2,2,null,true);
 			txtID.Text = txtID.Text.Trim();
 			txtPW.Text = txtPW.Text.Trim();
 
@@ -84,21 +84,21 @@ namespace PCIWebFinAid
 
 			using (MiscList mList = new MiscList())
 			{
-				sql = "exec SP_ClientCRMValidateLoginD"
-				    + " @IPAddress = "   + Tools.DBString(WebTools.ClientIPAddress(Request))
-				    + ",@ClientCode = "  + Tools.DBString(txtID.Text,47)
-				    + ",@ContractPin = " + Tools.DBString(txtPW.Text)
-				    + ",@ProductCode = " + Tools.DBString(sessionGeneral.ProductCode);
+				sqlProc = "SP_ClientCRMValidateLoginD";
+				sql     = "exec " + sqlProc + " @IPAddress = "   + Tools.DBString(WebTools.ClientIPAddress(Request))
+				                            + ",@ClientCode = "  + Tools.DBString(txtID.Text,47)
+				                            + ",@ContractPin = " + Tools.DBString(txtPW.Text)
+				                            + ",@ProductCode = " + Tools.DBString(sessionGeneral.ProductCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("btnLogin_Click",10020,"Internal database error (SP_ClientCRMValidateLoginD)",sql,1,1);
+					SetErrorDetail("btnLogin_Click",10020,"Internal database error (" + sqlProc + ")",sql,1,1);
 				else if ( mList.EOF )
-					SetErrorDetail("btnLogin_Click",10030,"Invalid login and/or PIN","SP_ClientCRMValidateLoginD, no data returned",1,1);
+					SetErrorDetail("btnLogin_Click",10030,"Invalid login and/or PIN",sqlProc + ", no data returned",1,1);
 				else if ( mList.GetColumn("Status") != "S" )
 				{
 					string err = mList.GetColumn("ActionResultMessage");
 					if ( err.Length < 1 )
 						err = "Invalid login and/or PIN";
-					SetErrorDetail("btnLogin_Click",10040,err,"SP_ClientCRMValidateLoginD, Status = '" + mList.GetColumn("Status") + "'",1,1);
+					SetErrorDetail("btnLogin_Click",10040,err,sqlProc + ", Status = '" + mList.GetColumn("Status") + "'",1,1);
 				}
 				else
 				{

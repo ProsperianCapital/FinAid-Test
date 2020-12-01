@@ -21,7 +21,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(15666);
+				StartOver(24100);
 		}
 
 		private void ClearData()
@@ -54,32 +54,29 @@ namespace PCIWebFinAid
 
 			using (MiscList mList = new MiscList())
 			{
-				sql = "exec sp_CRM_ApplyForEmergencyCash"
-				    +     " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
-				    +     ",@ProductBenefitPurposeCode='000'"
-				    +     ",@CB1=''"
-				    +     ",@CB2=''"
-				    +     ",@CB3=''"
-				    +     ",@CB4=''"
-				    +     ",@CB5=''"
-				    +     ",@BankName="            + Tools.DBString(txtBank.Text)
-				    +     ",@AccountHolderName="   + Tools.DBString(txtAccName.Text)
-				    +     ",@AccountNumber="       + Tools.DBString(txtAccNumber.Text)
-				    +     ",@BranchName="          + Tools.DBString(txtBranchName.Text)
-				    +     ",@SWIFTorIBAN="         + Tools.DBString(txtSwift.Text)
-				    +     ",@BranchCode="          + Tools.DBString(txtBranchCode.Text)
-				    +     ",@Access='N'"
-				    +     ",@Amount='"             + amt.ToString() + "'" // Tools.StringToDecimal(amt)
-				    +     ",@LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
-				    +     ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode);
+				sqlProc = "sp_CRM_ApplyForEmergencyCash";
+				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
+				                            + ",@ProductBenefitPurposeCode='000'"
+				                            + ",@CB1=''"
+				                            + ",@CB2=''"
+				                            + ",@CB3=''"
+				                            + ",@CB4=''"
+				                            + ",@CB5=''"
+				                            + ",@BankName="            + Tools.DBString(txtBank.Text)
+				                            + ",@AccountHolderName="   + Tools.DBString(txtAccName.Text)
+				                            + ",@AccountNumber="       + Tools.DBString(txtAccNumber.Text)
+				                            + ",@BranchName="          + Tools.DBString(txtBranchName.Text)
+				                            + ",@SWIFTorIBAN="         + Tools.DBString(txtSwift.Text)
+				                            + ",@BranchCode="          + Tools.DBString(txtBranchCode.Text)
+				                            + ",@Amount='"             + amt.ToString() + "'" // Tools.StringToDecimal(amt)
+				                            + ",@LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
+				                            + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
+				                            + ",@Access='N'";
 
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("btnOK_Click",11840,"<br /><br />Internal database error (sp_CRM_ApplyForEmergencyCash)",sql,1,1);
+					SetErrorDetail("btnOK_Click",24010,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
-				{
-					lblError.Text    = "<br /><br />" + mList.GetColumn("ActionResultMessage");
-					lblError.Visible = true;
-				}
+					SetErrorDetail("btnOK_Click",24020,mList.GetColumn("ActionResultMessage"),"",102);
 			}
 		}
 	}

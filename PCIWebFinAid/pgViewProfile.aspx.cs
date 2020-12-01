@@ -21,7 +21,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
 				LoadDataInitial();
 			else
-				StartOver(12666);
+				StartOver(11010);
 		}
 
 		private void ClearData()
@@ -41,9 +41,10 @@ namespace PCIWebFinAid
 
 			using (MiscList mList = new MiscList())
 			{
-				sql = "exec sp_Get_CRMClientWelcome @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+				sqlProc = "sp_Get_CRMClientWelcome";
+				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",11040,"Internal database error (sp_Get_CRMClientWelcome failed)",sql,1,1);
+					SetErrorDetail("LoadDataInitial",11100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else
 				{
 					lblAddress.Text   = mList.GetColumn("Address").Replace(Environment.NewLine,"<br />");
@@ -57,11 +58,10 @@ namespace PCIWebFinAid
 					lblLastLogon.Text = mList.GetColumn("LastLogon");
 				}
 
-//				sql = "exec sp_CRM_GetContractActivityLog @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
-//				                                      + ",@Access="       + Tools.DBString(sessionGeneral.AccessType);
-				sql = "exec sp_CRM_GetContractContactLog @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+				sqlProc = "sp_CRM_GetContractContactLog";
+				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",11060,"Internal database error (sp_CRM_GetContractContactLog failed)",sql,1,1);
+					SetErrorDetail("LoadDataInitial",11120,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else
 					while ( ! mList.EOF )
 					{

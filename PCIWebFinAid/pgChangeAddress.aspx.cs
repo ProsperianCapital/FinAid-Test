@@ -56,7 +56,7 @@ namespace PCIWebFinAid
 			if ( addr4.Length < 2 && addr5.Length > 1 )
 				return;
 
-			SetErrorDetail("",13667,"[SQL] Update yet to be implemented","",102,0);
+			SetErrorDetail("",25010,"[SQL] Update yet to be implemented","",102,0);
 		}
 	}
 }
