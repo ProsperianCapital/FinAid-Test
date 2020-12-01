@@ -7,7 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using PCIBusiness;
 
-// XXX
+// X
 
 namespace PCIWebFinAid
 {
