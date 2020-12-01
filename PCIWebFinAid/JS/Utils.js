@@ -112,7 +112,7 @@ function GetEltValueInt(eltID)
 		var h = Trim(p.innerHTML);
 		if ( h.length == 0 )
 			h = p.value;
-		var k = ToInteger(h);   alert(h+' = '+k.toString());
+		var k = ToInteger(h);
 		if ( k > 0 )
 			return k;
 	}
