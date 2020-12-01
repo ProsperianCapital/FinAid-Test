@@ -5,7 +5,7 @@ using System;
 using System.Text;
 using PCIBusiness;
 
-// XX
+// 
 
 namespace PCIWebFinAid
 {
