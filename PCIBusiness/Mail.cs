@@ -87,29 +87,19 @@ namespace PCIBusiness
 
 		public override int Send(byte mode=0)
 		{
+//	Mode  = 67 means load from Web.config
+//	Mode != 67 means load from Provider on SQL
+
 			int err    = 0;
 			resultCode = "0";
 
 			while ( err == 0 )
 			{
 				err = 10;
-
-//				if ( mode == 67 && smtp == null ) // Load from config
-//				{
-//					err        = 13;
-//					smtp       = new SmtpClient   (Tools.ConfigValue("SMTP-Server"));
-//					int port   = Tools.StringToInt(Tools.ConfigValue("SMTP-Port"));
-//					if ( port > 0 )
-//						smtp.Port = port;
-//					err                        = 16;
-//					smtp.UseDefaultCredentials = false;
-//					smtp.Credentials           = new NetworkCredential(Tools.ConfigValue("SMTP-User"),Tools.ConfigValue("SMTP-Password"));
-//				}
-
 				if ( mode ==  0 && provider == null && LoadProvider() != 0 )
 					break;
 
-				err = 16;
+				err = 15;
 				if ( mode == 67 && smtp == null && LoadConfig() != 0 )
 					break;
 
@@ -121,7 +111,7 @@ namespace PCIBusiness
 				if ( mode == 0  && smtp == null )
 					LoadProvider();
 
-				err = 33;
+				err = 35;
 				if ( mode == 67 && smtp == null )
 					LoadConfig();
 
@@ -204,28 +194,36 @@ namespace PCIBusiness
 
 			try
 			{
-				string smtpData = Tools.ConfigValue("SMTP-Server")
-				        + " / " + Tools.ConfigValue("SMTP-User")
-				        + " / " + Tools.ConfigValue("SMTP-Password")
-				        + " / " + Tools.ConfigValue("SMTP-Port")
-				        + " / " + Tools.ConfigValue("SMTP-From")
-				        + " / " + Tools.ConfigValue("SMTP-BCC");
+				int    ePort    = Tools.StringToInt(Tools.ConfigValue("SMTP-Port"));
+				string eServer  = Tools.ConfigValue("SMTP-Server");
+				string eUser    = Tools.ConfigValue("SMTP-User");
+				string ePwd     = Tools.ConfigValue("SMTP-Password");
+				string eFrom    = Tools.ConfigValue("SMTP-From");
+				string eBCC     = Tools.ConfigValue("SMTP-BCC");
+				string smtpData = eServer
+				        + " / " + eUser
+				        + " / " + ePwd
+				        + " / " + ePort.ToString()
+				        + " / " + eFrom
+				        + " / " + eBCC;
 				Tools.LogInfo("LoadConfig/10","SMTP Config ... " + smtpData,222,this);
 
-				ret       = 20;
-				smtp      = new SmtpClient (Tools.ConfigValue("SMTP-Server"));
-				ret       = 30;
-				From      = Tools.ConfigValue("SMTP-From");
-				ret       = 40;
-				BCC       = Tools.ConfigValue("SMTP-BCC");
-				ret       = 50;
-				int  port = Tools.StringToInt(Tools.ConfigValue("SMTP-Port"));
-				if ( port > 0 )
-					smtp.Port = port;
+				ret     = 20;
+				smtp    = new SmtpClient(eServer);
+				ret     = 30;
+				if ( eFrom.Length > 5 )
+					From = eFrom;
+				else
+					From = eUser;
+				ret     = 40;
+				BCC     = eBCC;
+				ret     = 50;
+				if ( ePort > 0 )
+					smtp.Port = ePort;
 				ret                        = 60;
 				smtp.UseDefaultCredentials = false;
 			//	smtp.EnableSsl             = false;
-				smtp.Credentials           = new NetworkCredential(Tools.ConfigValue("SMTP-User"),Tools.ConfigValue("SMTP-Password"));
+				smtp.Credentials           = new NetworkCredential(eUser,ePwd);
 				ret                        = 0;
 			}
 			catch (Exception ex)
