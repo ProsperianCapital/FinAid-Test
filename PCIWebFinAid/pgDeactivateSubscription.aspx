@@ -19,18 +19,6 @@ function Validate(pic)
 	try
 	{
 		var d = [null,null,null,null,null,null,null];
-		d[1]  = ( GetEltValueInt('txtAmount')         < 1 );
-		d[2]  = ( GetEltValue('txtBank').length       < 2 );
-		d[3]  = ( GetEltValue('txtAccName').length    < 2 );
-		d[4]  = ( GetEltValue('txtAccNumber').length  < 5 );
-		d[5]  = ( GetEltValue('txtBranchName').length < 2 );
-		d[6]  = ( GetEltValue('txtBranchCode').length < 4 );
-
-		DisableElt('X104048',d[1]||d[2]||d[3]||d[4]||d[5]||d[6]);
-	
-		ShowElt('imgY'+pic.toString(),!d[pic]);
-		ShowElt('imgN'+pic.toString(), d[pic]);
-		return disable; 
 	}
 	catch (x)
 	{ }
@@ -56,8 +44,8 @@ function Validate(pic)
 </p><p class="DataStatic">
 <asp:Literal runat="server" ID="X104316">104316</asp:Literal>
 </p>
-<asp:Button runat="server" id="X104317" Text="104317" OnClick="btnChange_Click" style="width:200px" />
-<asp:Button runat="server" id="X104314" Text="104314" OnClick="btnConfirm_Click" style="width:200px" />
+<asp:Button runat="server" id="X104317" Text="104317" OnClick="btnChange_Click" style="width:175px" />
+<asp:Button runat="server" id="X104314" Text="104314" OnClick="btnConfirm_Click" style="width:175px" />
 <br /><br />
 <asp:Label runat="server" ID="X104370" CssClass="Info">104370</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>

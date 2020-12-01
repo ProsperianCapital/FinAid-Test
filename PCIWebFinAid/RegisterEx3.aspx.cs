@@ -622,7 +622,7 @@ namespace PCIWebFinAid
 					    +     ",@WebsiteVisitorCode ="        + Tools.DBString(WebTools.RequestValueString(Request,"WVC"))
 					    +     ",@WebsiteVisitorSessionCode =" + Tools.DBString(WebTools.RequestValueString(Request,"WVSC"));
 
-					Tools.LogInfo("LoadContractCode/T1",sql,203,this);
+//					Tools.LogInfo("LoadContractCode/T1",sql,203,this);
 
 					if ( miscList.ExecQuery(sql,0) != 0 )
 						SetErrorDetail("LoadContractCode",10013,"Error retrieving new contract details ; please try again later",sql);
@@ -960,7 +960,7 @@ namespace PCIWebFinAid
 					             + ",@CardExpiryMonth =" + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
 					             + ",@CardExpiryYear ="  + Tools.DBString(WebTools.ListValue(lstCCYear).ToString());
 
-					Tools.LogInfo("btnNext_Click/T2","Page="+pageNo.ToString()+", "+sql,203,this);
+//					Tools.LogInfo("btnNext_Click/T2","Page="+pageNo.ToString()+", "+sql,203,this);
 
 					errNo = miscList.ExecQuery(sql,0);
 					SetErrorDetail("btnNext_Click/30020",errNo,"Unable to update information (pageNo="+pageNo.ToString()+")",sql);
@@ -1076,7 +1076,7 @@ namespace PCIWebFinAid
 							sql   = "exec WP_ContractApplicationC"
 							      +     " @RegistrationPage = '5'"
 							      +     ",@ContractCode =" + Tools.DBString(contractCode);
-							Tools.LogInfo("btnNext_Click/T3","Page="+pageNo.ToString()+", "+sql,203,this);
+//							Tools.LogInfo("btnNext_Click/T3","Page="+pageNo.ToString()+", "+sql,203,this);
 							errNo = miscList.ExecQuery(sql,0,"",false,true);
 							SetErrorDetail("btnNext_Click/30065",(errNo==0?0:30065),"Unable to update information (WP_ContractApplicationC)",sql);
 
@@ -1093,7 +1093,7 @@ namespace PCIWebFinAid
 								      +     ",@ReferenceNumber ="    + Tools.DBString(txReference.Value,47)
 								      +     ",@TransactionStatusCode = ''"
 								      +     ",@CardTokenisationStatusCode = '007'";
-								Tools.LogInfo("btnNext_Click/T4","Page="+pageNo.ToString()+", "+sql,203,this);
+//								Tools.LogInfo("btnNext_Click/T4","Page="+pageNo.ToString()+", "+sql,203,this);
 								errNo = miscList.ExecQuery(sql,0,"",false,true);
 								SetErrorDetail("btnNext_Click/30070",(errNo==0?0:30070),"Unable to update card token (sp_TokenEx_Ins_CardToken)",sql);
 							}
