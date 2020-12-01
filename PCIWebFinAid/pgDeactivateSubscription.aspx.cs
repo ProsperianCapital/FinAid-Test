@@ -97,11 +97,10 @@ namespace PCIWebFinAid
 				                            + ",@LanguageDialectCode="    + Tools.DBString(sessionGeneral.LanguageDialectCode)
 				                            + ",@Access='N'";
 
-				Tools.LogInfo("btnConfirm_Click",sql,203,this);
+//				Tools.LogInfo("btnConfirm_Click",sql,203,this);
 
-				int  r  = mList.ExecQuery(sql,0,"",false);
-				if ( r != 0 )
-					SetErrorDetail("btnConfirm_Click",23100,"Internal database error, ExecQuery()=" + r.ToString() + " (" + sqlProc + ")",sql,102,1);
+				if ( mList.ExecQuery(sql,0,"",false) != 0 )
+					SetErrorDetail("btnConfirm_Click",23100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( mList.EOF )
 					SetErrorDetail("btnConfirm_Click",23110,"No data returned (" + sqlProc + ")",sql,102);
 				else
