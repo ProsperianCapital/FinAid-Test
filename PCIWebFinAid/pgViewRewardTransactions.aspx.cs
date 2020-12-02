@@ -46,7 +46,7 @@ namespace PCIWebFinAid
 				                            + ",@LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
 				                            + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
 				                            + ",@Access="              + Tools.DBString(sessionGeneral.AccessType);
-				if ( mList.ExecQuery(sql,0) != 0 )
+				if ( mList.ExecQuery(sql,0,"",false) != 0 )
 					SetErrorDetail("LoadDataInitial",19100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else
 					while ( ! mList.EOF )

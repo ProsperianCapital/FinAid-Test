@@ -46,10 +46,8 @@ namespace PCIWebFinAid
 
 				sql = "exec sp_CRM_GetContractActivityLog @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
 				                                      + ",@Access="       + Tools.DBString(sessionGeneral.AccessType);
-				if ( mList.ExecQuery(sql,0) != 0 )
+				if ( mList.ExecQuery(sql,0,"",false) != 0 )
 					SetErrorDetail("PageLoad",11060,"Internal database error (sp_CRM_GetContractActivityLog failed)",sql,1,1);
-				else if ( mList.EOF )
-					SetErrorDetail("PageLoad",11070,"Internal database error (sp_CRM_GetContractActivityLog no data returned)",sql,1,1);
 				else
 					while ( ! mList.EOF )
 					{
