@@ -26,6 +26,10 @@
 <form id="frmLookup" runat="server">
 <ascx:XMenu runat="server" ID="ascxXMenu" />
 
+<asp:HiddenField runat="server" id="hdnProductCode"></asp:HiddenField>
+<asp:HiddenField runat="server" id="hdnMailFrom"></asp:HiddenField>
+<asp:HiddenField runat="server" id="hdnMailReply"></asp:HiddenField>
+
 <div class="Header3">
 Contract Lookup
 </div>
@@ -41,10 +45,6 @@ Contract Code<br />
 <asp:Button runat="server" ID="btnMail"   Text="EMail"  OnClientClick="JavaScript:ShowElt('pnlMail',true);GetElt('txtTo').focus();return false" />&nbsp;
 </p>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
-
-<asp:HiddenField runat="server" id="hdnProductCode"></asp:HiddenField>
-<asp:HiddenField runat="server" id="hdnMailFrom"></asp:HiddenField>
-<asp:HiddenField runat="server" id="hdnMailReply"></asp:HiddenField>
 
 <div id="pnlMail" class="Popup2" style="visibility:hidden;display:none;width:400px">
 	<div class="PopupHead">Send contract by email</div>

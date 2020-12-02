@@ -9,7 +9,6 @@
 
 namespace PCIWebFinAid {
     
-    
     public partial class pgTransactionLookUp {
         
         /// <summary>

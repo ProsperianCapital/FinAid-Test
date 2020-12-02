@@ -12,6 +12,7 @@
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
 <!--#include file="IncludeBusy.htm" -->
+
 <form id="frmLookup" runat="server">
 	<script type="text/javascript" src="JS/Calendar.js"></script>
 

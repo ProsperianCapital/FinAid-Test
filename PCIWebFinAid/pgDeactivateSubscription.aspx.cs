@@ -58,8 +58,6 @@ namespace PCIWebFinAid
 					lblCurr.Text    = mList.GetColumn("CurrencySymbol");
 				}
 
-				System.Web.UI.WebControls.ListItem lItem;
-
 				sqlProc = "sp_CRM_GetContractCancellationReasonList";
 				sql     = "exec " + sqlProc + " @LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
 				                            + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
@@ -70,7 +68,7 @@ namespace PCIWebFinAid
 				else
 					while ( ! mList.EOF )
 					{
-						lItem       = new System.Web.UI.WebControls.ListItem();
+						System.Web.UI.WebControls.ListItem lItem = new System.Web.UI.WebControls.ListItem();
 						lItem.Value = mList.GetColumn("CancellationReasonCode");
 						lItem.Text  = mList.GetColumn("CancellationReasonDescription");
 						lstReason.Items.Add(lItem);

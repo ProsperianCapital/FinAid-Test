@@ -45,7 +45,7 @@ namespace PCIWebFinAid
 				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
 					SetErrorDetail("LoadDataInitial",11100,"Internal database error (" + sqlProc + ")",sql,102,1);
-				else
+				else if ( ! mList.EOF )
 				{
 					lblAddress.Text   = mList.GetColumn("Address").Replace(Environment.NewLine,"<br />");
 					lblEMail.Text     = mList.GetColumn("EmailAddress");

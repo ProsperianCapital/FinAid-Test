@@ -200,6 +200,7 @@
     <Content Include="Bin\PCIUnattended.EXE" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="XMenuItem.cs" />
     <Compile Include="AJAXProcess.aspx.cs">
       <DependentUpon>AJAXProcess.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -424,7 +425,6 @@
     <Compile Include="UIApplicationTest.aspx.designer.cs">
       <DependentUpon>UIApplicationTest.aspx</DependentUpon>
     </Compile>
-    <Compile Include="XMenuItem.cs" />
     <Compile Include="pgContractLookUp.aspx.cs">
       <DependentUpon>pgContractLookUp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
