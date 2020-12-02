@@ -80,6 +80,7 @@
     <Content Include="pgContractLookUp.aspx" />
     <Content Include="pgDeactivateSubscription.aspx" />
     <Content Include="pgLogonCRM.aspx" />
+    <Content Include="pgPayOutstandingFees.aspx" />
     <Content Include="pgRequestCashReward.aspx" />
     <Content Include="pgTransactionLookUp.aspx" />
     <Content Include="pgViewCurrentBalances.aspx" />
@@ -200,6 +201,13 @@
     <Content Include="Bin\PCIUnattended.EXE" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="pgPayOutstandingFees.aspx.cs">
+      <DependentUpon>pgPayOutstandingFees.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgPayOutstandingFees.aspx.designer.cs">
+      <DependentUpon>pgPayOutstandingFees.aspx</DependentUpon>
+    </Compile>
     <Compile Include="XMenuItem.cs" />
     <Compile Include="AJAXProcess.aspx.cs">
       <DependentUpon>AJAXProcess.aspx</DependentUpon>

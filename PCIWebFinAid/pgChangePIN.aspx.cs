@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using PCIBusiness;
 
 namespace PCIWebFinAid
 {
@@ -37,19 +38,30 @@ namespace PCIWebFinAid
 //		Called once in the beginning
 
 			LoadLabelText(ascxXMenu);
-			txtPINOld.Focus();
+			txtPIN0.Focus();
 		}
 
 		protected void btnOK_Click(Object sender, EventArgs e)
 		{
-			string pinOld  = txtPINOld.Text.Trim();
-			string pinNew1 = txtPINNew1.Text.Trim();
-			string pinNew2 = txtPINNew2.Text.Trim();
+			int pin0 = Tools.StringToInt(txtPIN0.Text);
+			int pin1 = Tools.StringToInt(txtPIN1.Text);
+			int pin2 = Tools.StringToInt(txtPIN2.Text);
 
-			if ( pinNew1 == pinNew2 && PCIBusiness.Tools.CheckPIN(pinOld ,MIN_PIN_LENGTH)
-			                        && PCIBusiness.Tools.CheckPIN(pinNew1,MIN_PIN_LENGTH)
-			                        && PCIBusiness.Tools.CheckPIN(pinNew2,MIN_PIN_LENGTH) )
-				SetErrorDetail("",17100,"[SQL] Update yet to be implemented","",102,0);
+			if ( pin0 > 0 && pin1 > 0 && pin2 > 0 && pin1 == pin2 )
+
+				using (MiscList mList = new MiscList())
+				{
+					sqlProc = "sp_CRM_ChangeContractPINA";
+					sql     = "exec " + sqlProc + " @ContractCode="       + Tools.DBString(sessionGeneral.ContractCode)
+					                            + ",@ExistingPIN="        + pin0.ToString()
+					                            + ",@NewPIN="             + pin1.ToString()
+					                            + ",@NewPINConfirmation=" + pin2.ToString()
+					                            + ",@Access="             + Tools.DBString(sessionGeneral.AccessType);
+					if ( mList.ExecQuery(sql,0) != 0 )
+						SetErrorDetail("btnOK_Click",17100,"Internal database error (" + sqlProc + ")",sql,102,1);
+					else if ( ! mList.EOF )
+						SetErrorDetail("btnOK_Click",17110,mList.GetColumn("ResultMessage"),"",102);
+			}
 		}
 	}
 }

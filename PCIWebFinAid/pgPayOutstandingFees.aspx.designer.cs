@@ -10,7 +10,7 @@
 namespace PCIWebFinAid {
     
     
-    public partial class pgChangePIN {
+    public partial class pgPayOutstandingFees {
         
         /// <summary>
         /// ascxXHeader control.
@@ -40,85 +40,76 @@ namespace PCIWebFinAid {
         protected global::PCIWebFinAid.XMenu ascxXMenu;
         
         /// <summary>
-        /// X104197 control.
+        /// X104390 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104197;
+        protected global::System.Web.UI.WebControls.Literal X104390;
         
         /// <summary>
-        /// X104198 control.
+        /// X104152 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104198;
+        protected global::System.Web.UI.WebControls.Literal X104152;
         
         /// <summary>
-        /// txtPIN0 control.
+        /// lblCurr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPIN0;
+        protected global::System.Web.UI.WebControls.Literal lblCurr;
         
         /// <summary>
-        /// X104200 control.
+        /// lblBalance control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104200;
+        protected global::System.Web.UI.WebControls.Literal lblBalance;
         
         /// <summary>
-        /// txtPIN1 control.
+        /// X104999 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPIN1;
+        protected global::System.Web.UI.WebControls.Literal X104999;
         
         /// <summary>
-        /// X104202 control.
+        /// txtAmt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104202;
+        protected global::System.Web.UI.WebControls.TextBox txtAmt;
         
         /// <summary>
-        /// txtPIN2 control.
+        /// X104888 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPIN2;
+        protected global::System.Web.UI.WebControls.Button X104888;
         
         /// <summary>
-        /// X104204 control.
+        /// X104777 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button X104204;
-        
-        /// <summary>
-        /// X104355 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label X104355;
+        protected global::System.Web.UI.WebControls.Label X104777;
         
         /// <summary>
         /// ascxXFooter control.

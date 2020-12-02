@@ -22,17 +22,17 @@ function CheckPIN(n)
 	{
 		ShowElt('imgY'+n,false);
 		ShowElt('imgN'+n,false);
-		var p = GetEltValue('txtPINNew'+n);
+		var p = GetEltValue('txtPIN'+n);
 		if ( p.length < 1 )
 			return;
 		if ( ! ValidPIN(p,<%=MIN_PIN_LENGTH%>) )
 			ShowElt('imgN'+n,true);
-		else if ( n == 2 && GetEltValue('txtPINNew1') != p )
+		else if ( n == 2 && GetEltValue('txtPIN1') != p )
 			ShowElt('imgN'+n,true);
 		else
 		{
 			ShowElt('imgY'+n,true);
-			var h = GetEltValue('txtPINNew2');
+			var h = GetEltValue('txtPIN2');
 			if ( n == 1 && h.length > 0 )
 			{
 				ShowElt('imgY2',(h==p));
@@ -54,27 +54,36 @@ function CheckPIN(n)
 <table>
 <tr>
 	<td><asp:Literal runat="server" ID="X104198">104198</asp:Literal></td>
-	<td><asp:TextBox runat="server" Width="100px" ID="txtPINOld"></asp:TextBox></td></tr>
+	<td><asp:TextBox runat="server" Width="100px" ID="txtPIN0" OnChange="JavaScript:CheckPIN(0)"></asp:TextBox>
+		<img id="imgY0" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
+		<img id="imgN0" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
+	</td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104200">104200</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="100px" ID="txtPINNew1" OnChange="JavaScript:CheckPIN(1)"></asp:TextBox>&nbsp;
+		<asp:TextBox runat="server" Width="100px" ID="txtPIN1" OnChange="JavaScript:CheckPIN(1)"></asp:TextBox>&nbsp;
 		<img id="imgY1" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
 		<img id="imgN1" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
 	</td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104202">104202</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="100px" ID="txtPINNew2" OnChange="JavaScript:CheckPIN(2)"></asp:TextBox>&nbsp;
+		<asp:TextBox runat="server" Width="100px" ID="txtPIN2" OnChange="JavaScript:CheckPIN(2)"></asp:TextBox>&nbsp;
 		<img id="imgY2" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
 		<img id="imgN2" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
 	</td></tr>
 </table>
-<br /><br />
+<br />
 <asp:Button runat="server" id="X104204" Text="104204" OnClick="btnOK_Click" />
 <br /><br />
 <asp:Label runat="server" ID="X104355" CssClass="Info">104355</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
+
+<script type="text/javascript">
+CheckPIN(0);
+CheckPIN(1);
+CheckPIN(2);
+</script>
 
 <!--#include file="IncludeErrorDtl.htm" -->
 <ascx:XFooter runat="server" ID="ascxXFooter" />
