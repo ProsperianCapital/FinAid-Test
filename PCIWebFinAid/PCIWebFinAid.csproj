@@ -89,6 +89,7 @@
     <Content Include="pgViewProductActivityLog.aspx" />
     <Content Include="pgViewProductDashboard.aspx" />
     <Content Include="pgViewProfile.aspx" />
+    <Content Include="pgViewRewardTransactions.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx3.aspx" />
     <Content Include="RegisterThreeD.aspx" />
@@ -207,6 +208,13 @@
     </Compile>
     <Compile Include="pgPayOutstandingFees.aspx.designer.cs">
       <DependentUpon>pgPayOutstandingFees.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgViewRewardTransactions.aspx.cs">
+      <DependentUpon>pgViewRewardTransactions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgViewRewardTransactions.aspx.designer.cs">
+      <DependentUpon>pgViewRewardTransactions.aspx</DependentUpon>
     </Compile>
     <Compile Include="XMenuItem.cs" />
     <Compile Include="AJAXProcess.aspx.cs">
