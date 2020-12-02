@@ -15,6 +15,35 @@
 <form id="frmMain" runat="server">
 <ascx:XMenu runat="server" ID="ascxXMenu" />
 
+<script type="text/javascript">
+function Validate(n,mode)
+{
+	try
+	{
+		var img = GetElt('img'+n.toString());
+		var adr = GetEltValue('txtLine'+n.toString());
+		var dir = '<%=PCIBusiness.Tools.ImageFolder() %>';
+		if ( adr.length == 0 && mode == 1 )
+			img.src = '';
+		else if ( adr.length < 3 && adr.length > 0 )
+			img.src = dir + 'Cross.png';
+		else if ( adr.length < 3 && n < 3 )
+			img.src = dir + 'Cross.png';
+		else
+			img.src = dir + 'Tick.png';
+
+		var bad = false;
+		for ( var k = 1 ; k < 6 ; k++ )
+			if ( GetElt('img'+k.toString()).src.indexOf('Cross') > 0 )
+				bad = true;
+		DisableElt('X104237',bad);
+	}
+	catch (x)
+	{ }
+	return false;
+}
+</script>
+
 <div class="Header3">
 <asp:Literal runat="server" ID="X104214">104214</asp:Literal>
 </div>
@@ -44,25 +73,33 @@
 <table>
 <tr>
 	<td><asp:Literal runat="server" ID="Y104216">104216</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine1" Width="400px"></asp:TextBox></td></tr>
+	<td><asp:TextBox runat="server" ID="txtLine1" Width="400px" OnChange="JavaScript:Validate(1)"></asp:TextBox>&nbsp;<img id="img1" /></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="Y104218">104218</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine2" Width="400px"></asp:TextBox></td></tr>
+	<td><asp:TextBox runat="server" ID="txtLine2" Width="400px" OnChange="JavaScript:Validate(2)"></asp:TextBox>&nbsp;<img id="img2" /></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="Y104220">104220</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine3" Width="400px"></asp:TextBox></td></tr>
+	<td><asp:TextBox runat="server" ID="txtLine3" Width="400px" OnChange="JavaScript:Validate(3)"></asp:TextBox>&nbsp;<img id="img3" /></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="Y104222">104222</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine4" Width="400px"></asp:TextBox></td></tr>
+	<td><asp:TextBox runat="server" ID="txtLine4" Width="400px" OnChange="JavaScript:Validate(4)"></asp:TextBox>&nbsp;<img id="img4" /></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="Y104224">104224</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine5" Width="400px"></asp:TextBox></td></tr>
+	<td><asp:TextBox runat="server" ID="txtLine5" Width="400px" OnChange="JavaScript:Validate(5)"></asp:TextBox>&nbsp;<img id="img5" /></td></tr>
 </table>
 <br />
 <asp:Button runat="server" id="X104237" Text="104237" OnClick="btnOK_Click" />
 <br /><br />
 <asp:Label runat="server" ID="X104356" CssClass="Info">104356</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
+
+<script type="text/javascript">
+Validate(1,1);
+Validate(2,1);
+Validate(3,1);
+Validate(4,1);
+Validate(5,1);
+</script>
 
 <!--#include file="IncludeErrorDtl.htm" -->
 <ascx:XFooter runat="server" ID="ascxXFooter" />

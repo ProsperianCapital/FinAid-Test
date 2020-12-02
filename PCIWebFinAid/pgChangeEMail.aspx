@@ -76,6 +76,11 @@ function CheckMail(n)
 <asp:Label runat="server" ID="X104355" CssClass="Info">104355</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
+<script type="text/javascript">
+CheckMail(1);
+CheckMail(2);
+</script>
+
 <!--#include file="IncludeErrorDtl.htm" -->
 <ascx:XFooter runat="server" ID="ascxXFooter" />
 </form>

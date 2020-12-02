@@ -49,13 +49,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X104128;
         
         /// <summary>
-        /// tblActivity control.
+        /// tblHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tblActivity;
+        protected global::System.Web.UI.WebControls.Table tblHistory;
         
         /// <summary>
         /// X104134 control.

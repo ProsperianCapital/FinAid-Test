@@ -81,7 +81,7 @@ namespace PCIWebFinAid
 
 		protected void btnChange_Click(Object sender, EventArgs e)
 		{
-			SetErrorDetail("btnChange_Click",23200,"Not yet implemented ...","",102);
+			SetErrorDetail("btnChange_Click",23200,"Not yet implemented ...","",102,0);
 		}
 
 		protected void btnConfirm_Click(Object sender, EventArgs e)
@@ -100,9 +100,9 @@ namespace PCIWebFinAid
 				if ( mList.ExecQuery(sql,0,"",false) != 0 )
 					SetErrorDetail("btnConfirm_Click",23300,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( mList.EOF )
-					SetErrorDetail("btnConfirm_Click",23310,"No data returned (" + sqlProc + ")",sql,102);
+					SetErrorDetail("btnConfirm_Click",23310,"No data returned (" + sqlProc + ")",sql,102,1);
 				else
-					SetErrorDetail("btnConfirm_Click",23320,mList.GetColumn("ResultMessage"),"",102);
+					SetErrorDetail("btnConfirm_Click",23320,mList.GetColumn("ResultMessage"),"",102,0);
 			}
 		}
 	}

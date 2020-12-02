@@ -19,7 +19,7 @@
 <asp:Literal runat="server" ID="X104128">104128</asp:Literal>
 </div>
 
-<asp:Table runat="server" ID="tblActivity" style="border:1px solid #000000">
+<asp:Table runat="server" ID="tblHistory" style="border:1px solid #000000">
 <asp:TableRow>
 	<asp:TableCell ID="X104134" style="border-bottom:1px solid #000000;font-weight:bold">104134</asp:TableCell>
 	<asp:TableCell ID="X104136" style="border-bottom:1px solid #000000;font-weight:bold">104136</asp:TableCell></asp:TableRow>

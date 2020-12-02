@@ -61,7 +61,7 @@ namespace PCIWebFinAid
 				sqlProc = "sp_CRM_GetContractContactLog";
 				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",11110,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("LoadDataInitial",11110,"Internal database error (" + sqlProc + ")",sql,102,2);
 				else
 					while ( ! mList.EOF )
 					{
