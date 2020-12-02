@@ -28,7 +28,7 @@
 	<asp:TableCell ID="X104510" style="border-bottom:1px solid #000000;font-weight:bold">104510</asp:TableCell>
 	<asp:TableCell ID="X104511" style="border-bottom:1px solid #000000;font-weight:bold">104511</asp:TableCell></asp:TableRow>
 </asp:Table>
-<br /><br />
+<br />
 <asp:Label runat="server" ID="X104050" CssClass="Info">104050</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 

@@ -50,22 +50,25 @@ namespace PCIWebFinAid
 					while ( ! mList.EOF )
 					{
 						TableRow  row  = new TableRow();
-						TableCell col1 = new TableCell();
-						TableCell col2 = new TableCell();
-						TableCell col3 = new TableCell();
-						TableCell col4 = new TableCell();
+//						TableCell col2 = new TableCell();
+//						TableCell col3 = new TableCell();
+//						TableCell col4 = new TableCell();
 //						col1.Text      = Tools.DateToString(mList.GetColumnDate("Date"),7,1); // yyyy-mm-dd hh:mm:ss
-						col1.Text      = mList.GetColumn("Date");
-						col2.Text      = mList.GetColumn("Description");
-						col3.Text      = mList.GetColumn("Amount");
-						col4.Text      = mList.GetColumn("Balance");
-						balance        = col4.Text;
-						col3.HorizontalAlign = HorizontalAlign.Right;
-						col4.HorizontalAlign = HorizontalAlign.Right;
-						row.Cells.Add(col1);
-						row.Cells.Add(col2);
-						row.Cells.Add(col3);
-						row.Cells.Add(col4);
+						TableCell col  = new TableCell();
+						col.Text       = mList.GetColumn("Date");
+						row.Cells.Add(col);
+						col            = new TableCell();
+						col.Text       = mList.GetColumn("Description");
+						row.Cells.Add(col);
+						col            = new TableCell();
+						col.HorizontalAlign = HorizontalAlign.Right;
+						col.Text       = mList.GetColumn("Amount");
+						row.Cells.Add(col);
+						col            = new TableCell();
+						col.HorizontalAlign = HorizontalAlign.Right;
+						col.Text       = mList.GetColumn("Balance");
+						row.Cells.Add(col);
+						balance        = col.Text;
 						tblStatement.Rows.Add(row);
 						mList.NextRow();
 					}

@@ -57,6 +57,7 @@ namespace PCIWebFinAid
 						{
 							col      = new TableCell();
 							col.Text = mList.GetColumn(k);
+							col.Wrap = ( k == 3 || k == 4 );
 							row.Cells.Add(col);
 						}
 						tblData.Rows.Add(row);
