@@ -64,14 +64,16 @@ namespace PCIWebFinAid
 				if ( mList.ExecQuery(sql,0) != 0 )
 					SetErrorDetail("LoadDataInitial",20100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
-				{
-					lblName.Text   = mList.GetColumn("CardHolderName");
-					lblNumber.Text = mList.GetColumn("MaskedCardNumber");
-					lblMM.Text     = mList.GetColumn("CardExpieryMonth");
-					lblYY.Text     = mList.GetColumn("CardExpieryYear");
-					lblCVV.Text    = mList.GetColumn("CardCVVCode");
-					WebTools.ListSelect(lstMM,lblMM.Text);
-					WebTools.ListSelect(lstYY,lblYY.Text);
+				{ 
+					lblName.Text    = mList.GetColumn("CardHolderName");
+					lblNumber.Text  = mList.GetColumn("MaskedCardNumber");
+					lblCVV.Text     = mList.GetColumn("CardCVVCode");
+					string mm       = mList.GetColumn("CardExpiryMonth");
+					string yy       = mList.GetColumn("CardExpiryYear");
+					if ( mm.Length > 0 && yy.Length > 0 )
+						lblDate.Text = mm + " / " + yy;
+					WebTools.ListSelect(lstMM,mm);
+					WebTools.ListSelect(lstYY,yy);
 				}
 			}
 			txtName.Focus();

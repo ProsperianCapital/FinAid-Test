@@ -94,22 +94,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X104275;
         
         /// <summary>
-        /// lblMM control.
+        /// lblDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblMM;
-        
-        /// <summary>
-        /// lblYY control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblYY;
+        protected global::System.Web.UI.WebControls.Literal lblDate;
         
         /// <summary>
         /// X104277 control.

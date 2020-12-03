@@ -59,9 +59,7 @@ function Validate(eltID,len,eltType)
 	<td class="DataStatic"><asp:Literal runat="server" ID="lblNumber">Card number</asp:Literal></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104275">104275</asp:Literal></td>
-	<td class="DataStatic">
-		<asp:Literal runat="server" ID="lblMM">MM</asp:Literal> /
-		<asp:Literal runat="server" ID="lblYY">YYYY</asp:Literal></td></tr>
+	<td class="DataStatic"><asp:Literal runat="server" ID="lblDate">MM / YYYY</asp:Literal></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104277">104277</asp:Literal></td>
 	<td class="DataStatic"><asp:Literal runat="server" ID="lblCVV">CVV</asp:Literal></td></tr>
