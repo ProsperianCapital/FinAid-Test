@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using PCIBusiness;
 
 namespace PCIWebFinAid
 {
@@ -38,17 +37,42 @@ namespace PCIWebFinAid
 //		Called once in the beginning
 
 			LoadLabelText(ascxXMenu);
-			txtEMailNew1.Focus();
+
+			using (MiscList mList = new MiscList())
+			{
+				sqlProc = "sp_CRM_GetContractContactInfo";
+				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
+				                            + ",@Access="       + Tools.DBString(sessionGeneral.AccessType);
+				if ( mList.ExecQuery(sql,0) != 0 )
+					SetErrorDetail("LoadDataInitial",16100,"Internal database error (" + sqlProc + ")",sql,102,1);
+				else if ( ! mList.EOF )
+				{
+					lblEMail.Text = mList.GetColumn("EMailAddress");
+					lblPhone.Text = mList.GetColumn("MobileNumber");
+				}
+			}
+			txtEMail.Focus();
 		}
 
 		protected void btnOK_Click(Object sender, EventArgs e)
 		{
-			string emailNew1 = txtEMailNew1.Text.Trim().ToUpper();
-			string emailNew2 = txtEMailNew2.Text.Trim().ToUpper();
+			string email = txtEMail.Text.Trim();
+			string phone = txtPhone.Text.Trim();
 
-			if ( emailNew1 == emailNew2 && PCIBusiness.Tools.CheckEMail(emailNew1,1)
-			                            && PCIBusiness.Tools.CheckEMail(emailNew2,1) )
-				SetErrorDetail("",16100,"[SQL] Update yet to be implemented","",102,0);
+			if ( Tools.CheckEMail(email,1) && Tools.CheckPhone(phone) )
+				using (MiscList mList = new MiscList())
+				{
+					sqlProc = "sp_CRM_ChangeContractContactInfoA";
+					sql     = "exec " + sqlProc + " @ContractCode="    + Tools.DBString(sessionGeneral.ContractCode)
+					                            + ",@Access="          + Tools.DBString(sessionGeneral.AccessType)
+					                            + ",@NewEMailAddress=" + Tools.DBString(email,47)
+					                            + ",@NewMobileNumber=" + Tools.DBString(phone,47);
+	
+					if ( mList.ExecQuery(sql,0) != 0 )
+						SetErrorDetail("btnOK_Click",16200,"Internal database error (" + sqlProc + ")",sql,102,1);
+					else if ( ! mList.EOF )
+						SetErrorDetail("btnOK_Click",16210,mList.GetColumn("ResultMessage"),"",102,0);
+				}
 		}
 	}
 }

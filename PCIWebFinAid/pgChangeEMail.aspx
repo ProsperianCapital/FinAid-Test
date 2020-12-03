@@ -16,69 +16,72 @@
 <ascx:XMenu runat="server" ID="ascxXMenu" />
 
 <script type="text/javascript">
-function CheckMail(n)
+function Validate(eltID,eltType)
 {
 	try
 	{
-		ShowElt('imgY'+n,false);
-		ShowElt('imgN'+n,false);
-		var p = GetEltValue('txtEMailNew'+n).toUpperCase();
-		if ( p.length < 1 )
-			return;
-		if ( ! ValidEmail(p) )
-			ShowElt('imgN'+n,true);
-		else if ( n == 2 && GetEltValue('txtEMailNew1').toUpperCase() != p )
-			ShowElt('imgN'+n,true);
+		var img = GetElt('img'+eltID);
+		var val = GetEltValue('txt'+eltID);
+		var dir = '<%=PCIBusiness.Tools.ImageFolder() %>';
+		var ok  = false;
+		if ( eltType == 1 ) // EMail
+			ok = ValidEmail(val);
+		else if ( eltType == 2 ) // Phone
+			ok = ValidPhone(val,0);
+		if (ok)
+			img.src = dir + 'Tick.png';
 		else
 		{
-			ShowElt('imgY'+n,true);
-			var h = GetEltValue('txtEMailNew2').toUpperCase();
-			if ( n == 1 && h.length > 0 )
-			{
-				ShowElt('imgY2',(h==p));
-				ShowElt('imgN2',(h!=p));
-			}
+			img.src = dir + 'Cross.png';
+			DisableElt('X104258',true);
 		}
+		return ok;
 	}
 	catch (x)
-	{
-		alert(x.message);
-	}			
+	{ }
+	return false;
 }
 </script>
 
 <div class="Header3">
-<asp:Literal runat="server" ID="X104197">104197</asp:Literal>
+<asp:Literal runat="server" ID="X104247">104247</asp:Literal>
 </div>
 
 <table>
 <tr>
-	<td><asp:Literal runat="server" ID="X104198">104198</asp:Literal></td>
-	<td><asp:TextBox runat="server" Width="480px" ID="txtEMailOld" ReadOnly="true"></asp:TextBox></td></tr>
+	<td colspan="2" class="Header7"><asp:Literal runat="server" ID="X104248">104248</asp:Literal></td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104200">104200</asp:Literal></td>
+	<td><asp:Literal runat="server" ID="X104249">104249</asp:Literal></td>
+	<td><asp:Literal runat="server" ID="lblEMail"></asp:Literal></td></tr>
+<tr>
+	<td><asp:Literal runat="server" ID="X104251">104251</asp:Literal></td>
+	<td><asp:Literal runat="server" ID="lblPhone"></asp:Literal></td></tr>
+<tr>
+	<td colspan="2"><hr /></td></tr>
+<tr>
+	<td colspan="2" class="Header7"><asp:Literal runat="server" ID="X104253">104253</asp:Literal></td></tr>
+<tr>
+	<td><asp:Literal runat="server" ID="X104254">104254</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="480px" ID="txtEMailNew1" OnChange="JavaScript:CheckMail(1)"></asp:TextBox>&nbsp;
-		<img id="imgY1" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
-		<img id="imgN1" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
+		<asp:TextBox runat="server" Width="480px" ID="txtEMail" OnKeyUp="JavaScript:Validate('EMail',1)"></asp:TextBox>&nbsp;
+		<img id="imgEMail" />
 	</td></tr>
 <tr>
-	<td><asp:Literal runat="server" ID="X104202">104202</asp:Literal></td>
+	<td><asp:Literal runat="server" ID="X104256">104256</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="480px" ID="txtEMailNew2" OnChange="JavaScript:CheckMail(2)"></asp:TextBox>&nbsp;
-		<img id="imgY2" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
-		<img id="imgN2" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
+		<asp:TextBox runat="server" Width="480px" ID="txtPhone" OnKeyUp="JavaScript:Validate('Phone',2)"></asp:TextBox>&nbsp;
+		<img id="imgPhone" />
 	</td></tr>
 </table>
+<br />
+<asp:Button runat="server" id="X104258" Text="104258" OnClick="btnOK_Click" />
 <br /><br />
-<asp:Button runat="server" id="X104204" Text="104204" OnClick="btnOK_Click" />
-<br /><br />
-<asp:Label runat="server" ID="X104355" CssClass="Info">104355</asp:Label>
+<asp:Label runat="server" ID="X104357" CssClass="Info">104357</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <script type="text/javascript">
-CheckMail(1);
-CheckMail(2);
+if ( Validate('EMail',1) && Validate('Phone',2) )
+	DisableElt('X104258',false);
 </script>
 
 <!--#include file="IncludeErrorDtl.htm" -->

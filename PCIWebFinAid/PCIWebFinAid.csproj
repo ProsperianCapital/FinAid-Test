@@ -76,6 +76,7 @@
     <Content Include="Home.aspx" />
     <Content Include="pgChangeAddress.aspx" />
     <Content Include="pgChangeEMail.aspx" />
+    <Content Include="pgChangeEMailOnly.aspx" />
     <Content Include="pgChangePIN.aspx" />
     <Content Include="pgContractLookUp.aspx" />
     <Content Include="pgDeactivateSubscription.aspx" />
@@ -83,8 +84,10 @@
     <Content Include="pgPayOutstandingFees.aspx" />
     <Content Include="pgRequestCashReward.aspx" />
     <Content Include="pgTransactionLookUp.aspx" />
+    <Content Include="pgVerifyIdentity.aspx" />
     <Content Include="pgViewCurrentBalances.aspx" />
     <Content Include="pgVieweWallets.aspx" />
+    <Content Include="pgViewFundingMethods.aspx" />
     <Content Include="pgViewMiniStatement.aspx" />
     <Content Include="pgViewProductActivityLog.aspx" />
     <Content Include="pgViewProductDashboard.aspx" />
@@ -202,12 +205,33 @@
     <Content Include="Bin\PCIUnattended.EXE" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="pgChangeEMailOnly.aspx.cs">
+      <DependentUpon>pgChangeEMailOnly.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgChangeEMailOnly.aspx.designer.cs">
+      <DependentUpon>pgChangeEMailOnly.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pgPayOutstandingFees.aspx.cs">
       <DependentUpon>pgPayOutstandingFees.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pgPayOutstandingFees.aspx.designer.cs">
       <DependentUpon>pgPayOutstandingFees.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgVerifyIdentity.aspx.cs">
+      <DependentUpon>pgVerifyIdentity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgVerifyIdentity.aspx.designer.cs">
+      <DependentUpon>pgVerifyIdentity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgViewFundingMethods.aspx.cs">
+      <DependentUpon>pgViewFundingMethods.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgViewFundingMethods.aspx.designer.cs">
+      <DependentUpon>pgViewFundingMethods.aspx</DependentUpon>
     </Compile>
     <Compile Include="pgViewRewardTransactions.aspx.cs">
       <DependentUpon>pgViewRewardTransactions.aspx</DependentUpon>

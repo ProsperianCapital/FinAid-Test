@@ -48,9 +48,9 @@ function Validate(n,mode)
 <asp:Literal runat="server" ID="X104214">104214</asp:Literal>
 </div>
 
-<b><asp:Literal runat="server" ID="X104215">104215</asp:Literal></b>
-<br /><br />
 <table>
+<tr>
+	<td colspan="2" class="Header7"><asp:Literal runat="server" ID="X104215">104215</asp:Literal></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104216">104216</asp:Literal></td>
 	<td class="DataStatic"><asp:Literal runat="server" ID="lblLine1">Current Addr Line 1</asp:Literal></td></tr>
@@ -66,11 +66,10 @@ function Validate(n,mode)
 <tr>
 	<td><asp:Literal runat="server" ID="X104224">104224</asp:Literal></td>
 	<td class="DataStatic"><asp:Literal runat="server" ID="lblLine5">Current Addr Line 5</asp:Literal></td></tr>
-</table>
-<hr />
-<b><asp:Literal runat="server" ID="X104226">104226</asp:Literal></b>
-<br /><br />
-<table>
+<tr>
+	<td colspan="2"><hr /></td></tr>
+<tr>
+	<td colspan="2" class="Header7"><asp:Literal runat="server" ID="X104226">104226</asp:Literal></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="Y104216">104216</asp:Literal></td>
 	<td><asp:TextBox runat="server" ID="txtLine1" Width="400px" OnChange="JavaScript:Validate(1)"></asp:TextBox>&nbsp;<img id="img1" /></td></tr>

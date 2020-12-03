@@ -10,7 +10,7 @@
 namespace PCIWebFinAid {
     
     
-    public partial class pgChangeEMail {
+    public partial class pgViewFundingMethods {
         
         /// <summary>
         /// ascxXHeader control.
@@ -40,121 +40,202 @@ namespace PCIWebFinAid {
         protected global::PCIWebFinAid.XMenu ascxXMenu;
         
         /// <summary>
-        /// X104247 control.
+        /// X104268 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104247;
+        protected global::System.Web.UI.WebControls.Literal X104268;
         
         /// <summary>
-        /// X104248 control.
+        /// X104269 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104248;
+        protected global::System.Web.UI.WebControls.Literal X104269;
         
         /// <summary>
-        /// X104249 control.
+        /// lblName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104249;
+        protected global::System.Web.UI.WebControls.Literal lblName;
         
         /// <summary>
-        /// lblEMail control.
+        /// X104273 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblEMail;
+        protected global::System.Web.UI.WebControls.Literal X104273;
         
         /// <summary>
-        /// X104251 control.
+        /// lblNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104251;
+        protected global::System.Web.UI.WebControls.Literal lblNumber;
         
         /// <summary>
-        /// lblPhone control.
+        /// X104275 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblPhone;
+        protected global::System.Web.UI.WebControls.Literal X104275;
         
         /// <summary>
-        /// X104253 control.
+        /// lblMM control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104253;
+        protected global::System.Web.UI.WebControls.Literal lblMM;
         
         /// <summary>
-        /// X104254 control.
+        /// lblYY control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104254;
+        protected global::System.Web.UI.WebControls.Literal lblYY;
         
         /// <summary>
-        /// txtEMail control.
+        /// X104277 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEMail;
+        protected global::System.Web.UI.WebControls.Literal X104277;
         
         /// <summary>
-        /// X104256 control.
+        /// lblCVV control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X104256;
+        protected global::System.Web.UI.WebControls.Literal lblCVV;
         
         /// <summary>
-        /// txtPhone control.
+        /// Y104269 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPhone;
+        protected global::System.Web.UI.WebControls.Literal Y104269;
         
         /// <summary>
-        /// X104258 control.
+        /// txtName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button X104258;
+        protected global::System.Web.UI.WebControls.TextBox txtName;
         
         /// <summary>
-        /// X104357 control.
+        /// Y104273 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label X104357;
+        protected global::System.Web.UI.WebControls.Literal Y104273;
+        
+        /// <summary>
+        /// txtNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNumber;
+        
+        /// <summary>
+        /// Y104275 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Y104275;
+        
+        /// <summary>
+        /// lstMM control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstMM;
+        
+        /// <summary>
+        /// lstYY control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList lstYY;
+        
+        /// <summary>
+        /// Y104277 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Y104277;
+        
+        /// <summary>
+        /// txtCVV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCVV;
+        
+        /// <summary>
+        /// X104279 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button X104279;
+        
+        /// <summary>
+        /// X104281 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label X104281;
+        
+        /// <summary>
+        /// X104358 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label X104358;
         
         /// <summary>
         /// ascxXFooter control.
