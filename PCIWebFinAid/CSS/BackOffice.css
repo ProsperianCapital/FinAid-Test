@@ -264,6 +264,64 @@ input[type=text]:focus, input[type=password]:focus, select:focus, textarea:focus
 	font-weight: bold;
 }
 
+.tRowHead
+{
+	font-family: ralewaymedium;
+	font-size: 14px;
+	font-weight: bold;
+	color: black;
+	background-color: aqua;
+	border-bottom: 1px solid #000000;
+}
+
+tr.tRow
+{
+	background-color: #E1E1E1;
+}
+tr.tRow td
+{
+	vertical-align: middle;
+}
+tr.tRow:hover
+{
+	background-color: lightpink; /* aquamarine; */
+}
+
+tr.tRowAlt
+{
+	background-color: #B9B9B9;
+}
+tr.tRowAlt td
+{
+	vertical-align: middle;
+}
+tr.tRowAlt:hover
+{
+	background-color: aquamarine;
+}
+
+table
+{
+	text-align: left;
+	border-spacing: 0px;
+	word-spacing: 0px;
+	white-space: nowrap;
+	border-collapse: collapse;
+	padding: 0px;
+}
+
+tr
+{
+	padding: 0;
+}
+
+td
+{
+	vertical-align: top;
+	padding: 5px;
+	border: none;
+}
+
 /* Testing stuff below, not used */
 
 .Detail
@@ -304,41 +362,3 @@ input[type=text]:focus, input[type=password]:focus, select:focus, textarea:focus
 	float: right;
 }
 
-.tRowHead
-{
-	font-family: ralewaymedium;
-	font-size: 14px;
-	font-weight: bold;
-	color: black;
-	background-color: lightgreen;
-}
-
-tr.odd, .tRow {
-	background-color: #E1E1E1; }
-tr.tRow td {
-	vertical-align: middle; }
-tr.tRow:hover {
-	background-color: aquamarine; }
-
-tr.even, .tRowAlt {
-	background-color: #B9B9B9; }
-tr.tRowAlt td {
-	vertical-align: middle; }
-tr.tRowAlt:hover {
-	background-color: aquamarine; }
-
-table {
-	text-align: left;
-	border-spacing: 0px;
-	word-spacing: 0px;
-	white-space: nowrap;
-	border-collapse: collapse;
-	padding: 0px; }
-
-tr {
-	padding: 0; }
-
-td {
-	vertical-align: top;
-	padding: 5px;
-	border: none; }
