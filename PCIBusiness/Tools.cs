@@ -888,6 +888,18 @@ namespace PCIBusiness
 			return ( x > 0 && ( pin.Length == length || length < 1 ) );
 		}
 
+		public static bool CheckPhone(string phone)
+		{
+			phone = NullToString(phone).Replace(" ","").Replace("(","").Replace(")","");
+			if ( phone.Length < 8 )
+				return false;
+			if ( phone.StartsWith("0") || phone.StartsWith("+") )
+				for ( int k = 0 ; k < phone.Length ; k++ )
+					if ( ! ("0123456789").Contains(phone.Substring(k,1)) )
+						return false;
+			return true;
+		}
+
 		public static bool CheckEMail(string email,byte mode=2)
 		{
 		//	Mode = 1. Exactly 1 address allowed (ie. no commas, semi-colons or spaces).
