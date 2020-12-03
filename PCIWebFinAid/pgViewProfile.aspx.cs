@@ -58,8 +58,9 @@ namespace PCIWebFinAid
 					lblLastLogon.Text = mList.GetColumn("LastLogon");
 				}
 
-				sqlProc = "sp_CRM_GetContractContactLog";
-				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+				bool rowEven = true;
+				sqlProc      = "sp_CRM_GetContractContactLog";
+				sql          = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0,"",false) != 0 )
 					SetErrorDetail("LoadDataInitial",11110,"Internal database error (" + sqlProc + ")",sql,102,2);
 				else
@@ -72,6 +73,11 @@ namespace PCIWebFinAid
 						col2.Text      = mList.GetColumn("ContactDescription");
 						row.Cells.Add(col1);
 						row.Cells.Add(col2);
+						if (rowEven)
+							row.CssClass = "tRow";
+						else
+							row.CssClass = "tRowAlt";
+						rowEven = ! rowEven;
 						tblHistory.Rows.Add(row);
 						mList.NextRow();
 					}

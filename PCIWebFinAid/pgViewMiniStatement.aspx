@@ -20,11 +20,11 @@
 </div>
 
 <asp:Table runat="server" ID="tblStatement" style="border:1px solid #000000">
-<asp:TableRow>
-	<asp:TableCell ID="X104118" style="border-bottom:1px solid #000000;font-weight:bold">104118</asp:TableCell>
-	<asp:TableCell ID="X104119" style="border-bottom:1px solid #000000;font-weight:bold">104119</asp:TableCell>
-	<asp:TableCell ID="X104120" style="border-bottom:1px solid #000000;font-weight:bold">104120</asp:TableCell>
-	<asp:TableCell ID="X104121" style="border-bottom:1px solid #000000;font-weight:bold">104121</asp:TableCell></asp:TableRow>
+<asp:TableRow CssClass="tRowHead">
+	<asp:TableCell ID="X104118">104118</asp:TableCell>
+	<asp:TableCell ID="X104119">104119</asp:TableCell>
+	<asp:TableCell ID="X104120">104120</asp:TableCell>
+	<asp:TableCell ID="X104121">104121</asp:TableCell></asp:TableRow>
 </asp:Table>
 <br />
 <asp:Literal runat="server" ID="X104360">104360</asp:Literal>

@@ -20,9 +20,9 @@
 </div>
 
 <asp:Table runat="server" ID="tblHistory" style="border:1px solid #000000">
-<asp:TableRow>
-	<asp:TableCell ID="X104134" style="border-bottom:1px solid #000000;font-weight:bold">104134</asp:TableCell>
-	<asp:TableCell ID="X104136" style="border-bottom:1px solid #000000;font-weight:bold">104136</asp:TableCell></asp:TableRow>
+<asp:TableRow CssClass="tRowHead">
+	<asp:TableCell ID="X104134">104134</asp:TableCell>
+	<asp:TableCell ID="X104136">104136</asp:TableCell></asp:TableRow>
 </asp:Table>
 <br /><br />
 <asp:Label runat="server" ID="X104140" CssClass="Info">104140</asp:Label>

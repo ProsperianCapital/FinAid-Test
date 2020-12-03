@@ -49,9 +49,9 @@
 		<asp:Literal runat="server" ID="X104023">104023</asp:Literal>
 		<br /><br />
 		<asp:Table runat="server" ID="tblHistory" style="border:1px solid #000000">
-		<asp:TableRow>
-			<asp:TableCell ID="X104367" style="border-bottom:1px solid #000000;font-weight:bold">104367</asp:TableCell>
-			<asp:TableCell ID="X104368" style="border-bottom:1px solid #000000;font-weight:bold">104368</asp:TableCell></asp:TableRow>
+		<asp:TableRow CssClass="tRowHead">
+			<asp:TableCell ID="X104367">104367</asp:TableCell>
+			<asp:TableCell ID="X104368">104368</asp:TableCell></asp:TableRow>
 		</asp:Table>
 		<br />
 		<asp:Label runat="server" ID="X104027" CssClass="Info">104027</asp:Label>

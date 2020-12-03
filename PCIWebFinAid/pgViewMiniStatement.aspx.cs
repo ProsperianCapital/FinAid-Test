@@ -41,34 +41,40 @@ namespace PCIWebFinAid
 
 			using (MiscList mList = new MiscList())
 			{
+				bool   rowEven = true;
 				string balance = "";
-				sqlProc = "sp_Get_CRMClientMiniStatementB";
-				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+				sqlProc        = "sp_Get_CRMClientMiniStatementB";
+				sql            = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0,"",false) != 0 )
 					SetErrorDetail("LoadDataInitial",13100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else
 					while ( ! mList.EOF )
 					{
-						TableRow  row  = new TableRow();
-//						TableCell col2 = new TableCell();
-//						TableCell col3 = new TableCell();
-//						TableCell col4 = new TableCell();
-//						col1.Text      = Tools.DateToString(mList.GetColumnDate("Date"),7,1); // yyyy-mm-dd hh:mm:ss
-						TableCell col  = new TableCell();
-						col.Text       = mList.GetColumn("Date");
+						TableRow  row   = new TableRow();
+//						TableCell col2  = new TableCell();
+//						TableCell col3  = new TableCell();
+//						TableCell col4  = new TableCell();
+//						col1.Text       = Tools.DateToString(mList.GetColumnDate("Date"),7,1); // yyyy-mm-dd hh:mm:ss
+						TableCell col   = new TableCell();
+						col.Text        = mList.GetColumn("Date");
 						row.Cells.Add(col);
-						col            = new TableCell();
-						col.Text       = mList.GetColumn("Description");
+						col             = new TableCell();
+						col.Text        = mList.GetColumn("Description");
 						row.Cells.Add(col);
-						col            = new TableCell();
+						col             = new TableCell();
 						col.HorizontalAlign = HorizontalAlign.Right;
-						col.Text       = mList.GetColumn("Amount");
+						col.Text        = mList.GetColumn("Amount");
 						row.Cells.Add(col);
-						col            = new TableCell();
+						col             = new TableCell();
 						col.HorizontalAlign = HorizontalAlign.Right;
-						col.Text       = mList.GetColumn("Balance");
+						col.Text        = mList.GetColumn("Balance");
 						row.Cells.Add(col);
-						balance        = col.Text;
+						balance         = col.Text;
+						if (rowEven)
+							row.CssClass = "tRow";
+						else
+							row.CssClass = "tRowAlt";
+						rowEven = ! rowEven;
 						tblStatement.Rows.Add(row);
 						mList.NextRow();
 					}
