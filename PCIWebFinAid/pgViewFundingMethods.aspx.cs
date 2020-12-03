@@ -70,8 +70,10 @@ namespace PCIWebFinAid
 					lblCVV.Text     = mList.GetColumn("CardCVVCode");
 					string mm       = mList.GetColumn("CardExpiryMonth");
 					string yy       = mList.GetColumn("CardExpiryYear");
-					if ( mm.Length > 0 && yy.Length > 0 )
-						lblDate.Text = mm + " / " + yy;
+					if ( mm.Length  > 0 && yy.Length > 0 )
+						lblDate.Text = (mm.Length==1?"0":"") + mm + " / " + yy;
+					else
+						lblDate.Text = "";
 					WebTools.ListSelect(lstMM,mm);
 					WebTools.ListSelect(lstYY,yy);
 				}
