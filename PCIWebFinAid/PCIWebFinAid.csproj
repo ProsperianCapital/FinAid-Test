@@ -84,7 +84,9 @@
     <Content Include="pgPayOutstandingFees.aspx" />
     <Content Include="pgRequestCashReward.aspx" />
     <Content Include="pgTransactionLookUp.aspx" />
+    <Content Include="pgVerifyEMail.aspx" />
     <Content Include="pgVerifyIdentity.aspx" />
+    <Content Include="pgVerifyMobile.aspx" />
     <Content Include="pgViewCurrentBalances.aspx" />
     <Content Include="pgVieweWallets.aspx" />
     <Content Include="pgViewFundingMethods.aspx" />
@@ -219,12 +221,26 @@
     <Compile Include="pgPayOutstandingFees.aspx.designer.cs">
       <DependentUpon>pgPayOutstandingFees.aspx</DependentUpon>
     </Compile>
+    <Compile Include="pgVerifyEMail.aspx.cs">
+      <DependentUpon>pgVerifyEMail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgVerifyEMail.aspx.designer.cs">
+      <DependentUpon>pgVerifyEMail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pgVerifyIdentity.aspx.cs">
       <DependentUpon>pgVerifyIdentity.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pgVerifyIdentity.aspx.designer.cs">
       <DependentUpon>pgVerifyIdentity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgVerifyMobile.aspx.cs">
+      <DependentUpon>pgVerifyMobile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgVerifyMobile.aspx.designer.cs">
+      <DependentUpon>pgVerifyMobile.aspx</DependentUpon>
     </Compile>
     <Compile Include="pgViewFundingMethods.aspx.cs">
       <DependentUpon>pgViewFundingMethods.aspx</DependentUpon>

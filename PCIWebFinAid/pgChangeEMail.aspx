@@ -52,10 +52,10 @@ function Validate(eltID,eltType)
 	<td colspan="2" class="Header7"><asp:Literal runat="server" ID="X104248">104248</asp:Literal></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104249">104249</asp:Literal></td>
-	<td><asp:Literal runat="server" ID="lblEMail"></asp:Literal></td></tr>
+	<td class="DataStatic"><asp:Literal runat="server" ID="lblEMail"></asp:Literal></td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104251">104251</asp:Literal></td>
-	<td><asp:Literal runat="server" ID="lblPhone"></asp:Literal></td></tr>
+	<td class="DataStatic"><asp:Literal runat="server" ID="lblPhone"></asp:Literal></td></tr>
 <tr>
 	<td colspan="2"><hr /></td></tr>
 <tr>
