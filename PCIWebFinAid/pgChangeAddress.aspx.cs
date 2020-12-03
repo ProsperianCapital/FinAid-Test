@@ -19,7 +19,10 @@ namespace PCIWebFinAid
 				return;
 
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-				LoadDataInitial();
+			{
+				LoadLabelText(ascxXMenu);
+				LoadPageData();
+			}
 			else
 				StartOver(15010);
 		}
@@ -32,12 +35,8 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = "";
 		}
 
-		private void LoadDataInitial()
+		private void LoadPageData()
 		{
-//		Called once in the beginning
-
-			LoadLabelText(ascxXMenu);
-
 			using (MiscList mList = new MiscList())
 			{
 				sqlProc = "sp_CRM_GetContractAddress";
@@ -54,6 +53,11 @@ namespace PCIWebFinAid
 					lblLine5.Text = mList.GetColumn("AddressLine5");
 				}
 			}
+			txtLine1.Text = "";
+			txtLine2.Text = "";
+			txtLine3.Text = "";
+			txtLine4.Text = "";
+			txtLine5.Text = "";
 			txtLine1.Focus();
 		}
 
@@ -85,8 +89,15 @@ namespace PCIWebFinAid
 
 				if ( mList.ExecQuery(sql,0) != 0 )
 					SetErrorDetail("btnOK_Click",15200,"Internal database error (" + sqlProc + ")",sql,102,1);
-				else if ( ! mList.EOF )
-					SetErrorDetail("btnOK_Click",15210,mList.GetColumn("ResultMessage"),"",102,0);
+				else if ( mList.EOF )
+					SetErrorDetail("btnOK_Click",15210,"No data returned (" + sqlProc + ")",sql,102,1);
+				else
+				{
+					SetErrorDetail("btnOK_Click",15220,mList.GetColumn("ResultMessage"),"",102,0);
+					Tools.LogInfo("btnOK_Click","ResultCode="+mList.GetColumn("ResultCode"),222);
+					if ( mList.GetColumnInt("ResultCode") == 0 )
+						LoadPageData();
+				}
 			}
 		}
 	}

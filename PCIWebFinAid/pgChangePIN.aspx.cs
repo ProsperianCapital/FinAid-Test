@@ -60,8 +60,13 @@ namespace PCIWebFinAid
 					if ( mList.ExecQuery(sql,0) != 0 )
 						SetErrorDetail("btnOK_Click",17100,"Internal database error (" + sqlProc + ")",sql,102,1);
 					else if ( ! mList.EOF )
+					{
 						SetErrorDetail("btnOK_Click",17110,mList.GetColumn("ResultMessage"),"",102,0);
-			}
+						txtPIN0.Text = "";
+						txtPIN1.Text = "";
+						txtPIN2.Text = "";
+					}
+				}
 		}
 	}
 }
