@@ -16,30 +16,23 @@
 <ascx:XMenu runat="server" ID="ascxXMenu" />
 
 <script type="text/javascript">
-function Validate(eltID,eltType)
+function Validate(n)
 {
 	try
 	{
-		var img = GetElt('img'+eltID);
-		var val = GetEltValue('txt'+eltID);
+		var eX  = GetEltValue('txtEMail');
+		var pX  = GetEltValue('txtPhone');
+		var eOK = ValidEmail(eX);
+		var pOK = ValidPhone(pX,0);
 		var dir = '<%=PCIBusiness.Tools.ImageFolder() %>';
-		var ok  = false;
-		if ( eltType == 1 ) // EMail
-			ok = ValidEmail(val);
-		else if ( eltType == 2 ) // Phone
-			ok = ValidPhone(val,0);
-		if (ok)
-			img.src = dir + 'Tick.png';
-		else
-		{
-			img.src = dir + 'Cross.png';
-			DisableElt('X104258',true);
-		}
-		return ok;
+		if ( n == 1 || ( n == 0 && eX.length > 0 ) )
+			GetElt('imgEMail').src = dir + ( eOK ? 'Tick' : 'Cross' ) + '.png';
+		if ( n == 2 || ( n == 0 && eP.length > 0 ) )
+			GetElt('imgPhone').src = dir + ( pOK ? 'Tick' : 'Cross' ) + '.png';
+		DisableElt('X104258',!(eOK&pOK));
 	}
 	catch (x)
 	{ }
-	return false;
 }
 </script>
 
@@ -63,13 +56,13 @@ function Validate(eltID,eltType)
 <tr>
 	<td><asp:Literal runat="server" ID="X104254">104254</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="480px" ID="txtEMail" OnKeyUp="JavaScript:Validate('EMail',1)"></asp:TextBox>&nbsp;
+		<asp:TextBox runat="server" Width="480px" ID="txtEMail" OnKeyUp="JavaScript:Validate(1)"></asp:TextBox>&nbsp;
 		<img id="imgEMail" />
 	</td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104256">104256</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="480px" ID="txtPhone" OnKeyUp="JavaScript:Validate('Phone',2)"></asp:TextBox>&nbsp;
+		<asp:TextBox runat="server" Width="480px" ID="txtPhone" OnKeyUp="JavaScript:Validate(2)"></asp:TextBox>&nbsp;
 		<img id="imgPhone" />
 	</td></tr>
 </table>
@@ -80,8 +73,7 @@ function Validate(eltID,eltType)
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <script type="text/javascript">
-if ( Validate('EMail',1) && Validate('Phone',2) )
-	DisableElt('X104258',false);
+Validate(0);
 </script>
 
 <!--#include file="IncludeErrorDtl.htm" -->

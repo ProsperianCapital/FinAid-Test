@@ -20,30 +20,41 @@ function CheckPIN(n)
 {
 	try
 	{
-		ShowElt('imgY'+n,false);
-		ShowElt('imgN'+n,false);
-		var p = GetEltValue('txtPIN'+n);
-		if ( p.length < 1 )
-			return;
-		if ( ! ValidPIN(p,<%=MIN_PIN_LENGTH%>) )
-			ShowElt('imgN'+n,true);
-		else if ( n == 2 && GetEltValue('txtPIN1') != p )
-			ShowElt('imgN'+n,true);
-		else
+		var p0 = GetEltValue('txtPIN0');
+		var p1 = GetEltValue('txtPIN1');
+		var p2 = GetEltValue('txtPIN2');
+
+		if ( n != null )
 		{
-			ShowElt('imgY'+n,true);
-			var h = GetEltValue('txtPIN2');
-			if ( n == 1 && h.length > 0 )
+			ShowElt('imgY'+n,false);
+			ShowElt('imgN'+n,false);
+			var p = GetEltValue('txtPIN'+n);
+			if ( ! ValidPIN(p,<%=MIN_PIN_LENGTH%>) )
+				ShowElt('imgN'+n,true);
+			else if ( n == 2 && p1 != p2 )
+				ShowElt('imgN'+n,true);
+			else
 			{
-				ShowElt('imgY2',(h==p));
-				ShowElt('imgN2',(h!=p));
+				ShowElt('imgY'+n,true);
+				if ( n == 1 && p2.length > 0 )
+				{
+					ShowElt('imgY2',(p1==p2));
+					ShowElt('imgN2',(p1!=p2));
+				}
 			}
 		}
+		var ok = ( ValidPIN(p0,<%=MIN_PIN_LENGTH%>) &&
+		           ValidPIN(p1,<%=MIN_PIN_LENGTH%>) &&
+		           ValidPIN(p2,<%=MIN_PIN_LENGTH%>) &&
+		           p1 == p2 );
+		DisableElt('X104204',!ok);
+		return ok;
 	}
 	catch (x)
 	{
 		alert(x.message);
-	}			
+	}
+	return false;	
 }
 </script>
 
@@ -54,21 +65,21 @@ function CheckPIN(n)
 <table>
 <tr>
 	<td><asp:Literal runat="server" ID="X104198">104198</asp:Literal></td>
-	<td><asp:TextBox runat="server" Width="100px" ID="txtPIN0" OnChange="JavaScript:CheckPIN(0)"></asp:TextBox>
+	<td><asp:TextBox runat="server" Width="100px" ID="txtPIN0" OnKeyUp="JavaScript:CheckPIN(0)"></asp:TextBox>
 		<img id="imgY0" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
 		<img id="imgN0" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
 	</td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104200">104200</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="100px" ID="txtPIN1" OnChange="JavaScript:CheckPIN(1)"></asp:TextBox>&nbsp;
+		<asp:TextBox runat="server" Width="100px" ID="txtPIN1" OnKeyUp="JavaScript:CheckPIN(1)"></asp:TextBox>&nbsp;
 		<img id="imgY1" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
 		<img id="imgN1" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
 	</td></tr>
 <tr>
 	<td><asp:Literal runat="server" ID="X104202">104202</asp:Literal></td>
 	<td>
-		<asp:TextBox runat="server" Width="100px" ID="txtPIN2" OnChange="JavaScript:CheckPIN(2)"></asp:TextBox>&nbsp;
+		<asp:TextBox runat="server" Width="100px" ID="txtPIN2" OnKeyUp="JavaScript:CheckPIN(2)"></asp:TextBox>&nbsp;
 		<img id="imgY2" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
 		<img id="imgN2" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
 	</td></tr>
@@ -80,9 +91,9 @@ function CheckPIN(n)
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <script type="text/javascript">
-CheckPIN(0);
-CheckPIN(1);
-CheckPIN(2);
+CheckPIN(null);
+CheckPIN(null);
+CheckPIN(null);
 </script>
 
 <!--#include file="IncludeErrorDtl.htm" -->
