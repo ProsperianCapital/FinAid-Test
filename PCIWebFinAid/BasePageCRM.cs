@@ -31,7 +31,7 @@ namespace PCIWebFinAid
 					msg = "[" + mList.ReturnCode.ToString() + "] " + msg;
 				else
 					msg = "[" + mList.ReturnCode.ToString() + "] Update failed (" + sqlProc + ")";
-				SetErrorDetail(module+".UpdatePageData",99010,msg,"",102,1);
+				SetErrorDetail(module+".UpdatePageData",(mList.ReturnCode==0?0:99010),msg,"",102,1);
 			}
 		}
 
