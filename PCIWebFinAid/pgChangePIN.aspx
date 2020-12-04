@@ -24,7 +24,7 @@ function CheckPIN(n)
 		var p1 = GetEltValue('txtPIN1');
 		var p2 = GetEltValue('txtPIN2');
 
-		if ( n != null )
+		if ( n < 3 )
 		{
 			ShowElt('imgY'+n,false);
 			ShowElt('imgN'+n,false);
@@ -91,9 +91,7 @@ function CheckPIN(n)
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 
 <script type="text/javascript">
-CheckPIN(null);
-CheckPIN(null);
-CheckPIN(null);
+CheckPIN(99);
 </script>
 
 <!--#include file="IncludeErrorDtl.htm" -->

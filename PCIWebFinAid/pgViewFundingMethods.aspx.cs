@@ -19,7 +19,7 @@ namespace PCIWebFinAid
 				return;
 
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-				LoadDataInitial();
+				LoadPageData();
 			else
 				StartOver(20010);
 		}
@@ -32,7 +32,7 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = "";
 		}
 
-		private void LoadDataInitial()
+		protected override void LoadPageData()
 		{
 //		Called once in the beginning
 
@@ -62,7 +62,7 @@ namespace PCIWebFinAid
 				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
 				                            + ",@Access="       + Tools.DBString(sessionGeneral.AccessType);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",20100,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("LoadPageData",20100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
 				{ 
 					lblName.Text    = mList.GetColumn("CardHolderName");

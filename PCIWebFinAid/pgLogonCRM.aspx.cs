@@ -56,6 +56,10 @@ namespace PCIWebFinAid
 			}
 		}
 
+		protected override void LoadPageData()
+		{
+		}
+
 		protected void btnLogin_Click(Object sender, EventArgs e)
 		{
 			SetErrorDetail("btnLogin_Click",10100,"Invalid user name and/or password","One or both of user name/password is blank",2,2,null,true);

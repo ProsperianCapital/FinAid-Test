@@ -30,9 +30,11 @@ function Validate(n)
 		if ( n == 2 || ( n == 0 && eP.length > 0 ) )
 			GetElt('imgPhone').src = dir + ( pOK ? 'Tick' : 'Cross' ) + '.png';
 		DisableElt('X104258',!(eOK&pOK));
+		return eOK & pOK;
 	}
 	catch (x)
 	{ }
+	return false;
 }
 </script>
 

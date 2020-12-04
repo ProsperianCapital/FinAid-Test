@@ -20,7 +20,7 @@ namespace PCIWebFinAid
 				return;
 
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-				LoadDataInitial();
+				LoadPageData();
 			else
 				StartOver(16010);
 		}
@@ -33,7 +33,7 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = "";
 		}
 
-		private void LoadDataInitial()
+		protected override void LoadPageData()
 		{
 //		Called once in the beginning
 

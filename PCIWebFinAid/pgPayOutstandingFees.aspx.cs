@@ -19,7 +19,7 @@ namespace PCIWebFinAid
 				return;
 
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-				LoadDataInitial();
+				LoadPageData();
 			else
 				StartOver(18010);
 		}
@@ -32,7 +32,7 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = "";
 		}
 
-		private void LoadDataInitial()
+		protected override void LoadPageData()
 		{
 //		Called once in the beginning
 
@@ -48,7 +48,7 @@ namespace PCIWebFinAid
 				sqlProc = "sp_CRM_GetContractSettlementBalance";
 				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",23100,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("LoadPageData",23100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
 				{
 					lblBalance.Text = mList.GetColumn("SettlementBalance");

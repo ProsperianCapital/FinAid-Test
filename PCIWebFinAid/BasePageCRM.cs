@@ -17,6 +17,51 @@ namespace PCIWebFinAid
 			base.StartOver ( errNo, ( pageName.Length > 0 ? pageName : "pgLogonCRM.aspx" ) );
 		}
 
+		protected abstract void LoadPageData();
+
+		protected void UpdatePageData(string module)
+		{
+			using (MiscList mList = new MiscList())
+			{
+				mList.UpdateQuery(sql);
+				string msg = mList.ReturnMessage;
+				if ( mList.ReturnCode == 0 )
+					LoadPageData();
+				else if ( msg.Length > 0 )
+					msg = "[" + mList.ReturnCode.ToString() + "] " + msg;
+				else
+					msg = "[" + mList.ReturnCode.ToString() + "] Update failed (" + sqlProc + ")";
+
+			//	Debug version
+				SetErrorDetail(module+".UpdatePageData",99010,msg,sql,102,1,null,false,233);
+			//	Live version
+			//	SetErrorDetail(module+".UpdatePageData",99010,msg,"",102,1);
+			}
+		}
+
+//		protected void UpdatePageData(string module)
+//		{
+//			using (MiscList mList = new MiscList())
+//			{
+//				if ( mList.ExecQuery(sql,0,"",false) != 0 )
+//					SetErrorDetail(module,99010,"Internal database error (" + sqlProc + ")",sql,102,1);
+//				else if ( mList.EOF )
+//					SetErrorDetail(module,99020,"No data returned (" + sqlProc + ")",sql,102,1);
+//				else
+//				{
+//					int    errCode = mList.GetColumnInt("ResultCode");
+//					string errMsg  = mList.GetColumn   ("ResultMessage");
+//					if ( errCode > 0 && errMsg.Length > 0 )
+//						errMsg = "[" + errCode.ToString() + "] " + errMsg;
+//					else if ( errCode > 0 )
+//						errMsg = "[" + errCode.ToString() + "] Update failed (" + sqlProc + ")";
+//					else
+//						LoadPageData();
+//					SetErrorDetail(module,99030,errMsg,"",102,1);
+//				}
+//			}
+//		}
+
 		protected int LoadLabelText(Control subCtl)
 		{
 			if ( sessionGeneral == null )

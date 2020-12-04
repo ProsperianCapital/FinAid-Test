@@ -19,7 +19,7 @@ namespace PCIWebFinAid
 				return;
 
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-				LoadDataInitial();
+				LoadPageData();
 			else
 				StartOver(11010);
 		}
@@ -33,7 +33,7 @@ namespace PCIWebFinAid
 			lblDate.Text       = Tools.DateToString(System.DateTime.Now,7,1); // yyyy-mm-dd hh:mm:ss
 		}
 
-		private void LoadDataInitial()
+		protected override void LoadPageData()
 		{
 //		Called once in the beginning
 
@@ -44,7 +44,7 @@ namespace PCIWebFinAid
 				sqlProc = "sp_Get_CRMClientWelcome";
 				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",11100,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("LoadPageData",11100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
 				{
 					lblAddress.Text   = mList.GetColumn("Address").Replace(Environment.NewLine,"<br />");
@@ -62,7 +62,7 @@ namespace PCIWebFinAid
 				sqlProc      = "sp_CRM_GetContractContactLog";
 				sql          = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0,"",false) != 0 )
-					SetErrorDetail("LoadDataInitial",11110,"Internal database error (" + sqlProc + ")",sql,102,2);
+					SetErrorDetail("LoadPageData",11110,"Internal database error (" + sqlProc + ")",sql,102,2);
 				else
 					while ( ! mList.EOF )
 					{

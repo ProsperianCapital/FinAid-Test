@@ -19,7 +19,7 @@ namespace PCIWebFinAid
 				return;
 
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-				LoadDataInitial();
+				LoadPageData();
 			else
 				StartOver(12010);
 		}
@@ -32,7 +32,7 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = "";
 		}
 
-		private void LoadDataInitial()
+		protected override void LoadPageData()
 		{
 //		Called once in the beginning
 
@@ -43,9 +43,9 @@ namespace PCIWebFinAid
 				sqlProc = "sp_WP_Get_DashboardInfo";
 				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",12100,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("LoadPageData",12100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( mList.EOF )
-					SetErrorDetail("LoadDataInitial",12110,"Internal database error (" + sqlProc + ", no data returned)",sql,102,1);
+					SetErrorDetail("LoadPageData",12110,"Internal database error (" + sqlProc + ", no data returned)",sql,102,1);
 				else
 				{
 					lblName.Text         = mList.GetColumn("ClientName");

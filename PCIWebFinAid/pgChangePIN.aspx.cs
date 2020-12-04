@@ -20,7 +20,10 @@ namespace PCIWebFinAid
 				return;
 
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-				LoadDataInitial();
+			{
+				LoadLabelText(ascxXMenu);
+				LoadPageData();
+			}
 			else
 				StartOver(17010);
 		}
@@ -33,11 +36,11 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = "";
 		}
 
-		private void LoadDataInitial()
+		protected override void LoadPageData()
 		{
-//		Called once in the beginning
-
-			LoadLabelText(ascxXMenu);
+			txtPIN0.Text = "";
+			txtPIN1.Text = "";
+			txtPIN2.Text = "";
 			txtPIN0.Focus();
 		}
 
@@ -48,25 +51,35 @@ namespace PCIWebFinAid
 			int pin2 = Tools.StringToInt(txtPIN2.Text);
 
 			if ( pin0 > 0 && pin1 > 0 && pin2 > 0 && pin1 == pin2 )
+			{
+				sqlProc = "sp_CRM_ChangeContractPINA";
+				sql     = "exec " + sqlProc + " @ContractCode="       + Tools.DBString(sessionGeneral.ContractCode)
+				                            + ",@ExistingPIN="        + pin0.ToString()
+				                            + ",@NewPIN="             + pin1.ToString()
+				                            + ",@NewPINConfirmation=" + pin2.ToString()
+				                            + ",@Access="             + Tools.DBString(sessionGeneral.AccessType);
+				UpdatePageData("btnOK_Click");
+			}
 
-				using (MiscList mList = new MiscList())
-				{
-					sqlProc = "sp_CRM_ChangeContractPINA";
-					sql     = "exec " + sqlProc + " @ContractCode="       + Tools.DBString(sessionGeneral.ContractCode)
-					                            + ",@ExistingPIN="        + pin0.ToString()
-					                            + ",@NewPIN="             + pin1.ToString()
-					                            + ",@NewPINConfirmation=" + pin2.ToString()
-					                            + ",@Access="             + Tools.DBString(sessionGeneral.AccessType);
-					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("btnOK_Click",17100,"Internal database error (" + sqlProc + ")",sql,102,1);
-					else if ( ! mList.EOF )
-					{
-						SetErrorDetail("btnOK_Click",17110,mList.GetColumn("ResultMessage"),"",102,0);
-						txtPIN0.Text = "";
-						txtPIN1.Text = "";
-						txtPIN2.Text = "";
-					}
-				}
+//				using (MiscList mList = new MiscList())
+//				{
+//					sqlProc = "sp_CRM_ChangeContractPINA";
+//					sql     = "exec " + sqlProc + " @ContractCode="       + Tools.DBString(sessionGeneral.ContractCode)
+//					                            + ",@ExistingPIN="        + pin0.ToString()
+//					                            + ",@NewPIN="             + pin1.ToString()
+//					                            + ",@NewPINConfirmation=" + pin2.ToString()
+//					                            + ",@Access="             + Tools.DBString(sessionGeneral.AccessType);
+//					if ( mList.ExecQuery(sql,0) != 0 )
+//						SetErrorDetail("btnOK_Click",17100,"Internal database error (" + sqlProc + ")",sql,102,1);
+//					else if ( ! mList.EOF )
+//					{
+//						SetErrorDetail("btnOK_Click",17110,mList.GetColumn("ResultMessage"),"",102,0);
+//						txtPIN0.Text = "";
+//						txtPIN1.Text = "";
+//						txtPIN2.Text = "";
+//					}
+//				}
+
 		}
 	}
 }

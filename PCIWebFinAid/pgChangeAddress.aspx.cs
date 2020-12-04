@@ -35,7 +35,7 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = "";
 		}
 
-		private void LoadPageData()
+		protected override void LoadPageData()
 		{
 			using (MiscList mList = new MiscList())
 			{
@@ -43,7 +43,7 @@ namespace PCIWebFinAid
 				sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
 				                            + ",@Access="       + Tools.DBString(sessionGeneral.AccessType);
 				if ( mList.ExecQuery(sql,0) != 0 )
-					SetErrorDetail("LoadDataInitial",15100,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("LoadPageData",15100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
 				{
 					lblLine1.Text = mList.GetColumn("AddressLine1");
@@ -76,6 +76,16 @@ namespace PCIWebFinAid
 			if ( addr4.Length < 2 && addr5.Length > 1 )
 				return;
 
+			sqlProc = "sp_CRM_ChangeContractAddressA";
+			sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
+			                            + ",@Access="       + Tools.DBString(sessionGeneral.AccessType)
+			                            + ",@NewLine1="     + Tools.DBString(addr1,47) // Unicode
+			                            + ",@NewLine2="     + Tools.DBString(addr2,47)
+			                            + ",@NewLine3="     + Tools.DBString(addr3,47)
+			                            + ",@NewLine4="     + Tools.DBString(addr4,47)
+			                            + ",@NewLine5="     + Tools.DBString(addr5,47);
+			UpdatePageData("btnOK_Click");
+/*
 			using (MiscList mList = new MiscList())
 			{
 				sqlProc = "sp_CRM_ChangeContractAddressA";
@@ -94,11 +104,12 @@ namespace PCIWebFinAid
 				else
 				{
 					SetErrorDetail("btnOK_Click",15220,mList.GetColumn("ResultMessage"),"",102,0);
-					Tools.LogInfo("btnOK_Click","ResultCode="+mList.GetColumn("ResultCode"),222);
+				//	Tools.LogInfo("btnOK_Click","ResultCode="+mList.GetColumn("ResultCode"),222);
 					if ( mList.GetColumnInt("ResultCode") == 0 )
 						LoadPageData();
 				}
 			}
+*/
 		}
 	}
 }

@@ -20,7 +20,6 @@ function Validate(n)
 {
 	try
 	{
-		DisableElt('X104237',true);
 		if ( n > 0 )
 		{
 			var img = GetElt('img'+n.toString());
@@ -31,15 +30,17 @@ function Validate(n)
 			else
 				img.src = dir + 'Tick.png';
 		}
-		if ( GetEltValue('txtLine1').length > 2 &&
-		     GetEltValue('txtLine2').length > 2 &&
-		   ( GetEltValue('txtLine3').length > 2 || GetEltValue('txtLine3').length == 0 ) &&
-		   ( GetEltValue('txtLine4').length > 2 || GetEltValue('txtLine4').length == 0 ) &&
-		   ( GetEltValue('txtLine5').length > 2 || GetEltValue('txtLine5').length == 0 ) )
-			DisableElt('X104237',false);
+		var ok = ( GetEltValue('txtLine1').length > 2 &&
+		           GetEltValue('txtLine2').length > 2 &&
+		         ( GetEltValue('txtLine3').length > 2 || GetEltValue('txtLine3').length == 0 ) &&
+		         ( GetEltValue('txtLine4').length > 2 || GetEltValue('txtLine4').length == 0 ) &&
+		         ( GetEltValue('txtLine5').length > 2 || GetEltValue('txtLine5').length == 0 ) );
+		DisableElt('X104237',!ok);
+		return ok;
 	}
 	catch (x)
 	{ }
+	return false;
 }
 </script>
 

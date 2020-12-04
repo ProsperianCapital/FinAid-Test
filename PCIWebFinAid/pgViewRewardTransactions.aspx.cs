@@ -20,7 +20,7 @@ namespace PCIWebFinAid
 				return;
 
 			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
-				LoadDataInitial();
+				LoadPageData();
 			else
 				StartOver(19010);
 		}
@@ -33,7 +33,7 @@ namespace PCIWebFinAid
 			ascxXFooter.JSText = "";
 		}
 
-		private void LoadDataInitial()
+		protected override void LoadPageData()
 		{
 //		Called once in the beginning
 
@@ -77,7 +77,7 @@ namespace PCIWebFinAid
 				                                 + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
 				                                 + ",@Access="              + Tools.DBString(sessionGeneral.AccessType);
 				if ( mList.ExecQuery(sql,0,"",false) != 0 )
-					SetErrorDetail("LoadDataInitial",19100,"Internal database error (" + sqlProc + ")",sql,102,1);
+					SetErrorDetail("LoadPageData",19100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else
 					while ( ! mList.EOF )
 					{
