@@ -205,6 +205,8 @@ namespace PCIBusiness
 					bureauURL = "https://test-api.tokenex.com";
 				else if ( bureau == Constants.PaymentProvider.FNB )
 					bureauURL = "https://sandbox.ms.fnb.co.za/eCommerce/v2";
+				else if ( bureau == Constants.PaymentProvider.CyberSource )
+					bureauURL = "https://apitest.cybersource.com/tms/v2";
 			}
 		}
 
@@ -212,6 +214,12 @@ namespace PCIBusiness
 		{
 			xmlResult = null;
 		}
+
+		protected string ClassName
+		{
+			get { return this.GetType().ToString(); }
+		}
+
 
 		public Transaction()
 		{

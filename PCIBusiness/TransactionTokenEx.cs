@@ -40,7 +40,7 @@ namespace PCIBusiness
 
 				tURL = tURL + "/TransparentGatewayAPI/Detokenize";
 
-				Tools.LogInfo("TransactionTokenEx.PostHTML/10","URL=" + pURL + ", URL data=" + xmlSent,221);
+				Tools.LogInfo("PostHTML/10","URL=" + pURL + ", URL data=" + xmlSent,221,this);
 
 				ret                              = 20;
 				byte[]         buffer            = Encoding.UTF8.GetBytes(xmlSent);
@@ -79,19 +79,19 @@ namespace PCIBusiness
 					if ( tranPeach.Successful )
 						ret = 0;
 					else
-						Tools.LogInfo("TransactionTokenEx.PostHTML/110","resultCode="+resultCode+", resultMsg="+resultMsg,221);
+						Tools.LogInfo("PostHTML/110","resultCode="+resultCode+", resultMsg="+resultMsg,221,this);
 				}
 			}
 			catch (WebException ex1)
 			{
 				resultCode = ex1.Response.Headers["tx_code"];
 				resultMsg  = ex1.Response.Headers["tx_message"];
-				Tools.DecodeWebException(ex1,"TransactionTokenEx.PostHTML/197",xmlSent);
+				Tools.DecodeWebException(ex1,ClassName+".PostHTML/197",xmlSent);
 			}
 			catch (Exception ex2)
 			{
-				Tools.LogInfo     ("TransactionTokenEx.PostHTML/198","Ret="+ret.ToString()+", URL=" + pURL + ", XML Sent="+xmlSent,255);
-				Tools.LogException("TransactionTokenEx.PostHTML/199","Ret="+ret.ToString()+", URL=" + pURL + ", XML Sent="+xmlSent,ex2);
+				Tools.LogInfo     ("PostHTML/198","Ret="+ret.ToString()+", URL=" + pURL + ", XML Sent="+xmlSent,255,this);
+				Tools.LogException("PostHTML/199","Ret="+ret.ToString()+", URL=" + pURL + ", XML Sent="+xmlSent,ex2,this);
 			}
 			return ret;
 		}
@@ -105,7 +105,7 @@ namespace PCIBusiness
 				if ( payment.ProviderURL.Length > 0 )
 					url = payment.ProviderURL;
 
-				Tools.LogInfo("TransactionTokenEx.PostJSON/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
+				Tools.LogInfo("PostJSON/10","Post="+xmlSent+", Key="+payment.ProviderKey,10,this);
 
 				ret                     = 20;
 				byte[]         buffer   = Encoding.UTF8.GetBytes(xmlSent);
@@ -140,7 +140,7 @@ namespace PCIBusiness
 					if ( Successful )
 						ret = 0;
 					else
-						Tools.LogInfo("TransactionTokenEx.PostJSON/110","resultCode="+resultCode+", resultMsg="+resultMsg,221);
+						Tools.LogInfo("PostJSON/110","resultCode="+resultCode+", resultMsg="+resultMsg,221,this);
 				}
 			}
 			catch (WebException ex1)
@@ -149,7 +149,7 @@ namespace PCIBusiness
 			}
 			catch (Exception ex2)
 			{
-				Tools.LogException("TransactionTokenEx.PostJSON/199","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex2);
+				Tools.LogException("PostJSON/199","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex2,this);
 			}
 			return ret;
 		}
@@ -169,7 +169,7 @@ namespace PCIBusiness
 				if ( payment.ProviderURL.Length > 0 )
 					url = payment.ProviderURL;
 
-				Tools.LogInfo("TransactionTokenEx.PostXML/10","Post="+xmlSent+", Key="+payment.ProviderKey,10);
+				Tools.LogInfo("PostXML/10","Post="+xmlSent+", Key="+payment.ProviderKey,10,this);
 
 				ret                     = 20;
 				byte[]         buffer   = Encoding.UTF8.GetBytes(xmlSent);
@@ -211,16 +211,16 @@ namespace PCIBusiness
 					if ( Successful )
 						ret = 0;
 					else
-						Tools.LogInfo("TransactionTokenEx.PostXML/110","resultCode="+resultCode+", resultMsg="+resultMsg,221);
+						Tools.LogInfo("PostXML/110","resultCode="+resultCode+", resultMsg="+resultMsg,221,this);
 				}
 			}
 			catch (WebException ex1)
 			{
-				Tools.DecodeWebException(ex1,"TransactionTokenEx.PostXML/197",xmlSent);
+				Tools.DecodeWebException(ex1,ClassName+".PostXML/197",xmlSent);
 			}
 			catch (Exception ex2)
 			{
-				Tools.LogException("TransactionTokenEx.PostXML/199","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex2);
+				Tools.LogException("PostXML/199","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex2,this);
 			}
 			return ret;
 		}
@@ -272,7 +272,7 @@ namespace PCIBusiness
 
 			if ( payment.CardToken.Length < 6 )
 			{
-				Tools.LogInfo("TransactionTokenEx.CardPayment/10","Invalid token (" + payment.CardToken.Length + "), reference " + payment.MerchantReference,222);
+				Tools.LogInfo("CardPayment/10","Invalid token (" + payment.CardToken.Length + "), reference " + payment.MerchantReference,222,this);
 				return ret;
 			}
 
@@ -293,7 +293,7 @@ namespace PCIBusiness
 				        + "&recurringType=REPEATED";
 //				        + "&card.cvv={{{cvv}}}"
 
-				Tools.LogInfo("TransactionTokenEx.CardPayment/20","Post="+xmlSent+", Key="+payment.ProviderKey,10);
+				Tools.LogInfo("CardPayment/20","Post="+xmlSent+", Key="+payment.ProviderKey,10,this);
 
 				ret    = PeachHTML((byte)Constants.TransactionType.CardPayment,payment);
 				payRef = Tools.JSONValue(strResult,"id");
@@ -301,11 +301,11 @@ namespace PCIBusiness
 				if ( payRef.Length < 1 && ret == 0 )
 					ret = 248;
 
-				Tools.LogInfo("TransactionTokenEx.CardPayment/30","ResultCode="+ResultCode + ", payRef=" + payRef,221);
+				Tools.LogInfo("CardPayment/30","ResultCode="+ResultCode + ", payRef=" + payRef,221,this);
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("TransactionTokenEx.CardPayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex);
+				Tools.LogException("CardPayment/90","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex,this);
 			}
 			return ret;
 		}

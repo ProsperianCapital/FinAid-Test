@@ -20,7 +20,7 @@ namespace PCIBusiness
 
 			try
 			{
-				Tools.LogInfo("TransactionPayGenius.GetToken/10","Merchant Ref=" + payment.MerchantReference,10);
+				Tools.LogInfo("GetToken/10","Merchant Ref=" + payment.MerchantReference,10,this);
 
 				xmlSent  = "{ \"creditCard\" : " + Tools.JSONPair("number"     ,payment.CardNumber,1,"{")
 				                                 + Tools.JSONPair("cardHolder" ,payment.CardName,1)
@@ -44,8 +44,8 @@ namespace PCIBusiness
 			}
 			catch (Exception ex)
 			{
-				Tools.LogInfo("TransactionPayGenius.GetToken/98","Ret="+ret.ToString()+", JSON Sent="+xmlSent,255);
-				Tools.LogException("TransactionPayGenius.GetToken/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent,ex);
+				Tools.LogInfo     ("GetToken/98","Ret="+ret.ToString()+", JSON Sent="+xmlSent,255,this);
+				Tools.LogException("GetToken/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent,ex ,this);
 			}
 			return ret;
 		}
@@ -58,7 +58,7 @@ namespace PCIBusiness
 			int ret = 10;
 			payRef  = "";
 
-			Tools.LogInfo("TransactionPayGenius.TokenPayment/10","Merchant Ref=" + payment.MerchantReference,10);
+			Tools.LogInfo("TokenPayment/10","Merchant Ref=" + payment.MerchantReference,10,this);
 
 			try
 			{
@@ -82,8 +82,8 @@ namespace PCIBusiness
 			}
 			catch (Exception ex)
 			{
-				Tools.LogInfo("TransactionPayGenius.TokenPayment/98","Ret="+ret.ToString()+", JSON Sent="+xmlSent,255);
-				Tools.LogException("TransactionPayGenius.TokenPayment/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent,ex);
+				Tools.LogInfo     ("TokenPayment/98","Ret="+ret.ToString()+", JSON Sent="+xmlSent,255,this);
+				Tools.LogException("TokenPayment/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent,ex ,this);
 			}
 			return ret;
 		}
@@ -148,13 +148,13 @@ namespace PCIBusiness
 				webRequest.Headers["X-Signature"] = sig;
 				ret                               = 100;
 
-				Tools.LogInfo("TransactionPayGenius.CallWebService/20",
+				Tools.LogInfo("CallWebService/20",
 				              "Transaction Type=" + tranDesc +
 				            ", URL=" + url +
 				            ", Token=" + payment.ProviderKey +
 				            ", Key=" + payment.ProviderPassword +
 				            ", Signature=" + sig +
-				            ", JSON Sent=" + xmlSent, 10);
+				            ", JSON Sent=" + xmlSent, 10, this);
 
 				using (Stream stream = webRequest.GetRequestStream())
 				{

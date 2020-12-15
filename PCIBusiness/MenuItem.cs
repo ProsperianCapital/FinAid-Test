@@ -46,7 +46,12 @@ namespace PCIBusiness
 		}
 		public string   RouterLink
 		{
-			get { return Tools.NullToString(routerLink); }
+			get
+			{
+				if ( string.IsNullOrWhiteSpace(routerLink) )
+					return Tools.NullToString(url);
+				return Tools.NullToString(routerLink);
+			}
 		}
 		public string   URL
 		{
@@ -75,10 +80,15 @@ namespace PCIBusiness
 			menuCode           = dbConn.ColString("MenuItemCode");
 			menuName           = dbConn.ColString(x+"ItemDescription");
 			menuDescription    = dbConn.ColString(x+"ItemDescription");
-			url                = dbConn.ColString("URL");
-			routerLink         = dbConn.ColString("RouterLink",0,0);
 			imageName          = dbConn.ColString("MenuLevel1ImageFileName");
 			displayImageOrText = dbConn.ColString("DisplayMenuLevel1Image");
+			url                = dbConn.ColString("URL");
+			routerLink         = dbConn.ColString("RouterLink",0,0);
+
+//	See RouterLink "Get" method
+//			if ( routerLink.Length < 1 && url.Length > 0 )
+//				routerLink      = url;
+
 //	Testing
 //			url                = dbConn.ColString("URL") + "?UserCode={UserCode}";
 		}
