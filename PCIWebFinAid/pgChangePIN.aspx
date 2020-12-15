@@ -31,7 +31,9 @@ function CheckPIN(n)
 			var p = GetEltValue('txtPIN'+n);
 			if ( ! ValidPIN(p,<%=MIN_PIN_LENGTH%>) )
 				ShowElt('imgN'+n,true);
-			else if ( n == 2 && p1 != p2 )
+			else if ( n == 1 && p0 == p1 ) // New PIN = old PIN
+				ShowElt('imgN'+n,true);
+			else if ( n == 2 && p1 != p2 ) // New PINs not equal
 				ShowElt('imgN'+n,true);
 			else
 			{
@@ -62,28 +64,26 @@ function CheckPIN(n)
 <asp:Literal runat="server" ID="X104197">104197</asp:Literal>
 </div>
 
-<table>
-<tr>
-	<td><asp:Literal runat="server" ID="X104198">104198</asp:Literal></td>
-	<td><asp:TextBox runat="server" Width="100px" ID="txtPIN0" OnKeyUp="JavaScript:CheckPIN(0)"></asp:TextBox>
-		<img id="imgY0" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
-		<img id="imgN0" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
-	</td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104200">104200</asp:Literal></td>
-	<td>
-		<asp:TextBox runat="server" Width="100px" ID="txtPIN1" OnKeyUp="JavaScript:CheckPIN(1)"></asp:TextBox>&nbsp;
-		<img id="imgY1" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
-		<img id="imgN1" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
-	</td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104202">104202</asp:Literal></td>
-	<td>
-		<asp:TextBox runat="server" Width="100px" ID="txtPIN2" OnKeyUp="JavaScript:CheckPIN(2)"></asp:TextBox>&nbsp;
-		<img id="imgY2" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
-		<img id="imgN2" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
-	</td></tr>
-</table>
+<div class="DataLabel" style="width:100%">
+
+<asp:Literal runat="server" ID="X104198">104198</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtPIN0" CssClass="DataInput" OnKeyUp="JavaScript:CheckPIN(0)"></asp:TextBox>&nbsp;
+	<img id="imgY0" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
+	<img id="imgN0" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
+<br /><br />
+
+<asp:Literal runat="server" ID="X104200">104200</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtPIN1" CssClass="DataInput" OnKeyUp="JavaScript:CheckPIN(1)"></asp:TextBox>&nbsp;
+	<img id="imgY1" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
+	<img id="imgN1" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
+<br /><br />
+
+<asp:Literal runat="server" ID="X104202">104202</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtPIN2" CssClass="DataInput" OnKeyUp="JavaScript:CheckPIN(2)"></asp:TextBox>&nbsp;
+	<img id="imgY2" src="<%=PCIBusiness.Tools.ImageFolder() %>Tick.png"  style="visibility:hidden;display:none" />
+	<img id="imgN2" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
+</div>
+
 <br />
 <asp:Button runat="server" id="X104204" Text="104204" OnClick="btnOK_Click" />
 <br /><br />

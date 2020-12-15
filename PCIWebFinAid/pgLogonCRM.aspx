@@ -11,7 +11,7 @@
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
 <form id="frmLogin" runat="server">
-	<div class="Header3" style="margin-top:2px">
+	<div class="Header3" style="margin-top:2px;text-align:center">
 	CareAssist
 	</div>
 	<p style="text-align:center">

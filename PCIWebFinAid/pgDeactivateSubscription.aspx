@@ -32,12 +32,15 @@ function Validate(pic)
 <div class="Header3">
 <asp:Literal runat="server" ID="X104308">104308</asp:Literal>
 </div>
-<p class="DataStatic">
+
+<p class="Header7">
 <asp:Literal runat="server" ID="X104318">104318</asp:Literal>
 </p><p>
-<asp:Literal runat="server" ID="X104309">104309</asp:Literal> :<b>
+<asp:Literal runat="server" ID="X104309">104309</asp:Literal>&nbsp;
+<span class="DataStatic">
 <asp:Literal runat="server" ID="lblCurr"></asp:Literal>
-<asp:Literal runat="server" ID="lblBalance"></asp:Literal></b>
+<asp:Literal runat="server" ID="lblBalance"></asp:Literal>
+</span>
 </p><p>
 <asp:Literal runat="server" ID="X104312">104312</asp:Literal><br />
 <asp:DropDownList runat="server" ID="lstReason" style="margin-top:5px"></asp:DropDownList>

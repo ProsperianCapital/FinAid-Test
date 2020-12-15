@@ -48,44 +48,48 @@ function Validate(n)
 <asp:Literal runat="server" ID="X104214">104214</asp:Literal>
 </div>
 
-<table>
-<tr>
-	<td colspan="2" class="Header7"><asp:Literal runat="server" ID="X104215">104215</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104216">104216</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblLine1">Current Addr Line 1</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104218">104218</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblLine2">Current Addr Line 2</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104220">104220</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblLine3">Current Addr Line 3</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104222">104222</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblLine4">Current Addr Line 4</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104224">104224</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblLine5">Current Addr Line 5</asp:Literal></td></tr>
-<tr>
-	<td colspan="2"><hr /></td></tr>
-<tr>
-	<td colspan="2" class="Header7"><asp:Literal runat="server" ID="X104226">104226</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="Y104216">104216</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine1" Width="400px" OnKeyUp="JavaScript:Validate(1)"></asp:TextBox>&nbsp;<img id="img1" /></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="Y104218">104218</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine2" Width="400px" OnKeyUp="JavaScript:Validate(2)"></asp:TextBox>&nbsp;<img id="img2" /></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="Y104220">104220</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine3" Width="400px" OnKeyUp="JavaScript:Validate(3)"></asp:TextBox>&nbsp;<img id="img3" /></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="Y104222">104222</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine4" Width="400px" OnKeyUp="JavaScript:Validate(4)"></asp:TextBox>&nbsp;<img id="img4" /></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="Y104224">104224</asp:Literal></td>
-	<td><asp:TextBox runat="server" ID="txtLine5" Width="400px" OnKeyUp="JavaScript:Validate(5)"></asp:TextBox>&nbsp;<img id="img5" /></td></tr>
-</table>
+<p class="Header7">
+<asp:Literal runat="server" ID="X104215">104215</asp:Literal>
+</p>
+
+<div class="DataLabel" style="width:100%">
+<asp:Literal runat="server" ID="X104216">104216</asp:Literal>&nbsp;
+<asp:Label   runat="server" ID="lblLine1" CssClass="DataStatic">Current Addr Line 1</asp:Label><br />
+<asp:Literal runat="server" ID="X104218">104218</asp:Literal>&nbsp;
+<asp:Label   runat="server" ID="lblLine2" CssClass="DataStatic">Current Addr Line 2</asp:Label><br />
+<asp:Literal runat="server" ID="X104220">104220</asp:Literal>&nbsp;
+<asp:Label   runat="server" ID="lblLine3" CssClass="DataStatic">Current Addr Line 3</asp:Label><br />
+<asp:Literal runat="server" ID="X104222">104222</asp:Literal>&nbsp;
+<asp:Label   runat="server" ID="lblLine4" CssClass="DataStatic">Current Addr Line 4</asp:Label><br />
+<asp:Literal runat="server" ID="X104224">104224</asp:Literal>&nbsp;
+<asp:Label   runat="server" ID="lblLine5" CssClass="DataStatic">Current Addr Line 5</asp:Label>
+</div>
+
+<hr />
+
+<p class="Header7">
+<asp:Literal runat="server" ID="X104226">104226</asp:Literal>
+</p>
+
+<div class="DataLabel" style="width:100%">
+<div>
+<asp:Literal runat="server" ID="Y104216">104216</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtLine1" CssClass="DataInput" OnKeyUp="JavaScript:Validate(1)"></asp:TextBox>&nbsp;<img id="img1" />
+</div><div>
+<asp:Literal runat="server" ID="Y104218">104218</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtLine2" CssClass="DataInput" OnKeyUp="JavaScript:Validate(2)"></asp:TextBox>&nbsp;<img id="img2" />
+</div><div>
+<asp:Literal runat="server" ID="Y104220">104220</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtLine3" CssClass="DataInput" OnKeyUp="JavaScript:Validate(3)"></asp:TextBox>&nbsp;<img id="img3" />
+</div><div>
+<asp:Literal runat="server" ID="Y104222">104222</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtLine4" CssClass="DataInput" OnKeyUp="JavaScript:Validate(4)"></asp:TextBox>&nbsp;<img id="img4" />
+</div><div>
+<asp:Literal runat="server" ID="Y104224">104224</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtLine5" CssClass="DataInput" OnKeyUp="JavaScript:Validate(5)"></asp:TextBox>&nbsp;<img id="img5" />
+</div>
+</div>
+
 <br />
 <asp:Button runat="server" id="X104237" Text="104237" OnClick="btnOK_Click" />
 <br /><br />

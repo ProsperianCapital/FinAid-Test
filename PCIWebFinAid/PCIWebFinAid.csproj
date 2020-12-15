@@ -78,6 +78,7 @@
     <Content Include="pgChangeEMail.aspx" />
     <Content Include="pgChangeEMailOnly.aspx" />
     <Content Include="pgChangePIN.aspx" />
+    <Content Include="pgChangeSubscriptionOption.aspx" />
     <Content Include="pgContractLookUp.aspx" />
     <Content Include="pgDeactivateSubscription.aspx" />
     <Content Include="pgLogonCRM.aspx" />
@@ -95,6 +96,7 @@
     <Content Include="pgViewProductDashboard.aspx" />
     <Content Include="pgViewProfile.aspx" />
     <Content Include="pgViewRewardTransactions.aspx" />
+    <Content Include="pgViewSubscriptionDetail.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx3.aspx" />
     <Content Include="RegisterThreeD.aspx" />
@@ -214,6 +216,13 @@
     <Compile Include="pgChangeEMailOnly.aspx.designer.cs">
       <DependentUpon>pgChangeEMailOnly.aspx</DependentUpon>
     </Compile>
+    <Compile Include="pgChangeSubscriptionOption.aspx.cs">
+      <DependentUpon>pgChangeSubscriptionOption.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgChangeSubscriptionOption.aspx.designer.cs">
+      <DependentUpon>pgChangeSubscriptionOption.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pgPayOutstandingFees.aspx.cs">
       <DependentUpon>pgPayOutstandingFees.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -255,6 +264,13 @@
     </Compile>
     <Compile Include="pgViewRewardTransactions.aspx.designer.cs">
       <DependentUpon>pgViewRewardTransactions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pgViewSubscriptionDetail.aspx.cs">
+      <DependentUpon>pgViewSubscriptionDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pgViewSubscriptionDetail.aspx.designer.cs">
+      <DependentUpon>pgViewSubscriptionDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="XMenuItem.cs" />
     <Compile Include="AJAXProcess.aspx.cs">

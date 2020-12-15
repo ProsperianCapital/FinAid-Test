@@ -64,7 +64,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblCurr;
+        protected global::System.Web.UI.WebControls.Label lblCurr;
         
         /// <summary>
         /// lblBalance control.
@@ -73,7 +73,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblBalance;
+        protected global::System.Web.UI.WebControls.Label lblBalance;
         
         /// <summary>
         /// X104999 control.

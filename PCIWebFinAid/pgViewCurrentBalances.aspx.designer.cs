@@ -64,7 +64,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblRegFee;
+        protected global::System.Web.UI.WebControls.Label lblRegFee;
         
         /// <summary>
         /// X104106 control.
@@ -82,7 +82,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblMonthlyFee;
+        protected global::System.Web.UI.WebControls.Label lblMonthlyFee;
         
         /// <summary>
         /// X104098 control.
@@ -100,7 +100,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblGrantLimit;
+        protected global::System.Web.UI.WebControls.Label lblGrantLimit;
         
         /// <summary>
         /// X104102 control.
@@ -118,7 +118,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblGrantAvail;
+        protected global::System.Web.UI.WebControls.Label lblGrantAvail;
         
         /// <summary>
         /// X104104 control.
@@ -136,7 +136,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblGrantStatus;
+        protected global::System.Web.UI.WebControls.Label lblGrantStatus;
         
         /// <summary>
         /// X104108 control.
@@ -154,7 +154,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblFeeDate;
+        protected global::System.Web.UI.WebControls.Label lblFeeDate;
         
         /// <summary>
         /// X104110 control.

@@ -64,7 +64,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblName;
+        protected global::System.Web.UI.WebControls.Label lblName;
         
         /// <summary>
         /// X104273 control.
@@ -82,7 +82,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblNumber;
+        protected global::System.Web.UI.WebControls.Label lblNumber;
         
         /// <summary>
         /// X104275 control.
@@ -100,7 +100,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblDate;
+        protected global::System.Web.UI.WebControls.Label lblDate;
         
         /// <summary>
         /// X104277 control.
@@ -118,7 +118,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblCVV;
+        protected global::System.Web.UI.WebControls.Label lblCVV;
         
         /// <summary>
         /// Y104269 control.

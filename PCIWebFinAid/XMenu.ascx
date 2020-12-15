@@ -174,23 +174,6 @@ function MobileMenu(mID)
 }
 </script>
 
-<a href="JavaScript:MobileMenu()"><img src="Images/HamburgerMenu.png" class="VHamburger" title="Show menu" /></a>
+<a href="JavaScript:MobileMenu()"><img src="<%=PCIBusiness.Tools.ImageFolder() %>HamburgerMenu.png" class="VHamburger" title="Show menu" /></a>
 <asp:Literal runat="server" ID="lblMenuL"></asp:Literal>
-<asp:Literal runat="server" ID="lblMenuS">
-<div class="VSmall" id="menuSmall">
-<!-- these are for testing ... -->
-	<div class="VMenu VMenuMobi"><a href="JavaScript:MobileMenu('mx1h')" style="display:block">Menu 1<img src="Images/DownArrow.png" style="float:right;height:30px" /></a></div>
-	<div id="mx1h">	
-		<div class="VMenu VSubMenu VMenuMobi" style="margin-left:40px"><a href="#" style="display:block">Menu 1.1</a></div>
-		<div class="VMenu VSubMenu VMenuMobi" style="margin-left:40px"><a href="JavaScript:MobileMenu('mx2h')" style="display:block">Menu 1.2</a></div>
-		<div id="mx2h">	
-			<div class="VMenu VSubMenu VMenuMobi" style="margin-left:80px"><a href="#" style="display:block">Menu 1.2.1</a></div>
-			<div class="VMenu VSubMenu VMenuMobi" style="margin-left:80px"><a href="#" style="display:block">Menu 1.2.2</a></div>
-			<div class="VMenu VSubMenu VMenuMobi" style="margin-left:80px"><a href="#" style="display:block">Menu 1.2.3</a></div>
-		</div>
-		<div class="VMenu VSubMenu VMenuMobi" style="margin-left:40px"><a href="#" style="display:block">Menu 1.3</a></div>
-	</div>
-	<div class="VMenu VMenuMobi"><a href="#" style="display:block">Menu 2<img src="Images/DownArrow.png" style="float:right;height:30px" /></a></div>
-	<div class="VMenu VMenuMobi"><a href="#" style="display:block">Menu 3<img src="Images/DownArrow.png" style="float:right;height:30px" /></a></div>
-</div>
-</asp:Literal>
+<asp:Literal runat="server" ID="lblMenuS"></asp:Literal>

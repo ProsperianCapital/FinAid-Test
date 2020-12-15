@@ -73,7 +73,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblEMail;
+        protected global::System.Web.UI.WebControls.Label lblEMail;
         
         /// <summary>
         /// X104251 control.
@@ -91,7 +91,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblPhone;
+        protected global::System.Web.UI.WebControls.Label lblPhone;
         
         /// <summary>
         /// X104253 control.

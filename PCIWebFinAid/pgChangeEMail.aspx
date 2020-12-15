@@ -42,33 +42,33 @@ function Validate(n)
 <asp:Literal runat="server" ID="X104247">104247</asp:Literal>
 </div>
 
-<table>
-<tr>
-	<td colspan="2" class="Header7"><asp:Literal runat="server" ID="X104248">104248</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104249">104249</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblEMail"></asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104251">104251</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblPhone"></asp:Literal></td></tr>
-<tr>
-	<td colspan="2"><hr /></td></tr>
-<tr>
-	<td colspan="2" class="Header7"><asp:Literal runat="server" ID="X104253">104253</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104254">104254</asp:Literal></td>
-	<td>
-		<asp:TextBox runat="server" Width="480px" ID="txtEMail" OnKeyUp="JavaScript:Validate(1)"></asp:TextBox>&nbsp;
-		<img id="imgEMail" />
-	</td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104256">104256</asp:Literal></td>
-	<td>
-		<asp:TextBox runat="server" Width="480px" ID="txtPhone" OnKeyUp="JavaScript:Validate(2)"></asp:TextBox>&nbsp;
-		<img id="imgPhone" />
-	</td></tr>
-</table>
-<br />
+<p class="Header7">
+<asp:Literal runat="server" ID="X104248">104248</asp:Literal>
+</p>
+
+<div class="DataLabel" style="width:100%">
+<asp:Literal runat="server" ID="X104249">104249</asp:Literal>&nbsp;
+<asp:Label   runat="server" ID="lblEMail" CssClass="DataStatic">EMail</asp:Label><br />
+<asp:Literal runat="server" ID="X104251">104251</asp:Literal>&nbsp;
+<asp:Label   runat="server" ID="lblPhone" CssClass="DataStatic">Phone</asp:Label>
+</div>
+
+<hr />
+
+<p class="Header7">
+<asp:Literal runat="server" ID="X104253">104253</asp:Literal>
+</p>
+
+<div class="DataLabel" style="width:100%">
+<p>
+<asp:Literal runat="server" ID="X104254">104254</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtEMail" CssClass="DataInput" OnKeyUp="JavaScript:Validate(1)"></asp:TextBox>&nbsp;<img id="imgEMail" />
+</p><p>
+<asp:Literal runat="server" ID="X104256">104256</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtPhone" CssClass="DataInput" OnKeyUp="JavaScript:Validate(2)"></asp:TextBox>&nbsp;<img id="imgPhone" />
+</p>
+</div>
+
 <asp:Button runat="server" id="X104258" Text="104258" OnClick="btnOK_Click" />
 <br /><br />
 <asp:Label runat="server" ID="X104357" CssClass="Info">104357</asp:Label>

@@ -44,19 +44,16 @@ function Validate()
 <div class="Header3">
 <asp:Literal runat="server" ID="X104390">104390</asp:Literal>
 </div>
-<table>
-<tr>
-	<td><asp:Literal runat="server" ID="X104152">104152</asp:Literal></td>
-	<td><b>
-		<asp:Literal runat="server" ID="lblCurr">Curr Symbol</asp:Literal>
-		<asp:Literal runat="server" ID="lblBalance">Outstanding Amount</asp:Literal></b></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104999">104999</asp:Literal></td>
-	<td>
-		<asp:TextBox runat="server" ID="txtAmt" OnKeyUp="JavaScript:Validate()"></asp:TextBox>&nbsp;
-		<img id="imgValidate" />
-	</td></tr>
-</table>
+
+<div class="DataLabel" style="width:100%">
+<asp:Literal runat="server" ID="X104152">104152</asp:Literal>&nbsp;
+<asp:Label runat="server" CssClass="DataStatic" ID="lblCurr">Curr Symbol</asp:Label>
+<asp:Label runat="server" CssClass="DataStatic" ID="lblBalance">Outstanding Amount</asp:Label>
+<br /><br />
+<asp:Literal runat="server" ID="X104999">104999</asp:Literal><br />
+<asp:TextBox runat="server" ID="txtAmt" CssClass="DataInput" OnKeyUp="JavaScript:Validate()"></asp:TextBox>&nbsp;<img id="imgValidate" />
+</div>
+
 <br />
 <asp:Button runat="server" id="X104888" Text="104888" OnClick="btnOK_Click" />
 <br /><br />

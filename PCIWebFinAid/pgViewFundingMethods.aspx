@@ -50,42 +50,40 @@ function Validate(eltID,len,eltType)
 <asp:Literal runat="server" ID="X104268">104268</asp:Literal>
 </div>
 
-<table>
-<tr>
-	<td><asp:Literal runat="server" ID="X104269">104269</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblName">Card holder name</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104273">104273</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblNumber">Card number</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104275">104275</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblDate">MM / YYYY</asp:Literal></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="X104277">104277</asp:Literal></td>
-	<td class="DataStatic"><asp:Literal runat="server" ID="lblCVV">CVV</asp:Literal></td></tr>
-<tr>
-	<td colspan="2"><hr /></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="Y104269">104269</asp:Literal></td>
-	<td class="DataStatic">
-		<asp:TextBox runat="server" Width="400px" OnKeyUp="JavaScript:Validate('Name',3,0)" ID="txtName"></asp:TextBox>&nbsp;
-		<img id="imgName" /></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="Y104273">104273</asp:Literal></td>
-	<td class="DataStatic">
-		<asp:TextBox runat="server" Width="200px" OnKeyUp="JavaScript:Validate('Number',14,1)" ID="txtNumber" MaxLength="20"></asp:TextBox>&nbsp;
-		<img id="imgNumber" /></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="Y104275">104275</asp:Literal></td>
-	<td class="DataStatic">
-		<asp:DropDownList runat="server" ID="lstMM" Width="60px"></asp:DropDownList>
-		<asp:DropDownList runat="server" ID="lstYY" Width="60px"></asp:DropDownList></td></tr>
-<tr>
-	<td><asp:Literal runat="server" ID="Y104277">104277</asp:Literal></td>
-	<td class="DataStatic">
-		<asp:TextBox runat="server" Width="40px" OnKeyUp="JavaScript:Validate('CVV',3,2)" ID="txtCVV" MaxLength="4"></asp:TextBox>&nbsp;
-		<img id="imgCVV" /></td></tr>
-</table>
+<div class="DataLabel" style="width:100%">
+<div>
+<asp:Literal runat="server" ID="X104269">104269</asp:Literal><br />
+<asp:Label   runat="server" ID="lblName" CssClass="DataStatic">Name</asp:Label>
+</div><div>
+<asp:Literal runat="server" ID="X104273">X104273</asp:Literal><br />
+<asp:Label   runat="server" ID="lblNumber" CssClass="DataStatic">Number</asp:Label>
+</div><div>
+<asp:Literal runat="server" ID="X104275">X104275</asp:Literal><br />
+<asp:Label   runat="server" ID="lblDate" CssClass="DataStatic">MM / YYYY</asp:Label>
+</div><div>
+<asp:Literal runat="server" ID="X104277">X104277</asp:Literal><br />
+<asp:Label   runat="server" ID="lblCVV" CssClass="DataStatic">CVV</asp:Label>
+</div>
+</div>
+
+<hr />
+
+<div class="DataLabel" style="width:100%">
+<div>
+	<asp:Literal runat="server" ID="Y104269">104269</asp:Literal><br />
+	<asp:TextBox runat="server" ID="txtName" CssClass="DataInput" OnKeyUp="JavaScript:Validate('Name',3,0)"></asp:TextBox>&nbsp;<img id="imgName" />
+</div><div>
+	<asp:Literal runat="server" ID="Y104273">104273</asp:Literal><br />
+	<asp:TextBox runat="server" ID="txtNumber" CssClass="DataInput" OnKeyUp="JavaScript:Validate('Number',14,1)" MaxLength="20"></asp:TextBox>&nbsp;<img id="imgNumber" />
+</div><div>
+	<asp:Literal runat="server" ID="Y104275">104275</asp:Literal><br />
+	<asp:DropDownList runat="server" ID="lstMM" CssClass="DataInput"></asp:DropDownList>
+	<asp:DropDownList runat="server" ID="lstYY" CssClass="DataInput"></asp:DropDownList>
+</div><div>
+	<asp:Literal runat="server" ID="Y104277">104277</asp:Literal><br />
+	<asp:TextBox runat="server" ID="txtCVV" CssClass="DataInput" OnKeyUp="JavaScript:Validate('CVV',3,2)" MaxLength="4"></asp:TextBox>&nbsp;<img id="imgCVV" />
+</div>
+</div>
 
 <br />
 <asp:Button runat="server" id="X104279" Text="104279" OnClick="btnOK_Click" />&nbsp;
