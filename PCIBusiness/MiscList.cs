@@ -110,15 +110,20 @@ namespace PCIBusiness
 			{ }
 			return "";
 		}
-		public string GetColumn(string colName,byte errorMode=1)
+		public string GetColumn(string colName,byte errorMode=1,byte convertMode=0)
 		{
 			try
 			{
 				if ( dbConn != null )
 				{
-					int x = dbConn.ColNumber(colName,errorMode);
-					if ( x >= 0 )
-						return GetColumn(x);	
+					int  cNum  = dbConn.ColNumber(colName,errorMode);
+					if ( cNum >= 0 )
+					{
+						string ret = GetColumn(cNum);
+						if ( ret.Length > 5 && convertMode == 6 )
+							ret = ret.Replace(Environment.NewLine,"<br />");
+						return ret;
+					}
 				}
 			}
 			catch

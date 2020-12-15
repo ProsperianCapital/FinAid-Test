@@ -59,18 +59,19 @@ namespace PCIBusiness
 
 		public enum PaymentProvider : int
 		{
-			MyGate     =  2,
-			T24        =  6,
-			Ikajo      = 15,
-			PayU       = 16,
-			PayGate    = 17,
-			PayGenius  = 18,
-			Ecentric   = 19,
-			eNETS      = 20,
-			Peach      = 21,
-			TokenEx    = 22,
-			SatchelPay = 23,
-			FNB        = 24
+			MyGate      =  2,
+			T24         =  6,
+			Ikajo       = 15,
+			PayU        = 16,
+			PayGate     = 17,
+			PayGenius   = 18,
+			Ecentric    = 19,
+			eNETS       = 20,
+			Peach       = 21,
+			TokenEx     = 22,
+			SatchelPay  = 23,
+			FNB         = 24,
+			CyberSource = 25
 //	Not implemented yet
 //			DinersClub = xx
 //			PayFast    = xx
@@ -132,14 +133,15 @@ namespace PCIBusiness
 		}
 		public enum TransactionType : byte
 		{
-			GetToken              =  1,
-			TokenPayment          =  2,
-			CardPayment           =  3,
-			DeleteToken           =  4,
-			GetCardFromToken      =  5,
-			CardPaymentThirdParty =  6,
-			ThreeDSecurePayment   =  7,
-			ManualPayment         = 73
+			GetToken              =   1,
+			TokenPayment          =   2,
+			CardPayment           =   3,
+			DeleteToken           =   4,
+			GetCardFromToken      =   5,
+			CardPaymentThirdParty =   6,
+			ThreeDSecurePayment   =   7,
+			ManualPayment         =  73,
+			Test                  = 197
 		}
 
 //	iTextSharp stuff

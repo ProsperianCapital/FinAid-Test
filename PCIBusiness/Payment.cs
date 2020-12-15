@@ -109,6 +109,8 @@ namespace PCIBusiness
 					return "MY014473";
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS) )
 					return "UMID_858445001";
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+					return "testmid";
 
 				return "";
 			}
@@ -129,6 +131,8 @@ namespace PCIBusiness
 					return "27ededae-4ba3-486a-a243-8da1e4c1a067";
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
 					return "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+					return "0123k20MBbIB2t012345678993gHCIZsQKFpf7dR0hY=";
 
 				return "";
 			}
@@ -151,6 +155,8 @@ namespace PCIBusiness
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
 					return "8ac7a4ca72b781310172b7ed08860114"; // Payments
 				//	return "8ac7a4c772b77ddf0172b7ed1cd206df"; // 3d
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+					return "01234567-0123-0123-0123-012345678912";
 
 				return "";
 			}
@@ -554,6 +560,8 @@ namespace PCIBusiness
 					transaction = new TransactionPeach();
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 					transaction = new TransactionTokenEx();
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+					transaction = new TransactionCyberSource();
 				else
 					return retProc;
 			}
@@ -607,6 +615,8 @@ namespace PCIBusiness
 					transaction = new TransactionPeach();
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 					transaction = new TransactionTokenEx();
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+					transaction = new TransactionCyberSource();
 //				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayFast) )
 //					transaction = new TransactionPayFast();
 				else
