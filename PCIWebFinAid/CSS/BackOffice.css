@@ -128,12 +128,6 @@ input[type=text]:focus, input[type=password]:focus, select:focus, textarea:focus
 	font-weight: bold;
 }
 
-.Header7
-{
-	color: magenta;
-	font-weight: bold;
-}
-
 .MenuRow
 {
 	background-color: #898787;
@@ -204,6 +198,12 @@ input[type=text]:focus, input[type=password]:focus, select:focus, textarea:focus
 .Info
 {
 	color: green;
+	font-weight: bold;
+}
+
+.Note
+{
+	color: magenta;
 	font-weight: bold;
 }
 
