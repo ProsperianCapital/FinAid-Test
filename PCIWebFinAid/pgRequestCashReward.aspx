@@ -52,7 +52,7 @@ function Validate(pic)
 	<img id="imgN1" src="<%=PCIBusiness.Tools.ImageFolder() %>Cross.png" style="visibility:hidden;display:none" />
 </div>
 
-<p class="DataStatic">
+<p class="Note">
 <asp:Literal runat="server" ID="X104056">104056</asp:Literal>
 </p>
 

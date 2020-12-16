@@ -33,7 +33,7 @@ function Validate(pic)
 <asp:Literal runat="server" ID="X104308">104308</asp:Literal>
 </div>
 
-<p class="Header7">
+<p class="Note">
 <asp:Literal runat="server" ID="X104318">104318</asp:Literal>
 </p><p>
 <asp:Literal runat="server" ID="X104309">104309</asp:Literal>&nbsp;

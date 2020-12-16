@@ -48,7 +48,7 @@ function Validate(n)
 <asp:Literal runat="server" ID="X104214">104214</asp:Literal>
 </div>
 
-<p class="Header7">
+<p class="Note">
 <asp:Literal runat="server" ID="X104215">104215</asp:Literal>
 </p>
 
@@ -67,7 +67,7 @@ function Validate(n)
 
 <hr />
 
-<p class="Header7">
+<p class="Note">
 <asp:Literal runat="server" ID="X104226">104226</asp:Literal>
 </p>
 

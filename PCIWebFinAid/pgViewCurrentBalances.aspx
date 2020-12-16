@@ -40,6 +40,7 @@
 <asp:Label   runat="server" ID="lblFeeDate" CssClass="DataStatic">FeeDate</asp:Label>
 </p>
 </div>
+<br />
 <asp:Label runat="server" ID="X104110" CssClass="Info">104110</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
 

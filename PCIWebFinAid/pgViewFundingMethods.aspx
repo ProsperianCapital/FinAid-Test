@@ -87,7 +87,7 @@ function Validate(eltID,len,eltType)
 
 <br />
 <asp:Button runat="server" id="X104279" Text="104279" OnClick="btnOK_Click" />&nbsp;
-<asp:Label runat="server" ID="X104281"  CssClass="Header7">104281</asp:Label>
+<asp:Label runat="server" ID="X104281"  CssClass="Note">104281</asp:Label>
 <br /><br />
 <asp:Label runat="server" ID="X104358"  CssClass="Info">104358</asp:Label>
 <asp:Label runat="server" ID="lblError" CssClass="Error"></asp:Label>
