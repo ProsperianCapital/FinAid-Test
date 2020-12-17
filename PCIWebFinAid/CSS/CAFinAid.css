@@ -30,6 +30,27 @@ table td
 	height: 12px;
 }
 
+.HCol1
+{
+	padding-left: 50px;
+	padding-right: 25px;
+	float: left;
+}
+.HCol2
+{
+	font-size: 18px;
+	letter-spacing: 1.5px;
+	padding: 25px;
+	padding-top: 20px;
+	float: left;
+}
+.HCol3
+{
+	padding: 25px;
+	padding-top: 20px;
+	float: left;
+}
+
 .Header1
 {
 	font-family: "Trebuchet MS", serif;
@@ -39,17 +60,89 @@ table td
 	color: white;
 	padding: 10px;
 	background-color: #54595F;
-	height: 76px;
+	height: 70px;
+	display: inline-block;
+	width: 100%;
 }
 .Header1a
 {
 	font-size: 18px;
-	letter-spacing: 1.5px;
+	letter-spacing: 1.6px;
+	font-family: "Open Sans Hebrew", Sans-serif;
+	line-height: 1.5;
 }
 .Header1b:hover
 {
 	background-color: #FF1A1A;
 }
+
+@media screen and (max-width: 1118px)
+{
+	.HCol1
+	{
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.HCol2
+	{
+		padding: 10px;
+		padding-top: 20px;
+	}
+	.HCol3
+	{
+		padding: 10px;
+		padding-top: 20px;
+	}
+}
+
+@media screen and (max-width: 1004px)
+{
+	.HCol1
+	{
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.HCol2
+	{
+		padding: 10px;
+		padding-top: 0px;
+		padding-bottom: 8px;
+	}
+	.HCol3
+	{
+		padding: 10px;
+		padding-top: 8px;
+		padding-bottom: 0px;
+	}
+}
+
+@media screen and (max-width: 664px)
+{
+	.Header1
+	{
+		height: 134px;
+	}
+	.HCol1
+	{
+		padding-left: 56px;
+		padding-right: 400px;
+	}
+	.HCol2
+	{
+		float: none;
+		padding-left: 8px;
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
+	.HCol3
+	{
+		float: none;
+		padding-left: 16px;
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
+}
+
 
 .Header2
 {
