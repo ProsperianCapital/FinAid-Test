@@ -48,9 +48,9 @@ namespace PCIWebFinAid
 			{
 				LoadStaticDetails();
 				LoadDynamicDetails();
-//
-				btnErrorDtl.Visible = false;
-//
+
+				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
+				btnWidth.Visible    = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 			}
 		}
 
