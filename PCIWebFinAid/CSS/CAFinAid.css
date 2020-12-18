@@ -60,9 +60,9 @@ table td
 	color: white;
 	padding: 10px;
 	background-color: #54595F;
-	height: 70px;
+	height: 74px;
 	display: inline-block;
-	width: 100%;
+	width: 99%;
 }
 .Header1a
 {
@@ -120,7 +120,7 @@ table td
 {
 	.Header1
 	{
-		height: 134px;
+		height: 140px;
 	}
 	.HCol1
 	{
@@ -142,7 +142,6 @@ table td
 		padding-bottom: 4px;
 	}
 }
-
 
 .Header2
 {
