@@ -14,9 +14,9 @@
 function TickOver(img,mode)
 {
 	if ( mode == 1 )
-		img.src = 'ImageLibrary/TickOrange.png';
+		img.src = '<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png';
 	else
-		img.src = 'ImageLibrary/Tickwhite.png';
+		img.src = '<%=PCIBusiness.Tools.ImageFolder() %>Tickwhite.png';
 }
 </script>
 <form id="frmHome" runat="server">
