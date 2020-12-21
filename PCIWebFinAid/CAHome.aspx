@@ -191,16 +191,16 @@ function TickOver(img,mode)
 	</p>
 	<div style="display:flex;margin:auto;width:100%">
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
-		<asp:Image runat="server" ID="P12020" style="width:290px" title="Image 12020" /> <!-- isos -->
-		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Mobile Response</figcaption>
+		<asp:Image runat="server" ID="P12010" style="width:290px" title="Image 12010" />
+		<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Mobile Response</figcaption>
 	</figure> 
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
-		<asp:Image runat="server" ID="P12021" style="width:290px" title="Image 12021" /> <!-- legal -->
-		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Legal Access</figcaption>
+		<asp:Image runat="server" ID="P12011" style="width:290px" title="Image 12011" />
+		<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Legal Access</figcaption>
 	</figure> 
 	<figure style="box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px; transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin: 15px 15px 15px 15px;padding: 60px 30px 60px 30px">
-		<asp:Image runat="server" ID="P12022" style="width:290px" title="Image 12022" /> <!-- loyalty -->
-		<figcaption style="font-size: 17px;letter-spacing: 0.5px;margin-top: 8px;text-align:center">Emergency Cash Reward</figcaption>
+		<asp:Image runat="server" ID="P12012" style="width:290px" title="Image 12012" />
+		<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Cash Reward</figcaption>
 	</figure> 
 	</div>
 	</div>
@@ -209,18 +209,20 @@ function TickOver(img,mode)
 	<asp:Literal runat="server" ID="XHIW"></asp:Literal>
 	</div>
 
-	<p style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px">
-	<asp:Literal runat="server" ID="X999999">For more, visit...</asp:Literal>
-	</p>
+	<div style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px;margin-left:75px">
+	<asp:Literal runat="server" ID="X105009">105009</asp:Literal>
+	</div>
+	<div style="margin-left:90px">
 	<img src="<%=PCIBusiness.Tools.ImageFolder() %>ServiceLinkiSOS.png" />
 	<img src="<%=PCIBusiness.Tools.ImageFolder() %>ServiceLinkLifeGuru.png" />
+	</div>
 	<br />
 	<hr />
 
 	<div style="float:left;width:10%">&nbsp;</div>
-	<div style="float:left;width:20%">
-		<img src="ImagesCA/LogoENG.png" style="height:30px" />
-		<p>
+	<div style="float:left;width:20%;padding-top:20px">
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>LogoENG.png" style="height:30px" />
+		<p style="line-height:1.5;margin: 0 0 1em 0">
 		<asp:Literal runat="server" ID="X100040">100040</asp:Literal>
 		</p>
 	</div>
