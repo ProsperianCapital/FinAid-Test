@@ -221,7 +221,7 @@ function TickOver(img,mode)
 
 	<div style="float:left;width:10%">&nbsp;</div>
 	<div style="float:left;width:20%;padding-top:20px">
-		<img id="P12001" style="height:30px" />
+		<asp:Image runat="server" ID="P12001" style="height:30px" />
 		<p style="line-height:1.5;margin: 0 0 1em 0">
 		<asp:Literal runat="server" ID="X100040">100040</asp:Literal>
 		</p>
