@@ -228,8 +228,10 @@ function TickOver(img,mode)
 		<asp:Image runat="server" ID="P12015" />
 		<asp:Image runat="server" ID="P12016" />
 		<asp:Image runat="server" ID="P12017" />
-		<asp:Image runat="server" ID="P12018" />
-		<asp:Image runat="server" ID="P12019" />
+		<!-- Not used
+		<asp Image run@t="server" ID="P12018" />
+		<asp Image run@t="server" ID="P12019" />
+		-->
 	</div>
 
 	<div style="float:left;width:10%">&nbsp;</div>
@@ -238,20 +240,20 @@ function TickOver(img,mode)
 		<asp:Literal runat="server" ID="X100092">100092</asp:Literal>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X100093">100093</asp:Literal>
-		</b></p><p>
+		</b></p><p style="display:flex">
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Envelope.png" />
 		<asp:Label runat="server" ID="X104408" style="vertical-align:top">104408</asp:Label>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X100101">100101</asp:Literal>
-		</b></p><p>
+		</b></p><p style="display:flex">
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Telephone.png" />
 		<asp:Label runat="server" ID="X104404" style="vertical-align:top">104404</asp:Label>
-		</p><p>
+		</p><p style="display:flex">
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Clock.png" />
 		<asp:Label runat="server" ID="X100102" style="vertical-align:top">100102</asp:Label>
-		</p><p>
+		</p><p style="display:flex">
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Pin.png" />
-		<asp:Label runat="server" ID="X100105" style="vertical-align:top">100105</asp:Label>
+		<asp:Label runat="server" ID="X100105" style="vertical-align:top">Please address any written correspondence to P O Box 1134234234, Westville, 8787. Thank you</asp:Label>
 		</p>
 	</div>
 

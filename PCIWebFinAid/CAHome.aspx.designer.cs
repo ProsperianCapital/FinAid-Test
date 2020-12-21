@@ -517,24 +517,6 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Image P12017;
         
         /// <summary>
-        /// P12018 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image P12018;
-        
-        /// <summary>
-        /// P12019 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image P12019;
-        
-        /// <summary>
         /// X100092 control.
         /// </summary>
         /// <remarks>
