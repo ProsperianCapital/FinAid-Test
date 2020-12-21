@@ -464,25 +464,50 @@ namespace PCIWebFinAid
 		}
 		public static byte ReplaceControlText(Page webPage,string ctlID,string fieldValue,Control subControl=null)
 		{
-			Control ctl = webPage.FindControl(ctlID);
-			if ( ctl == null && subControl != null )
-				ctl    = subControl.FindControl(ctlID);
-			if ( ctl == null )
-				return 10;
-			else if (ctl.GetType()  == typeof(Literal))
-				((Literal)ctl).Text   = fieldValue;
-			else if (ctl.GetType()  == typeof(Label))
-				((Label)ctl).Text     = fieldValue;
-			else if (ctl.GetType()  == typeof(TableCell))
-				((TableCell)ctl).Text = fieldValue;
-			else if (ctl.GetType()  == typeof(Button))
-				((Button)ctl).Text    = fieldValue;
-			else if (ctl.GetType()  == typeof(CheckBox))
-				((CheckBox)ctl).Text  = fieldValue;
-			else if (ctl.GetType()  == typeof(HyperLink))
-				((HyperLink)ctl).Text = fieldValue;
-			else
-				return 20;
+			Control ctl;
+			
+			for ( int k = 1 ; k < 3 ; k++ )
+			{
+				ctl = null;
+				if ( k == 1 && webPage != null )
+					ctl = webPage.FindControl(ctlID);
+				else if ( k == 2 && subControl != null )
+					ctl = subControl.FindControl(ctlID);
+				if ( ctl == null )
+					continue;
+				else if (ctl.GetType()  == typeof(Literal))
+					((Literal)ctl).Text   = fieldValue;
+				else if (ctl.GetType()  == typeof(Label))
+					((Label)ctl).Text     = fieldValue;
+				else if (ctl.GetType()  == typeof(TableCell))
+					((TableCell)ctl).Text = fieldValue;
+				else if (ctl.GetType()  == typeof(Button))
+					((Button)ctl).Text    = fieldValue;
+				else if (ctl.GetType()  == typeof(CheckBox))
+					((CheckBox)ctl).Text  = fieldValue;
+				else if (ctl.GetType()  == typeof(HyperLink))
+					((HyperLink)ctl).Text = fieldValue;
+			}
+
+//			if ( ctl == null && subControl != null )
+//				ctl    = subControl.FindControl(ctlID);
+//			if ( ctl == null )
+//				return 10;
+//			else if (ctl.GetType()  == typeof(Literal))
+//				((Literal)ctl).Text   = fieldValue;
+//			else if (ctl.GetType()  == typeof(Label))
+//				((Label)ctl).Text     = fieldValue;
+//			else if (ctl.GetType()  == typeof(TableCell))
+//				((TableCell)ctl).Text = fieldValue;
+//			else if (ctl.GetType()  == typeof(Button))
+//				((Button)ctl).Text    = fieldValue;
+//			else if (ctl.GetType()  == typeof(CheckBox))
+//				((CheckBox)ctl).Text  = fieldValue;
+//			else if (ctl.GetType()  == typeof(HyperLink))
+//				((HyperLink)ctl).Text = fieldValue;
+//			else
+//				return 20;
+
 			return 0;
 		}
 
