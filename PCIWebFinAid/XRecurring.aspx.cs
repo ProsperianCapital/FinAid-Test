@@ -257,14 +257,14 @@ namespace PCIWebFinAid
 					}
 
 					ret = payment.ProcessPayment();
-					if ( ret == 0 && payment.ThreeDForm.Length > 0 )
+					if ( ret == 0 && payment.WebForm.Length > 0 )
 						try
 						{
 						//	Busy();
 							ret = 987654;
 						//	This always throws a "thread aborted" exception ... ignore it
 							System.Web.HttpContext.Current.Response.Clear();
-							System.Web.HttpContext.Current.Response.Write(payment.ThreeDForm);
+							System.Web.HttpContext.Current.Response.Write(payment.WebForm);
 							System.Web.HttpContext.Current.Response.End();
 						}
 						catch

@@ -773,13 +773,22 @@ namespace PCIWebFinAid
 			return err.Length;
 		}
 
-		private void Send3dForm(Payment payment)
+		private void Send3dForm(Payment payment) // Constants.PaymentProvider provider)
 		{
 			if ( payment == null )
 				return;
+			else if ( payment.BureauCode.Length < 1 )
+				return;
 
-		//	Peach
-			payment.BureauCode         = Tools.BureauCode(Constants.PaymentProvider.Peach);
+			Transaction trans;
+
+			if ( payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
+				trans = new TransactionPeach();
+			else if ( payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+				trans = new TransactionCyberSource();
+			else
+				return;
+
 			payment.ProviderUserID     = paymentMID;
 			payment.ProviderKey        = paymentKey;
 			payment.ProviderURL        = paymentURL;
@@ -803,25 +812,28 @@ namespace PCIWebFinAid
 //			if ( try3d > 1 )
 //				Tools.LogInfo("RegisterEx3.Send3dForm","Contract " + payment.MerchantReference + " (try " + try3d.ToString() + ")",222);
 
-			using (TransactionPeach trans = new TransactionPeach())
-				if ( trans.ThreeDSecurePayment(payment,Request.UrlReferrer,languageCode,languageDialectCode) == 0 )
-					try
-					{
-					//	Ver 1
-					//	lbl3d.Text = trans.ThreeDSecureHTML;
-					//	Ver 2
-					//	This always throws a "thread aborted" exception ... ignore it
-						System.Web.HttpContext.Current.Response.Clear();
-						System.Web.HttpContext.Current.Response.Write(trans.ThreeDSecureHTML);
-						System.Web.HttpContext.Current.Response.Flush();
-						System.Web.HttpContext.Current.Response.End();
-					}
-					catch
-					{ }
-				else if ( trans.PaymentReference.Length > 0 )
-					Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=288&id=" + trans.PaymentReference);
-				else
-					Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=299");
+//			using (TransactionPeach trans = new TransactionPeach())
+
+			if ( trans.ThreeDSecurePayment(payment,Request.UrlReferrer,languageCode,languageDialectCode) == 0 )
+				try
+				{
+				//	Ver 1
+				//	lbl3d.Text = trans.ThreeDSecureHTML;
+				//	Ver 2
+				//	This always throws a "thread aborted" exception ... ignore it
+					System.Web.HttpContext.Current.Response.Clear();
+					System.Web.HttpContext.Current.Response.Write(trans.ThreeDSecureHTML);
+					System.Web.HttpContext.Current.Response.Flush();
+					System.Web.HttpContext.Current.Response.End();
+				}
+				catch
+				{ }
+			else if ( trans.PaymentReference.Length > 0 )
+				Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=288&id=" + trans.PaymentReference);
+			else
+				Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=299");
+
+			trans = null;
 		}
 
 		protected void btn3d_Click(Object sender, EventArgs e)
@@ -853,6 +865,8 @@ namespace PCIWebFinAid
 				payment.TokenizerCode     = bureauCodeToken;
 				payment.TokenizerID       = tokenMID;
 				payment.TokenizerKey      = tokenKey;
+			//	Bureau
+				payment.BureauCode        = bureauCodePayment;
 			//	Customer
 				payment.CardNumber        = txtCCNumber.Text;
 				payment.CardToken         = txToken.Value;
@@ -864,7 +878,7 @@ namespace PCIWebFinAid
 				payment.CurrencyCode      = paymentCurrency;
 				payment.PaymentAmount     = Tools.StringToInt(paymentAmount);
 
-				Send3dForm(payment);
+				Send3dForm(payment); // Constants.PaymentProvider.Peach);
 			}
 		}
 		protected void btn3d_ClickPeachDirect(Object sender, EventArgs e)
@@ -883,6 +897,8 @@ namespace PCIWebFinAid
 				payment.TokenizerCode     = "";
 				payment.TokenizerID       = "";
 				payment.TokenizerKey      = "";
+			//	Bureau
+				payment.BureauCode        = bureauCodePayment;
 			//	Customer
 				payment.CardNumber        = txtCCNumber.Text;
 				payment.CardName          = txtCCName.Text;
@@ -893,7 +909,7 @@ namespace PCIWebFinAid
 				payment.CurrencyCode      = paymentCurrency;
 				payment.PaymentAmount     = Tools.StringToInt(paymentAmount);
 
-				Send3dForm(payment);
+				Send3dForm(payment); // Constants.PaymentProvider.Peach);
 			}
 		}
 
@@ -1127,12 +1143,9 @@ namespace PCIWebFinAid
 							    +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
 							if ( miscList.ExecQuery(sql,0) == 0 && ! miscList.EOF )
 							{
-								refundPolicy                 = miscList.GetColumn("RefundPolicyText");
-								moneyBackPolicy              = miscList.GetColumn("MoneyBackPolicyText");
-								cancellationPolicy           = miscList.GetColumn("CancellationPolicyText");
-								lblp6RefundPolicy.Text       = refundPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
-								lblp6MoneyBackPolicy.Text    = moneyBackPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
-								lblp6CancellationPolicy.Text = cancellationPolicy.Replace(Environment.NewLine,"<br />");
+								lblp6RefundPolicy.Text       = miscList.GetColumn("RefundPolicyText",1,6) + "<br />&nbsp;";
+								lblp6MoneyBackPolicy.Text    = miscList.GetColumn("MoneyBackPolicyText",1,6) + "<br />&nbsp;";
+								lblp6CancellationPolicy.Text = miscList.GetColumn("CancellationPolicyText",1,6);
 							}
 							if ( refundPolicy.Length < 1 || moneyBackPolicy.Length < 1 || cancellationPolicy.Length < 1 )
 								SetErrorDetail("btnNext_Click/30085",30080,"Unable to retrieve product policy text",sql);
