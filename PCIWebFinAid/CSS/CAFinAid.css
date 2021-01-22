@@ -6,6 +6,10 @@ body
 {
 	font-family: ralewaymedium, Calibri, Arial, Tahoma;
 	font-size: 14px;
+	/*
+	overflow-y: hidden;
+	overflow-x: hidden;
+	*/
 }
 input[type=button], input[type=submit]
 {
@@ -58,11 +62,13 @@ table td
 	font-style: italic;
 	font-weight: 100;
 	color: white;
-	padding: 10px;
+	padding: 0px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	background-color: #54595F;
 	height: 74px;
 	display: inline-block;
-	width: 99%;
+	width: 100%;
 }
 .Header1a
 {
@@ -234,9 +240,10 @@ table td
 	color: white;
 	background-color: #54595F;
 	height: 25px;
-	float: right;
 	width: 100%;
 	text-align: center;
+	float: left;
+	padding: 0px;
 	padding-top: 8px;
 }
 
