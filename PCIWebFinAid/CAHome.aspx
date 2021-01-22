@@ -239,19 +239,19 @@ function TickOver(img,mode)
 		</p><p><b>
 		<asp:Literal runat="server" ID="X100093">100093</asp:Literal>
 		</b></p><p style="display:flex">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Envelope.png" />
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Envelope.png" style="object-fit:contain" />
 		<asp:Label runat="server" ID="X104408" style="vertical-align:top">104408</asp:Label>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X100101">100101</asp:Literal>
 		</b></p><p style="display:flex">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Telephone.png" />
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Telephone.png" style="object-fit:contain" />
 		<asp:Label runat="server" ID="X104404" style="vertical-align:top">104404</asp:Label>
 		</p><p style="display:flex">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Clock.png" />
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Clock.png" style="object-fit:contain" />
 		<asp:Label runat="server" ID="X100102" style="vertical-align:top">100102</asp:Label>
 		</p><p style="display:flex">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Pin.png" />
-		<asp:Label runat="server" ID="X100105" style="vertical-align:top">Please address any written correspondence to P O Box 1134234234, Westville, 8787. Thank you</asp:Label>
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Pin.png" style="object-fit:contain" />
+		<asp:Label runat="server" ID="X100105" style="vertical-align:top">Please address any written correspondence to P O Box 1134234234, Westville, 8787. Thank you, have a nice day and don't call us, we'll call you</asp:Label>
 		</p>
 	</div>
 
