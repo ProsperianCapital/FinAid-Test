@@ -110,6 +110,11 @@
     <Compile Include="TransactionPeach.cs" />
     <Compile Include="TransactionT24.cs" />
     <Compile Include="TransactionTokenEx.cs" />
+    <Compile Include="Web References\CyberSource\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\IkajoService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -138,10 +143,22 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Properties\app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\CyberSource\CyberSourceTransactionWS.wsdl" />
+    <None Include="Web References\CyberSource\CyberSourceTransaction_1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\CyberSource\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\CyberSource\ReplyMessage.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\IkajoService\CancelResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -191,6 +208,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WebReferenceUrl Include="https://ics2wstesta.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.171.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\CyberSource\</RelPath>
+      <UpdateFromURL>https://ics2wstesta.ic3.com/commerce/1.x/transactionProcessor/CyberSourceTransaction_1.171.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>PCIBusiness_CyberSource_TransactionProcessor</CachedSettingsPropName>
+    </WebReferenceUrl>
     <WebReferenceUrl Include="https://secure.paygate.co.za/PayVault/PayVault.wsdl">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\PayGateVault\</RelPath>

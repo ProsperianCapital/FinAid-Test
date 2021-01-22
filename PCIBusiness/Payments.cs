@@ -102,17 +102,18 @@ namespace PCIBusiness
 			return provider;
 		}
 
-		public int ProcessCards(string bureau,byte transactionType=0,int rowsToProcess=0)
+		public int ProcessCards(string bureau,byte transactionType=0,int rowsToProcess=0,string bureaCodeTokenize="")
 		{
 			int    maxRows  = Tools.StringToInt(Tools.ConfigValue("MaximumRows"));
 			int    iter     = 0;
 			int    rowsDone = 0;
 			string desc     = "";
 
-			bureauCode = Tools.NullToString(bureau);
-			success    = 0;
-			fail       = 0;
-			maxRows    = ( maxRows < 1 ? Constants.MaxRowsPayment : maxRows );
+			bureauCode        = Tools.NullToString(bureau);
+			bureaCodeTokenize = Tools.NullToString(bureau);
+			success           = 0;
+			fail              = 0;
+			maxRows           = ( maxRows < 1 ? Constants.MaxRowsPayment : maxRows );
 
 			if ( bureauCode.Length < 1 )
 				return 0;
@@ -183,7 +184,10 @@ namespace PCIBusiness
 						else if ( transactionType == (byte)Constants.TransactionType.CardPayment )
 							err = payment.ProcessPayment();
 						else if ( transactionType == (byte)Constants.TransactionType.CardPaymentThirdParty )
-							err = payment.ProcessPayment();
+						{
+							payment.TokenizerCode = bureaCodeTokenize;
+							err                   = payment.ProcessPayment(); 
+						}
 						else if ( transactionType == (byte)Constants.TransactionType.DeleteToken )
 							err = payment.DeleteToken();
 						else if ( transactionType == (byte)Constants.TransactionType.GetCardFromToken )

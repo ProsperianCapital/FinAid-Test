@@ -54,7 +54,7 @@ namespace PCIBusiness
 
 		private int      processMode;
 		private byte     transactionType;
-		private string   threeDForm;
+		private string   webForm;
 
 		private Transaction transaction;
 
@@ -110,7 +110,9 @@ namespace PCIBusiness
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS) )
 					return "UMID_858445001";
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
-					return "testmid";
+					return "2744639";
+//					return "000000002744639";
+//					return "testmid";
 
 				return "";
 			}
@@ -132,7 +134,9 @@ namespace PCIBusiness
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach) )
 					return "OGFjN2E0Yzc3MmI3N2RkZjAxNzJiN2VkMDFmODA2YTF8akE0aEVaOG5ZQQ==";
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
-					return "0123k20MBbIB2t012345678993gHCIZsQKFpf7dR0hY=";
+					return "6o/jJqk5K+abVz057+G2X4H5XnkEKqEK0gz53MB0fjQ=";
+//					return "Zh24hLoQTpDj1n2g5ahwfDGiLaQryCQHi+DGEl0dcP8=";
+//					return "0123k20MBbIB2t012345678993gHCIZsQKFpf7dR0hY=";
 
 				return "";
 			}
@@ -156,7 +160,10 @@ namespace PCIBusiness
 					return "8ac7a4ca72b781310172b7ed08860114"; // Payments
 				//	return "8ac7a4c772b77ddf0172b7ed1cd206df"; // 3d
 				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
-					return "01234567-0123-0123-0123-012345678912";
+					return "3C857FA4-ED86-4A08-A119-24170A74C760";
+//					return "baa4366b-6a39-4a7f-99a2-442a91200a46";
+//					return "410c3964-6c30-4e71-a60e-057cff71a547";
+//					return "01234567-0123-0123-0123-012345678912";
 
 				return "";
 			}
@@ -188,6 +195,8 @@ namespace PCIBusiness
 						return "https://www.mygate.co.za/Collections/1x0x0/pinManagement.cfc?wsdl";
 					else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate) )
 						return "https://secure.paygate.co.za/payhost/process.trans";
+					else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+						return "https://secureacceptance.cybersource.com/silent";
 					return "";
 				}
 
@@ -239,9 +248,9 @@ namespace PCIBusiness
 ////			}
 ////			return "";
 //		}
-		public string    ThreeDForm
+		public string    WebForm
 		{
-			get { return  Tools.NullToString(threeDForm); }
+			get { return  Tools.NullToString(webForm); }
 		}
 
 //		Customer stuff
@@ -482,12 +491,15 @@ namespace PCIBusiness
 		{
 			get
 			{
-				if ( transactionType == (byte)Constants.TransactionType.CardPayment      ) return "Card Payment";
-				if ( transactionType == (byte)Constants.TransactionType.DeleteToken      ) return "Delete Token";
-				if ( transactionType == (byte)Constants.TransactionType.GetToken         ) return "Get Token";
-				if ( transactionType == (byte)Constants.TransactionType.ManualPayment    ) return "Manual Payment (3d)";
-				if ( transactionType == (byte)Constants.TransactionType.TokenPayment     ) return "Token Payment";
-				if ( transactionType == (byte)Constants.TransactionType.GetCardFromToken ) return "Get Card Number from Token";
+				if ( transactionType == (byte)Constants.TransactionType.CardPayment           ) return "Card Payment";
+				if ( transactionType == (byte)Constants.TransactionType.CardPaymentThirdParty ) return "Payment via 3rd Party";
+				if ( transactionType == (byte)Constants.TransactionType.DeleteToken           ) return "Delete Token";
+				if ( transactionType == (byte)Constants.TransactionType.GetCardFromToken      ) return "Get Card from Token";
+				if ( transactionType == (byte)Constants.TransactionType.GetToken              ) return "Get Token from Card";
+				if ( transactionType == (byte)Constants.TransactionType.ManualPayment         ) return "Manual Payment";
+				if ( transactionType == (byte)Constants.TransactionType.ThreeDSecurePayment   ) return "3d Secure Payment";
+				if ( transactionType == (byte)Constants.TransactionType.TokenPayment          ) return "Token Payment";
+				if ( transactionType == (byte)Constants.TransactionType.Test                  ) return "Test";
 				return "Unknown (transactionType=" + transactionType.ToString() + ")";
 			}
 		}
@@ -642,11 +654,13 @@ namespace PCIBusiness
 			if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
 				retProc    = transaction.TokenPayment(this);
 			else if ( transactionType == (byte)Constants.TransactionType.CardPaymentThirdParty )
-				retProc    = transaction.CardPaymentThirdParty(this);
+				retProc    = transaction.CardPayment3rdParty(this);
+			else if ( transactionType == (byte)Constants.TransactionType.Test )
+				retProc    = transaction.CardTest(this);
 			else
 				retProc    = transaction.CardPayment(this);
 
-			threeDForm    = "";
+			webForm       = "";
 			returnMessage = transaction.ResultMessage;
 
 			if ( transactionType == (byte)Constants.TransactionType.ManualPayment ) // Manual card payment
@@ -654,17 +668,21 @@ namespace PCIBusiness
 				Tools.LogInfo("ProcessPayment/60","Manual card payment, retProc=" + retProc.ToString() + ", acsUrl=" + transaction.ThreeDacsUrl,199,this);
 				if ( transaction.ThreeDRequired )
 					if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.eNETS) )
-						threeDForm = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
-						           + "<form name='frm3D' method='POST'   action='" + transaction.ThreeDacsUrl + "'>"
-						           + "<input type='hidden' name='PaReq'   value='" + transaction.ThreeDpaReq + "' />"
-						           + "<input type='hidden' name='TermUrl' value='" + transaction.ThreeDtermUrl + "' />"
-						           + "<input type='hidden' name='MD'      value='" + transaction.ThreeDmd + "' />"
-						           + "</form></body></html>";
+						webForm = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
+						        + "<form name='frm3D' method='POST'   action='" + transaction.ThreeDacsUrl + "'>"
+						        + "<input type='hidden' name='PaReq'   value='" + transaction.ThreeDpaReq + "' />"
+						        + "<input type='hidden' name='TermUrl' value='" + transaction.ThreeDtermUrl + "' />"
+						        + "<input type='hidden' name='MD'      value='" + transaction.ThreeDmd + "' />"
+						        + "</form></body></html>";
 					else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PayGate) )
-						threeDForm = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
-						           + "<form name='frm3D' method='POST' action='" + transaction.ThreeDacsUrl + "'>"
-						           + transaction.ThreeDKeyValuePairs
-						           + "</form></body></html>";
+						webForm = "<html><body onload='document.forms[\"frm3D\"].submit()'>"
+						        + "<form name='frm3D' method='POST' action='" + transaction.ThreeDacsUrl + "'>"
+						        + transaction.ThreeDKeyValuePairs
+						        + "</form></body></html>";
+			}
+			else if ( transactionType == (byte)Constants.TransactionType.Test && transaction.WebForm.Length > 0 )
+			{
+				webForm = transaction.WebForm;
 			}
 			else if ( processMode == (int)Constants.ProcessMode.FullUpdate         ||
 			          processMode == (int)Constants.ProcessMode.UpdatePaymentStep2 ||
@@ -692,9 +710,12 @@ namespace PCIBusiness
 			providerPassword = dbConn.ColString ("MerchantUserPassword",0,0);
 
 		//	Token Provider (if empty, then it is the same as the payment provider)
-			tokenizerID      = dbConn.ColString ("TxID" ,0,0);
-			tokenizerKey     = dbConn.ColString ("TxKey",0,0);
-			tokenizerURL     = dbConn.ColString ("TxURL",0,0);
+			if ( dbConn.ColStatus("TxKey") == Constants.DBColumnStatus.ColumnOK )
+			{
+				tokenizerID   = dbConn.ColString ("TxID");
+				tokenizerKey  = dbConn.ColString ("TxKey");
+				tokenizerURL  = dbConn.ColString ("TxURL");
+			}
 
 		//	Customer
 			if ( dbConn.ColStatus("lastName") == Constants.DBColumnStatus.ColumnOK )
@@ -704,12 +725,12 @@ namespace PCIBusiness
 				email         = dbConn.ColString ("email");
 				phoneCell     = dbConn.ColString ("mobile");
 				regionalId    = dbConn.ColString ("regionalId");
-				address1      = dbConn.ColString ("address1");
-				address2      = dbConn.ColString ("city");
+				address1      = dbConn.ColUniCode("address1");
+				address2      = dbConn.ColUniCode("city");
 				postalCode    = dbConn.ColString ("zip_code");
 				provinceCode  = dbConn.ColString ("state");
 				countryCode   = dbConn.ColString ("countryCode");
-				ipAddress     = dbConn.ColString ("IPAddress");
+				ipAddress     = dbConn.ColString ("IPAddress",0,0);
 			}
 
 		//	Payment
@@ -741,7 +762,7 @@ namespace PCIBusiness
 		{
 			processMode     = Tools.StringToInt(Tools.ConfigValue("ProcessMode"));
 			bureauCode      = Tools.NullToString(bureau);
-			threeDForm      = "";
+			webForm         = "";
 			transactionType = 0;
 		}
 
@@ -749,7 +770,7 @@ namespace PCIBusiness
 		{
 			processMode     = Tools.StringToInt(Tools.ConfigValue("ProcessMode"));
 			bureauCode      = "";
-			threeDForm      = "";
+			webForm         = "";
 			transactionType = 0;
 		}
 	}

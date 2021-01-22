@@ -425,6 +425,44 @@ namespace PCIBusiness
 			return "";
 		}
 
+		public static string HTMLValue(string data,string htmlName,string htmlId="")
+		{
+			try
+			{
+				data     = Tools.NullToString(data);
+				htmlName = Tools.NullToString(htmlName).ToUpper();
+				htmlId   = Tools.NullToString(htmlId).ToUpper();
+				if ( data.Length < 1 )
+					return "";
+				if ( htmlName.Length < 1 && htmlId.Length < 1 )
+					return "";
+
+				int k;
+				int j;
+
+				if ( htmlId.Length > 0 )
+					k = data.ToUpper().Replace("\"","'").IndexOf("ID='"+htmlId+"'");
+				else
+					k = data.ToUpper().Replace("\"","'").IndexOf("NAME='"+htmlName+"'");
+				if ( k < 1 )
+					return "";
+				data = data.Substring(k);
+				j    = data.IndexOf(">");
+				k    = data.ToUpper().IndexOf("VALUE=");
+				if ( k > 0 && k < j-6 )
+				{
+					data = data.Substring(k+6,j-k-6);
+					k    = data.Replace("\"","'").IndexOf("'");
+					j    = data.Replace("\"","'").IndexOf("'",k+1);
+					if ( j > k+1 )
+						return data.Substring(k+1,j-k-1).Trim();					
+				}
+			}
+			catch
+			{ }
+			return "";
+		}
+
 		public static string XMLCell(string tagName,string tagData,int maxLength=0)
 		{
 			string p = XMLSafe(tagData);
@@ -445,6 +483,7 @@ namespace PCIBusiness
 					try
 					{	
 						ret = xmlDoc.SelectSingleNode("//"+xmlTag).InnerText.Trim();
+						XmlElement p = xmlDoc.GetElementById(xmlTag);
 					}
 					catch { }
 					if ( ret == null || ret.Length == 0 )
@@ -582,10 +621,12 @@ namespace PCIBusiness
          return str;
 		}
 
-		public static string URLString(string str)
+		public static string URLString(string str,byte exceptionType=0)
 		{
 			if ( string.IsNullOrWhiteSpace(str) )
 				return "";
+			if ( exceptionType == 1 && ( str.Contains("{{{") || str.Contains("}}}") ) ) // TokenEx
+				return str.Trim();
 			return System.Net.WebUtility.UrlEncode(str.Trim());
 //			return System.Net.WebUtility.HtmlEncode(str.Trim());
 //			return str.Trim();

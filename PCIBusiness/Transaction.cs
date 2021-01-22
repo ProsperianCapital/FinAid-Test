@@ -26,6 +26,7 @@ namespace PCIBusiness
 		protected string      md;
 		protected string      acsUrl;
 		protected string      keyValuePairs;
+		protected string      d3Form;
 
 		public  string      PaymentReference
 		{
@@ -129,7 +130,16 @@ namespace PCIBusiness
 		{
 			get { return   Tools.NullToString(keyValuePairs); }
 		}
+		public string   ThreeDSecureHTML
+		{
+			get { return Tools.NullToString(d3Form); }
+		}
 
+
+		public virtual string WebForm
+		{
+			get { return ""; }
+		}
 
 		public virtual int GetToken(Payment payment)
 		{
@@ -151,9 +161,19 @@ namespace PCIBusiness
 			return 14040;
 		}
 
-		public virtual int CardPaymentThirdParty(Payment payment)
+		public virtual int CardTest(Payment payment)
 		{
 			return 14050;
+		}
+
+		public virtual int CardPayment3rdParty(Payment payment)
+		{
+			return 14060;
+		}
+
+		public virtual int ThreeDSecurePayment(Payment payment,Uri postBackURL,string languageCode="",string languageDialectCode="")
+		{
+			return 14510;
 		}
 
       public virtual bool EnabledFor3d(byte transactionType)
@@ -239,6 +259,7 @@ namespace PCIBusiness
 			md                  = "";
 			acsUrl              = "";
 			keyValuePairs       = "";
+			d3Form              = "";
 			xmlResult           = null;
 		}
 	}

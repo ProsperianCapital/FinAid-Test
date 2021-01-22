@@ -7,7 +7,6 @@ namespace PCIBusiness
 {
 	public class TransactionPeach : Transaction
 	{
-		string d3Form;
 		string currency;
 		string amount;
 		string cardNumber;
@@ -30,10 +29,10 @@ namespace PCIBusiness
 			get { return Tools.NullToString(cardHolder); }
 		}
 
-		public string   ThreeDSecureHTML
-		{
-			get { return Tools.NullToString(d3Form); }
-		}
+//		public string   ThreeDSecureHTML
+//		{
+//			get { return Tools.NullToString(d3Form); }
+//		}
 
 		public  bool   Successful
 		{
@@ -222,7 +221,7 @@ namespace PCIBusiness
 			        + "&shopperResultUrl="      + Tools.ConfigValue("SystemURL")+"/Succeed.aspx?TransRef="+Tools.XMLSafe(payment.MerchantReference);
 		}
 
-		public override int CardPaymentThirdParty(Payment payment)
+		public override int CardPayment3rdParty(Payment payment)
 		{
 			byte   err  = 0;
 			int    ret  = 10;
@@ -251,7 +250,7 @@ namespace PCIBusiness
 
 				if ( tURL.Length < 1 )
 				{
-					Tools.LogInfo("CardPaymentThirdParty/20","Unknown Third Party Tokenizer (" + bureauCodeTokenizer + "), data=" + xmlSent,221,this);
+					Tools.LogInfo("CardPayment3rdParty/20","Unknown Third Party Tokenizer (" + bureauCodeTokenizer + "), data=" + xmlSent,221,this);
 					return ret;
 				}
 				if ( ! payment.TokenizerURL.ToUpper().EndsWith("DETOKENIZE") )
@@ -270,7 +269,7 @@ namespace PCIBusiness
 				ret = 30;
 				SetUpPaymentXML(payment,(byte)Constants.TransactionType.CardPaymentThirdParty);
 
-				Tools.LogInfo("CardPaymentThirdParty/30","pURL=" + pURL + ", tURL=" + tURL + ", data=" + xmlSent,10,this);
+				Tools.LogInfo("CardPayment3rdParty/30","pURL=" + pURL + ", tURL=" + tURL + ", data=" + xmlSent,10,this);
 
 				ret                              = 40;
 				byte[]         buffer            = Encoding.UTF8.GetBytes(xmlSent);
@@ -307,7 +306,7 @@ namespace PCIBusiness
 			catch (WebException ex1)
 			{
 				err       = 1;
-				strResult = Tools.DecodeWebException(ex1,"TransactionPeach.CardPaymentThirdParty/997",xmlSent);
+				strResult = Tools.DecodeWebException(ex1,"TransactionPeach.CardPayment3rdParty/997",xmlSent);
 			}
 
 			catch (Exception ex2)
@@ -315,8 +314,8 @@ namespace PCIBusiness
 				err = 2;
 				if ( strResult == null )
 					strResult = "";
-				Tools.LogInfo     ("CardPaymentThirdParty/998","Ret="+ret.ToString()+", Result="+strResult,222,this);
-				Tools.LogException("CardPaymentThirdParty/999","Ret="+ret.ToString()+", Result="+strResult,ex2,this);
+				Tools.LogInfo     ("CardPayment3rdParty/998","Ret="+ret.ToString()+", Result="+strResult,222,this);
+				Tools.LogException("CardPayment3rdParty/999","Ret="+ret.ToString()+", Result="+strResult,ex2,this);
 			}
 
 			ret        = 200;
@@ -327,10 +326,10 @@ namespace PCIBusiness
 			if ( Successful && err == 0 )
 			{
 				ret = 0;
-				Tools.LogInfo("CardPaymentThirdParty/220","(Succeed) Result="+strResult,10,this);
+				Tools.LogInfo("CardPayment3rdParty/220","(Succeed) Result="+strResult,10,this);
 			}
 			else
-				Tools.LogInfo("CardPaymentThirdParty/230","(Fail/" + err.ToString() + ") Result="+strResult,221,this);
+				Tools.LogInfo("CardPayment3rdParty/230","(Fail/" + err.ToString() + ") Result="+strResult,221,this);
 
 			return ret;
 		}
@@ -501,7 +500,7 @@ namespace PCIBusiness
 			return ret;
 		}
 
-		public int ThreeDSecurePayment(Payment payment,Uri postBackURL,string languageCode="",string languageDialectCode="")
+		public override int ThreeDSecurePayment(Payment payment,Uri postBackURL,string languageCode="",string languageDialectCode="")
 		{
 			int    ret = 10;
 			string url = "";
@@ -645,7 +644,6 @@ namespace PCIBusiness
 
 		public TransactionPeach() : base()
 		{
-			d3Form                                = "";
 			ServicePointManager.Expect100Continue = true;
 			ServicePointManager.SecurityProtocol  = SecurityProtocolType.Tls12;
 			base.LoadBureauDetails(Constants.PaymentProvider.Peach);
