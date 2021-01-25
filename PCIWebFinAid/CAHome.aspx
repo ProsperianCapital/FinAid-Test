@@ -27,7 +27,7 @@ function TickOver(img,mode)
 
 	<div style="margin:0 auto;display:block;width:100%">
 	<asp:Image runat="server" ID="P12002" style="max-width:100%;max-height:346px;float:left" />
-	<p style="color:#242424;font-family:Arial; font-size:35px; font-weight:600; line-height:1.5em; letter-spacing:0.8px; text-shadow:0px 0px 0px #000000; top:100px; left:0px; right:0px; word-break:break-word; word-wrap:break-word">
+	<p style="color:#242424;font-family:Arial;font-size:35px;font-weight:600;line-height:1.5em; letter-spacing:0.8px;text-shadow:0px 0px 0px #000000;top:100px;left:0px;right:0px;word-break:break-word;word-wrap:break-word;text-align:center">
 	<asp:Literal runat="server" ID="X100002">100002</asp:Literal>
 	</p><p style="color:#54595F;font-family:Sans-serif; font-size:19px; font-weight:500; line-height:1.6em; letter-spacing:0.8px; text-shadow:0px 0px 51px #FFFFFF; top:210px; left:0px; right:0px">
 	<asp:Literal runat="server" ID="X100004">100004</asp:Literal>
@@ -127,17 +127,17 @@ function TickOver(img,mode)
 -->
 	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;position:relative;padding:0px;margin:0 auto">
 		<div style="padding:10px;font-family:'Open Sans Hebrew',Sans-serif;font-size:20px;line-height:1.5em;letter-spacing:1.3px">
-		<div>			
+		<div style="margin-left:10px">
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100287">100287</asp:Literal>
 		</div>
 		<br />
-		<div>			
+		<div style="margin-left:10px">		
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100288">100288</asp:Literal>
 		</div>
 		<br />
-		<div>			
+		<div style="margin-left:10px">		
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100289">100289</asp:Literal>
 		</div>
@@ -147,7 +147,7 @@ function TickOver(img,mode)
 		</div>
 		</div>
 
-		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232">
+		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;text-align:center">
 		<asp:Literal runat="server" ID="X100045">100045</asp:Literal>
 		</p><p style="font-size:19px;font-weight:300;line-height:1.6em;color:#272626">
 		<asp:Literal runat="server" ID="X100046">100046</asp:Literal>
@@ -204,16 +204,20 @@ function TickOver(img,mode)
 		</div>
 	</div>
 
-	<div style="font-size:10.5pt;font-family:Helvetica,sans-serif;line-height:1.5;margin-left:50px;margin-right:50px">
+	<div style="font-size:10.5pt;font-family:Helvetica,sans-serif;line-height:1.5;margin-left:10px;margin-right:10px">
 	<asp:Literal runat="server" ID="XHIW"></asp:Literal>
 	</div>
 
 	<div style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px;margin-left:75px">
 	<asp:Literal runat="server" ID="X105009">105009</asp:Literal>
 	</div>
-	<div style="margin-left:90px">
-	<img src="<%=PCIBusiness.Tools.ImageFolder() %>ServiceLinkiSOS.png" />
-	<img src="<%=PCIBusiness.Tools.ImageFolder() %>ServiceLinkLifeGuru.png" />
+	<div style="margin-left:10px">
+	<asp:Image runat="server" ID="P12013" title="Img 12013" />
+	<asp:Image runat="server" ID="P12025" title="Img 12025" />
+	</div>
+	<div style="margin-left:10px">
+	<asp:Image runat="server" ID="P12026" title="Img 12026" />
+	<asp:Image runat="server" ID="P12027" title="Img 12027" />
 	</div>
 	<br />
 	<hr />
@@ -223,9 +227,13 @@ function TickOver(img,mode)
 		<asp:Literal runat="server" ID="X100092">100092</asp:Literal>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X100093">100093</asp:Literal>
+		</b></p><p>
+		<asp:Literal runat="server" ID="X104402">104402</asp:Literal>
+		</p><p><b>
+		<asp:Literal runat="server" ID="X100095">100095</asp:Literal>
 		</b></p><p style="display:flex">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Envelope.png" style="object-fit:contain" />
-		<asp:Label runat="server" ID="X104408" style="vertical-align:top">104408</asp:Label>
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Envelope.png" style="object-fit:contain" />&nbsp;
+		<asp:Label runat="server" ID="X100096" style="vertical-align:top">100096</asp:Label>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X100101">100101</asp:Literal>
 		</b></p><p style="display:flex">
@@ -234,9 +242,11 @@ function TickOver(img,mode)
 		</p><p style="display:flex">
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Clock.png" style="object-fit:contain" />
 		<asp:Label runat="server" ID="X100102" style="vertical-align:top">100102</asp:Label>
-		</p><p style="display:flex">
+		</p><p><b>
+		<asp:Literal runat="server" ID="X104418">104418</asp:Literal>
+		</b></p><p style="display:flex">
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Pin.png" style="object-fit:contain" />
-		<asp:Label runat="server" ID="X100105" style="vertical-align:top">Please address any written correspondence to P O Box 1134234234, Westville, 8787. Thank you, have a nice day and don't call us, we'll call you</asp:Label>
+		<asp:Label runat="server" ID="X100105" style="vertical-align:top">(100105) Please address any written correspondence to P O Box 1134234234, Westville, 8787. Thank you, have a nice day and don't call us, we'll call you</asp:Label>
 		</p>
 	</div>
 
