@@ -465,6 +465,11 @@ namespace PCIWebFinAid
 		public static byte ReplaceControlText(Page webPage,string ctlID,string fieldValue,Control subControl=null)
 		{
 			Control ctl;
+
+			if ( fieldValue.Contains(Environment.NewLine) )
+				PCIBusiness.Tools.LogInfo("WebTools.ReplaceControlText/1","[cr][lf] found : " + fieldValue,222);
+
+			fieldValue = fieldValue.Replace(Environment.NewLine,"<br />").Replace("\r\n","<br />");
 			
 			for ( int k = 1 ; k < 3 ; k++ )
 			{
