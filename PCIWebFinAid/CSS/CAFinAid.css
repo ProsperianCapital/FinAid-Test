@@ -8,8 +8,8 @@ body
 	font-size: 14px;
 	/*
 	overflow-y: hidden;
-	overflow-x: hidden;
 	*/
+	overflow-x: hidden;
 }
 input[type=button], input[type=submit]
 {
@@ -36,21 +36,22 @@ table td
 
 .HCol1
 {
-	padding-left: 50px;
-	padding-right: 25px;
+	padding-left: 20px;
+	padding-right: 10px;
 	float: left;
 }
 .HCol2
 {
 	font-size: 18px;
 	letter-spacing: 1.5px;
-	padding: 25px;
+	padding-left: 10px;
+	padding-right: 10px;
 	padding-top: 20px;
 	float: left;
 }
 .HCol3
 {
-	padding: 25px;
+	padding: 10px;
 	padding-top: 20px;
 	float: left;
 }
@@ -256,7 +257,7 @@ table td
 	background-color: lightblue; /* #898787; */
 	position: fixed;
 	bottom: 1px;
-	width: 97%;
+	width: 99%;
 }
 
 .Footer1
