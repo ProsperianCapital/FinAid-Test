@@ -466,10 +466,12 @@ namespace PCIWebFinAid
 		{
 			Control ctl;
 
-			if ( fieldValue.Contains(Environment.NewLine) )
+			if ( fieldValue.Contains(Environment.NewLine) || fieldValue.Contains("\r\n") || fieldValue.Contains("\r") || fieldValue.Contains("\n") )
+			{
 				PCIBusiness.Tools.LogInfo("WebTools.ReplaceControlText/1","[cr][lf] found : " + fieldValue,222);
-
-			fieldValue = fieldValue.Replace(Environment.NewLine,"<br />").Replace("\r\n","<br />");
+				fieldValue = fieldValue.Replace(Environment.NewLine,"<br />").Replace("\r\n","<br />");
+				fieldValue = fieldValue.Replace("\r","<br />").Replace("\n","<br />");
+			}
 			
 			for ( int k = 1 ; k < 3 ; k++ )
 			{
