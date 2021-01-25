@@ -466,12 +466,25 @@ namespace PCIWebFinAid
 		{
 			Control ctl;
 
-			if ( fieldValue.Contains(Environment.NewLine) || fieldValue.Contains("\r\n") || fieldValue.Contains("\r") || fieldValue.Contains("\n") )
-			{
-				PCIBusiness.Tools.LogInfo("WebTools.ReplaceControlText/1","[cr][lf] found : " + fieldValue,222);
-				fieldValue = fieldValue.Replace(Environment.NewLine,"<br />").Replace("\r\n","<br />");
-				fieldValue = fieldValue.Replace("\r","<br />").Replace("\n","<br />");
-			}
+//			bool    found = false;
+//			foreach ( char ch in fieldValue )
+//				if ( (byte)ch > 0 && (byte)ch < 32 )
+//				{
+//					found = true;
+//					PCIBusiness.Tools.LogInfo("WebTools.ReplaceControlText/1","Char " + ((byte)ch).ToString() + " found",222,"WebTools");
+//				}
+//
+//			if (found)
+//				PCIBusiness.Tools.LogInfo("WebTools.ReplaceControlText/2",fieldValue,222);
+
+//			if ( fieldValue.Contains(Environment.NewLine) || fieldValue.Contains("\r\n") || fieldValue.Contains("\r") || fieldValue.Contains("\n") )
+//			{
+//				PCIBusiness.Tools.LogInfo("WebTools.ReplaceControlText/3","[cr][lf] found : " + fieldValue,222);
+//				fieldValue = fieldValue.Replace(Environment.NewLine,"<br />").Replace("\r\n","<br />");
+//				fieldValue = fieldValue.Replace("\r","<br />").Replace("\n","<br />");
+//			}
+
+			fieldValue = fieldValue.Replace(Environment.NewLine,"<br />").Replace("\r\n","<br />");
 			
 			for ( int k = 1 ; k < 3 ; k++ )
 			{

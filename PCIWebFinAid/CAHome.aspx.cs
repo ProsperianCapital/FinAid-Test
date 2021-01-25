@@ -210,8 +210,8 @@ namespace PCIWebFinAid
 						{
 							ret        = 10240;
 							fieldCode  = mList.GetColumn("Serial");
-							fieldHead  = mList.GetColumn("HIWHeader",6);
-							fieldValue = mList.GetColumn("HIWDetail",6);
+							fieldHead  = mList.GetColumn("HIWHeader",0,6);
+							fieldValue = mList.GetColumn("HIWDetail",0,6);
 						//	blocked    = mList.GetColumn("Blocked");
 							Tools.LogInfo("LoadDynamicDetails/10240","HIW="+fieldCode+"/"+fieldHead,errPriority,this);
 							if ( "0123456789".Contains(fieldHead.Substring(0,1)) )
