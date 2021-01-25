@@ -210,8 +210,8 @@ namespace PCIWebFinAid
 						{
 							ret        = 10240;
 							fieldCode  = mList.GetColumn("Serial");
-							fieldHead  = mList.GetColumn("HIWHeader");
-							fieldValue = mList.GetColumn("HIWDetail");
+							fieldHead  = mList.GetColumn("HIWHeader",6);
+							fieldValue = mList.GetColumn("HIWDetail",6);
 						//	blocked    = mList.GetColumn("Blocked");
 							Tools.LogInfo("LoadDynamicDetails/10240","HIW="+fieldCode+"/"+fieldHead,errPriority,this);
 							if ( "0123456789".Contains(fieldHead.Substring(0,1)) )
@@ -222,28 +222,6 @@ namespace PCIWebFinAid
 								                      + "<p class='HIWDetail2'>" + fieldValue + "</p>";
 							mList.NextRow();
 						}
-
-/*
-					ret = 10250;
-					sql = "exec sp_WP_Get_ProductLegalDocumentInfo" + stdParms;
-					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10260, "Internal database error (sp_WP_Get_ProductLegalDocumentInfo failed)", sql, 2, 2, null, false, errPriority);
-					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10270, "Internal database error (sp_WP_Get_ProductLegalDocumentInfo no data returned)", sql, 2, 2, null, false, errPriority);
-					else
-						while ( ! mList.EOF )
-						{
-							ret        = 10280;
-							fieldCode  = mList.GetColumn("Serial");
-							fieldValue = mList.GetColumn("WebsiteFieldValue");
-						//	blocked    = mList.GetColumn("Blocked");
-							Tools.LogInfo("LoadDynamicDetails/10280","Legal="+fieldCode,errPriority,this);
-							err        = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,ascxHeader);
-							if ( err != 0 )
-								SetErrorDetail("LoadDynamicDetails", 10290, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString(), 2, 2, null, false, errPriority);
-							mList.NextRow();
-						}
-*/
 				}
 				catch (Exception ex)
 				{
