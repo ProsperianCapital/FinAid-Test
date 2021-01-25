@@ -121,12 +121,12 @@ function TickOver(img,mode)
 	</div>
 
 	</div> 
-<!-- #F9CF0E
-
+<!--
+	#F9CF0E
 	<div style="position:relative;display:inline-block;width:100%;background-color:#F9CF0E">
 -->
-	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;position:relative">
-		<div style="float:right;padding:100px;font-family:'Open Sans Hebrew',Sans-serif;font-size:20px;line-height:1.5em;letter-spacing:1.3px">
+	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;position:relative;padding:0px;margin:0 auto">
+		<div style="padding:10px;font-family:'Open Sans Hebrew',Sans-serif;font-size:20px;line-height:1.5em;letter-spacing:1.3px">
 		<div>			
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100287">100287</asp:Literal>
@@ -217,23 +217,7 @@ function TickOver(img,mode)
 	<br />
 	<hr />
 
-	<div style="float:left;width:10%">&nbsp;</div>
-	<div style="float:left;width:20%;padding-top:20px">
-		<asp:Image runat="server" ID="P12001" style="height:30px" />
-		<p style="line-height:1.5;margin: 0 0 1em 0;padding-top:10px;font-size:12px">
-		<asp:Literal runat="server" ID="X100040">100040</asp:Literal>
-		</p>
-		<asp:Image runat="server" ID="P12015" />
-		<asp:Image runat="server" ID="P12016" />
-		<asp:Image runat="server" ID="P12017" />
-		<!-- Not used
-		<asp Image run@t="server" ID="P12018" />
-		<asp Image run@t="server" ID="P12019" />
-		-->
-	</div>
-
-	<div style="float:left;width:10%">&nbsp;</div>
-	<div style="float:left;width:20%">
+	<div>
 		<p style="color:#FF7400;font-family:Sans-serif;font-size:18px;font-weight:600;letter-spacing:0.8px">
 		<asp:Literal runat="server" ID="X100092">100092</asp:Literal>
 		</p><p><b>
@@ -255,6 +239,18 @@ function TickOver(img,mode)
 		</p>
 	</div>
 
+	<div>
+		<asp:Image runat="server" ID="P12001" style="height:30px" />
+		<p style="line-height:1.5;margin: 0 0 1em 0;padding-top:10px;font-size:12px">
+		<asp:Literal runat="server" ID="X100040">100040</asp:Literal>
+		</p>
+		<asp:Image runat="server" ID="P12015" />
+		<asp:Image runat="server" ID="P12016" />
+		<asp:Image runat="server" ID="P12017" />
+		<asp:Image runat="server" ID="P12018" />
+		<asp:Image runat="server" ID="P12019" />
+	</div>
+
 	<!--
 	<div style="float:left;width:10%">&nbsp;</div>
 	<div style="float:left;width:20%">
@@ -264,8 +260,8 @@ function TickOver(img,mode)
 		<asp HyperLink run@t="server" ID="X100008" CssClass="TopButton TopButtonO"></asp:HyperLink>&nbsp;
 		<asp HyperLink run@t="server" ID="X100009" CssClass="TopButton TopButtonY"></asp:HyperLink>
 	</div>
-	-->
 	<div style="float:left;width:10%">&nbsp;</div>
+	-->
 
 	<!--#include file="IncludeErrorDtl.htm" -->
 

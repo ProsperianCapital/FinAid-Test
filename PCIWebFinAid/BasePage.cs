@@ -9,10 +9,9 @@ namespace PCIWebFinAid
 {
 	public abstract class BasePage : StdDisposable
 	{
-		protected Label   lblError;
-		protected Label   lblErrorDtl;
-		protected Button  btnErrorDtl;
-	//	protected Literal lblJS;
+		protected Label  lblError;
+		protected Label  lblErrorDtl;
+		protected Button btnErrorDtl;
 
 		override protected void OnInit(EventArgs e) // You must set AutoEventWireup="false" in the ASPX page
 		{
