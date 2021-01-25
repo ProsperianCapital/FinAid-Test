@@ -119,13 +119,9 @@ function TickOver(img,mode)
 			</div>
 		</div>
 	</div>
-
 	</div> 
-<!--
-	#F9CF0E
-	<div style="position:relative;display:inline-block;width:100%;background-color:#F9CF0E">
--->
-	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;position:relative;padding:0px;margin:0 auto">
+
+	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;min-width:246px !important;position:relative;padding:0px;margin:0 auto">
 		<div style="padding:10px;font-family:'Open Sans Hebrew',Sans-serif;font-size:20px;line-height:1.5em;letter-spacing:1.3px">
 		<div style="margin-left:10px">
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
@@ -208,18 +204,17 @@ function TickOver(img,mode)
 	<asp:Literal runat="server" ID="XHIW"></asp:Literal>
 	</div>
 
-	<div style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px;margin-left:75px">
+	<div style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px;margin-left:10px">
 	<asp:Literal runat="server" ID="X105009">105009</asp:Literal>
 	</div>
-	<div style="margin-left:10px">
+	<div style="margin:0px;margin-left:10px">
 	<asp:Image runat="server" ID="P12013" title="Img 12013" />
 	<asp:Image runat="server" ID="P12025" title="Img 12025" />
 	</div>
-	<div style="margin-left:10px">
+	<div style="margin:0px;margin-left:10px">
 	<asp:Image runat="server" ID="P12026" title="Img 12026" />
 	<asp:Image runat="server" ID="P12027" title="Img 12027" />
 	</div>
-	<br />
 	<hr />
 
 	<div>
