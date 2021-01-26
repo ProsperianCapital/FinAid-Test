@@ -34,6 +34,7 @@ namespace PCIWebFinAid
 				languageDialectCode            = WebTools.RequestValueString(Request,"LDC");
 				docTypeCode                    = WebTools.RequestValueString(Request,"DT");
 				ascxHeader.lstLanguage.Visible = false;
+				btnErrorDtl.Visible            = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 
 //				hdnProductCode.Value     = productCode;
 //				hdnLangCode.Value        = languageCode;
