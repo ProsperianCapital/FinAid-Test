@@ -121,26 +121,26 @@ function TickOver(img,mode)
 	</div>
 	</div> 
 
-	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;min-width:246px !important;position:relative;padding:0px;margin:0 auto">
-		<div style="padding:10px;font-family:'Open Sans Hebrew',Sans-serif;font-size:20px;line-height:1.5em;letter-spacing:1.3px">
-		<div style="margin-left:10px">
+	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;min-width:346px;padding:0px;margin:0px">
+		<div style="padding:10px;font-family:'Open Sans Hebrew',Sans-serif;font-size:20px;line-height:1.5em;letter-spacing:1.3px;margin:0px">
+			<div style="margin-left:10px">
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100287">100287</asp:Literal>
-		</div>
-		<br />
-		<div style="margin-left:10px">		
+			</div>
+			<br />
+			<div style="margin-left:10px">		
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100288">100288</asp:Literal>
-		</div>
-		<br />
-		<div style="margin-left:10px">		
+			</div>
+			<br />
+			<div style="margin-left:10px">		
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100289">100289</asp:Literal>
-		</div>
-		<br />
-		<div>			
+			</div>
+			<br />
+			<div>			
 			<a href="#"><div class="TopButton" style="height:32px;width:120px;color:#FFFFFF;background-color:#54595F" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">REGISTER</div></a>
-		</div>
+			</div>
 		</div>
 
 		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;text-align:center">
@@ -150,34 +150,32 @@ function TickOver(img,mode)
 		</p>
 
 		<div style="color:#54595F;font-size:19px;font-weight:600">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Register.png" style="float:left" />
-		<br /><asp:Label runat="server" ID="X105001">105001</asp:Label>
-		<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
-		<asp:Label runat="server" ID="X105002">105002</asp:Label>
-		</div>
-		</div>
-
-		<br />
-		<div style="color:#54595F;font-size:19px;font-weight:600">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Pay.png" style="float:left" />
-		<br /><asp:Literal runat="server" ID="X105003">105003</asp:Literal>
-		<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
-		<asp:Literal runat="server" ID="X105004">105004</asp:Literal>
-		</div>
+			<img src="<%=PCIBusiness.Tools.ImageFolder() %>Register.png" style="float:left" />
+			<br /><asp:Label runat="server" ID="X105001">105001</asp:Label>
+			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
+			<asp:Label runat="server" ID="X105002">105002</asp:Label>
+			</div>
 		</div>
 
 		<br />
 		<div style="color:#54595F;font-size:19px;font-weight:600">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Enjoy.png" style="float:left" />
-		<br /><asp:Literal runat="server" ID="X105005">105005</asp:Literal>
-		<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
-		<asp:Literal runat="server" ID="X105006">105006</asp:Literal>
+			<img src="<%=PCIBusiness.Tools.ImageFolder() %>Pay.png" style="float:left" />
+			<br /><asp:Literal runat="server" ID="X105003">105003</asp:Literal>
+			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
+			<asp:Literal runat="server" ID="X105004">105004</asp:Literal>
+			</div>
 		</div>
+
+		<br />
+		<div style="color:#54595F;font-size:19px;font-weight:600">
+			<img src="<%=PCIBusiness.Tools.ImageFolder() %>Enjoy.png" style="float:left" />
+			<br /><asp:Literal runat="server" ID="X105005">105005</asp:Literal>
+			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
+			<asp:Literal runat="server" ID="X105006">105006</asp:Literal>
+			</div>
 		</div>
 		<br />
 	</div>
-<!--
-	</div> -->
 
 	<div>
 		<p style="color: #F88742;font-family:Sans-serif;font-size: 35px;font-weight: 400;line-height: 1.4em;letter-spacing: 0.8px;text-align:center">
@@ -269,11 +267,17 @@ function TickOver(img,mode)
 	<div style="float:left;width:10%">&nbsp;</div>
 	-->
 
+	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=001" Target="Legal">100041</asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=003" Target="Legal">100042</asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=005" Target="Legal">100043</asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100044" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=004" Target="Legal">100044</asp:HyperLink>
+
 	<!--#include file="IncludeErrorDtl.htm" -->
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error" Visible="false" Enabled="false" ViewStateMode="Disabled"></asp:Label>
 	<asp:HiddenField runat="server" ID="hdnVer" />
 </form>
+<br />
 <ascx:Footer runat="server" ID="ascxFooter" />
 </body>
 </html>

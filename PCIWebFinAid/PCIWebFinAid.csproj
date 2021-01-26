@@ -70,6 +70,7 @@
     <Content Include="CAFooter.ascx" />
     <Content Include="CAHeader.ascx" />
     <Content Include="CAHome.aspx" />
+    <Content Include="CALegal.aspx" />
     <Content Include="CALogin.aspx" />
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
@@ -209,6 +210,13 @@
     <Content Include="Bin\PCIUnattended.EXE" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CALegal.aspx.cs">
+      <DependentUpon>CALegal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CALegal.aspx.designer.cs">
+      <DependentUpon>CALegal.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pgChangeEMailOnly.aspx.cs">
       <DependentUpon>pgChangeEMailOnly.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

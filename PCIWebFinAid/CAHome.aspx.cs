@@ -137,6 +137,13 @@ namespace PCIWebFinAid
 			hdnLangCode.Value        = languageCode;
 			hdnLangDialectCode.Value = languageDialectCode;
 			hdnVer.Value             = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
+			string legalParms        = "&PC="  + productCode
+			                         + "&LC="  + languageCode
+			                         + "&LDC=" + languageDialectCode;
+			X100041.NavigateUrl      = X100041.NavigateUrl + legalParms;
+			X100042.NavigateUrl      = X100042.NavigateUrl + legalParms;
+			X100043.NavigateUrl      = X100043.NavigateUrl + legalParms;
+			X100044.NavigateUrl      = X100044.NavigateUrl + legalParms;
 		}
 
 		private void LoadDynamicDetails()
