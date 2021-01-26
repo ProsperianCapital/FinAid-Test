@@ -20,7 +20,7 @@
 
 	<br />&nbsp;
 	<div style="background-color:#898787;width:100%;padding:0px;padding-top:40px;padding-bottom:40px;line-height:5px;font-size:32px">
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:Literal runat="server" ID="xTitle"></asp:Literal>
+	&nbsp;&nbsp;&nbsp;&nbsp;<asp:Literal runat="server" ID="xTitle"></asp:Literal>
 	</div>
 	<div style="color:#E68A00;font-size:17px;font-weight:800;margin:20px">
 	<asp:Literal runat="server" ID="xHeader"></asp:Literal>
