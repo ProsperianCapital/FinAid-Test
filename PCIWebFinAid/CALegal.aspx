@@ -13,20 +13,22 @@
 <form id="frmHome" runat="server">
 	<ascx:Header runat="server" ID="ascxHeader" />
 
-	<asp:HiddenField runat="server" Value="" ID="hdnProductCode" />
-	<asp:HiddenField runat="server" Value="" ID="hdnLangCode" />
-	<asp:HiddenField runat="server" Value="" ID="hdnLangDialectCode" />
-	<asp:HiddenField runat="server" Value="" ID="hdnDocTypeCode" />
+	<asp:HiddenField runat="server" ID="hdnProductCode" />
+	<asp:HiddenField runat="server" ID="hdnLangCode" />
+	<asp:HiddenField runat="server" ID="hdnLangDialectCode" />
+	<asp:HiddenField runat="server" ID="hdnDocTypeCode" />
 
 	<br />&nbsp;
-	<div style="background-color:#898787;width:100%;padding:0px;padding-top:40px;padding-bottom:40px;line-height:5px;font-size:32px">
-	&nbsp;&nbsp;&nbsp;&nbsp;<asp:Literal runat="server" ID="xTitle"></asp:Literal>
+	<div style="background-color:#898787;width:100%;padding:0px;padding-top:12px;padding-bottom:15px;font-size:32px">
+		<div style="margin:20px">
+		<asp:Literal runat="server" ID="xTitle"></asp:Literal>
+		</div>
 	</div>
 	<div style="color:#E68A00;font-size:17px;font-weight:800;margin:20px">
-	<asp:Literal runat="server" ID="xHeader"></asp:Literal>
+		<asp:Literal runat="server" ID="xHeader"></asp:Literal>
 	</div>
 	<div style="font-size:14px;margin:20px">
-	<asp:Literal runat="server" ID="xText"></asp:Literal>
+		<asp:Literal runat="server" ID="xText"></asp:Literal>
 	</div>
 
 	<!--#include file="IncludeErrorDtl.htm" -->

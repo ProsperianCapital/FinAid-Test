@@ -19,9 +19,9 @@ function TickOver(img,mode)
 <form id="frmHome" runat="server">
 	<ascx:Header runat="server" ID="ascxHeader" />
 
-	<asp:HiddenField runat="server" Value="" ID="hdnProductCode" />
-	<asp:HiddenField runat="server" Value="" ID="hdnLangCode" />
-	<asp:HiddenField runat="server" Value="" ID="hdnLangDialectCode" />
+	<asp:HiddenField runat="server" ID="hdnProductCode" />
+	<asp:HiddenField runat="server" ID="hdnLangCode" />
+	<asp:HiddenField runat="server" ID="hdnLangDialectCode" />
 
 	<asp:Button runat="server" ID="btnWidth" Text="Width" OnClientClick="JavaScript:alert('Width = '+window.innerWidth.toString()+' pixels');return false" />
 
@@ -182,7 +182,7 @@ function TickOver(img,mode)
 		<asp:Literal runat="server" ID="X100051">100051</asp:Literal>
 		</p>
 		<!-- <div style="display:flex;margin:auto;width:100%" -->
-		<div style="margin:0 auto;width:100%"> <!-- ";display:inline-block" -->
+		<div style="margin:0 auto;width:100%">
 		<figure style="display:inline-block;box-shadow: 0px 0px 50px 0px rgba(15,15,43,0.58);width:290px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:15px 15px 15px 15px;padding:60px 30px 60px 30px">
 			<asp:Image runat="server" ID="P12010" style="width:290px" title="Image 12010" />
 			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Mobile Response</figcaption>
