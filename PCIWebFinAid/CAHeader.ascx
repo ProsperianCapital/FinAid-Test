@@ -4,7 +4,7 @@
 	<div class="HCol1">
 		<asp:Image runat="server" ID="P12001" />
 	</div>
-	<div class="Header1a HCol2">
+	<div class="HCol2">
 		Instant Help When You Need It Most
 	</div>
 	<div class="HCol3">

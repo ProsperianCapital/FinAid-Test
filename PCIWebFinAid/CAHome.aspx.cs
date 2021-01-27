@@ -10,6 +10,7 @@ namespace PCIWebFinAid
 		byte   errPriority;
 		int    ret;
 		string sql;
+		string spr;
 
 		string productCode;
 		string languageCode;
@@ -64,11 +65,12 @@ namespace PCIWebFinAid
 				try
 				{
 					ret = 10010;
-					sql = "exec sp_WP_Get_ProductWebsiteInfo @ProductURL = 'www.careassistza.com'";
+					spr = "sp_WP_Get_ProductWebsiteInfo";
+					sql = "exec " + spr + " @ProductURL = 'www.careassistza.com'";
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadStaticDetails", 10020, "Internal database error (sp_WP_Get_ProductWebsiteInfo failed)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadStaticDetails", 10020, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadStaticDetails", 10030, "Internal database error (sp_WP_Get_ProductWebsiteInfo no data returned)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadStaticDetails", 10030, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 					{
 						ret              = 10040;
@@ -91,11 +93,12 @@ namespace PCIWebFinAid
 					}
 
 					ret = 10050;
-					sql = "exec sp_WP_Get_ProductLanguageInfo @ProductCode=" + Tools.DBString(productCode);
+					spr = "sp_WP_Get_ProductLanguageInfo";
+					sql = "exec " + spr + " @ProductCode=" + Tools.DBString(productCode);
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadStaticDetails", 10060, "Internal database error (sp_WP_Get_ProductLanguageInfo failed)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadStaticDetails", 10060, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadStaticDetails", 10070, "Internal database error (sp_WP_Get_ProductLanguageInfo no data returned)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadStaticDetails", 10070, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 					{
 						string       lCode;
@@ -160,11 +163,12 @@ namespace PCIWebFinAid
 				try
 				{
 					ret = 10110;
-					sql = "exec sp_WP_Get_ProductContent" + stdParms;
+					spr = "sp_WP_Get_ProductContent";
+					sql = "exec " + spr + stdParms;
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10120, "Internal database error (sp_WP_Get_ProductContent failed)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadDynamicDetails", 10120, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10130, "Internal database error (sp_WP_Get_ProductContent no data returned)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadDynamicDetails", 10130, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 						while ( ! mList.EOF )
 						{
@@ -175,17 +179,18 @@ namespace PCIWebFinAid
 						//	blocked    = mList.GetColumn("Blocked");
 							Tools.LogInfo("LoadDynamicDetails/10140","FieldCode="+fieldCode,errPriority,this);
 							err        = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,ascxHeader);
-							if ( err != 0 )
+							if ( err  != 0 )
 								SetErrorDetail("LoadDynamicDetails", 10150, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
 							mList.NextRow();
 						}
 
 					ret = 10160;
-					sql = "exec sp_WP_Get_ProductImageInfo" + stdParms;
+					spr = "sp_WP_Get_ProductImageInfo";
+					sql = "exec " + spr + stdParms;
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10170, "Internal database error (sp_WP_Get_ProductImageInfo failed)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadDynamicDetails", 10170, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10180, "Internal database error (sp_WP_Get_ProductImageInfo no data returned)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadDynamicDetails", 10180, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 						while ( ! mList.EOF )
 						{
@@ -206,12 +211,13 @@ namespace PCIWebFinAid
 						}
 
 					ret       = 10210;
-					XHIW.Text = "";
-					sql       = "exec sp_WP_Get_ProductHIWInfo" + stdParms;
+					xHIW.Text = "";
+					spr       = "sp_WP_Get_ProductHIWInfo";
+					sql       = "exec " + spr + stdParms;
 					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10220, "Internal database error (sp_WP_Get_ProductHIWInfo failed)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadDynamicDetails", 10220, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10230, "Internal database error (sp_WP_Get_ProductHIWInfo no data returned)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("LoadDynamicDetails", 10230, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
 					else
 						while ( ! mList.EOF )
 						{
@@ -219,16 +225,40 @@ namespace PCIWebFinAid
 							fieldCode  = mList.GetColumn("Serial");
 							fieldHead  = mList.GetColumn("HIWHeader",0,6);
 							fieldValue = mList.GetColumn("HIWDetail",0,6);
-						//	blocked    = mList.GetColumn("Blocked");
 							Tools.LogInfo("LoadDynamicDetails/10240","HIW="+fieldCode+"/"+fieldHead,errPriority,this);
 							if ( "0123456789".Contains(fieldHead.Substring(0,1)) )
-								XHIW.Text = XHIW.Text + "<p class='HIWHead1'>"   + fieldHead  + "</p>"
+								xHIW.Text = xHIW.Text + "<p class='HIWHead1'>"   + fieldHead  + "</p>"
 								                      + "<p class='HIWDetail1'>" + fieldValue + "</p>";
 							else
-								XHIW.Text = XHIW.Text + "<p class='HIWHead2'>"   + fieldHead  + "</p>"
+								xHIW.Text = xHIW.Text + "<p class='HIWHead2'>"   + fieldHead  + "</p>"
 								                      + "<p class='HIWDetail2'>" + fieldValue + "</p>";
 							mList.NextRow();
 						}
+
+					ret       = 10310;
+					xFAQ.Text = "";
+					spr       = "sp_WP_Get_ProductFAQInfo";
+					sql       = "exec " + spr + stdParms;
+					if ( mList.ExecQuery(sql,0) != 0 )
+						SetErrorDetail("LoadDynamicDetails", 10320, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+					else if ( mList.EOF )
+						SetErrorDetail("LoadDynamicDetails", 10330, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
+					else
+						while ( ! mList.EOF )
+						{
+							ret        = 10340;
+							fieldCode  = mList.GetColumn("FAQ"      ,0,6);
+							fieldHead  = mList.GetColumn("FAQHeader",0,6);
+							fieldValue = mList.GetColumn("FAQDetail",0,6);
+							xFAQ.Text  = xFAQ.Text + "<p class='FAQHead'>"   + fieldHead  + "</p>"
+								                    + "<p class='FAQDetail'>" + fieldValue + "</p>";
+							Tools.LogInfo("LoadDynamicDetails/10240","FAQ="+fieldCode+"/"+fieldHead,errPriority,this);
+							mList.NextRow();
+						}
+//					if ( xFAQ.Text.Length > 0 )
+//						xFAQ.Text = "<br />" + xFAQ.Text + "<br />";
+//					else
+					X100063.Visible = ( xFAQ.Text.Length > 0 );
 				}
 				catch (Exception ex)
 				{
