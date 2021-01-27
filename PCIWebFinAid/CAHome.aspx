@@ -183,21 +183,24 @@ function FAQ()
 		<br />
 	</div>
 
-	<div>
-		<p style="color: #F88742;font-family:Sans-serif;font-size: 35px;font-weight: 400;line-height: 1.4em;letter-spacing: 0.8px;text-align:center">
+	<div style="margin:0 auto;padding:0px;display:inline-block;width:100%">
+		<p style="color: #F88742;font-family:Sans-serif;font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;text-align:center">
 		<asp:Literal runat="server" ID="X100051">100051</asp:Literal>
 		</p>
-		<!-- <div style="display:flex;margin:auto;width:100%" -->
-		<div style="margin:0 auto;width:100%">
-		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 10px 20px 10px">
+		<div class="HFig">
+		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 20px 10px 10px">
 			<asp:Image runat="server" ID="P12010" style="width:100%" />
 			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Mobile Response</figcaption>
-		</figure> 
-		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 10px 20px 10px">
+		</figure>
+		</div>
+		<div class="HFig">
+		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 20px 10px 10px">
 			<asp:Image runat="server" ID="P12011" style="width:100%" />
 			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Legal Access</figcaption>
 		</figure> 
-		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 10px 20px 10px">
+		</div>
+		<div class="HFig">
+		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 20px 10px 10px">
 			<asp:Image runat="server" ID="P12012" style="width:100%" />
 			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Cash Reward</figcaption>
 		</figure> 
@@ -209,6 +212,8 @@ function FAQ()
 	</div>
 
 	<asp:HyperLink runat="server" ID="X100063" ForeColor="Orange" style="font-size:18px" NavigateUrl="JavaScript:FAQ()">100063</asp:HyperLink>
+	&nbsp;
+	<a href="JavaScript:FAQ()"><div class="TopButton" style="width:120px;color:#FFFFFF;background-color:#54595F" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">FAQs</div></a>
 	<div id="divFAQ" style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
 	<asp:Literal runat="server" ID="xFAQ"></asp:Literal>
 	</div>
