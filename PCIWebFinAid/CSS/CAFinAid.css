@@ -428,6 +428,11 @@ table td
 */
 }
 
+.HFig
+{
+	float: left;
+}
+
 @media screen and (max-width: 2400px)
 {
 	.HCol1
@@ -494,5 +499,12 @@ table td
 	.Header1
 	{
 		height: 150px;
+	}
+	.HFig
+	{
+		margin: 0 auto;
+		text-align: center;
+		float: none;
+		padding: 0px 0px 0px 0px;
 	}
 }
