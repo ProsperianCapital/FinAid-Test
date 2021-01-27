@@ -189,15 +189,15 @@ function FAQ()
 		</p>
 		<!-- <div style="display:flex;margin:auto;width:100%" -->
 		<div style="margin:0 auto;width:100%">
-		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:60px 30px 60px 30px">
+		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 10px 20px 10px">
 			<asp:Image runat="server" ID="P12010" style="width:100%" />
 			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Mobile Response</figcaption>
 		</figure> 
-		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:60px 30px 60px 30px">
+		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 10px 20px 10px">
 			<asp:Image runat="server" ID="P12011" style="width:100%" />
 			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Legal Access</figcaption>
 		</figure> 
-		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:60px 30px 60px 30px">
+		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 10px 20px 10px">
 			<asp:Image runat="server" ID="P12012" style="width:100%" />
 			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Cash Reward</figcaption>
 		</figure> 
