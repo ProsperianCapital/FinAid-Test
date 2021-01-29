@@ -239,6 +239,8 @@ namespace PCIWebFinAid
 					xFAQ.Text = "";
 					spr       = "sp_WP_Get_ProductFAQInfo";
 					sql       = "exec " + spr + stdParms;
+					string hd = "*P*";
+
 					if ( mList.ExecQuery(sql,0) != 0 )
 						SetErrorDetail("LoadDynamicDetails", 10320, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
@@ -250,14 +252,20 @@ namespace PCIWebFinAid
 							fieldCode  = mList.GetColumn("FAQ"      ,0,6);
 							fieldHead  = mList.GetColumn("FAQHeader",0,6);
 							fieldValue = mList.GetColumn("FAQDetail",0,6);
-							xFAQ.Text  = xFAQ.Text + "<p class='FAQHead'>"   + fieldHead  + "</p>"
-								                    + "<p class='FAQDetail'>" + fieldValue + "</p>";
+							if ( fieldHead != hd )
+							{
+								ret = 10350;
+								if ( hd == "*P*" )
+									xFAQ.Text = xFAQ.Text + "<a href='JavaScript:FAQ()' title='Close' style='float:right;padding:4px'><img src='" + Tools.ImageFolder() + "Close1.png' /></a>";
+								xFAQ.Text    = xFAQ.Text + "<p class='FAQHead'>" + fieldHead  + "</p>";
+								hd           = fieldHead;
+							}
+							ret       = 10360;
+							xFAQ.Text = xFAQ.Text + "<p class='FAQQuestion'>" + fieldCode  + "</p>"
+								                   + "<p class='FAQAnswer'>"   + fieldValue + "</p>";
 							Tools.LogInfo("LoadDynamicDetails/10240","FAQ="+fieldCode+"/"+fieldHead,errPriority,this);
 							mList.NextRow();
 						}
-//					if ( xFAQ.Text.Length > 0 )
-//						xFAQ.Text = "<br />" + xFAQ.Text + "<br />";
-//					else
 					X100063.Visible = ( xFAQ.Text.Length > 0 );
 				}
 				catch (Exception ex)
