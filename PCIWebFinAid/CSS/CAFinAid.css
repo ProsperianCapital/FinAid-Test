@@ -349,14 +349,23 @@ table td
 
 .FAQHead
 {
-	color: blue;
+	color: black;
 	font-family: Montserrat, Sans-serif;
 	font-size: 16px;
+	font-weight: 800;
+	margin-left: 15px;
+}
+
+.FAQQuestion
+{
+	color: blue;
+	font-family: Montserrat, Sans-serif;
+	font-size: 14px;
 	font-weight: 500;
 	margin-left: 15px;
 }
 
-.FAQDetail
+.FAQAnswer
 {
 	color: #000000;
 	font-family: Montserrat, Sans-serif;
