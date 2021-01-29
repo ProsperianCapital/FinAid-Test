@@ -11,7 +11,8 @@
 </head>
 <body>
 <script type="text/javascript">
-var showFAQ = 0;
+var showFAQ   = 0;
+var showLegal = [0,0,0,0,0,0,0];
 function TickOver(img,mode)
 {
 	img.src = '<%=PCIBusiness.Tools.ImageFolder() %>' + ( mode == 1 ? 'TickOrange' : 'TickWhite' ) + '.png';
@@ -20,6 +21,20 @@ function FAQ()
 {
 	showFAQ = ( showFAQ > 0 ? 0 : 1 );
 	ShowElt('divFAQ',(showFAQ>0));
+}
+function Legal(code)
+{
+	for ( var k = 1 ; k < showLegal.length ; k++ )
+		try
+		{
+			if ( k == code && showLegal[k] == 0 )
+				showLegal[k] = 1;
+			else
+				showLegal[k] = 0;
+			ShowElt('LV00'+k.toString(),(showLegal[k]>0));
+		}
+		catch (x)
+		{ }
 }
 </script>
 <form id="frmHome" runat="server">
@@ -187,22 +202,40 @@ function FAQ()
 		<p style="color: #F88742;font-family:Sans-serif;font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;text-align:center">
 		<asp:Literal runat="server" ID="X100051">100051</asp:Literal>
 		</p>
-		<div class="HFig">
+		<div class="HFig" id="D12010">
 		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 20px 10px 10px">
 			<asp:Image runat="server" ID="P12010" style="width:100%" />
-			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Mobile Response</figcaption>
+			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center"><asp:Literal runat="server" ID="X105036">105036</asp:Literal></figcaption>
 		</figure>
 		</div>
-		<div class="HFig">
+		<div class="HFig" id="D12011">
 		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 20px 10px 10px">
 			<asp:Image runat="server" ID="P12011" style="width:100%" />
-			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Legal Access</figcaption>
+			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center"><asp:Literal runat="server" ID="X105037">105037</asp:Literal></figcaption>
 		</figure> 
 		</div>
-		<div class="HFig">
+		<div class="HFig" id="D12012">
 		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 20px 10px 10px">
 			<asp:Image runat="server" ID="P12012" style="width:100%" />
-			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Emergency Cash Reward</figcaption>
+			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center"><asp:Literal runat="server" ID="X105038">105038</asp:Literal></figcaption>
+		</figure> 
+		</div>
+		<div class="HFig" id="D12023">
+		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 20px 10px 10px">
+			<asp:Image runat="server" ID="P12023" style="width:100%" />
+			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Image 12023 Caption</figcaption>
+		</figure> 
+		</div>
+		<div class="HFig" id="D12024">
+		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 20px 10px 10px">
+			<asp:Image runat="server" ID="P12024" style="width:100%" />
+			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Image 12024 Caption</figcaption>
+		</figure> 
+		</div>
+		<div class="HFig" id="D12028">
+		<figure style="display:inline-block;box-shadow:0px 0px 50px 0px rgba(15,15,43,0.58);width:340px;border-radius:15px;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;margin:10px 10px 10px 10px;padding:20px 20px 10px 10px">
+			<asp:Image runat="server" ID="P12028" style="width:100%" />
+			<figcaption style="font-size:17px;letter-spacing:0.5px;margin-top:8px;text-align:center">Image 12028 Caption</figcaption>
 		</figure> 
 		</div>
 	</div>
@@ -211,21 +244,22 @@ function FAQ()
 	<asp:Literal runat="server" ID="xHIW"></asp:Literal>
 	</div>
 
-	<asp:HyperLink runat="server" ID="X100063" ForeColor="Orange" style="font-size:18px" NavigateUrl="JavaScript:FAQ()">100063</asp:HyperLink>
-	&nbsp;
-	<a href="JavaScript:FAQ()"><div class="TopButton" style="width:120px;color:#FFFFFF;background-color:#54595F" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">FAQs</div></a>
-	<div id="divFAQ" style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
-	<asp:Literal runat="server" ID="xFAQ"></asp:Literal>
+	<div style="background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px">
+		<a href="JavaScript:FAQ()"><div class="TopButton" style="width:120px;color:#FFFFFF;background-color:#54595F;margin:4px 0px 0px 4px" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'"><asp:Literal runat="server" ID="X100063">100063</asp:Literal></div></a>
+		<div id="divFAQ" style="color:#FFFFFF;font-family:Sans-serif;visibility:hidden;display:none">
+		<asp:Literal runat="server" ID="xFAQ"></asp:Literal>
+		</div>
 	</div>
 
 	<div style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px;margin-left:10px">
 	<asp:Literal runat="server" ID="X105009">105009</asp:Literal>
 	</div>
-	<div style="margin:0px;margin-left:10px">
+
+	<div style="text-align:center"> <!-- margin:0px;margin-left:10px -->
 	<asp:Image runat="server" ID="P12013" />
 	<asp:Image runat="server" ID="P12025" />
 	</div>
-	<div style="margin:0px;margin-left:10px">
+	<div style="text-align:center"> <!-- margin:0px;margin-left:10px -->
 	<asp:Image runat="server" ID="P12026" />
 	<asp:Image runat="server" ID="P12027" />
 	</div>
@@ -242,37 +276,38 @@ function FAQ()
 		<asp:Literal runat="server" ID="X100095">100095</asp:Literal>
 
 		</b></p><p style="display:flex">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Envelope.png" style="object-fit:contain" />&nbsp;
+		<asp:Image runat="server" ID="P12031" style="object-fit:contain" />&nbsp;
 		<asp:Label runat="server" ID="X100096">100096</asp:Label>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X100101">100101</asp:Literal>
 		</b></p><p style="display:flex">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Telephone.png" style="object-fit:contain" />
+		<asp:Image runat="server" ID="P12032" style="object-fit:contain" />&nbsp;
 		<asp:Label runat="server" ID="X104404" style="padding-top:4px">104404</asp:Label>
 		</p><p style="display:flex">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Clock.png" style="object-fit:contain" />
+		<asp:Image runat="server" ID="P12033" style="object-fit:contain" />&nbsp;
 		<asp:Label runat="server" ID="X100102" style="padding-top:4px">100102</asp:Label>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X104418">104418</asp:Literal>
 		</b></p><div style="display:flex">
-		<div style="vertical-align:top"><img src="<%=PCIBusiness.Tools.ImageFolder() %>Pin.png" style="object-fit:contain" /></div>
-		<asp:Label runat="server" ID="X100105">(100105) Please address any written correspondence to<br />P O Box 1134234234<br />Westville<br />8787.<br />Thank you, have a nice day and don't call us, we'll call you ... and not soon either. So shut up and stop complaining</asp:Label>
+		<div style="vertical-align:top"><asp:Image runat="server" ID="P12034" style="object-fit:contain" /></div>
+		<asp:Label runat="server" ID="X100105">100105</asp:Label>
 		</div>
 	</div>
 
-	<div>
-		<!--
-		<asp Image run@t="server" ID="P12001" style="height:30px" />
-		-->
-		<p style="line-height:1.5;margin: 0 0 1em 0;padding-top:10px;font-size:11px">
-		<asp:Literal runat="server" ID="X100040">100040</asp:Literal>
-		</p>
-		<asp:Image runat="server" ID="P12015" />
-		<asp:Image runat="server" ID="P12016" />
-		<asp:Image runat="server" ID="P12017" />
-		<asp:Image runat="server" ID="P12018" />
-		<asp:Image runat="server" ID="P12019" />
-	</div>
+	<!--
+	<asp Image run@t="server" ID="P12001" style="height:30px" />
+	-->
+	<p style="line-height:1.5;margin: 0 0 1em 0;padding-top:10px;font-size:11px">
+	<asp:Literal runat="server" ID="X100040">100040</asp:Literal>
+	</p>
+	<!-- To centre
+	<div style="text-align:center">
+	-->
+	<asp:Image runat="server" ID="P12015" ImageUrl="ImageLibrary/Visa.png" />
+	<asp:Image runat="server" ID="P12016" ImageUrl="ImageLibrary/MasterCard.png" />
+	<asp:Image runat="server" ID="P12017" />
+	<asp:Image runat="server" ID="P12018" />
+	<asp:Image runat="server" ID="P12019" />
 
 	<!--
 	<div style="float:left;width:10%">&nbsp;</div>
@@ -286,11 +321,38 @@ function FAQ()
 	<div style="float:left;width:10%">&nbsp;</div>
 	-->
 
-	<br />
-	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=001" Target="Legal">100041</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=003" Target="Legal">100042</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=005" Target="Legal">100043</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100044" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=004" Target="Legal">100044</asp:HyperLink>
+	<br /><br />
+<!--
+	<asp HyperLink run@t="server" ID="X100041" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=001" Target="Legal">100041</asp:HyperLink> |
+-->
+	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="JavaScript:Legal(1)">100041</asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="JavaScript:Legal(3)">100042</asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="JavaScript:Legal(5)">100043</asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100044" ForeColor="Orange" NavigateUrl="JavaScript:Legal(4)">100044</asp:HyperLink>
+
+	<div id="LV001" style="color:#FFFFFF;font-family:Sans-serif;background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('LV001',false)" title="Close" style="float:right;padding:4px" />
+		<p class='FAQQuestion'><asp:Literal runat="server" ID="LH001">Header 001</asp:Literal></p>
+		<p class='FAQAnswer'><asp:Literal runat="server" ID="LD001">Detail 001</asp:Literal></p>
+	</div>
+
+	<div id="LV003" style="color:#FFFFFF;font-family:Sans-serif;background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('LV003',false)" title="Close" style="float:right;padding:4px" />
+		<p class='FAQQuestion'><asp:Literal runat="server" ID="LH003">Header 003</asp:Literal></p>
+		<p class='FAQAnswer'><asp:Literal runat="server" ID="LD003">Detail 003</asp:Literal></p>
+	</div>
+
+	<div id="LV005" style="color:#FFFFFF;font-family:Sans-serif;background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('LV005',false)" title="Close" style="float:right;padding:4px" />
+		<p class='FAQQuestion'><asp:Literal runat="server" ID="LH005">Header 005</asp:Literal></p>
+		<p class='FAQAnswer'><asp:Literal runat="server" ID="LD005">Detail 005</asp:Literal></p>
+	</div>
+
+	<div id="LV004" style="color:#FFFFFF;font-family:Sans-serif;background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
+		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('LV004',false)" title="Close" style="float:right;padding:4px" />
+		<p class='FAQQuestion'><asp:Literal runat="server" ID="LH004">Header 004</asp:Literal></p>
+		<p class='FAQAnswer'><asp:Literal runat="server" ID="LD004">Detail 004</asp:Literal></p>
+	</div>
 
 	<!--#include file="IncludeErrorDtl.htm" -->
 

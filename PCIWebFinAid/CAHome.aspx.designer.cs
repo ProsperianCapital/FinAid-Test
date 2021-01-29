@@ -436,6 +436,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Image P12010;
         
         /// <summary>
+        /// X105036 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal X105036;
+        
+        /// <summary>
         /// P12011 control.
         /// </summary>
         /// <remarks>
@@ -445,6 +454,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Image P12011;
         
         /// <summary>
+        /// X105037 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal X105037;
+        
+        /// <summary>
         /// P12012 control.
         /// </summary>
         /// <remarks>
@@ -452,6 +470,42 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image P12012;
+        
+        /// <summary>
+        /// X105038 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal X105038;
+        
+        /// <summary>
+        /// P12023 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image P12023;
+        
+        /// <summary>
+        /// P12024 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image P12024;
+        
+        /// <summary>
+        /// P12028 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image P12028;
         
         /// <summary>
         /// xHIW control.
@@ -469,7 +523,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink X100063;
+        protected global::System.Web.UI.WebControls.Literal X100063;
         
         /// <summary>
         /// xFAQ control.
@@ -562,6 +616,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X100095;
         
         /// <summary>
+        /// P12031 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image P12031;
+        
+        /// <summary>
         /// X100096 control.
         /// </summary>
         /// <remarks>
@@ -580,6 +643,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X100101;
         
         /// <summary>
+        /// P12032 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image P12032;
+        
+        /// <summary>
         /// X104404 control.
         /// </summary>
         /// <remarks>
@@ -587,6 +659,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label X104404;
+        
+        /// <summary>
+        /// P12033 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image P12033;
         
         /// <summary>
         /// X100102 control.
@@ -605,6 +686,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X104418;
+        
+        /// <summary>
+        /// P12034 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image P12034;
         
         /// <summary>
         /// X100105 control.
@@ -704,6 +794,78 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink X100044;
+        
+        /// <summary>
+        /// LH001 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LH001;
+        
+        /// <summary>
+        /// LD001 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LD001;
+        
+        /// <summary>
+        /// LH003 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LH003;
+        
+        /// <summary>
+        /// LD003 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LD003;
+        
+        /// <summary>
+        /// LH005 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LH005;
+        
+        /// <summary>
+        /// LD005 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LD005;
+        
+        /// <summary>
+        /// LH004 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LH004;
+        
+        /// <summary>
+        /// LD004 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LD004;
         
         /// <summary>
         /// hdnVer control.

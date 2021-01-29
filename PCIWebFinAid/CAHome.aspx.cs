@@ -140,13 +140,14 @@ namespace PCIWebFinAid
 			hdnLangCode.Value        = languageCode;
 			hdnLangDialectCode.Value = languageDialectCode;
 			hdnVer.Value             = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
-			string legalParms        = "&PC="  + productCode
-			                         + "&LC="  + languageCode
-			                         + "&LDC=" + languageDialectCode;
-			X100041.NavigateUrl      = X100041.NavigateUrl + legalParms;
-			X100042.NavigateUrl      = X100042.NavigateUrl + legalParms;
-			X100043.NavigateUrl      = X100043.NavigateUrl + legalParms;
-			X100044.NavigateUrl      = X100044.NavigateUrl + legalParms;
+
+//			string legalParms        = "&PC="  + productCode
+//			                         + "&LC="  + languageCode
+//			                         + "&LDC=" + languageDialectCode;
+//			X100041.NavigateUrl      = X100041.NavigateUrl + legalParms;
+//			X100042.NavigateUrl      = X100042.NavigateUrl + legalParms;
+//			X100043.NavigateUrl      = X100043.NavigateUrl + legalParms;
+//			X100044.NavigateUrl      = X100044.NavigateUrl + legalParms;
 		}
 
 		private void LoadDynamicDetails()
@@ -155,6 +156,7 @@ namespace PCIWebFinAid
 			string fieldCode;
 			string fieldHead;
 			string fieldValue;
+			string fieldURL;
 			string stdParms = " @ProductCode="         + Tools.DBString(productCode)
 					          + ",@LanguageCode="        + Tools.DBString(languageCode)
 					          + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
@@ -176,6 +178,7 @@ namespace PCIWebFinAid
 							fieldCode  = mList.GetColumn("WebsiteFieldCode");
 						//	fieldName  = mList.GetColumn("WebsiteFieldName");
 							fieldValue = mList.GetColumn("WebsiteFieldValue");
+							fieldURL   = mList.GetColumn("FieldHyperlinkTarget");
 						//	blocked    = mList.GetColumn("Blocked");
 							Tools.LogInfo("LoadDynamicDetails/10140","FieldCode="+fieldCode,errPriority,this);
 							err        = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,ascxHeader);
@@ -197,11 +200,11 @@ namespace PCIWebFinAid
 							ret        = 10190;
 							fieldCode  = mList.GetColumn("ImageCode");
 							fieldValue = mList.GetColumn("ImageFileName");
-						//	blocked    = mList.GetColumn("Blocked");
+							fieldURL   = mList.GetColumn("ImageHyperLink");
 							Tools.LogInfo("LoadDynamicDetails/10190","ImageCode="+fieldCode+"/"+fieldValue,errPriority,this);
 							err        = WebTools.ReplaceImage(this.Page,fieldCode,fieldValue,
 							                                   mList.GetColumn   ("ImageMouseHoverText"),
-							                                   mList.GetColumn   ("ImageHyperLink"),
+							                                   fieldURL,
 							                                   mList.GetColumnInt("ImageHeight"),
 							                                   mList.GetColumnInt("ImageWidth"),
 							                                   ascxHeader);
@@ -209,6 +212,16 @@ namespace PCIWebFinAid
 								SetErrorDetail("LoadDynamicDetails", 10200, "Unrecognized Image code ("+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceImage('"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
 							mList.NextRow();
 						}
+
+					ret = 10205;
+					spr = "";
+					if ( P12010.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12010',false);";
+					if ( P12011.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12011',false);";
+					if ( P12012.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12012',false);";
+					if ( P12023.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12023',false);";
+					if ( P12024.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12024',false);";
+					if ( P12028.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12028',false);";
+					ascxFooter.JSText = WebTools.JavaScriptSource(spr);
 
 					ret       = 10210;
 					xHIW.Text = "";
@@ -256,7 +269,7 @@ namespace PCIWebFinAid
 							{
 								ret = 10350;
 								if ( hd == "*P*" )
-									xFAQ.Text = xFAQ.Text + "<a href='JavaScript:FAQ()' title='Close' style='float:right;padding:4px'><img src='" + Tools.ImageFolder() + "Close1.png' /></a>";
+									xFAQ.Text = xFAQ.Text + "<hr /><a href='JavaScript:FAQ()' title='Close' style='float:right;padding:4px'><img src='" + Tools.ImageFolder() + "Close1.png' /></a>";
 								xFAQ.Text    = xFAQ.Text + "<p class='FAQHead'>" + fieldHead  + "</p>";
 								hd           = fieldHead;
 							}
@@ -266,7 +279,29 @@ namespace PCIWebFinAid
 							Tools.LogInfo("LoadDynamicDetails/10240","FAQ="+fieldCode+"/"+fieldHead,errPriority,this);
 							mList.NextRow();
 						}
+
 					X100063.Visible = ( xFAQ.Text.Length > 0 );
+					ret             = 10410;
+					spr             = "sp_WP_Get_ProductLegalDocumentInfo";
+					sql             = "exec " + spr + stdParms;
+					if ( mList.ExecQuery(sql,0) != 0 )
+						SetErrorDetail("LoadDynamicDetails", 10420, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+					else if ( mList.EOF )
+						SetErrorDetail("LoadDynamicDetails", 10430, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+					else
+						while ( ! mList.EOF )
+						{
+							ret       = 10440;
+							fieldCode = mList.GetColumn("DocumentTypeCode");
+							try
+							{
+								((Literal)FindControl("LH"+fieldCode)).Text = mList.GetColumn("DocumentHeader",1,6);
+								((Literal)FindControl("LD"+fieldCode)).Text = mList.GetColumn("DocumentText",1,6);
+							}
+							catch
+							{ }
+							mList.NextRow();
+						}
 				}
 				catch (Exception ex)
 				{
