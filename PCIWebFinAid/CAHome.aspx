@@ -67,12 +67,12 @@ function Legal(code)
 			<asp:Literal runat="server" ID="X105013">105013</asp:Literal>
 			</div>
 		</div>
-		<div style="float:right;display:inline-block">
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;<asp:Literal runat="server" ID="X105017">105017</asp:Literal><br />
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;<asp:Literal runat="server" ID="X105018">105018</asp:Literal><br />
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;<asp:Literal runat="server" ID="X105019">105019</asp:Literal><br />&nbsp;
+		<div style="float:right">
+			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105017">105017</asp:Literal></div>
+			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105018">105018</asp:Literal></div>
+			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105019">105019</asp:Literal></div>
 		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-left:5px;margin-right:5px">
+		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
 			<div style="font-size:10px;vertical-align:top;text-align:center">
 			<asp:Literal runat="server" ID="X105014">105014</asp:Literal>
 			<span style="font-size:40px">
@@ -96,11 +96,11 @@ function Legal(code)
 			</div>
 		</div>
 		<div style="float:right;display:inline-block">
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;<asp:Literal runat="server" ID="X105025">105025</asp:Literal><br />
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;<asp:Literal runat="server" ID="X105026">105026</asp:Literal><br />
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;<asp:Literal runat="server" ID="X105027">105027</asp:Literal><br />&nbsp;
+			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105025">105025</asp:Literal></div>
+			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105026">105026</asp:Literal></div>
+			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105027">105027</asp:Literal></div>
 		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-left:5px;margin-right:5px">
+		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
 			<div style="font-size:10px;vertical-align:top;text-align:center">
 			<asp:Literal runat="server" ID="X105022">105022</asp:Literal>
 			<span style="font-size:40px">
@@ -124,11 +124,11 @@ function Legal(code)
 			</div>
 		</div>
 		<div style="float:right;display:inline-block">
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;<asp:Literal runat="server" ID="X105033">105033</asp:Literal><br />
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;<asp:Literal runat="server" ID="X105034">105034</asp:Literal><br />
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" />&nbsp;<asp:Literal runat="server" ID="X105035">105035</asp:Literal><br />&nbsp;
+			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105033">105033</asp:Literal></div>
+			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105034">105034</asp:Literal></div>
+			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105035">105035</asp:Literal></div>
 		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-left:5px;margin-right:5px">
+		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
 			<div style="font-size:10px;vertical-align:top;text-align:center">
 			<asp:Literal runat="server" ID="X105030">105030</asp:Literal>
 			<span style="font-size:40px">
