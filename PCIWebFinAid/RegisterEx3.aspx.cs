@@ -23,12 +23,15 @@ namespace PCIWebFinAid
 
 //	3d Secure stuff
 //	See SPR "sp_WP_Get_ProductInfo"
+//	Token provider
 		private string   bureauCodeToken;
-		private string   tokenMID;
+		private string   tokenAccount;
 		private string   tokenKey;
+//	Payment provider
 		private string   bureauCodePayment;
 		private string   paymentURL;
-		private string   paymentMID;
+		private string   paymentAccount;
+		private string   paymentId;
 		private string   paymentKey;
 		private string   paymentCurrency;
 		private string   paymentAmount;
@@ -60,11 +63,13 @@ namespace PCIWebFinAid
 				contractCode        = WebTools.ViewStateString(ViewState,"ContractCode");
 				contractPIN         = WebTools.ViewStateString(ViewState,"ContractPIN");
 				bureauCodeToken     = WebTools.ViewStateString(ViewState,"BureauCodeToken");
-				bureauCodePayment   = WebTools.ViewStateString(ViewState,"BureauCodePayment");
+////			bureauCodePayment   = WebTools.ViewStateString(ViewState,"BureauCodePayment"); [TEST]
+				bureauCodePayment   = Tools.BureauCode(Constants.PaymentProvider.CyberSource);
 				paymentURL          = WebTools.ViewStateString(ViewState,"PaymentURL");
-				tokenMID            = WebTools.ViewStateString(ViewState,"TokenMID");
+				tokenAccount        = WebTools.ViewStateString(ViewState,"TokenAccount");
 				tokenKey            = WebTools.ViewStateString(ViewState,"TokenKey");
-				paymentMID          = WebTools.ViewStateString(ViewState,"PaymentMID");
+				paymentAccount      = WebTools.ViewStateString(ViewState,"PaymentAccount");
+				paymentId           = WebTools.ViewStateString(ViewState,"PaymentId");
 				paymentKey          = WebTools.ViewStateString(ViewState,"PaymentKey");
 				paymentCurrency     = WebTools.ViewStateString(ViewState,"PaymentCurrency");
 				pageNo              = Tools.StringToInt(hdnPageNo.Value);
@@ -595,10 +600,11 @@ namespace PCIWebFinAid
 			ViewState["BureauCodeToken"]   = null;
 			ViewState["BureauCodePayment"] = null;
 			ViewState["PaymentURL"]        = null;
-			ViewState["PaymentMID"]        = null;
+			ViewState["PaymentAccount"]    = null;
+			ViewState["PaymentId"]         = null;
 			ViewState["PaymentKey"]        = null;
 //			ViewState["TokenURL"]          = null;
-			ViewState["TokenMID"]          = null;
+			ViewState["TokenAccount"]      = null;
 			ViewState["TokenKey"]          = null;
 			ViewState["PaymentCurrency"]   = null;
 
@@ -649,49 +655,62 @@ namespace PCIWebFinAid
 							{
 								bureauCodeToken   = miscList.GetColumn("TokenBureauCode");
 //								tokenURL          = miscList.GetColumn("TokenBureauURL");
-								tokenMID          = miscList.GetColumn("TokenBureauUserName");
+								tokenAccount      = miscList.GetColumn("TokenBureauUserName");
 								tokenKey          = miscList.GetColumn("TokenBureauUserSaveKey");
 								bureauCodePayment = miscList.GetColumn("3DsecBureauCode");
+//								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.CyberSource);
 								paymentURL        = miscList.GetColumn("3DsecURL");
-								paymentMID        = miscList.GetColumn("PaymentBureauUserPassword");
+								paymentAccount    = miscList.GetColumn("PaymentBureauUserPassword");
+								paymentId         = miscList.GetColumn("PaymentBureauUserSaveId");
 								paymentKey        = miscList.GetColumn("PaymentBureauUserSaveKey");
 								paymentCurrency   = miscList.GetColumn("TransactionalCurrencyCode");
 								paymentAmount     = "0"; // miscList.GetColumn("TransactionalAmount");
 
-								if ( paymentURL.Length < 1 || paymentMID.Length < 1 || paymentKey.Length < 1 )
+								if ( paymentURL.Length < 1 || paymentAccount.Length < 1 || paymentKey.Length < 1 )
 									Tools.LogInfo("RegisterEx3.LoadContractCode",sql+" ->"
 									            +  " bureauCodeToken="  +bureauCodeToken
 									            + ", bureauCodePayment="+bureauCodePayment
-									            + ", tokenMID="         +tokenMID
+									            + ", tokenAccount="     +tokenAccount
 									            + ", tokenKey="         +tokenKey
 									            + ", paymentURL="       +paymentURL
-									            + ", paymentMID="       +paymentMID
+									            + ", paymentAccount="   +paymentAccount
+									            + ", paymentId="        +paymentId
 									            + ", paymentKey="       +paymentKey
 									            + ", paymentCurrency="  +paymentCurrency,224);
 //	TESTING
 								if ( ! Tools.SystemIsLive() && bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 								{
-									if ( tokenMID.Length < 1 )
-										tokenMID          = Tools.ProviderCredentials("TokenEx","Id");
+									if ( tokenAccount.Length < 1 )
+										tokenAccount      = Tools.ProviderCredentials("TokenEx","Id");
 									if ( tokenKey.Length < 1 )
 										tokenKey          = Tools.ProviderCredentials("TokenEx","Key","API");
 								}
 								if ( ! Tools.SystemIsLive() && bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.Peach) )
 								{
-									if ( paymentMID.Length < 1 )
-										paymentMID          = Tools.ProviderCredentials("Peach","Id","3d");
+									if ( paymentAccount.Length < 1 )
+										paymentAccount      = Tools.ProviderCredentials("Peach","Id","3d");
 									if ( paymentKey.Length < 1 )
 										paymentKey          = Tools.ProviderCredentials("Peach","Key");
+								}
+								if ( ! Tools.SystemIsLive() && bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+								{
+									if ( paymentAccount.Length < 1 )
+										paymentAccount      = Tools.ProviderCredentials("CyberSource","Id");
+									if ( paymentId.Length < 1 )
+										paymentId           = Tools.ProviderCredentials("CyberSource","KeyId");
+									if ( paymentKey.Length < 1 )
+										paymentKey          = Tools.ProviderCredentials("CyberSource","Key");
 								}
 								if ( ! Tools.SystemIsLive() && paymentCurrency.Length < 1 )
 									paymentCurrency = "ZAR";
 //	TESTING
 								ViewState["BureauCodeToken"]   = bureauCodeToken;
 								ViewState["BureauCodePayment"] = bureauCodePayment;
-								ViewState["TokenMID"]          = tokenMID;
+								ViewState["TokenAccount"]      = tokenAccount;
 								ViewState["TokenKey"]          = tokenKey;
 								ViewState["PaymentURL"]        = paymentURL;
-								ViewState["PaymentMID"]        = paymentMID;
+								ViewState["PaymentAccount"]    = paymentAccount;
+								ViewState["PaymentId"]         = paymentId;
 								ViewState["PaymentKey"]        = paymentKey;
 								ViewState["PaymentCurrency"]   = paymentCurrency;
 							}
@@ -789,10 +808,17 @@ namespace PCIWebFinAid
 			else
 				return;
 
-			payment.ProviderUserID     = paymentMID;
+			payment.PaymentDescription = "CareAssist Verification";
 			payment.ProviderKey        = paymentKey;
 			payment.ProviderURL        = paymentURL;
-			payment.PaymentDescription = "CareAssist Verification";
+			payment.ProviderAccount    = "";
+			if ( string.IsNullOrWhiteSpace(paymentId) )
+				payment.ProviderUserID  = paymentAccount; // Peach
+			else
+			{
+				payment.ProviderAccount = paymentAccount;
+				payment.ProviderUserID  = paymentId;      // CyberSource
+			}
 			if ( payment.CurrencyCode.Length < 1 )
 				payment.CurrencyCode    = "ZAR";
 			if ( payment.PaymentAmount < 1 )
@@ -812,8 +838,6 @@ namespace PCIWebFinAid
 //			if ( try3d > 1 )
 //				Tools.LogInfo("RegisterEx3.Send3dForm","Contract " + payment.MerchantReference + " (try " + try3d.ToString() + ")",222);
 
-//			using (TransactionPeach trans = new TransactionPeach())
-
 			if ( trans.ThreeDSecurePayment(payment,Request.UrlReferrer,languageCode,languageDialectCode) == 0 )
 				try
 				{
@@ -828,28 +852,32 @@ namespace PCIWebFinAid
 				}
 				catch
 				{ }
-			else if ( trans.PaymentReference.Length > 0 )
-				Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=288&id=" + trans.PaymentReference);
 			else
-				Response.Redirect("RegisterThreeD.aspx?TransRef=" + contractCode.ToString() + "&ErrorCode=299");
-
+			{
+				string url = "RegisterThreeD.aspx?ProviderCode=" + Tools.BureauCode(Constants.PaymentProvider.CyberSource)
+				           +                    "&TransRef="       + contractCode.ToString()
+				           +                    "&ResultCode="    + Tools.URLString(trans.ResultCode)
+				           +                    "&ResultMessage=" + Tools.URLString(trans.ResultMessage)
+				           +                    "&id="            + Tools.URLString(trans.PaymentReference);
+				Response.Redirect(url);
+			}
 			trans = null;
 		}
 
 		protected void btn3d_Click(Object sender, EventArgs e)
 		{
-//			Payment to Peach via TokenEx if we only have a token
-			if ( paymentMID.Length < 1 || paymentKey.Length < 1 )
+//			Payment to Peach/CyberSource via TokenEx if we only have a token
+			if ( paymentAccount.Length < 1 || paymentKey.Length < 1 )
 			{
-				string x = "paymentMID="+paymentMID + ", paymentKey="+paymentKey + ", paymentURL=" + paymentURL;
+				string x = "paymentAccount="+paymentAccount + ", paymentId="+paymentId + ", paymentKey="+paymentKey + ", paymentURL=" + paymentURL;
 				SetErrorDetail("btn3d_Click",26010,"Invalid payment provider MID/URL/Key",x,2,2,null,false,239);
 				return;
 			}
 
 			if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
-				if ( tokenMID.Length < 1 || tokenKey.Length < 1 )
+				if ( tokenAccount.Length < 1 || tokenKey.Length < 1 )
 				{
-					string x = "tokenMID="+tokenMID + ", tokenKey="+tokenKey;
+					string x = "tokenAccount="+tokenAccount + ", tokenKey="+tokenKey;
 					SetErrorDetail("btn3d_Click",26020,"Invalid token provider MID/Key",x,2,2,null,false,239);
 					return;
 				}
@@ -863,7 +891,7 @@ namespace PCIWebFinAid
 			{
 			//	TokenEx ... might not be needed
 				payment.TokenizerCode     = bureauCodeToken;
-				payment.TokenizerID       = tokenMID;
+				payment.TokenizerID       = tokenAccount;
 				payment.TokenizerKey      = tokenKey;
 			//	Bureau
 				payment.BureauCode        = bureauCodePayment;
@@ -877,16 +905,21 @@ namespace PCIWebFinAid
 				payment.MerchantReference = contractCode;
 				payment.CurrencyCode      = paymentCurrency;
 				payment.PaymentAmount     = Tools.StringToInt(paymentAmount);
+				payment.FirstName         = txtFirstName.Text;
+				payment.LastName          = txtSurname.Text;
+				payment.EMail             = txtEMail.Text;
+				payment.PhoneCell         = txtCellNo.Text;
 
-				Send3dForm(payment); // Constants.PaymentProvider.Peach);
+				Send3dForm(payment);
 			}
 		}
-		protected void btn3d_ClickPeachDirect(Object sender, EventArgs e)
+
+		protected void btn3d_ClickDirect(Object sender, EventArgs e)
 		{
-//			Straight payment to Peach if we have the card number
-			if ( paymentMID.Length < 1 || paymentKey.Length < 1 )
+//			Straight payment to Peach/CyberSource if we have the card number
+			if ( paymentAccount.Length < 1 || paymentKey.Length < 1 )
 			{
-				string x = "paymentMID="+paymentMID + ", paymentKey="+paymentKey + ", paymentURL=" + paymentURL;
+				string x = "paymentAccount="+paymentAccount + ", paymentId="+paymentId + ", paymentKey="+paymentKey + ", paymentURL=" + paymentURL;
 				SetErrorDetail("btn3d_Click",24010,"Invalid payment provider MID/URL/Key",x,2,2,null,false,239);
 				return;
 			}
@@ -908,8 +941,12 @@ namespace PCIWebFinAid
 				payment.MerchantReference = contractCode;
 				payment.CurrencyCode      = paymentCurrency;
 				payment.PaymentAmount     = Tools.StringToInt(paymentAmount);
+				payment.FirstName         = txtFirstName.Text;
+				payment.LastName          = txtSurname.Text;
+				payment.EMail             = txtEMail.Text;
+				payment.PhoneCell         = txtCellNo.Text;
 
-				Send3dForm(payment); // Constants.PaymentProvider.Peach);
+				Send3dForm(payment);
 			}
 		}
 
@@ -1143,12 +1180,18 @@ namespace PCIWebFinAid
 							    +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
 							if ( miscList.ExecQuery(sql,0) == 0 && ! miscList.EOF )
 							{
-								lblp6RefundPolicy.Text       = miscList.GetColumn("RefundPolicyText",1,6) + "<br />&nbsp;";
-								lblp6MoneyBackPolicy.Text    = miscList.GetColumn("MoneyBackPolicyText",1,6) + "<br />&nbsp;";
-								lblp6CancellationPolicy.Text = miscList.GetColumn("CancellationPolicyText",1,6);
+								refundPolicy       = miscList.GetColumn("RefundPolicyText",1,6);
+								moneyBackPolicy    = miscList.GetColumn("MoneyBackPolicyText",1,6);
+								cancellationPolicy = miscList.GetColumn("CancellationPolicyText",1,6);
 							}
 							if ( refundPolicy.Length < 1 || moneyBackPolicy.Length < 1 || cancellationPolicy.Length < 1 )
 								SetErrorDetail("btnNext_Click/30085",30080,"Unable to retrieve product policy text",sql);
+							else
+							{
+								lblp6RefundPolicy.Text       = refundPolicy + "<br />&nbsp;";
+								lblp6MoneyBackPolicy.Text    = moneyBackPolicy + "<br />&nbsp;";
+								lblp6CancellationPolicy.Text = cancellationPolicy;
+							}
 
 							sql = ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) ? txToken.Value : txtCCNumber.Text ).Trim(); // Tokenized as SIXxxxxxxFOUR
 							if ( sql.Length > 6 )

@@ -72,6 +72,7 @@
     <Content Include="CAHome.aspx" />
     <Content Include="CALegal.aspx" />
     <Content Include="CALogin.aspx" />
+    <Content Include="Detokenize.aspx" />
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
@@ -216,6 +217,13 @@
     </Compile>
     <Compile Include="CALegal.aspx.designer.cs">
       <DependentUpon>CALegal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Detokenize.aspx.cs">
+      <DependentUpon>Detokenize.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Detokenize.aspx.designer.cs">
+      <DependentUpon>Detokenize.aspx</DependentUpon>
     </Compile>
     <Compile Include="pgChangeEMailOnly.aspx.cs">
       <DependentUpon>pgChangeEMailOnly.aspx</DependentUpon>
