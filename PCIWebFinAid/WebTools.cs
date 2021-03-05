@@ -438,7 +438,8 @@ namespace PCIWebFinAid
 
 			if ( bureauCode < 1 )
 				return 20;
-			else if ( bureauCode  == (int)PCIBusiness.Constants.PaymentProvider.TokenEx )				
+			else if ( bureauCode  == (int)PCIBusiness.Constants.PaymentProvider.TokenEx ||			
+			          bureauCode  == (int)PCIBusiness.Constants.PaymentProvider.CyberSource )				
 				urlNew = "RegisterEx3.aspx";
 			else
 				urlNew = "Register.aspx";
@@ -462,7 +463,7 @@ namespace PCIWebFinAid
 			{ }
 			return 0;
 		}
-		public static byte ReplaceControlText(Page webPage,string ctlID,string fieldValue,Control subControl=null)
+		public static byte ReplaceControlText(Page webPage,string ctlID,string fieldValue,string fieldURL,Control subControl=null)
 		{
 			Control ctl;
 
@@ -501,12 +502,22 @@ namespace PCIWebFinAid
 					((Label)ctl).Text     = fieldValue;
 				else if (ctl.GetType()  == typeof(TableCell))
 					((TableCell)ctl).Text = fieldValue;
-				else if (ctl.GetType()  == typeof(Button))
-					((Button)ctl).Text    = fieldValue;
 				else if (ctl.GetType()  == typeof(CheckBox))
 					((CheckBox)ctl).Text  = fieldValue;
+				else if (ctl.GetType()  == typeof(Button))
+				{
+					Button btn            = (Button)ctl;
+					btn.Text              = fieldValue;
+					if ( fieldURL.Length  > 0 )
+						btn.OnClientClick  = "JavaScript:location.href='" + fieldURL + "';return false";
+				}
 				else if (ctl.GetType()  == typeof(HyperLink))
-					((HyperLink)ctl).Text = fieldValue;
+				{
+					HyperLink lnk         = (HyperLink)ctl;
+					lnk.Text              = fieldValue;
+					if ( fieldURL.Length  > 0 )
+						lnk.NavigateUrl = fieldURL;
+				}
 			}
 
 //			if ( ctl == null && subControl != null )

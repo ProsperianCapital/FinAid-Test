@@ -267,14 +267,14 @@ namespace PCIWebFinAid
 					}
 					else
 					{
-						Tools.LogInfo     ("RegisterEx3.LoadGoogleAnalytics/1","Failed to load Google UA code",233);
-						Tools.LogException("RegisterEx3.LoadGoogleAnalytics/2",sql,null);
+						Tools.LogInfo     ("LoadGoogleAnalytics/1","Failed to load Google UA code",233,this);
+						Tools.LogException("LoadGoogleAnalytics/2",sql,null,this);
 					}
 				}
 				catch (Exception ex)
 				{
-					Tools.LogInfo     ("RegisterEx3.LoadGoogleAnalytics/8","Failed to load Google UA code",233);
-					Tools.LogException("RegisterEx3.LoadGoogleAnalytics/9",sql,ex);
+					Tools.LogInfo     ("LoadGoogleAnalytics/8","Failed to load Google UA code",233,this);
+					Tools.LogException("LoadGoogleAnalytics/9",sql,ex,this);
 				}
 		}
 

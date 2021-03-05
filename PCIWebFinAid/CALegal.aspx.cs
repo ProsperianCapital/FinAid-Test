@@ -48,6 +48,7 @@ namespace PCIWebFinAid
 						string spr;
 						string fieldCode;
 						string fieldValue;
+						string fieldURL;
 						string stdParms = " @ProductCode="         + Tools.DBString(productCode)
 					                   + ",@LanguageCode="        + Tools.DBString(languageCode)
 					                   + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
@@ -64,7 +65,8 @@ namespace PCIWebFinAid
 								ret        = 10040;
 								fieldCode  = mList.GetColumn("WebsiteFieldCode");
 								fieldValue = mList.GetColumn("WebsiteFieldValue");
-								err        = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,ascxHeader);
+								fieldURL   = mList.GetColumn("FieldHyperlinkTarget");
+								err        = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,fieldURL,ascxHeader);
 								if ( err != 0 )
 									SetErrorDetail("LoadDynamicDetails", 10050, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
 								mList.NextRow();

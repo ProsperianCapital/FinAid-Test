@@ -7,6 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <!--#include file="IncludeMainCA.htm" -->
+	<asp:Literal runat="server" ID="lblGoogleUA"></asp:Literal>
 	<title><asp:Literal runat="server" ID="X100003">100003</asp:Literal></title>
 </head>
 <body>
@@ -358,6 +359,7 @@ function Legal(code)
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error" Visible="false" Enabled="false" ViewStateMode="Disabled"></asp:Label>
 	<asp:HiddenField runat="server" ID="hdnVer" />
+	<asp:Literal runat="server" id="lblChat"></asp:Literal>
 </form>
 <br />
 <ascx:Footer runat="server" ID="ascxFooter" />

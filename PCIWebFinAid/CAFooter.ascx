@@ -3,5 +3,8 @@
 <asp:Literal runat="server" ID="lblJS"></asp:Literal>
 
 <div class="Footer3">
-© 2021 – All Rights Reserved by LifeStyle Direct Financial Services (Pty) Ltd
+<asp:Literal runat="server" ID="X105039">105039</asp:Literal>
+<!--
+(c) All Rights Reserved by LifeStyle Direct Financial Services (Pty) Ltd
+-->
 </div>

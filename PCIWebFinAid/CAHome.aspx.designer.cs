@@ -13,6 +13,15 @@ namespace PCIWebFinAid {
     public partial class CAHome {
         
         /// <summary>
+        /// lblGoogleUA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lblGoogleUA;
+        
+        /// <summary>
         /// X100003 control.
         /// </summary>
         /// <remarks>
@@ -875,6 +884,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnVer;
+        
+        /// <summary>
+        /// lblChat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal lblChat;
         
         /// <summary>
         /// ascxFooter control.

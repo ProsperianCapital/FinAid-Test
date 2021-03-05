@@ -15,7 +15,6 @@ namespace PCIWebFinAid
 				string dName     = url.Substring(k+3);
 				string goTo      = "pgLogon.aspx";
 				string parms     = "";
-//				string appCode   = "*";
 				string appStatus = "*";
 				ApplicationCode  = "";
 
@@ -36,7 +35,9 @@ namespace PCIWebFinAid
 
 						if ( appStatus == "A" )
 							if ( ApplicationCode == "000" )
-								goTo = "Register.aspx";
+								goTo = "Register3.aspx";
+							else if ( ApplicationCode == "100" )
+								goTo = "CAHome.aspx";
 					}
 
 				Tools.LogInfo("Home.PageLoad/1","url="       + url

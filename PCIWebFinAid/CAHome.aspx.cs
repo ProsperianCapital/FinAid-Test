@@ -16,19 +16,19 @@ namespace PCIWebFinAid
 		string languageCode;
 		string languageDialectCode;
 
-		string countryCode;
-		string templateCode;
-		string currencyCode;
-		string websiteCode;
-		string googleCode;
-		string chatSnippet;
-		string facebookSnippet;
-		string instagramSnippet;
-		string baiduSnippet;
-		string backgroundColour;
-		string foregroundColour;
-		string headerCode;
-		string footerCode;
+//		string countryCode;
+//		string templateCode;
+//		string currencyCode;
+//		string websiteCode;
+//		string googleCode;
+//		string chatSnippet;
+//		string facebookSnippet;
+//		string instagramSnippet;
+//		string baiduSnippet;
+//		string backgroundColour;
+//		string foregroundColour;
+//		string headerCode;
+//		string footerCode;
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
@@ -37,18 +37,24 @@ namespace PCIWebFinAid
 			if ( Page.IsPostBack )
 			{
 				productCode         = hdnProductCode.Value;
-				languageCode        = WebTools.ListValue(ascxHeader.lstLanguage,"");
+				languageCode        = hdnLangCode.Value;
 				languageDialectCode = hdnLangDialectCode.Value;
-				if ( languageCode  != hdnLangCode.Value && languageCode.Length > 0 )
+				ListItem lang       = ascxHeader.lstLanguage.SelectedItem;
+				if ( lang != null && ( lang.Text != languageCode || lang.Value != languageDialectCode ) )
+				{
+					languageCode             = lang.Text;
+					languageDialectCode      = lang.Value;
+					hdnLangCode.Value        = languageCode;
+					hdnLangDialectCode.Value = languageDialectCode;
 					LoadDynamicDetails();
-				else
-					languageCode   = hdnLangCode.Value;
-				hdnLangCode.Value = languageCode;
+				}
 			}
 			else
 			{
 				LoadStaticDetails();
 				LoadDynamicDetails();
+				LoadGoogleAnalytics();
+				LoadChat();
 
 				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 				btnWidth.Visible    = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
@@ -64,9 +70,33 @@ namespace PCIWebFinAid
 			using (MiscList mList = new MiscList())
 				try
 				{
+					string refer = WebTools.ClientReferringURL(Request);
+					if ( refer.Length < 1 )
+						refer = "www.careassistza.com";
 					ret = 10010;
+					spr = "sp_WP_Get_WebsiteInfoByURL";
+					sql = "exec " + spr + " " + Tools.DBString(refer);
+					if ( mList.ExecQuery(sql,0) != 0 )
+						SetErrorDetail("LoadStaticDetails", 10020, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+					else if ( mList.EOF )
+						SetErrorDetail("LoadStaticDetails", 10030, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
+					else
+					{
+						ret                 = 10040;
+						productCode         = mList.GetColumn("ProductCode");
+						languageCode        = mList.GetColumn("LanguageCode");
+						languageDialectCode = mList.GetColumn("LanguageDialectCode");
+					}
+
+					if ( productCode.Length         < 1 ) productCode         = "10278";
+					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
+					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
+
+					Tools.LogInfo("LoadStaticDetails/10040",sql+" ... PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,222,this);
+
+/*
 					spr = "sp_WP_Get_ProductWebsiteInfo";
-					sql = "exec " + spr + " @ProductURL = 'www.careassistza.com'";
+					sql = "exec " + spr + " @ProductURL = " + Tools.DBString(refer);
 					if ( mList.ExecQuery(sql,0) != 0 )
 						SetErrorDetail("LoadStaticDetails", 10020, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
@@ -79,8 +109,8 @@ namespace PCIWebFinAid
 						templateCode     = mList.GetColumn("TemplateCode");
 						currencyCode     = mList.GetColumn("ProductCurrencyCode");
 						websiteCode      = mList.GetColumn("WebsiteCode");
-						googleCode       = mList.GetColumn("GoogleAnalyticsCode");
-						chatSnippet      = mList.GetColumn("ChatSnippet");
+						lblGoogleUA.Text = mList.GetColumn("GoogleAnalyticsCode");
+						lblChat.Text     = mList.GetColumn("ChatSnippet");
 						facebookSnippet  = mList.GetColumn("FacebookSnippet");
 						instagramSnippet = mList.GetColumn("InstagramSnippet");
 						baiduSnippet     = mList.GetColumn("BaiduSnippet");
@@ -91,6 +121,7 @@ namespace PCIWebFinAid
 					//	blocked          = mList.GetColumn("Blocked");
 						Tools.LogInfo("LoadStaticDetails/10040","Product="+productCode+"/"+countryCode+"/"+currencyCode,errPriority,this);
 					}
+*/
 
 					ret = 10050;
 					spr = "sp_WP_Get_ProductLanguageInfo";
@@ -113,7 +144,8 @@ namespace PCIWebFinAid
 						//	blocked      = mList.GetColumn("Blocked");
 							Tools.LogInfo("LoadStaticDetails/10080","Language="+lCode+"/"+lDialectCode,errPriority,this);
 							lstLang.Items.Add(new System.Web.UI.WebControls.ListItem(lCode,lDialectCode));
-							if ( mList.GetColumn("DefaultIndicator").ToUpper() == "Y" )
+							if ( mList.GetColumn("DefaultIndicator").ToUpper() == "Y" ||
+							   ( lCode == languageCode && lDialectCode == languageDialectCode ) )
 							{
 								ret                   = 10090;
 								languageCode          = lCode;
@@ -140,14 +172,6 @@ namespace PCIWebFinAid
 			hdnLangCode.Value        = languageCode;
 			hdnLangDialectCode.Value = languageDialectCode;
 			hdnVer.Value             = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
-
-//			string legalParms        = "&PC="  + productCode
-//			                         + "&LC="  + languageCode
-//			                         + "&LDC=" + languageDialectCode;
-//			X100041.NavigateUrl      = X100041.NavigateUrl + legalParms;
-//			X100042.NavigateUrl      = X100042.NavigateUrl + legalParms;
-//			X100043.NavigateUrl      = X100043.NavigateUrl + legalParms;
-//			X100044.NavigateUrl      = X100044.NavigateUrl + legalParms;
 		}
 
 		private void LoadDynamicDetails()
@@ -174,15 +198,18 @@ namespace PCIWebFinAid
 					else
 						while ( ! mList.EOF )
 						{
-							ret        = 10140;
-							fieldCode  = mList.GetColumn("WebsiteFieldCode");
-						//	fieldName  = mList.GetColumn("WebsiteFieldName");
-							fieldValue = mList.GetColumn("WebsiteFieldValue");
-							fieldURL   = mList.GetColumn("FieldHyperlinkTarget");
-						//	blocked    = mList.GetColumn("Blocked");
+							ret         = 10140;
+							fieldCode   = mList.GetColumn("WebsiteFieldCode");
+						//	fieldName   = mList.GetColumn("WebsiteFieldName");
+						//	blocked     = mList.GetColumn("Blocked");
+							fieldValue  = mList.GetColumn("WebsiteFieldValue");
+							fieldURL    = mList.GetColumn("FieldHyperlinkTarget");
+							if ( fieldURL.Length > 0 && fieldURL.Contains("[") )
+								fieldURL = fieldURL.Replace("[PC]",Tools.URLString(productCode)).Replace("[LC]",Tools.URLString(languageCode)).Replace("[LDC]",Tools.URLString(languageDialectCode));
+
 							Tools.LogInfo("LoadDynamicDetails/10140","FieldCode="+fieldCode,errPriority,this);
-							err        = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,ascxHeader);
-							if ( err  != 0 )
+							err         = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,fieldURL,ascxHeader);
+							if ( err   != 0 )
 								SetErrorDetail("LoadDynamicDetails", 10150, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
 							mList.NextRow();
 						}
@@ -306,6 +333,61 @@ namespace PCIWebFinAid
 				catch (Exception ex)
 				{
 					PCIBusiness.Tools.LogException("LoadDynamicDetails/99","ret="+ret.ToString(),ex,this);
+				}
+		}
+
+		private void LoadChat()
+		{
+			lblChat.Text = "";
+
+			using (MiscList miscList = new MiscList())
+				try
+				{
+					sql = "exec sp_WP_Get_ChatSnip @ProductCode=" + Tools.DBString(productCode);
+					if ( miscList.ExecQuery(sql,0) != 0 )
+						SetErrorDetail("LoadChat",90010,"Internal database error (sp_WP_Get_ChatSnip)",sql);
+					else if ( miscList.EOF )
+						SetErrorDetail("LoadChat",90011,"Chat widget code cannot be found (sp_WP_Get_ChatSnip)",sql);
+					else
+						lblChat.Text = miscList.GetColumn("ChatSnippet");
+				}
+				catch (Exception ex)
+				{
+					SetErrorDetail("LoadChat",90799,"Internal error ; please try again later",ex.Message + " (" + sql + ")",2,2,ex);
+				}
+		}	
+
+		private void LoadGoogleAnalytics()
+		{
+			lblGoogleUA.Text = "";
+
+			using (MiscList miscList = new MiscList())
+				try
+				{
+					sql = "exec sp_WP_Get_GoogleACA @ProductCode=" + Tools.DBString(productCode);
+
+					if ( miscList.ExecQuery(sql,0) == 0 && ! miscList.EOF )
+					{
+						string gaCode    = miscList.GetColumn("GoogleAnalyticCode");
+						string url       = miscList.GetColumn("URL");
+						lblGoogleUA.Text = Environment.NewLine
+						                 + "<script>" + Environment.NewLine
+						                 + "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){"
+						                 + "(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),"
+						                 + "m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)"
+						                 + "})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');" + Environment.NewLine
+						                 + "ga('create', '" + gaCode + "', 'auto', {'allowLinker': true});" + Environment.NewLine
+						                 + "ga('require', 'linker');" + Environment.NewLine
+						                 + "ga('linker:autoLink', ['" + url + "'] );" + Environment.NewLine
+						                 + "ga('send', 'pageview');" + Environment.NewLine
+						                 + "</script>" + Environment.NewLine;
+					}
+					else
+						SetErrorDetail("LoadGoogleAnalytics",90788,"Failed to load Google UA code",sql,2,2,null,true);
+				}
+				catch (Exception ex)
+				{
+					SetErrorDetail("LoadGoogleAnalytics",90788,"Internal error ; please try again later",ex.Message + " (" + sql + ")",2,2,ex);
 				}
 		}
 	}
