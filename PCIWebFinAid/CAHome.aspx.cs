@@ -63,16 +63,23 @@ namespace PCIWebFinAid
 
 		private void LoadStaticDetails()
 		{
-			productCode         = "";
-			languageCode        = "";
-			languageDialectCode = "";
+			productCode         = "10387";
+			languageCode        = "ENG";
+			languageDialectCode = "0002";
 
 			using (MiscList mList = new MiscList())
 				try
 				{
-					string refer = WebTools.ClientReferringURL(Request);
-					if ( refer.Length < 1 )
-						refer = "www.careassistza.com";
+				//	string refer = WebTools.ClientReferringURL(Request);
+
+					string refer = Request.Url.AbsoluteUri.Trim();
+					int    k     = refer.IndexOf("://");
+					refer        = refer.Substring(k+3);
+
+					k = refer.ToUpper().IndexOf("/CAHOME.ASPX");
+					if ( k > 0 )
+						refer = refer.Substring(0,k);
+
 					ret = 10010;
 					spr = "sp_WP_Get_WebsiteInfoByURL";
 					sql = "exec " + spr + " " + Tools.DBString(refer);
@@ -86,11 +93,11 @@ namespace PCIWebFinAid
 						productCode         = mList.GetColumn("ProductCode");
 						languageCode        = mList.GetColumn("LanguageCode");
 						languageDialectCode = mList.GetColumn("LanguageDialectCode");
+						ret                 = 10042;
+						if ( productCode.Length         < 1 ) productCode         = "10387";
+						if ( languageCode.Length        < 1 ) languageCode        = "ENG";
+						if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
 					}
-
-					if ( productCode.Length         < 1 ) productCode         = "10278";
-					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
-					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
 
 					Tools.LogInfo("LoadStaticDetails/10040",sql+" ... PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,222,this);
 
