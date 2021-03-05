@@ -16,23 +16,9 @@ namespace PCIWebFinAid
 		string languageCode;
 		string languageDialectCode;
 
-//		string countryCode;
-//		string templateCode;
-//		string currencyCode;
-//		string websiteCode;
-//		string googleCode;
-//		string chatSnippet;
-//		string facebookSnippet;
-//		string instagramSnippet;
-//		string baiduSnippet;
-//		string backgroundColour;
-//		string foregroundColour;
-//		string headerCode;
-//		string footerCode;
-
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			errPriority = 241; // Log everything
+			errPriority = 20;
 
 			if ( Page.IsPostBack )
 			{
