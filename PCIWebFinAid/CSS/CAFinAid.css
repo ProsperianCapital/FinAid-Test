@@ -202,10 +202,12 @@ table td
 .TopButtonO
 {
 	background-color: #FF841C;
+	text-decoration: none;
 }
 .TopButtonY
 {
 	background-color: #F4DD08;
+	text-decoration: none;
 }
 .TopButton:hover
 {
