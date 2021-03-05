@@ -49,11 +49,16 @@ namespace PCIWebFinAid
 
 		private void LoadStaticDetails()
 		{
+		//	Defaults
 			productCode         = "10387";
 			languageCode        = "ENG";
 			languageDialectCode = "0002";
 
-			using (MiscList mList = new MiscList())
+			if ( Tools.NullToString(Request["BackDoor"]) == ((int)Constants.SystemPassword.BackDoor).ToString() )
+				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem(languageCode,languageDialectCode));
+
+			else
+				using (MiscList mList = new MiscList())
 				try
 				{
 				//	string refer = WebTools.ClientReferringURL(Request);
@@ -201,7 +206,7 @@ namespace PCIWebFinAid
 								fieldURL = fieldURL.Replace("[PC]",Tools.URLString(productCode)).Replace("[LC]",Tools.URLString(languageCode)).Replace("[LDC]",Tools.URLString(languageDialectCode));
 
 							Tools.LogInfo("LoadDynamicDetails/10140","FieldCode="+fieldCode,errPriority,this);
-							err         = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,fieldURL,ascxHeader);
+							err         = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,fieldURL,ascxHeader,ascxFooter);
 							if ( err   != 0 )
 								SetErrorDetail("LoadDynamicDetails", 10150, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
 							mList.NextRow();

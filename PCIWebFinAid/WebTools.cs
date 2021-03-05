@@ -463,7 +463,7 @@ namespace PCIWebFinAid
 			{ }
 			return 0;
 		}
-		public static byte ReplaceControlText(Page webPage,string ctlID,string fieldValue,string fieldURL,Control subControl=null)
+		public static byte ReplaceControlText(Page webPage,string ctlID,string fieldValue,string fieldURL,Control subCtl1=null,Control subCtl2=null)
 		{
 			Control ctl;
 
@@ -487,13 +487,15 @@ namespace PCIWebFinAid
 
 			fieldValue = fieldValue.Replace(Environment.NewLine,"<br />").Replace("\r\n","<br />");
 			
-			for ( int k = 1 ; k < 3 ; k++ )
+			for ( int k = 1 ; k < 4 ; k++ )
 			{
 				ctl = null;
 				if ( k == 1 && webPage != null )
 					ctl = webPage.FindControl(ctlID);
-				else if ( k == 2 && subControl != null )
-					ctl = subControl.FindControl(ctlID);
+				else if ( k == 2 && subCtl1 != null )
+					ctl = subCtl1.FindControl(ctlID);
+				else if ( k == 3 && subCtl2 != null )
+					ctl = subCtl2.FindControl(ctlID);
 				if ( ctl == null )
 					continue;
 				else if (ctl.GetType()  == typeof(Literal))
