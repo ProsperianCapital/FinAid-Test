@@ -52,12 +52,12 @@ namespace PCIWebFinAid
 		//	Defaults
 			productCode         = "10387";
 			languageCode        = "ENG";
-			languageDialectCode = "0002";
+			languageDialectCode = "0001";
 			ret                 = 10003;
 
 			if ( Tools.NullToString(Request["BackDoor"]) == ((int)Constants.SystemPassword.BackDoor).ToString() )
 			{
-				productCode = "10122"; // Testing ...
+			//	productCode = "10122"; // Testing ...
 				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem(languageCode,languageDialectCode));
 				Tools.LogInfo("LoadStaticDetails/10003","BackDoor, PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,222,this);
 			}
@@ -65,8 +65,6 @@ namespace PCIWebFinAid
 				using (MiscList mList = new MiscList())
 					try
 					{
-					//	string refer = WebTools.ClientReferringURL(Request);
-
 						ret          = 10008;
 						string refer = Request.Url.AbsoluteUri.Trim();
 						int    k     = refer.IndexOf("://");
@@ -92,7 +90,7 @@ namespace PCIWebFinAid
 							ret                 = 10042;
 							if ( productCode.Length         < 1 ) productCode         = "10387";
 							if ( languageCode.Length        < 1 ) languageCode        = "ENG";
-							if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
+							if ( languageDialectCode.Length < 1 ) languageDialectCode = "0001";
 						}
 
 						Tools.LogInfo("LoadStaticDetails/10040",sql+" ... PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,222,this);
