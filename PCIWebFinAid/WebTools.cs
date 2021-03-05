@@ -551,13 +551,16 @@ namespace PCIWebFinAid
 		                                  string  imgHyperlink="",
 		                                  int     imgHeight=0,
 		                                  int     imgWidth=0,
-		                                  Control subControl=null)
+		                                  Control subCtl1=null,
+		                                  Control subCtl2=null)
 		{
 			try
 			{
 				Image ctl = (Image)webPage.FindControl("P"+ctlID);
-				if ( ctl == null && subControl != null )
-					ctl    = (Image)subControl.FindControl("P"+ctlID);
+				if ( ctl == null && subCtl1 != null )
+					ctl    = (Image)subCtl1.FindControl("P"+ctlID);
+				if ( ctl == null && subCtl2 != null )
+					ctl    = (Image)subCtl2.FindControl("P"+ctlID);
 				if ( ctl == null )
 					return 10;
 				if ( ctl.GetType() != typeof(Image) )
@@ -573,8 +576,10 @@ namespace PCIWebFinAid
 					return 0;
 
 				HyperLink lnk = (HyperLink)webPage.FindControl("H"+ctlID);
-				if ( lnk == null && subControl != null )
-					lnk    = (HyperLink)subControl.FindControl("H"+ctlID);
+				if ( lnk == null && subCtl1 != null )
+					lnk    = (HyperLink)subCtl1.FindControl("H"+ctlID);
+				if ( lnk == null && subCtl2 != null )
+					lnk    = (HyperLink)subCtl2.FindControl("H"+ctlID);
 				if ( lnk == null )
 					return 30;
 				if ( lnk.GetType() != typeof(HyperLink) )

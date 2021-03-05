@@ -50,13 +50,14 @@ namespace PCIWebFinAid
 		private void LoadStaticDetails()
 		{
 		//	Defaults
-			productCode         = "10278"; // "10387";
+			productCode         = "10387";
 			languageCode        = "ENG";
 			languageDialectCode = "0002";
 			ret                 = 10003;
 
 			if ( Tools.NullToString(Request["BackDoor"]) == ((int)Constants.SystemPassword.BackDoor).ToString() )
 			{
+				productCode = "10122"; // Testing ...
 				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem(languageCode,languageDialectCode));
 				Tools.LogInfo("LoadStaticDetails/10003","BackDoor, PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,222,this);
 			}
@@ -89,7 +90,7 @@ namespace PCIWebFinAid
 							languageCode        = mList.GetColumn("LanguageCode");
 							languageDialectCode = mList.GetColumn("LanguageDialectCode");
 							ret                 = 10042;
-							if ( productCode.Length         < 1 ) productCode         = "10278";
+							if ( productCode.Length         < 1 ) productCode         = "10387";
 							if ( languageCode.Length        < 1 ) languageCode        = "ENG";
 							if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
 						}
@@ -207,7 +208,8 @@ namespace PCIWebFinAid
 							                                   fieldURL,
 							                                   mList.GetColumnInt("ImageHeight"),
 							                                   mList.GetColumnInt("ImageWidth"),
-							                                   ascxHeader);
+							                                   ascxHeader,
+							                                   ascxFooter);
 							if ( err != 0 )
 								SetErrorDetail("LoadDynamicDetails", 10200, "Unrecognized Image code ("+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceImage('"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
 							mList.NextRow();
