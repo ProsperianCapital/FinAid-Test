@@ -41,8 +41,7 @@ namespace PCIWebFinAid
 				LoadGoogleAnalytics();
 				LoadChat();
 
-				btnErrorDtl.Visible = true;
-//				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
+				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 				btnWidth.Visible    = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 			}
 		}

@@ -17,6 +17,7 @@ namespace PCIWebFinAid
 		private   string contractCode;
 		private   string contractPIN;
 		private   string sql;
+		private   string spr;
 //		private   int    tokenExMode;
 		private   int    errNo;
 		private   int    pageNo;
@@ -90,6 +91,7 @@ namespace PCIWebFinAid
 
 				if ( ! Tools.SystemIsLive() )
 				{
+					btnErrorDtl.Visible = true;
 //	Testing 1 (English)
 					if ( productCode.Length         < 1 ) productCode         = "10278";
 					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
@@ -285,11 +287,12 @@ namespace PCIWebFinAid
 			using (MiscList miscList = new MiscList())
 				try
 				{
-					sql = "exec sp_WP_Get_ChatSnip @ProductCode=" + Tools.DBString(productCode);
+					spr = "sp_WP_Get_ChatSnip";
+					sql = "exec " + spr + " @ProductCode=" + Tools.DBString(productCode);
 					if ( miscList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadChat",90010,"Internal database error (sp_WP_Get_ChatSnip)",sql);
+						SetErrorDetail("LoadChat",90010,"Internal database error (" + spr + ")",sql);
 					else if ( miscList.EOF )
-						SetErrorDetail("LoadChat",90011,"Chat widget code cannot be found (sp_WP_Get_ChatSnip)",sql);
+						SetErrorDetail("LoadChat",90011,"Chat widget code cannot be found (" + spr + ")",sql);
 					else
 						lblChat.Text = miscList.GetColumn("ChatSnippet");
 				}
@@ -306,13 +309,13 @@ namespace PCIWebFinAid
 			using (MiscList miscList = new MiscList())
 				try
 				{
-					sql = "exec sp_Check_IPLocation"
-					    +     " @ProductCode=" + Tools.DBString(productCode)
-					    +     ",@IPAddress="   + Tools.DBString(WebTools.ClientIPAddress(Request,1));
+					spr = "sp_Check_IPLocation";
+					sql = "exec " + spr + " @ProductCode=" + Tools.DBString(productCode)
+					                    + ",@IPAddress="   + Tools.DBString(WebTools.ClientIPAddress(Request,1));
 					if ( miscList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("CheckIP",91010,"Internal database error (sp_Check_IPLocation)",sql);
+						SetErrorDetail("CheckIP",91010,"Internal database error (" + spr + ")",sql);
 					else if ( miscList.EOF )
-						SetErrorDetail("CheckIP",91011,"Country/IP address check failed (sp_Check_IPLocation)",sql);
+						SetErrorDetail("CheckIP",91011,"Country/IP address check failed (" + spr + ")",sql);
 					else if ( miscList.GetColumn("Result") == "1" )
 						action = miscList.GetColumn("Action");
 				}
