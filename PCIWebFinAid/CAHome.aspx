@@ -8,7 +8,7 @@
 <head runat="server">
 <!--#include file="IncludeMainCA.htm" -->
 	<asp:Literal runat="server" ID="lblGoogleUA"></asp:Literal>
-	<title><asp:Literal runat="server" ID="X100003">100003</asp:Literal></title>
+	<title><asp:Literal runat="server" ID="X105040">105040</asp:Literal></title>
 </head>
 <body>
 <script type="text/javascript">
@@ -257,12 +257,12 @@ function Legal(code)
 	</div>
 
 	<div style="text-align:center"> <!-- margin:0px;margin-left:10px -->
-	<asp:Image runat="server" ID="P12013" />
-	<asp:Image runat="server" ID="P12025" />
+	<asp:HyperLink runat="server" ID="H12013"><asp:Image runat="server" ID="P12013" /></asp:HyperLink>
+	<asp:HyperLink runat="server" ID="H12025"><asp:Image runat="server" ID="P12025" /></asp:HyperLink>
 	</div>
-	<div style="text-align:center"> <!-- margin:0px;margin-left:10px -->
-	<asp:Image runat="server" ID="P12026" />
-	<asp:Image runat="server" ID="P12027" />
+	<div style="text-align:center">
+	<asp:HyperLink runat="server" ID="H12026"><asp:Image runat="server" ID="P12026" /></asp:HyperLink>
+	<asp:HyperLink runat="server" ID="H12027"><asp:Image runat="server" ID="P12027" /></asp:HyperLink>
 	</div>
 	<hr />
 

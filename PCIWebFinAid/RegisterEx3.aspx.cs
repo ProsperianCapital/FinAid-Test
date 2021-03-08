@@ -499,7 +499,7 @@ namespace PCIWebFinAid
 							miscList.NextRow();
 						}
 					else
-						lblJS.Text = WebTools.JavaScriptSource("TestSetup()",lblJS.Text,1);
+						lblJS.Text = WebTools.JavaScriptSource("NoDataError()",lblJS.Text,1);
 
 					SetErrorDetail("LoadLabels",errNo,"Unable to load registration page labels and data",sql);
 
@@ -627,8 +627,6 @@ namespace PCIWebFinAid
 //					    +     ",@ReferringURL ="              + Tools.DBString(hdnReferURL.Value)
 					    +     ",@WebsiteVisitorCode ="        + Tools.DBString(WebTools.RequestValueString(Request,"WVC"))
 					    +     ",@WebsiteVisitorSessionCode =" + Tools.DBString(WebTools.RequestValueString(Request,"WVSC"));
-
-//					Tools.LogInfo("LoadContractCode/T1",sql,203,this);
 
 					if ( miscList.ExecQuery(sql,0) != 0 )
 						SetErrorDetail("LoadContractCode",10013,"Error retrieving new contract details ; please try again later",sql);

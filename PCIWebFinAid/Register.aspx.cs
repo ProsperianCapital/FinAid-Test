@@ -451,7 +451,7 @@ namespace PCIWebFinAid
 							miscList.NextRow();
 						}
 					else
-						lblJS.Text = WebTools.JavaScriptSource("TestSetup()",lblJS.Text,1);
+						lblJS.Text = WebTools.JavaScriptSource("NoDataError()",lblJS.Text,1);
 
 					SetErrorDetail("LoadLabels",errNo,"Unable to load registration page labels and data",sql);
 
@@ -903,12 +903,9 @@ namespace PCIWebFinAid
 							    +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
 							if ( miscList.ExecQuery(sql,0) == 0 && ! miscList.EOF )
 							{
-								refundPolicy                 = miscList.GetColumn("RefundPolicyText");
-								moneyBackPolicy              = miscList.GetColumn("MoneyBackPolicyText");
-								cancellationPolicy           = miscList.GetColumn("CancellationPolicyText");
-								lblp6RefundPolicy.Text       = refundPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
-								lblp6MoneyBackPolicy.Text    = moneyBackPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
-								lblp6CancellationPolicy.Text = cancellationPolicy.Replace(Environment.NewLine,"<br />");
+								lblp6RefundPolicy.Text       = miscList.GetColumn("RefundPolicyText",1,6) + "<br />&nbsp;";
+								lblp6MoneyBackPolicy.Text    = miscList.GetColumn("MoneyBackPolicyText",1,6) + "<br />&nbsp;";
+								lblp6CancellationPolicy.Text = miscList.GetColumn("CancellationPolicyText",1,6);
 							}
 							if ( refundPolicy.Length < 1 || moneyBackPolicy.Length < 1 || cancellationPolicy.Length < 1 )
 								SetErrorDetail("btnNext_Click/30080",30080,"Unable to retrieve product policy text",sql);

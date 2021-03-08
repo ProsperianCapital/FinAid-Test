@@ -11,7 +11,6 @@ namespace PCIWebFinAid
 		int    ret;
 		string sql;
 		string spr;
-
 		string productCode;
 		string languageCode;
 		string languageDialectCode;
@@ -42,7 +41,8 @@ namespace PCIWebFinAid
 				LoadGoogleAnalytics();
 				LoadChat();
 
-				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
+				btnErrorDtl.Visible = true;
+//				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 				btnWidth.Visible    = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 			}
 		}

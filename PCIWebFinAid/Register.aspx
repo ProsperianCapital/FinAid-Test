@@ -18,6 +18,11 @@ var lastPage  = 5;
 var confPage  = 6;
 var pageNo;
 
+function NoDataError()
+{
+// Add code as necessary
+}
+
 function NextPage(inc,btn)
 {
 	try
