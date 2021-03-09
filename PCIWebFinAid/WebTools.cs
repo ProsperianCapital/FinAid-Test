@@ -521,26 +521,6 @@ namespace PCIWebFinAid
 						lnk.NavigateUrl = fieldURL;
 				}
 			}
-
-//			if ( ctl == null && subControl != null )
-//				ctl    = subControl.FindControl(ctlID);
-//			if ( ctl == null )
-//				return 10;
-//			else if (ctl.GetType()  == typeof(Literal))
-//				((Literal)ctl).Text   = fieldValue;
-//			else if (ctl.GetType()  == typeof(Label))
-//				((Label)ctl).Text     = fieldValue;
-//			else if (ctl.GetType()  == typeof(TableCell))
-//				((TableCell)ctl).Text = fieldValue;
-//			else if (ctl.GetType()  == typeof(Button))
-//				((Button)ctl).Text    = fieldValue;
-//			else if (ctl.GetType()  == typeof(CheckBox))
-//				((CheckBox)ctl).Text  = fieldValue;
-//			else if (ctl.GetType()  == typeof(HyperLink))
-//				((HyperLink)ctl).Text = fieldValue;
-//			else
-//				return 20;
-
 			return 0;
 		}
 

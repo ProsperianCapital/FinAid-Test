@@ -355,6 +355,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X100289;
         
         /// <summary>
+        /// X100009 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink X100009;
+        
+        /// <summary>
         /// X100045 control.
         /// </summary>
         /// <remarks>

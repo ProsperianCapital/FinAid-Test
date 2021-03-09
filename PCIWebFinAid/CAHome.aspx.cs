@@ -51,13 +51,14 @@ namespace PCIWebFinAid
 		//	Defaults
 			productCode         = "10387";
 			languageCode        = "ENG";
-			languageDialectCode = "0001";
+			languageDialectCode = "0002";
 			ret                 = 10003;
 
 			if ( Tools.NullToString(Request["BackDoor"]) == ((int)Constants.SystemPassword.BackDoor).ToString() )
 			{
-			//	productCode = "10122"; // Testing ...
-				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem(languageCode,languageDialectCode));
+				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem("ENG","0002"));
+				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem("THA","0001"));
+				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem("GER","0298"));
 				Tools.LogInfo("LoadStaticDetails/10003","BackDoor, PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,222,this);
 			}
 			else

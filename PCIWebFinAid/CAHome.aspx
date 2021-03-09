@@ -150,18 +150,19 @@ function Legal(code)
 			<asp:Literal runat="server" ID="X100287">100287</asp:Literal>
 			</div>
 			<br />
-			<div style="margin-left:20px">		
+			<div style="margin-left:20px">
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100288">100288</asp:Literal>
 			</div>
 			<br />
-			<div style="margin-left:20px">		
+			<div style="margin-left:20px">
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100289">100289</asp:Literal>
 			</div>
 			<br />
-			<div style="text-align:center">			
-			<a href="#"><div class="TopButton" style="height:32px;width:120px;padding:3px;padding-top:4px;color:#FFFFFF;background-color:#54595F" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">REGISTER</div></a>
+			<div style="text-align:center">
+			<asp:HyperLink runat="server" ID="X100009" class="TopButton" style="height:32px;width:120px;padding:3px;padding-top:4px;color:#FFFFFF;background-color:#54595F" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">XXXX
+			</asp:HyperLink>
 			</div>
 		</div>
 
@@ -268,13 +269,13 @@ function Legal(code)
 
 	<div>
 		<p style="color:#FF7400;font-family:Sans-serif;font-size:18px;font-weight:600;letter-spacing:0.8px">
-		<asp:Literal runat="server" ID="X100092">100092</asp:Literal>
+		<asp:Literal runat="server" ID="X100092"></asp:Literal>
 		</p><p><b>
-		<asp:Literal runat="server" ID="X100093">100093</asp:Literal>
+		<asp:Literal runat="server" ID="X100093"></asp:Literal>
 		</b></p><p>
-		<asp:Literal runat="server" ID="X104402">104402</asp:Literal>
+		<asp:Literal runat="server" ID="X104402"></asp:Literal>
 		</p><p><b>
-		<asp:Literal runat="server" ID="X100095">100095</asp:Literal>
+		<asp:Literal runat="server" ID="X100095"></asp:Literal>
 
 		</b></p><p style="display:flex">
 		<asp:Image runat="server" ID="P12031" style="object-fit:contain" />&nbsp;
@@ -283,10 +284,10 @@ function Legal(code)
 		<asp:Literal runat="server" ID="X100101">100101</asp:Literal>
 		</b></p><p style="display:flex">
 		<asp:Image runat="server" ID="P12032" style="object-fit:contain" />&nbsp;
-		<asp:Label runat="server" ID="X104404" style="padding-top:4px">104404</asp:Label>
+		<asp:Label runat="server" ID="X104404" style="padding-top:4px"></asp:Label>
 		</p><p style="display:flex">
 		<asp:Image runat="server" ID="P12033" style="object-fit:contain" />&nbsp;
-		<asp:Label runat="server" ID="X100102" style="padding-top:4px">100102</asp:Label>
+		<asp:Label runat="server" ID="X100102" style="padding-top:4px"></asp:Label>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X104418">104418</asp:Literal>
 		</b></p><div style="display:flex">
