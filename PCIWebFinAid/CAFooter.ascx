@@ -4,7 +4,4 @@
 
 <div class="Footer3">
 <asp:Literal runat="server" ID="X105039">105039</asp:Literal>
-<!--
-(c) All Rights Reserved by LifeStyle Direct Financial Services (Pty) Ltd
--->
 </div>

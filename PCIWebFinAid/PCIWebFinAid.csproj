@@ -76,6 +76,7 @@
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
+    <Content Include="LGHome.aspx" />
     <Content Include="pgChangeAddress.aspx" />
     <Content Include="pgChangeEMail.aspx" />
     <Content Include="pgChangeEMailOnly.aspx" />
@@ -224,6 +225,13 @@
     </Compile>
     <Compile Include="Detokenize.aspx.designer.cs">
       <DependentUpon>Detokenize.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LGHome.aspx.cs">
+      <DependentUpon>LGHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LGHome.aspx.designer.cs">
+      <DependentUpon>LGHome.aspx</DependentUpon>
     </Compile>
     <Compile Include="pgChangeEMailOnly.aspx.cs">
       <DependentUpon>pgChangeEMailOnly.aspx</DependentUpon>

@@ -5,7 +5,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class CAHome : BasePage
+	public partial class LGHome : BasePage
 	{
 		byte   errPriority;
 		int    ret;
@@ -17,7 +17,7 @@ namespace PCIWebFinAid
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			ApplicationCode = "100";
+			ApplicationCode = "110";
 			errPriority     = 19;
 
 			if ( Page.IsPostBack )
@@ -71,7 +71,7 @@ namespace PCIWebFinAid
 						int    k     = refer.IndexOf("://");
 						refer        = refer.Substring(k+3);
 
-						k = refer.ToUpper().IndexOf("/CAHOME.ASPX");
+						k = refer.ToUpper().IndexOf("/LGHOME.ASPX");
 						if ( k > 0 )
 							refer = refer.Substring(0,k);
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="CAHome.aspx.cs" Inherits="PCIWebFinAid.CAHome" %>
+﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="LGHome.aspx.cs" Inherits="PCIWebFinAid.LGHome" %>
 <%@ Register TagPrefix="ascx" TagName="Header" Src="CAHeader.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="Footer" Src="CAFooter.ascx" %>
 
@@ -161,7 +161,7 @@ function Legal(code)
 			</div>
 			<br />
 			<div style="text-align:center">
-			<asp:HyperLink runat="server" ID="X100009" class="TopButton" style="height:32px;width:120px;padding:3px;padding-top:4px;color:#FFFFFF;background-color:#54595F;text-decoration:none" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">REGISTER</asp:HyperLink>
+			<asp:HyperLink runat="server" ID="X100009" class="TopButton" style="height:32px;width:120px;padding:3px;padding-top:4px;color:#FFFFFF;background-color:#54595F;text-decoration:none" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">100009</asp:HyperLink>
 			</div>
 		</div>
 
@@ -323,9 +323,6 @@ function Legal(code)
 	-->
 
 	<br /><br />
-<!--
-	<asp HyperLink run@t="server" ID="X100041" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=001" Target="Legal">100041</asp:HyperLink> |
--->
 	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="JavaScript:Legal(1)">100041</asp:HyperLink> |
 	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="JavaScript:Legal(3)">100042</asp:HyperLink> |
 	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="JavaScript:Legal(5)">100043</asp:HyperLink> |

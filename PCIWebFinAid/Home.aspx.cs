@@ -36,8 +36,14 @@ namespace PCIWebFinAid
 						if ( appStatus == "A" )
 							if ( ApplicationCode == "000" )
 								goTo = "Register3.aspx";
-							else if ( ApplicationCode == "100" )
+							else if ( ApplicationCode == "002" ) // Care Assist CRM
+								goTo = "pgLogonCRM.aspx";
+//							else if ( ApplicationCode == "006" ) // Mobile app
+//								goTo = "pgLogonCRM.aspx";
+							else if ( ApplicationCode == "100" ) // Care Assist public
 								goTo = "CAHome.aspx";
+							else if ( ApplicationCode == "110" ) // Life Guru
+								goTo = "LGHome.aspx";
 					}
 
 				Tools.LogInfo("Home.PageLoad/1","url="       + url
