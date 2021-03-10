@@ -5,7 +5,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class LGHome : BasePage
+	public partial class ISHome : BasePage
 	{
 		byte   errPriority;
 		int    ret;
@@ -17,7 +17,7 @@ namespace PCIWebFinAid
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			ApplicationCode = "120";
+			ApplicationCode = "110";
 			errPriority     = 19;
 
 			if ( Page.IsPostBack )
@@ -114,7 +114,6 @@ namespace PCIWebFinAid
 								ret          = 10080;
 								lCode        = mList.GetColumn("LanguageCode");
 								lDialectCode = mList.GetColumn("LanguageDialectCode");
-							//	blocked      = mList.GetColumn("Blocked");
 								Tools.LogInfo("LoadStaticDetails/10080","Language="+lCode+"/"+lDialectCode,errPriority,this);
 								lstLang.Items.Add(new System.Web.UI.WebControls.ListItem(lCode,lDialectCode));
 								if ( mList.GetColumn("DefaultIndicator").ToUpper() == "Y" ||
