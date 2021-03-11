@@ -66,12 +66,18 @@ namespace PCIWebFinAid
 				using (MiscList mList = new MiscList())
 					try
 					{
-						ret          = 10008;
-						string refer = Request.Url.AbsoluteUri.Trim();
-						int    k     = refer.IndexOf("://");
-						refer        = refer.Substring(k+3);
+						ret             = 10008;
+//						string pageName = System.IO.Path.GetFileNameWithoutExtension(Page.AppRelativeVirtualPath);
+//						string pageName = Request.Url.LocalPath;
+						string pageName = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
+						string refer    = Request.Url.AbsoluteUri.Trim();
+						int    k        = refer.IndexOf("://");
+						refer           = refer.Substring(k+3);
 
-						k = refer.ToUpper().IndexOf("/LGHOME.ASPX");
+						if ( ! pageName.StartsWith("/") )
+							pageName = "/" + pageName;
+
+						k = refer.ToUpper().IndexOf(pageName.ToUpper());
 						if ( k > 0 )
 							refer = refer.Substring(0,k);
 
