@@ -222,93 +222,95 @@ namespace PCIWebFinAid
 
 					ret = 10205;
 					spr = "";
-					if ( P12010.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12010',false);";
-					if ( P12011.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12011',false);";
-					if ( P12012.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12012',false);";
-					if ( P12023.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12023',false);";
-					if ( P12024.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12024',false);";
-					if ( P12028.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12028',false);";
-					ascxFooter.JSText = WebTools.JavaScriptSource(spr);
 
-					ret       = 10210;
-					xHIW.Text = "";
-					spr       = "sp_WP_Get_ProductHIWInfo";
-					sql       = "exec " + spr + stdParms;
-					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10220, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
-					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10230, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
-					else
-						while ( ! mList.EOF )
-						{
-							ret        = 10240;
-							fieldCode  = mList.GetColumn("Serial");
-							fieldHead  = mList.GetColumn("HIWHeader",0,6);
-							fieldValue = mList.GetColumn("HIWDetail",0,6);
-							Tools.LogInfo("LoadDynamicDetails/10240","HIW="+fieldCode+"/"+fieldHead,errPriority,this);
-							if ( "0123456789".Contains(fieldHead.Substring(0,1)) )
-								xHIW.Text = xHIW.Text + "<p class='HIWHead1'>"   + fieldHead  + "</p>"
-								                      + "<p class='HIWDetail1'>" + fieldValue + "</p>";
-							else
-								xHIW.Text = xHIW.Text + "<p class='HIWHead2'>"   + fieldHead  + "</p>"
-								                      + "<p class='HIWDetail2'>" + fieldValue + "</p>";
-							mList.NextRow();
-						}
+//					if ( P12010.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12010',false);";
+//					if ( P12011.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12011',false);";
+//					if ( P12012.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12012',false);";
+//					if ( P12023.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12023',false);";
+//					if ( P12024.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12024',false);";
+//					if ( P12028.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12028',false);";
+//					ascxFooter.JSText = WebTools.JavaScriptSource(spr);
 
-					ret       = 10310;
-					xFAQ.Text = "";
-					spr       = "sp_WP_Get_ProductFAQInfo";
-					sql       = "exec " + spr + stdParms;
-					string hd = "*P*";
+//					ret       = 10210;
+//					xHIW.Text = "";
+//					spr       = "sp_WP_Get_ProductHIWInfo";
+//					sql       = "exec " + spr + stdParms;
+//					if ( mList.ExecQuery(sql,0) != 0 )
+//						SetErrorDetail("LoadDynamicDetails", 10220, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+//					else if ( mList.EOF )
+//						SetErrorDetail("LoadDynamicDetails", 10230, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
+//					else
+//						while ( ! mList.EOF )
+//						{
+//							ret        = 10240;
+//							fieldCode  = mList.GetColumn("Serial");
+//							fieldHead  = mList.GetColumn("HIWHeader",0,6);
+//							fieldValue = mList.GetColumn("HIWDetail",0,6);
+//							Tools.LogInfo("LoadDynamicDetails/10240","HIW="+fieldCode+"/"+fieldHead,errPriority,this);
+//							if ( "0123456789".Contains(fieldHead.Substring(0,1)) )
+//								xHIW.Text = xHIW.Text + "<p class='HIWHead1'>"   + fieldHead  + "</p>"
+//								                      + "<p class='HIWDetail1'>" + fieldValue + "</p>";
+//							else
+//								xHIW.Text = xHIW.Text + "<p class='HIWHead2'>"   + fieldHead  + "</p>"
+//								                      + "<p class='HIWDetail2'>" + fieldValue + "</p>";
+//							mList.NextRow();
+//						}
 
-					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10320, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
-					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10330, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
-					else
-						while ( ! mList.EOF )
-						{
-							ret        = 10340;
-							fieldCode  = mList.GetColumn("FAQ"      ,0,6);
-							fieldHead  = mList.GetColumn("FAQHeader",0,6);
-							fieldValue = mList.GetColumn("FAQDetail",0,6);
-							if ( fieldHead != hd )
-							{
-								ret = 10350;
-								if ( hd == "*P*" )
-									xFAQ.Text = xFAQ.Text + "<hr /><a href='JavaScript:FAQ()' title='Close' style='float:right;padding:4px'><img src='" + Tools.ImageFolder() + "Close1.png' /></a>";
-								xFAQ.Text    = xFAQ.Text + "<p class='FAQHead'>" + fieldHead  + "</p>";
-								hd           = fieldHead;
-							}
-							ret       = 10360;
-							xFAQ.Text = xFAQ.Text + "<p class='FAQQuestion'>" + fieldCode  + "</p>"
-								                   + "<p class='FAQAnswer'>"   + fieldValue + "</p>";
-							Tools.LogInfo("LoadDynamicDetails/10240","FAQ="+fieldCode+"/"+fieldHead,errPriority,this);
-							mList.NextRow();
-						}
+//					ret       = 10310;
+//					xFAQ.Text = "";
+//					spr       = "sp_WP_Get_ProductFAQInfo";
+//					sql       = "exec " + spr + stdParms;
+//					string hd = "*P*";
 
-					X100063.Visible = ( xFAQ.Text.Length > 0 );
-					ret             = 10410;
-					spr             = "sp_WP_Get_ProductLegalDocumentInfo";
-					sql             = "exec " + spr + stdParms;
-					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadDynamicDetails", 10420, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
-					else if ( mList.EOF )
-						SetErrorDetail("LoadDynamicDetails", 10430, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
-					else
-						while ( ! mList.EOF )
-						{
-							ret       = 10440;
-							fieldCode = mList.GetColumn("DocumentTypeCode");
-							try
-							{
-								((Literal)FindControl("LH"+fieldCode)).Text = mList.GetColumn("DocumentHeader",1,6);
-								((Literal)FindControl("LD"+fieldCode)).Text = mList.GetColumn("DocumentText",1,6);
-							}
-							catch
-							{ }
-							mList.NextRow();
-						}
+//					if ( mList.ExecQuery(sql,0) != 0 )
+//						SetErrorDetail("LoadDynamicDetails", 10320, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+//					else if ( mList.EOF )
+//						SetErrorDetail("LoadDynamicDetails", 10330, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
+//					else
+//						while ( ! mList.EOF )
+//						{
+//							ret        = 10340;
+//							fieldCode  = mList.GetColumn("FAQ"      ,0,6);
+//							fieldHead  = mList.GetColumn("FAQHeader",0,6);
+//							fieldValue = mList.GetColumn("FAQDetail",0,6);
+//							if ( fieldHead != hd )
+//							{
+//								ret = 10350;
+//								if ( hd == "*P*" )
+//									xFAQ.Text = xFAQ.Text + "<hr /><a href='JavaScript:FAQ()' title='Close' style='float:right;padding:4px'><img src='" + Tools.ImageFolder() + "Close1.png' /></a>";
+//								xFAQ.Text    = xFAQ.Text + "<p class='FAQHead'>" + fieldHead  + "</p>";
+//								hd           = fieldHead;
+//							}
+//							ret       = 10360;
+//							xFAQ.Text = xFAQ.Text + "<p class='FAQQuestion'>" + fieldCode  + "</p>"
+//								                   + "<p class='FAQAnswer'>"   + fieldValue + "</p>";
+//							Tools.LogInfo("LoadDynamicDetails/10240","FAQ="+fieldCode+"/"+fieldHead,errPriority,this);
+//							mList.NextRow();
+//						}
+
+//					X100063.Visible = ( xFAQ.Text.Length > 0 );
+//					ret             = 10410;
+//					spr             = "sp_WP_Get_ProductLegalDocumentInfo";
+//					sql             = "exec " + spr + stdParms;
+//					if ( mList.ExecQuery(sql,0) != 0 )
+//						SetErrorDetail("LoadDynamicDetails", 10420, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+//					else if ( mList.EOF )
+//						SetErrorDetail("LoadDynamicDetails", 10430, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+//					else
+//						while ( ! mList.EOF )
+//						{
+//							ret       = 10440;
+//							fieldCode = mList.GetColumn("DocumentTypeCode");
+//							try
+//							{
+//								((Literal)FindControl("LH"+fieldCode)).Text = mList.GetColumn("DocumentHeader",1,6);
+//								((Literal)FindControl("LD"+fieldCode)).Text = mList.GetColumn("DocumentText",1,6);
+//							}
+//							catch
+//							{ }
+//							mList.NextRow();
+//						}
+
 				}
 				catch (Exception ex)
 				{

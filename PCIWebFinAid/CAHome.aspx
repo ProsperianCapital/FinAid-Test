@@ -51,7 +51,7 @@ function Legal(code)
 	<asp:Image runat="server" ID="P12002" style="max-width:100%;max-height:346px;float:left" />
 	<p style="color:#242424;font-family:Arial;font-size:35px;font-weight:600;line-height:1.5em; letter-spacing:0.8px;text-shadow:0px 0px 0px #000000;top:100px;left:0px;right:0px;word-break:break-word;word-wrap:break-word;text-align:center">
 	<asp:Literal runat="server" ID="X100002">100002</asp:Literal>
-	</p><p style="color:#54595F;font-family:Sans-serif; font-size:19px; font-weight:500; line-height:1.6em; letter-spacing:0.8px; text-shadow:0px 0px 51px #FFFFFF; top:210px; left:0px; right:0px">
+	</p><p style="color:#54595F;font-family:Sans-serif;font-size:19px;font-weight:500;line-height:1.6em;letter-spacing:0.8px;text-shadow:0px 0px 51px #FFFFFF;top:210px;left:0px;right:0px">
 	<asp:Literal runat="server" ID="X100004">100004</asp:Literal>
 	</p>
 	</div>
@@ -243,6 +243,10 @@ function Legal(code)
 
 	<div style="font-size:10.5pt;font-family:Helvetica,sans-serif;line-height:1.5;margin-left:10px;margin-right:10px">
 	<asp:Literal runat="server" ID="xHIW"></asp:Literal>
+	<b>
+	<asp:Literal runat="server" ID="X105007">105007</asp:Literal>
+	</b><br /><br />
+	<asp:Literal runat="server" ID="X105008">105008</asp:Literal>
 	</div>
 
 	<div style="background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;text-align:center">
@@ -310,6 +314,10 @@ function Legal(code)
 	<asp:Image runat="server" ID="P12018" />
 	<asp:Image runat="server" ID="P12019" />
 
+	<p style="font-size:13px">
+	<asp:Literal runat="server" ID="X105010">105010</asp:Literal>
+	</p>
+
 	<!--
 	<div style="float:left;width:10%">&nbsp;</div>
 	<div style="float:left;width:20%">
@@ -321,8 +329,6 @@ function Legal(code)
 	</div>
 	<div style="float:left;width:10%">&nbsp;</div>
 	-->
-
-	<br /><br />
 <!--
 	<asp HyperLink run@t="server" ID="X100041" ForeColor="Orange" NavigateUrl="CALegal.aspx?DT=001" Target="Legal">100041</asp:HyperLink> |
 -->
