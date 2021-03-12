@@ -41,7 +41,7 @@ function Legal(code)
 
 	<asp:Button runat="server" ID="btnWidth" Text="Width" OnClientClick="JavaScript:alert('Width = '+window.innerWidth.toString()+' pixels');return false" />
 
-	<div style="margin:0px;padding:0px;display:block;width:100%;height:346px">
+	<div style="margin:0px;padding:0px;display:block;width:100%;height:375px">
 	<asp:Image runat="server" ID="P12002" style="max-width:100%;max-height:346px;float:left" />
 	<p style="color:#242424;font-family:Arial;font-size:35px;font-weight:600;line-height:1.5em; letter-spacing:0.8px;text-shadow:0px 0px 0px #000000;top:100px;left:0px;right:0px;word-break:break-word;word-wrap:break-word;text-align:center">
 	<asp:Literal runat="server" ID="X100002">100002</asp:Literal>

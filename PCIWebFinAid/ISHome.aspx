@@ -9,12 +9,14 @@
 <!--#include file="IncludeMainCA.htm" -->
 	<asp:Literal runat="server" ID="lblGoogleUA"></asp:Literal>
 	<title><asp:Literal runat="server" ID="X105040">105040</asp:Literal></title>
+	<!--
 	<style>
 	body
 	{
 		font-family: var(--e-global-typography-text-font-family), Sans-serif;
 	}
 	</style>
+	-->
 </head>
 <body>
 <script type="text/javascript">
@@ -53,7 +55,7 @@ function Legal(code)
 
 	<asp:Button runat="server" ID="btnWidth" Text="Width" OnClientClick="JavaScript:alert('Width = '+window.innerWidth.toString()+' pixels');return false" />
 
-	<div style="margin:0px;padding:0px;display:block;width:100%">
+	<div style="margin:0px;padding:0px;display:block;width:100%;height:350px">
 	<asp:Image runat="server" ID="P12002" style="max-width:100%;max-height:346px;float:left" />
 	<p style="color:#242424;font-family:Arial;font-size:35px;font-weight:600;line-height:1.5em; letter-spacing:0.8px;text-shadow:0px 0px 0px #000000;top:100px;left:0px;right:0px;word-break:break-word;word-wrap:break-word;text-align:center">
 	<asp:Literal runat="server" ID="X100002">100002</asp:Literal>
@@ -163,16 +165,18 @@ function Legal(code)
 	<asp:Literal runat="server" ID="xHIW"></asp:Literal>
 	</div>
 
+	<hr />
+
 	<div style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px;margin-left:10px">
 	<asp:Literal runat="server" ID="X105041">105041</asp:Literal>
 	</div>
-	<div style="margin-bottom:10px">
+	<div style="margin-bottom:20px">
 	<asp:Literal runat="server" ID="X105042">105042</asp:Literal>
 	</div>
 	<asp:HyperLink runat="server" ID="X100008" CssClass="TopButton TopButtonD"></asp:HyperLink>&nbsp;
 	<asp:HyperLink runat="server" ID="X100009" CssClass="TopButton TopButtonD"></asp:HyperLink>&nbsp;
 	<asp:HyperLink runat="server" ID="X105045" CssClass="TopButton TopButtonD"></asp:HyperLink>
-	<div style="margin-top:10px">
+	<div style="margin-top:20px">
 	<asp:Literal runat="server" ID="X105043">105043</asp:Literal>
 	</div>
 
