@@ -82,13 +82,13 @@ function Legal(code)
 
 		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;text-align:center">
 		<asp:Literal runat="server" ID="X100045">100045</asp:Literal>
-		</p><p style="font-size:20px;font-weight:400;line-height:1.6em;color:#272626">
+		</p><p style="font-size:20px;font-weight:400;line-height:1.6em;color:#272626;padding-left:10px">
 		<asp:Literal runat="server" ID="X100046">100046</asp:Literal>
 		</p>
 
-		<asp:Image runat="server" ID="P12036" title="Image 12036" />
+		<asp:Image runat="server" ID="P12036" title="Image 12036" style="padding-left:10px" />
 
-		<div style="color:#54595F;font-size:19px;font-weight:600">
+		<div style="color:#54595F;font-size:19px;font-weight:600;padding-left:10px">
 			<asp:Image runat="server" ID="PSignup" style="float:left" />
 			<br /><asp:Label runat="server" ID="X105001">105001</asp:Label>
 			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
@@ -97,7 +97,7 @@ function Legal(code)
 		</div>
 
 		<br />
-		<div style="color:#54595F;font-size:19px;font-weight:600">
+		<div style="color:#54595F;font-size:19px;font-weight:600;padding-left:10px">
 			<asp:Image runat="server" ID="PConfigure" style="float:left" />
 			<br /><asp:Literal runat="server" ID="X105003">105003</asp:Literal>
 			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
@@ -106,7 +106,7 @@ function Legal(code)
 		</div>
 
 		<br />
-		<div style="color:#54595F;font-size:19px;font-weight:600">
+		<div style="color:#54595F;font-size:19px;font-weight:600;padding-left:10px">
 			<asp:Image runat="server" ID="PInstall" style="float:left" />
 			<br /><asp:Literal runat="server" ID="X105005">105005</asp:Literal>
 			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
