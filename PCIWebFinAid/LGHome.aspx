@@ -58,7 +58,7 @@ function Legal(code)
 		HOW IT WORKS
 -->
 
-	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:0px;margin:0px;background-image:url('ImageLibrary/LG-Background.jpg');background-repeat:no-repeat;background-size:cover">
+	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:0px;margin:0px;background-image:url('<%=PCIBusiness.Tools.ImageFolder() %>LG-Background.jpg');background-repeat:no-repeat;background-size:cover">
 		<br />
 		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;margin-left:50px">
 		<asp:Literal runat="server" ID="X100045">100045</asp:Literal>
@@ -94,7 +94,7 @@ function Legal(code)
 	</div>
 
 	<div style="display:block;width:100%;height:250px">
-	<asp:Image runat="server" ID="P12035" style="float:left" src="ImageLibrary/BookYourChat.png" />
+	<asp:Image runat="server" ID="P12035" style="float:left" src="<%=PCIBusiness.Tools.ImageFolder() %>BookYourChat.png" />
 	<p style="font-size:20px;font-weight:bold">
 	<asp:Literal runat="server" ID="X105041">105041</asp:Literal>
 	</p><p>
@@ -153,8 +153,8 @@ function Legal(code)
 	<!-- To centre
 	<div style="text-align:center">
 	-->
-	<asp:Image runat="server" ID="P12015" ImageUrl="ImageLibrary/Visa.png" />
-	<asp:Image runat="server" ID="P12016" ImageUrl="ImageLibrary/MasterCard.png" />
+	<asp:Image runat="server" ID="P12015" ImageUrl="<%=PCIBusiness.Tools.ImageFolder() %>AccreditationVisa.png" />
+	<asp:Image runat="server" ID="P12016" ImageUrl="<%=PCIBusiness.Tools.ImageFolder() %>AccreditationMasterCard.png" />
 	<asp:Image runat="server" ID="P12017" />
 	<asp:Image runat="server" ID="P12018" />
 	<asp:Image runat="server" ID="P12019" />
