@@ -12,16 +12,10 @@
 </head>
 <body>
 <script type="text/javascript">
-var showFAQ   = 0;
 var showLegal = [0,0,0,0,0,0,0];
 function TickOver(img,mode)
 {
 	img.src = '<%=PCIBusiness.Tools.ImageFolder() %>' + ( mode == 1 ? 'TickOrange' : 'TickWhite' ) + '.png';
-}
-function FAQ()
-{
-	showFAQ = ( showFAQ > 0 ? 0 : 1 );
-	ShowElt('divFAQ',(showFAQ>0));
 }
 function Legal(code)
 {
@@ -56,68 +50,51 @@ function Legal(code)
 	</p>
 	</div>
 
-	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:0px;margin:0px">
+<!--
+	<div style="position:relative">
+	<img src="ImagesCA/CA-Assist2.jpg" style="width:100%" />
+	<div style="color:#FFFFFF; font-family:Sans-serif; position:absolute; top:10px; left:5%; width:95%">
+		<p style="font-size:35px; font-weight:400; line-height:1.4em; letter-spacing:0.8px">
+		HOW IT WORKS
+-->
+
+	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:0px;margin:0px;background-image:url('ImageLibrary/LG-Background.jpg');background-repeat:no-repeat;background-size:cover">
+		<br />
+		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;margin-left:50px">
+		<asp:Literal runat="server" ID="X100045">100045</asp:Literal>
+		</p><p style="font-size:20px;font-weight:400;line-height:1.6em;color:#272626;margin-left:50px">
+		<asp:Literal runat="server" ID="X100046">100046</asp:Literal>
+		</p>
+
 		<div style="padding:10px;font-family:'Open Sans Hebrew',Sans-serif;font-size:20px;line-height:1.5em;letter-spacing:1.3px;margin:0px">
-			<div style="margin-left:20px">
+			<div style="margin-left:40px">
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100287">100287</asp:Literal>
 			</div>
 			<br />
-			<div style="margin-left:20px">
+			<div style="margin-left:40px">
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100288">100288</asp:Literal>
 			</div>
 			<br />
-			<div style="margin-left:20px">
+			<div style="margin-left:40px">
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100289">100289</asp:Literal>
 			</div>
 			<br />
-			<div style="text-align:center">
+			<div style="margin-left:40px">
 			<asp:HyperLink runat="server" ID="X100009" class="TopButton" style="height:32px;width:120px;padding:3px;padding-top:4px;color:#FFFFFF;background-color:#54595F;text-decoration:none" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">100009</asp:HyperLink>
 			</div>
+			<br />&nbsp;
 		</div>
-
-		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;text-align:center">
-		<asp:Literal runat="server" ID="X100045">100045</asp:Literal>
-		</p><p style="font-size:20px;font-weight:400;line-height:1.6em;color:#272626">
-		<asp:Literal runat="server" ID="X100046">100046</asp:Literal>
-		</p>
-
-		<div style="color:#54595F;font-size:19px;font-weight:600">
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>Register.png" style="float:left" />
-			<br /><asp:Label runat="server" ID="X105001">105001</asp:Label>
-			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
-			<asp:Label runat="server" ID="X105002">105002</asp:Label>
-			</div>
-		</div>
-
-		<br />
-		<div style="color:#54595F;font-size:19px;font-weight:600">
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>Pay.png" style="float:left" />
-			<br /><asp:Literal runat="server" ID="X105003">105003</asp:Literal>
-			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
-			<asp:Literal runat="server" ID="X105004">105004</asp:Literal>
-			</div>
-		</div>
-
-		<br />
-		<div style="color:#54595F;font-size:19px;font-weight:600">
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>Enjoy.png" style="float:left" />
-			<br /><asp:Literal runat="server" ID="X105005">105005</asp:Literal>
-			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
-			<asp:Literal runat="server" ID="X105006">105006</asp:Literal>
-			</div>
-		</div>
-		<br />
 	</div>
 
 	<div style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px;margin-left:10px">
 	<asp:Literal runat="server" ID="X105009">105009</asp:Literal>
 	</div>
 
-	<div style="display:block;width:100%">
-	<asp:Image runat="server" ID="P12035" style="float:left" />
+	<div style="display:block;width:100%;height:250px">
+	<asp:Image runat="server" ID="P12035" style="float:left" src="ImageLibrary/BookYourChat.png" />
 	<p style="font-size:20px;font-weight:bold">
 	<asp:Literal runat="server" ID="X105041">105041</asp:Literal>
 	</p><p>
@@ -125,14 +102,17 @@ function Legal(code)
 	</p>
 	</div>
 
-	<div style="text-align:center"> <!-- margin:0px;margin-left:10px -->
-	<asp:HyperLink runat="server" ID="H12013"><asp:Image runat="server" ID="P12013" /></asp:HyperLink>
-	<asp:HyperLink runat="server" ID="H12025"><asp:Image runat="server" ID="P12025" /></asp:HyperLink>
+	<!--
+	<div style="text-align:center">
+	<asp HyperLink run@t="server" ID="H12013"><asp Image run@t="server" ID="P12013" /></asp:HyperLink>
+	<asp HyperLink run@t="server" ID="H12025"><asp Image run@t="server" ID="P12025" /></asp:HyperLink>
 	</div>
 	<div style="text-align:center">
-	<asp:HyperLink runat="server" ID="H12026"><asp:Image runat="server" ID="P12026" /></asp:HyperLink>
-	<asp:HyperLink runat="server" ID="H12027"><asp:Image runat="server" ID="P12027" /></asp:HyperLink>
+	<asp HyperLink run@t="server" ID="H12026"><asp Image run@t="server" ID="P12026" /></asp:HyperLink>
+	<asp HyperLink run@t="server" ID="H12027"><asp Image run@t="server" ID="P12027" /></asp:HyperLink>
 	</div>
+	-->
+
 	<hr />
 
 	<div>

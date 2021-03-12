@@ -56,93 +56,6 @@ function Legal(code)
 	</p>
 	</div>
 
-	<div style="margin:0 auto;width:100%;display:inline-block">
-
-	<div style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
-		<div style="background-color:#FFCC00;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
-			<div style="font-size:10px">&nbsp;</div>
-			<div style="font-size:20px">
-			<asp:Literal runat="server" ID="X105012">105012</asp:Literal>
-			</div>
-			<div style="font-size:14px">
-			<asp:Literal runat="server" ID="X105013">105013</asp:Literal>
-			</div>
-		</div>
-		<div style="float:right">
-			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105017">105017</asp:Literal></div>
-			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105018">105018</asp:Literal></div>
-			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105019">105019</asp:Literal></div>
-		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
-			<div style="font-size:10px;vertical-align:top;text-align:center">
-			<asp:Literal runat="server" ID="X105014">105014</asp:Literal>
-			<span style="font-size:40px">
-			&nbsp;<asp:Literal runat="server" ID="X105015">105015</asp:Literal>
-			</span>
-			</div>
-			<div style="font-size:20px;text-align:center">
-			<asp:Literal runat="server" ID="X105016">105016</asp:Literal>
-			</div>
-		</div>
-	</div>
-
-	<div style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
-		<div style="background-color:#A6A6A6;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
-			<div style="font-size:10px">&nbsp;</div>
-			<div style="font-size:20px">
-			<asp:Literal runat="server" ID="X105020">105020</asp:Literal>
-			</div>
-			<div style="font-size:14px">
-			<asp:Literal runat="server" ID="X105021">105021</asp:Literal>
-			</div>
-		</div>
-		<div style="float:right;display:inline-block">
-			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105025">105025</asp:Literal></div>
-			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105026">105026</asp:Literal></div>
-			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105027">105027</asp:Literal></div>
-		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
-			<div style="font-size:10px;vertical-align:top;text-align:center">
-			<asp:Literal runat="server" ID="X105022">105022</asp:Literal>
-			<span style="font-size:40px">
-			&nbsp;<asp:Literal runat="server" ID="X105023">105023</asp:Literal>
-			</span>
-			</div>
-			<div style="font-size:20px;text-align:center">
-			<asp:Literal runat="server" ID="X105024">105024</asp:Literal>
-			</div>
-		</div>
-	</div>
-
-	<div style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
-		<div style="background-color:#B18135;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
-			<div style="font-size:10px">&nbsp;</div>
-			<div style="font-size:20px">
-			<asp:Literal runat="server" ID="X105028">105028</asp:Literal>
-			</div>
-			<div style="font-size:14px">
-			<asp:Literal runat="server" ID="X105029">105029</asp:Literal>
-			</div>
-		</div>
-		<div style="float:right;display:inline-block">
-			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105033">105033</asp:Literal></div>
-			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105034">105034</asp:Literal></div>
-			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105035">105035</asp:Literal></div>
-		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
-			<div style="font-size:10px;vertical-align:top;text-align:center">
-			<asp:Literal runat="server" ID="X105030">105030</asp:Literal>
-			<span style="font-size:40px">
-			&nbsp;<asp:Literal runat="server" ID="X105031">105031</asp:Literal>
-			</span>
-			</div>
-			<div style="font-size:20px;text-align:center">
-			<asp:Literal runat="server" ID="X105032">105032</asp:Literal>
-			</div>
-		</div>
-	</div>
-	</div> 
-
 	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:0px;margin:0px">
 		<div style="padding:10px;font-family:'Open Sans Hebrew',Sans-serif;font-size:20px;line-height:1.5em;letter-spacing:1.3px;margin:0px">
 			<div style="margin-left:20px">
@@ -159,10 +72,6 @@ function Legal(code)
 			<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
 			<asp:Literal runat="server" ID="X100289">100289</asp:Literal>
 			</div>
-			<br />
-			<div style="text-align:center">
-			<asp:HyperLink runat="server" ID="X100009" class="TopButton" style="height:32px;width:120px;padding:3px;padding-top:4px;color:#FFFFFF;background-color:#54595F;text-decoration:none" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">100009</asp:HyperLink>
-			</div>
 		</div>
 
 		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;text-align:center">
@@ -171,32 +80,8 @@ function Legal(code)
 		<asp:Literal runat="server" ID="X100046">100046</asp:Literal>
 		</p>
 
-		<div style="color:#54595F;font-size:19px;font-weight:600">
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>Register.png" style="float:left" />
-			<br /><asp:Label runat="server" ID="X105001">105001</asp:Label>
-			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
-			<asp:Label runat="server" ID="X105002">105002</asp:Label>
-			</div>
-		</div>
+		<asp:Image runat="server" ID="P12036" title="Image 12036" />
 
-		<br />
-		<div style="color:#54595F;font-size:19px;font-weight:600">
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>Pay.png" style="float:left" />
-			<br /><asp:Literal runat="server" ID="X105003">105003</asp:Literal>
-			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
-			<asp:Literal runat="server" ID="X105004">105004</asp:Literal>
-			</div>
-		</div>
-
-		<br />
-		<div style="color:#54595F;font-size:19px;font-weight:600">
-			<img src="<%=PCIBusiness.Tools.ImageFolder() %>Enjoy.png" style="float:left" />
-			<br /><asp:Literal runat="server" ID="X105005">105005</asp:Literal>
-			<div style="color:#54595F;font-size:15px;font-weight:300;line-height:1.8em">
-			<asp:Literal runat="server" ID="X105006">105006</asp:Literal>
-			</div>
-		</div>
-		<br />
 	</div>
 
 	<div style="margin:0 auto;padding:0px;display:inline-block;width:100%">
@@ -253,10 +138,18 @@ function Legal(code)
 	</div>
 
 	<div style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px;margin-left:10px">
-	<asp:Literal runat="server" ID="X105009">105009</asp:Literal>
+	<asp:Literal runat="server" ID="X105041">105041</asp:Literal>
+	</div>
+	<div style="margin-bottom:10px">
+	<asp:Literal runat="server" ID="X105042">105042</asp:Literal>
+	</div>
+	<asp:HyperLink runat="server" ID="X100008" CssClass="TopButton TopButtonD"></asp:HyperLink>&nbsp;
+	<asp:HyperLink runat="server" ID="X100009" CssClass="TopButton TopButtonD"></asp:HyperLink>&nbsp;
+	<div style="margin-top:10px">
+	<asp:Literal runat="server" ID="X105043">105043</asp:Literal>
 	</div>
 
-	<div style="text-align:center"> <!-- margin:0px;margin-left:10px -->
+	<div style="text-align:center">
 	<asp:HyperLink runat="server" ID="H12013"><asp:Image runat="server" ID="P12013" /></asp:HyperLink>
 	<asp:HyperLink runat="server" ID="H12025"><asp:Image runat="server" ID="P12025" /></asp:HyperLink>
 	</div>
