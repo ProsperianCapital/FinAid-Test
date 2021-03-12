@@ -46,7 +46,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::PCIWebFinAid.CAHeader ascxHeader;
+        protected global::PCIWebFinAid.LGHeader ascxHeader;
         
         /// <summary>
         /// hdnProductCode control.
@@ -173,33 +173,6 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X105009;
-        
-        /// <summary>
-        /// P12035 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image P12035;
-        
-        /// <summary>
-        /// X105041 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X105041;
-        
-        /// <summary>
-        /// X105042 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X105042;
         
         /// <summary>
         /// X100092 control.

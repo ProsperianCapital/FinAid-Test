@@ -46,7 +46,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::PCIWebFinAid.CAHeader ascxHeader;
+        protected global::PCIWebFinAid.LGHeader ascxHeader;
         
         /// <summary>
         /// hdnProductCode control.
@@ -103,13 +103,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X100002;
         
         /// <summary>
-        /// X100004 control.
+        /// pnlTicks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X100004;
+        protected global::System.Web.UI.WebControls.Panel pnlTicks;
         
         /// <summary>
         /// X100287 control.
@@ -166,6 +166,87 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Image P12036;
         
         /// <summary>
+        /// PSignup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image PSignup;
+        
+        /// <summary>
+        /// X105001 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label X105001;
+        
+        /// <summary>
+        /// X105002 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label X105002;
+        
+        /// <summary>
+        /// PConfigure control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image PConfigure;
+        
+        /// <summary>
+        /// X105003 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal X105003;
+        
+        /// <summary>
+        /// X105004 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal X105004;
+        
+        /// <summary>
+        /// PInstall control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image PInstall;
+        
+        /// <summary>
+        /// X105005 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal X105005;
+        
+        /// <summary>
+        /// X105006 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal X105006;
+        
+        /// <summary>
         /// X100051 control.
         /// </summary>
         /// <remarks>
@@ -173,6 +254,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X100051;
+        
+        /// <summary>
+        /// X105044 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal X105044;
         
         /// <summary>
         /// P12010 control.
@@ -265,24 +355,6 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal xHIW;
         
         /// <summary>
-        /// X100063 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X100063;
-        
-        /// <summary>
-        /// xFAQ control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal xFAQ;
-        
-        /// <summary>
         /// X105041 control.
         /// </summary>
         /// <remarks>
@@ -317,6 +389,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink X100009;
+        
+        /// <summary>
+        /// X105045 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink X105045;
         
         /// <summary>
         /// X105043 control.

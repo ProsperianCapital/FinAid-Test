@@ -77,6 +77,7 @@
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
     <Content Include="ISHome.aspx" />
+    <Content Include="LGHeader.ascx" />
     <Content Include="LGHome.aspx" />
     <Content Include="pgChangeAddress.aspx" />
     <Content Include="pgChangeEMail.aspx" />
@@ -233,6 +234,13 @@
     </Compile>
     <Compile Include="ISHome.aspx.designer.cs">
       <DependentUpon>ISHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LGHeader.ascx.cs">
+      <DependentUpon>LGHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LGHeader.ascx.designer.cs">
+      <DependentUpon>LGHeader.ascx</DependentUpon>
     </Compile>
     <Compile Include="LGHome.aspx.cs">
       <DependentUpon>LGHome.aspx</DependentUpon>

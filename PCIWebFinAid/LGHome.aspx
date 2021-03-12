@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="LGHome.aspx.cs" Inherits="PCIWebFinAid.LGHome" %>
-<%@ Register TagPrefix="ascx" TagName="Header" Src="CAHeader.ascx" %>
+<%@ Register TagPrefix="ascx" TagName="Header" Src="LGHeader.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="Footer" Src="CAFooter.ascx" %>
 
 <!DOCTYPE html>
@@ -58,7 +58,10 @@ function Legal(code)
 		HOW IT WORKS
 -->
 
+<!--
 	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:0px;margin:0px;background-image:url('<%=PCIBusiness.Tools.ImageFolder() %>LG-Background.jpg');background-repeat:no-repeat;background-size:cover">
+-->
+	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:0px;margin:0px">
 		<br />
 		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;margin-left:50px">
 		<asp:Literal runat="server" ID="X100045">100045</asp:Literal>
@@ -93,14 +96,16 @@ function Legal(code)
 	<asp:Literal runat="server" ID="X105009">105009</asp:Literal>
 	</div>
 
+	<!--
 	<div style="display:block;width:100%;height:250px">
-	<asp:Image runat="server" ID="P12035" style="float:left" src="<%=PCIBusiness.Tools.ImageFolder() %>BookYourChat.png" />
+	<asp Image run@t="server" ID="P12035" style="float:left" />
 	<p style="font-size:20px;font-weight:bold">
-	<asp:Literal runat="server" ID="X105041">105041</asp:Literal>
+	<asp Literal run@t="server" ID="X105041">105041</asp:Literal>
 	</p><p>
-	<asp:Literal runat="server" ID="X105042">105042</asp:Literal>
+	<asp Literal run@t="server" ID="X105042">105042</asp:Literal>
 	</p>
 	</div>
+	-->
 
 	<!--
 	<div style="text-align:center">
@@ -172,10 +177,10 @@ function Legal(code)
 	-->
 
 	<br /><br />
-	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="JavaScript:Legal(1)">100041</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="JavaScript:Legal(3)">100042</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="JavaScript:Legal(5)">100043</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100044" ForeColor="Orange" NavigateUrl="JavaScript:Legal(4)">100044</asp:HyperLink>
+	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="JavaScript:Legal(1)"></asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="JavaScript:Legal(3)"></asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="JavaScript:Legal(5)"></asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100044" ForeColor="Orange" NavigateUrl="JavaScript:Legal(4)"></asp:HyperLink>
 
 	<div id="LV001" style="color:#FFFFFF;font-family:Sans-serif;background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('LV001',false)" title="Close" style="float:right;padding:4px" />
