@@ -153,8 +153,8 @@ function Legal(code)
 	<!-- To centre
 	<div style="text-align:center">
 	-->
-	<asp:Image runat="server" ID="P12015" ImageUrl="<%=PCIBusiness.Tools.ImageFolder() %>AccreditationVisa.png" />
-	<asp:Image runat="server" ID="P12016" ImageUrl="<%=PCIBusiness.Tools.ImageFolder() %>AccreditationMasterCard.png" />
+	<asp:Image runat="server" ID="P12015" />
+	<asp:Image runat="server" ID="P12016" />
 	<asp:Image runat="server" ID="P12017" />
 	<asp:Image runat="server" ID="P12018" />
 	<asp:Image runat="server" ID="P12019" />
