@@ -209,6 +209,11 @@ table td
 	background-color: #F4DD08;
 	text-decoration: none;
 }
+.TopButtonD
+{
+	background-color: #54595F;
+	text-decoration: none;
+}
 .TopButton:hover
 {
 	background-color: #898787;
