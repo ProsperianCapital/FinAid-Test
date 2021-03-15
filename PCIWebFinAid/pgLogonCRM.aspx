@@ -15,11 +15,11 @@
 	CareAssist
 	</div>
 	<p style="text-align:center">
-	<asp:TextBox runat="server" ID="txtID" placeholder="User Name" width="300px" Height="25px"></asp:TextBox>
+	<asp:TextBox runat="server" ID="X103014" placeholder="X103014" width="300px" Height="25px"></asp:TextBox>
 	</p><p style="text-align:center">
-	<asp:TextBox runat="server" ID="txtPW" placeholder="Password" TextMode="Password" Width="300px" Height="25px"></asp:TextBox>
+	<asp:TextBox runat="server" ID="X103015" placeholder="X103015" TextMode="Password" Width="300px" Height="25px"></asp:TextBox>
 	</p><p style="text-align:center">
-	<asp:Button runat="server" ID="btnLogin" Text="LOGIN" OnClick="btnLogin_Click" Width="310px" />
+	<asp:Button  runat="server" ID="X103016" Text="LOGIN" OnClick="btnLogin_Click" Width="310px" />
 	</p>
 
 	<p style="text-align:center">

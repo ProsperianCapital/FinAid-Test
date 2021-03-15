@@ -760,13 +760,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal lblCCNumberLabel;
         
         /// <summary>
-        /// pnlTokenNo control.
+        /// pnlTokenNot control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder pnlTokenNo;
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlTokenNot;
         
         /// <summary>
         /// txtCCNumber control.
@@ -778,13 +778,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txtCCNumber;
         
         /// <summary>
-        /// pnlTokenYes control.
+        /// pnlTokenEx control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder pnlTokenYes;
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlTokenEx;
         
         /// <summary>
         /// hdnCCNumberHelp control.

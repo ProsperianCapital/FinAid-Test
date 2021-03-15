@@ -91,7 +91,6 @@ namespace PCIWebFinAid
 
 				if ( ! Tools.SystemIsLive() )
 				{
-					btnErrorDtl.Visible = true;
 //	Testing 1 (English)
 					if ( productCode.Length         < 1 ) productCode         = "10278";
 					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
@@ -109,9 +108,6 @@ namespace PCIWebFinAid
 					SetWarning("B","Invalid startup values.");
 					return;
 				}
-
-//				if ( WebTools.CheckProductProvider(productCode,"RegisterEx3.aspx",Request,Response) == 0 )
-//					return;
 
 				ViewState["ProductCode"]         = productCode;
 				ViewState["LanguageCode"]        = languageCode;
@@ -134,14 +130,14 @@ namespace PCIWebFinAid
 					btnNext.Visible = ( lblError.Text.Length == 0 );
 					if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 					{
-						pnlTokenYes.Visible = true;
-						pnlTokenNo.Visible  = false;
+						pnlTokenEx.Visible  = true;
+						pnlTokenNot.Visible = false;
 						txtCCNumber.Text    = "";
 					}
 					else
 					{
-						pnlTokenYes.Visible = false;
-						pnlTokenNo.Visible  = true;
+						pnlTokenEx.Visible  = false;
+						pnlTokenNot.Visible = true;
 						txToken.Value       = "";
 					}
 				}

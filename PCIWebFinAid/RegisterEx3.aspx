@@ -452,11 +452,11 @@ function OptSelect(p)
 			<div class="DataLabel">
 			<asp:Literal runat="server" ID="lblCCNumberLabel"></asp:Literal>
 			<a href="#" onmouseover="JavaScript:Help(1,this,'CCNumber')" onmouseout="JavaScript:Help(0)" style="float:right">?</a></div>
-			<asp:PlaceHolder runat="server" ID="pnlTokenNo" Visible="false">
+			<asp:PlaceHolder runat="server" ID="pnlTokenNot" Visible="false">
 				<asp:TextBox runat="server" CssClass="DataInput" ID="txtCCNumber" MaxLength="20" onfocus="JavaScript:ValidatePage(100187,1)" onblur="JavaScript:ValidatePage(100187,2)"></asp:TextBox>
 			</asp:PlaceHolder>
 			<img id="imgCCNumber" />
-			<asp:PlaceHolder runat="server" ID="pnlTokenYes" Visible="false">
+			<asp:PlaceHolder runat="server" ID="pnlTokenEx" Visible="false">
 				<span id="txIFrameCC"></span>
 			</asp:PlaceHolder>
 			<asp:HiddenField runat="server" ID="hdnCCNumberHelp" />

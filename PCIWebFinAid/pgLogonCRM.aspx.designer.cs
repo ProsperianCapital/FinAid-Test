@@ -31,31 +31,31 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.HtmlControls.HtmlForm frmLogin;
         
         /// <summary>
-        /// txtID control.
+        /// X103014 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtID;
+        protected global::System.Web.UI.WebControls.TextBox X103014;
         
         /// <summary>
-        /// txtPW control.
+        /// X103015 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPW;
+        protected global::System.Web.UI.WebControls.TextBox X103015;
         
         /// <summary>
-        /// btnLogin control.
+        /// X103016 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogin;
+        protected global::System.Web.UI.WebControls.Button X103016;
         
         /// <summary>
         /// ascxXFooter control.

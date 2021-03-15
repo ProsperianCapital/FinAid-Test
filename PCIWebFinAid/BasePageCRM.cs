@@ -19,7 +19,7 @@ namespace PCIWebFinAid
 
 		protected abstract void LoadPageData();
 
-		protected void UpdatePageData(string module)
+		protected void UpdatePageData(string callingFunction)
 		{
 			using (MiscList mList = new MiscList())
 			{
@@ -31,7 +31,7 @@ namespace PCIWebFinAid
 					msg = "[" + mList.ReturnCode.ToString() + "] " + msg;
 				else
 					msg = "[" + mList.ReturnCode.ToString() + "] Update failed (" + sqlProc + ")";
-				SetErrorDetail(module+".UpdatePageData",(mList.ReturnCode==0?0:99010),msg,"",102,1);
+				SetErrorDetail(callingFunction+".UpdatePageData",(mList.ReturnCode==0?0:99010),msg,"",102,1);
 			}
 		}
 
@@ -63,26 +63,27 @@ namespace PCIWebFinAid
 			if ( sessionGeneral == null )
 				return 10010;
 
-			int    ret = 10020;
 			string fieldCode;
 			string fieldValue;
+			int    ret = 10020;
+			sqlProc    = "sp_WP_Get_ProductWebsiteCRMContent";
 
 			using (MiscList mList = new MiscList())
 				try	
 				{
-					sql = "exec sp_WP_Get_ProductWebsiteCRMContent @ProductCode=" + Tools.DBString(sessionGeneral.ProductCode)
-					                                           + ",@LanguageCode=" + Tools.DBString(sessionGeneral.LanguageCode)
-					                                           + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode);
+					sql = "exec " + sqlProc + " @ProductCode=" + Tools.DBString(sessionGeneral.ProductCode)
+					                        + ",@LanguageCode=" + Tools.DBString(sessionGeneral.LanguageCode)
+					                        + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode);
 					if ( mList.ExecQuery(sql, 0) != 0 )
-						SetErrorDetail("LoadLabelText", 10010, "Internal database error (sp_WP_Get_ProductWebsiteCRMContent failed)", sql, 1, 1);
+						SetErrorDetail("LoadLabelText", 10010, "Internal database error (" + sqlProc + " failed)", sql, 1, 1);
 					else if ( mList.EOF )
-						SetErrorDetail("LoadLabelText", 10020, "Internal database error (sp_WP_Get_ProductWebsiteCRMContent no data returned)", sql, 1, 1);
+						SetErrorDetail("LoadLabelText", 10020, "Internal database error (" + sqlProc + " no data returned)", sql, 1, 1);
 					else
 						while ( ! mList.EOF )
 						{
 							ret        = 10050;
 							fieldCode  = mList.GetColumn("WebsiteFieldCode");
-							fieldValue = mList.GetColumn("WebsiteFieldValue").Replace(Environment.NewLine,"<br />");
+							fieldValue = mList.GetColumn("WebsiteFieldValue",1,6);
 							ret        = 10060;
 							ReplaceControlText("X"+fieldCode,fieldValue,subCtl);
 							ReplaceControlText("Y"+fieldCode,fieldValue);
@@ -92,14 +93,14 @@ namespace PCIWebFinAid
 				}
 				catch (Exception ex)
 				{
-					SetErrorDetail("LoadLabelText", ret, "Internal error (sp_WP_Get_ProductWebsiteCRMContent)", "", 2, 2, ex);
+					SetErrorDetail("LoadLabelText", ret, "Internal error (" + sqlProc + ")", "", 2, 2, ex);
 					return ret;
 				}
 
 			return 0;
 		}
 
-		private void ReplaceControlText(string ctlID,string fieldValue,Control subControl=null)
+		protected void ReplaceControlText(string ctlID,string fieldValue,Control subControl=null)
 		{
 			Control ctl = FindControl(ctlID);
 			if ( ctl == null && subControl != null )
@@ -120,6 +121,22 @@ namespace PCIWebFinAid
 				((RadioButton)ctl).Text = fieldValue;
 			else if (ctl.GetType()    == typeof(HyperLink))
 				((HyperLink)ctl).Text   = fieldValue;
+			else if (ctl.GetType()    == typeof(TextBox))
+			{
+				TextBox tBox = (TextBox)ctl;
+				try
+				{
+					string  placeHolder  = tBox.Attributes["placeholder"].ToString().Trim().ToUpper();
+					if ( placeHolder    == ctlID )
+						tBox.Attributes["placeholder"] = fieldValue;
+					else
+						tBox.Text                      = fieldValue;
+				}
+				catch
+				{
+					tBox.Text = fieldValue;
+				}
+			}
 			else
 				SetErrorDetail("ReplaceControlText", 10030, "Unrecognized HTML control (" + ctlID.ToString() + "/" + fieldValue.ToString() + ")",ctlID.ToString() + ", control type="+ctl.GetType().ToString());
 		}

@@ -17,6 +17,7 @@ namespace PCIWebFinAid
 
 			if ( Page.IsPostBack )
 				SessionCheck(5);
+
 			else
 			{
 				SessionCheck(3);
@@ -41,17 +42,18 @@ namespace PCIWebFinAid
 				     languageDialectCode.Length < 1 )
 				{
 					SetErrorDetail("PageLoad",10200,"Invalid startup values ... system cannot continue","");
-					btnLogin.Text    = "Disabled";
-					btnLogin.Enabled = false;
-					txtID.Enabled    = false;
-					txtPW.Enabled    = false;
+					X103016.Text    = "Disabled"; // Button
+					X103016.Enabled = false;
+					X103014.Enabled = false; // User name
+					X103015.Enabled = false; // Password
 				}
 				else
 				{
-					txtID.Focus();
+					LoadLabelText(null);
+					LoadPageData();
+					X103014.Focus(); // User name
 					SessionSave(null,null,null,null,productCode,languageCode,languageDialectCode);
 				}
-
 				ascxXHeader.ShowUser(null,ApplicationCode);
 			}
 		}
@@ -63,14 +65,14 @@ namespace PCIWebFinAid
 		protected void btnLogin_Click(Object sender, EventArgs e)
 		{
 			SetErrorDetail("btnLogin_Click",10100,"Invalid user name and/or password","One or both of user name/password is blank",2,2,null,true);
-			txtID.Text = txtID.Text.Trim();
-			txtPW.Text = txtPW.Text.Trim();
+			X103014.Text = X103014.Text.Trim(); // User name
+			X103015.Text = X103015.Text.Trim(); // Password
 
-			if ( txtID.Text.Length < 1 || txtPW.Text.Length < 1 )
+			if ( X103014.Text.Length < 1 || X103015.Text.Length < 1 )
 				return;
 
 //	Testing
-			if ( ! Tools.SystemIsLive() && txtID.Text.ToUpper() == "PK" && txtPW.Text.ToUpper() == "PK" )
+			if ( ! Tools.SystemIsLive() && X103014.Text.ToUpper() == "PK" && X103015.Text.ToUpper() == "PK" )
 			{
 				SessionSave("100248","Paul Kilfoil","N","20200304-1911");
 				WebTools.Redirect(Response,sessionGeneral.StartPage);
@@ -89,8 +91,8 @@ namespace PCIWebFinAid
 			{
 				sqlProc = "SP_ClientCRMValidateLoginD";
 				sql     = "exec " + sqlProc + " @IPAddress = "   + Tools.DBString(WebTools.ClientIPAddress(Request))
-				                            + ",@ClientCode = "  + Tools.DBString(txtID.Text,47)
-				                            + ",@ContractPin = " + Tools.DBString(txtPW.Text)
+				                            + ",@ClientCode = "  + Tools.DBString(X103014.Text,47)
+				                            + ",@ContractPin = " + Tools.DBString(X103015.Text)
 				                            + ",@ProductCode = " + Tools.DBString(sessionGeneral.ProductCode);
 				if ( mList.ExecQuery(sql,0) != 0 )
 					SetErrorDetail("btnLogin_Click",10110,"Internal database error (" + sqlProc + ")",sql,1,1);
