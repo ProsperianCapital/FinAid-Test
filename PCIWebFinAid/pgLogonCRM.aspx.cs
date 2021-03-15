@@ -22,24 +22,28 @@ namespace PCIWebFinAid
 			{
 				SessionCheck(3);
 
-				string productCode         = WebTools.RequestValueString(Request,"PC");  // ProductCode");
-				string languageCode        = WebTools.RequestValueString(Request,"LC");  // LanguageCode");
-				string languageDialectCode = WebTools.RequestValueString(Request,"LDC"); // LanguageDialectCode");
+				string pc  = WebTools.RequestValueString(Request,"PC");  // ProductCode");
+				string lc  = WebTools.RequestValueString(Request,"LC");  // LanguageCode");
+				string ldc = WebTools.RequestValueString(Request,"LDC"); // LanguageDialectCode");
+
+				if ( pc.Length  > 0 ) sessionGeneral.ProductCode         = pc;
+				if ( lc.Length  > 0 ) sessionGeneral.LanguageCode        = lc;
+				if ( ldc.Length > 0 ) sessionGeneral.LanguageDialectCode = ldc;
 
 				if ( ! Tools.SystemIsLive() )
 				{
 //	Testing 1 (English)
-					if ( productCode.Length           < 1 ) productCode         = "10387";
-					if ( languageCode.Length          < 1 ) languageCode        = "ENG";
-					if ( languageDialectCode.Length   < 1 ) languageDialectCode = "0001";
+					if ( sessionGeneral.ProductCode.Length           < 1 ) sessionGeneral.ProductCode         = "10387";
+					if ( sessionGeneral.LanguageCode.Length          < 1 ) sessionGeneral.LanguageCode        = "ENG";
+					if ( sessionGeneral.LanguageDialectCode.Length   < 1 ) sessionGeneral.LanguageDialectCode = "0001";
 //	Testing 2 (Thai)
-//					if ( productCode.Length           < 1 ) productCode         = "10024";
-//					if ( languageCode.Length          < 1 ) languageCode        = "THA";
-//					if ( languageDialectCode.Length   < 1 ) languageDialectCode = "0001";
+//					if ( sessionGeneral.ProductCode.Length           < 1 ) sessionGeneral.ProductCode         = "10024";
+//					if ( sessionGeneral.LanguageCode.Length          < 1 ) sessionGeneral.LanguageCode        = "THA";
+//					if ( sessionGeneral.LanguageDialectCode.Length   < 1 ) sessionGeneral.LanguageDialectCode = "0001";
 				}
-				if ( productCode.Length         < 1 ||
-				     languageCode.Length        < 1 ||
-				     languageDialectCode.Length < 1 )
+				if ( sessionGeneral.ProductCode.Length         < 1 ||
+				     sessionGeneral.LanguageCode.Length        < 1 ||
+				     sessionGeneral.LanguageDialectCode.Length < 1 )
 				{
 					SetErrorDetail("PageLoad",10200,"Invalid startup values ... system cannot continue","");
 					X103016.Text    = "Disabled"; // Button
@@ -52,7 +56,8 @@ namespace PCIWebFinAid
 					LoadLabelText(null);
 					LoadPageData();
 					X103014.Focus(); // User name
-					SessionSave(null,null,null,null,productCode,languageCode,languageDialectCode);
+					SessionSave();
+//					SessionSave(null,null,null,null,productCode,languageCode,languageDialectCode);
 				}
 				ascxXHeader.ShowUser(null,ApplicationCode);
 			}
