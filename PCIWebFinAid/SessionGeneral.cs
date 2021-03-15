@@ -16,7 +16,7 @@
 		private string  languageDialectCode;
 
 //		System details
-		private string  startPage;
+//		private string  startPage;
 //		private string  applicationCode;
 
 		public  string  UserCode
@@ -73,18 +73,26 @@
 		{
 			get
 			{
-				if ( PCIBusiness.Tools.NullToString(startPage).Length < 6 )
-					if ( AccessType == "A" ) // Admin
-						startPage = "XHome.aspx";
-					else if ( AccessType == "N" ) // Client
-						startPage = "pgViewProductDashboard.aspx";
-					else if ( AccessType == "C" ) // CRM Agent
-						startPage = "pgViewProductDashboard.aspx";
-					else
-						startPage = "pgLogonCRM.aspx";
-				return startPage;
+				if ( AccessType == "A" ) // Admin
+					return "XHome.aspx";
+				if ( AccessType == "N" ) // Client
+					return "pgViewProductDashboard.aspx";
+				if ( AccessType == "C" ) // CRM Agent
+					return "pgViewProductDashboard.aspx";
+				return "pgLogonCRM.aspx";
+
+//				if ( PCIBusiness.Tools.NullToString(startPage).Length < 6 )
+//					if ( AccessType == "A" ) // Admin
+//						startPage = "XHome.aspx";
+//					else if ( AccessType == "N" ) // Client
+//						startPage = "pgViewProductDashboard.aspx";
+//					else if ( AccessType == "C" ) // CRM Agent
+//						startPage = "pgViewProductDashboard.aspx";
+//					else
+//						startPage = "pgLogonCRM.aspx";
+//				return startPage;
 			}
-			set { startPage = value.Trim(); }
+//			set { startPage = value.Trim(); }
 		}
 		public string   LogonPage
 		{
@@ -125,7 +133,7 @@
 			productCode         = "";
 			languageCode        = "";
 			languageDialectCode = "";
-			startPage           = "";
+//			startPage           = "";
 		}
 
 		public SessionGeneral()
