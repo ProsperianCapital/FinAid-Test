@@ -7,23 +7,30 @@ namespace PCIWebFinAid
 {
 	public partial class RegisterThreeD : BasePage
 	{
+		private string providerRef;
+		private string providerCode;
+		private string transRef;
+		private string resultCode;
+		private string resultMsg;
+		private int    sqlRet;
+		private int    ret;
+
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			int    ret;
-			string providerRef;
-//			string providerURL;
-			string providerCode = WebTools.RequestValueString(Request,"ProviderCode");
-			string transRef     = WebTools.RequestValueString(Request,"TransRef");
-			string resultCode   = WebTools.RequestValueString(Request,"ResultCode");
-			string resultMsg    = WebTools.RequestValueString(Request,"ResultMessage");
-//			string errorCode    = WebTools.RequestValueString(Request,"ErrorCode");
-			string sql          = "exec sp_WP_PaymentRegister3DSecA @ContractCode=" + Tools.DBString(transRef);
+			ret          = 10;
+			providerRef  = "";
+			providerCode = WebTools.RequestValueString(Request,"ProviderCode");
+			transRef     = WebTools.RequestValueString(Request,"TransRef");
+			resultCode   = WebTools.RequestValueString(Request,"ResultCode");
+			resultMsg    = WebTools.RequestValueString(Request,"ResultMessage");
+
+			string sql   = "exec sp_WP_PaymentRegister3DSecA @ContractCode=" + Tools.DBString(transRef);
 
 			try
 			{
-//				Stream webData = Request.InputStream;
 				using (StreamReader reader = new StreamReader(Request.InputStream))
 				{
+					ret           = 20;
 					string webStr = reader.ReadToEnd();
 					Tools.LogInfo("PageLoad/14",webStr,222,this);
 				}
@@ -35,38 +42,48 @@ namespace PCIWebFinAid
 			{
 				if ( resultCode.Length > 0 || resultMsg.Length > 0 || transRef.Length < 1 )
 				{
-					lbl100503.Text = "Error ...";
-					lbl100504.Text = "Your payment failed.<br /><br />"
-					               + "<table style='white-space:nowrap'>"
-					               + "<tr><td><b>Transaction Result Code</b></td><td> : " + resultCode + "</td></tr>"
-					               + "<tr><td><b>Transaction Message</b></td><td> : " + resultMsg + "</td></tr>"
-					               + "<tr><td><b>Transaction Reference</b></td><td> : " + transRef + "</td></tr></table>";
+					ret = 30;
+					SetMessage("Error ...","Your payment failed.");
 //					Tools.LogException("PageLoad/20",sql,this);
 //					Tools.LogInfo     ("PageLoad/13",sql,222,this);
 					return;
 				}
 
-				Transaction trans  = null;
-				string      token  = "";
+				ret               = 40;
+				Transaction trans = null;
+				string      token = "";
 
 				if ( providerCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
 				{
+					ret         = 50;
 					trans       = new TransactionCyberSource();
 					resultCode  = WebTools.RequestValueString(Request,"auth_response");
 					providerRef = WebTools.RequestValueString(Request,"transaction_id");
 					token       = WebTools.RequestValueString(Request,"payment_token");
+					resultMsg   = WebTools.RequestValueString(Request,"decision");
+					string xCd  = WebTools.RequestValueString(Request,"decision_return_code");
+					string xMsg = WebTools.RequestValueString(Request,"message");
+					if ( resultMsg.Length < 1 ) resultMsg = "FAIL";
+					if ( xCd.Length       > 0 ) resultMsg = resultMsg + "/" + xCd;
+					if ( xMsg.Length      > 0 ) resultMsg = resultMsg + " (" + xMsg + ")";
+
+					if ( resultCode.Length > 0 && resultCode != "0" && resultCode != "00" && resultCode != "000" && resultCode != "0000" )
+						SetMessage("Error ...","Your payment was rejected.");
+
 				//	providerURL = WebTools.RequestValueString(Request,"X");
 				}
 				else
 				{
+					ret         = 80;
 					trans       = new TransactionPeach();
 				//	resultCode  = "XXX-XXX-XXX";
 				//	providerURL = WebTools.RequestValueString(Request,"resourcePath");
 					providerRef = WebTools.RequestValueString(Request,"id");
-					ret         = trans.ThreeDSecureCheck(providerRef);
+					sqlRet      = trans.ThreeDSecureCheck(providerRef);
 					resultCode  = trans.ResultCode;
 				}
 
+				ret   = 100;
 				trans = null;
 				sql   = sql + ",@ReferenceNumber="    + Tools.DBString(providerRef)
 				            + ",@Status="             + Tools.DBString(resultCode)
@@ -75,7 +92,7 @@ namespace PCIWebFinAid
 
 //				using (TransactionPeach trans = new TransactionPeach())
 //				{
-//					ret       = trans.ThreeDSecureCheck(peachID);
+//					sqlRet    = trans.ThreeDSecureCheck(peachID);
 //					peachCode = trans.ResultCode;
 //					sql       = sql + Tools.DBString(peachCode);
 //				}
@@ -84,13 +101,15 @@ namespace PCIWebFinAid
 
 				using (MiscList mList = new MiscList())
 				{
+					ret = 120;
 //	Single language
-//					ret = mList.ExecQuery(sql,0,"",false,true);
+//					sqlRet = mList.ExecQuery(sql,0,"",false,true);
 
 //	Multi language
-					ret = mList.ExecQuery(sql,0);
-					if ( ret == 0 )
+					sqlRet = mList.ExecQuery(sql,0);
+					if ( sqlRet == 0 )
 					{
+						ret         = 130;
 						string  pc  = mList.GetColumn("ProductCode");
 						string  lc  = mList.GetColumn("LanguageCode");
 						string  ldc = mList.GetColumn("LanguageDialectCode");
@@ -105,10 +124,12 @@ namespace PCIWebFinAid
 
 //						Tools.LogInfo("RegisterThreeD.PageLoad/10",sql,222);
 
-						ret = mList.ExecQuery(sql,0);
-						if ( ret == 0 && ! mList.EOF )
+						ret    = 150;
+						sqlRet = mList.ExecQuery(sql,0);
+						if ( sqlRet == 0 && ! mList.EOF )
 							while ( ! mList.EOF )
 							{
+								ret        = 0; // All OK
 								fieldCode  = mList.GetColumn("WebsiteFieldCode");
 								fieldValue = mList.GetColumn("WebsiteFieldValue");
 //								Tools.LogInfo("RegisterThreeD.PageLoad/15","WebsiteFieldCode="+fieldCode+" ("+fieldValue+")",222);
@@ -119,29 +140,49 @@ namespace PCIWebFinAid
 							}
 						else
 						{
-							lbl100503.Text = "Oops ...";
-							lbl100504.Text = "Something seems to have gone wrong with your payment.<br /><br />We have logged the error and will investigate";
-							sql            =   "Contract Code="           + transRef
-							               + ", Transaction Ref="         + providerRef
-							               + ", Transaction Result Code=" + resultCode
-							               + ", Ret="                     + ret.ToString()
-							               + ", SQL="                     + sql;
+							ret = 190;
+							sql =   "Contract Code="           + transRef
+							    + ", Transaction Id="          + providerRef
+							    + ", Transaction Result Code=" + resultCode
+							    + ", sqlRet="                  + sqlRet.ToString()
+							    + ", Ret="                     + ret.ToString()
+							    + ", SQL="                     + sql;
 //							Tools.LogException("PageLoad/20",sql,this);
 							Tools.LogInfo     ("PageLoad/25",sql,222,this);
 						}
 					}
 					else
 					{
-						Tools.LogException("PageLoad/30","Ret="+ret.ToString()+" ("+sql+")",null,this);
-						Tools.LogInfo     ("PageLoad/35","Ret="+ret.ToString()+" ("+sql+")",222,this);
+						ret = 210;
+						Tools.LogException("PageLoad/30","sqlRet="+sqlRet.ToString()+" ("+sql+")",null,this);
+						Tools.LogInfo     ("PageLoad/35","sqlRet="+sqlRet.ToString()+" ("+sql+")",222,this);
 					}
 				}
+				if ( ret == 0 )
+					SetMessage("Thank You ...","Your application has been successfully received.",false);
+				else
+					SetMessage("Oops ...","Something seems to have gone wrong with your payment.<br /><br />We have logged the error and will investigate.",false);
 			}
 			catch (Exception ex)
 			{
+				SetMessage("Oops ...","Something seems to have gone wrong.");
 				Tools.LogException("PageLoad/90","",ex,this);
 				Tools.LogInfo     ("PageLoad/95",ex.Message,222,this);
 			}
+		}
+
+		private void SetMessage(string head1,string head2,bool overWrite=true)
+		{
+			if ( overWrite || lbl100503.Text.Length < 1 )
+				lbl100503.Text = head1;
+			if ( overWrite || lbl100504.Text.Length < 1 )
+				lbl100504.Text = head2 + ( head2.Length > 0 ? "<br /><br />" : "" )
+					            + "<table style='white-space:nowrap'>"
+								   + "<tr><td><b>Transaction Result Code</b></td><td> : " + resultCode + "</td></tr>"
+								   + "<tr><td><b>Transaction Message</b></td><td> : "     + resultMsg + "</td></tr>"
+								   + "<tr><td><b>Transaction Id</b></td><td> : "          + providerRef + "</td></tr>"
+								   + "<tr><td><b>Contract/Transaction Reference</b></td><td> : " + transRef + "</td></tr>"
+								   + "<tr><td><b>Internal code (ret)</b></td><td> : "            + ret.ToString() + "</td></tr></table>";
 		}
 	}
 }

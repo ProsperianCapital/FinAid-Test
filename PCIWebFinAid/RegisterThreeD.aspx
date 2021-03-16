@@ -12,11 +12,11 @@
 <body>
 
 <div class="Header3">
-<asp:Literal runat="server" id="lbl100503">Thank You ...</asp:Literal>
+<asp:Literal runat="server" id="lbl100503"></asp:Literal>
 </div>
 <p style="color:red;font-weight:bold">
 <br />
-<asp:Literal runat="server" id="lbl100504">Your application has been successfully received.</asp:Literal>
+<asp:Literal runat="server" id="lbl100504"></asp:Literal>
 </p>
 </body>
 </html>

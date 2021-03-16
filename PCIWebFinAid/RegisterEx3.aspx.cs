@@ -220,7 +220,7 @@ namespace PCIWebFinAid
 			}
 			catch (Exception ex)
 			{
-				Tools.LogException("RegisterEx3.HideControls","",ex);
+				Tools.LogException("HideControls","",ex,this);
 			}
 			lblJS.Text = WebTools.JavaScriptSource("ShowElt('tr"+controlID+"',false);ShowElt('trp6"+controlID+"',false)",lblJS.Text,1);
 		}
@@ -507,8 +507,8 @@ namespace PCIWebFinAid
 //	Note : btnBack1 ("Back") is only for DEV, not LIVE. So no label data exists
 
 					if ( btnNext.Text.Length  < 1 || btnBack2.Text.Length < 1 || btnAgree.Text.Length < 1 )
-						Tools.LogInfo("RegisterEx3.LoadLabels/37","Unable to load some or all button labels ("
-						             + btnNext.Text + "/" + btnBack2.Text + "/" + btnAgree.Text + ")",logDebug);
+						Tools.LogInfo("LoadLabels/37","Unable to load some or all button labels ("
+						             + btnNext.Text + "/" + btnBack2.Text + "/" + btnAgree.Text + ")",logDebug,this);
 
 					if ( btnNext.Text.Length  < 1 ) btnNext.Text  = "NEXT";
 //					if ( btnBack1.Text.Length < 1 ) btnBack1.Text = "BACK";
@@ -830,10 +830,10 @@ namespace PCIWebFinAid
 
 			int try3d        = Tools.StringToInt(hdn3dTries.Value) + 1;
 			hdn3dTries.Value = try3d.ToString();
-			Tools.LogInfo("RegisterEx3.Send3dForm","Contract " + payment.MerchantReference + " (try " + try3d.ToString() + ")",222);
+			Tools.LogInfo("Send3dForm","Contract " + payment.MerchantReference + " (try " + try3d.ToString() + ")",222,this);
 
 //			if ( try3d > 1 )
-//				Tools.LogInfo("RegisterEx3.Send3dForm","Contract " + payment.MerchantReference + " (try " + try3d.ToString() + ")",222);
+//				Tools.LogInfo("Send3dForm","Contract " + payment.MerchantReference + " (try " + try3d.ToString() + ")",222,this);
 
 			if ( trans.ThreeDSecurePayment(payment,Request.UrlReferrer,languageCode,languageDialectCode) == 0 )
 				try
@@ -851,8 +851,8 @@ namespace PCIWebFinAid
 				{ }
 			else
 			{
-				string url = "RegisterThreeD.aspx?ProviderCode=" + Tools.BureauCode(Constants.PaymentProvider.CyberSource)
-				           +                    "&TransRef="       + contractCode.ToString()
+				string url = "RegisterThreeD.aspx?ProviderCode="  + Tools.BureauCode(Constants.PaymentProvider.CyberSource)
+				           +                    "&TransRef="      + contractCode.ToString()
 				           +                    "&ResultCode="    + Tools.URLString(trans.ResultCode)
 				           +                    "&ResultMessage=" + Tools.URLString(trans.ResultMessage)
 				           +                    "&id="            + Tools.URLString(trans.PaymentReference);
@@ -1010,8 +1010,6 @@ namespace PCIWebFinAid
 					             + ",@CardExpiryMonth =" + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
 					             + ",@CardExpiryYear ="  + Tools.DBString(WebTools.ListValue(lstCCYear).ToString());
 
-//					Tools.LogInfo("btnNext_Click/T2","Page="+pageNo.ToString()+", "+sql,203,this);
-
 					errNo = miscList.ExecQuery(sql,0);
 					SetErrorDetail("btnNext_Click/30020",errNo,"Unable to update information (pageNo="+pageNo.ToString()+")",sql);
 
@@ -1055,13 +1053,13 @@ namespace PCIWebFinAid
 								lblTx.Text          = WebTools.JavaScriptSource("TokenSetup()");
 //	[TESTING]
 //								txConcatenatedString.Value = data;
-								Tools.LogInfo("RegisterEx3.btnNext_Click/30035","Id="+txID.Value
-								                                             +"; Key="+apiKey
-								                                             +"; Origin="+txOrigin.Value
-								                                             +"; TimeStamp="+txTimestamp.Value
-								                                             +"; TokenScheme="+txTokenScheme.Value
-								                                             +"; Concat="+data
-								                                             +"; HMAC="+txHMAC.Value,10);
+								Tools.LogInfo("btnNext_Click/30035","Id="+txID.Value
+								                                 +"; Key="+apiKey
+								                                 +"; Origin="+txOrigin.Value
+								                                 +"; TimeStamp="+txTimestamp.Value
+								                                 +"; TokenScheme="+txTokenScheme.Value
+								                                 +"; Concat="+data
+								                                 +"; HMAC="+txHMAC.Value,10,this);
 //	[TESTING]
 							}
 //	TokenEx End
@@ -1091,7 +1089,7 @@ namespace PCIWebFinAid
 							                      +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
 
 							string w = " (looking for ProductOption="+productOption+" and PaymentMethod="+payMethod+")";
-							Tools.LogInfo("RegisterEx3.btnNext_Click/30040",sql+w,logDebug);
+							Tools.LogInfo("btnNext_Click/30040",sql+w,logDebug,this);
 
 							if ( miscList.ExecQuery(sql,0) == 0 )
 								while ( ! miscList.EOF )
@@ -1102,7 +1100,7 @@ namespace PCIWebFinAid
 									       miscList.GetColumn("PaymentMethodCode").ToUpper() == payMethod.ToUpper()  )   ||
 									       miscList.GetColumn("PaymentMethodCode") == "*" )
 									{
-										Tools.LogInfo("RegisterEx3.btnNext_Click/30045",w+" (match)",logDebug);
+										Tools.LogInfo("btnNext_Click/30045",w+" (match)",logDebug,this);
 										lblCCMandate.Text = miscList.GetColumn("CollectionMandateText",0);
 										int k             = lblCCMandate.Text.IndexOf("\n"); // Do NOT use Environment.NewLine here!
 										if ( k > 0 && lblCCMandate.Text.Length > k+1 )
@@ -1114,7 +1112,7 @@ namespace PCIWebFinAid
 										lblp6Mandate.Text     = lblCCMandate.Text;
 										break;
 									}
-									Tools.LogInfo("RegisterEx3.btnNext_Click/30050",w,logDebug);
+									Tools.LogInfo("btnNext_Click/30050",w,logDebug,this);
 									miscList.NextRow();
 								}
 
@@ -1126,7 +1124,7 @@ namespace PCIWebFinAid
 							sql   = "exec WP_ContractApplicationC"
 							      +     " @RegistrationPage = '5'"
 							      +     ",@ContractCode =" + Tools.DBString(contractCode);
-//							Tools.LogInfo("btnNext_Click/T3","Page="+pageNo.ToString()+", "+sql,203,this);
+//							Tools.LogInfo("btnNext_Click/30061","Page="+pageNo.ToString()+", "+sql,203,this);
 							errNo = miscList.ExecQuery(sql,0,"",false,true);
 							SetErrorDetail("btnNext_Click/30065",(errNo==0?0:30065),"Unable to update information (WP_ContractApplicationC)",sql);
 
@@ -1143,7 +1141,7 @@ namespace PCIWebFinAid
 								      +     ",@ReferenceNumber ="    + Tools.DBString(txReference.Value,47)
 								      +     ",@TransactionStatusCode = ''"
 								      +     ",@CardTokenisationStatusCode = '007'";
-//								Tools.LogInfo("btnNext_Click/T4","Page="+pageNo.ToString()+", "+sql,203,this);
+//								Tools.LogInfo("btnNext_Click/30069","Page="+pageNo.ToString()+", "+sql,203,this);
 								errNo = miscList.ExecQuery(sql,0,"",false,true);
 								SetErrorDetail("btnNext_Click/30070",(errNo==0?0:30070),"Unable to update card token (sp_TokenEx_Ins_CardToken)",sql);
 							}
@@ -1388,7 +1386,7 @@ namespace PCIWebFinAid
 													if ( k > 1 ) // After 2 failed attempts
 														smtp.UseDefaultCredentials = false;
 													if ( k > 2 ) // After 3 failed attempts
-														Tools.LogException("RegisterEx3.aspx/84","Mail send failure, errNo=" + errNo.ToString() + " (" + txtEMail.Text+")",ex3);
+														Tools.LogException("btnNext_Click/30203","Mail send failure, errNo=" + errNo.ToString() + " (" + txtEMail.Text+")",ex3,this);
 												}
 										}
 										SetErrorDetail("btnNext_Click/30205",errNo,"Unable to send confirmation email (5 failed attempts)","");
