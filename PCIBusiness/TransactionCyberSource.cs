@@ -879,10 +879,18 @@ namespace PCIBusiness
 		public override int ThreeDSecurePayment(Payment payment,Uri postBackURL,string languageCode="",string languageDialectCode="")
 		{
 			ret                 = 10;
-			string    url       = "https://testsecureacceptance.cybersource.com/silent/embedded/pay";
-			string    profileId = "3C857FA4-ED86-4A08-A119-24170A74C760";
-			string    accessKey = "8b031c20a1ad343c97afe1869e2e7994";
-			string    secretKey = "2ea6c71fa7e04304a78f417c1e4d95677abb9673c7cd45ec803a08696041ea62b5eae10527704f4580ae8da223c295c0b42f97808adf4b6db1a2bf032eb74bd7376d9d1393f1443aaf8bcba7cd4d1148b3157119169c404fa74be9e4cd5cf9cacc34f76976f54bfa93136e4de6b1f53750a5e9d4b1cc4fcebd67a14bbcc156c3";
+
+//	Testing [Start]
+//			string    url       = "https://testsecureacceptance.cybersource.com/silent/embedded/pay";
+//			string    profileId = "3C857FA4-ED86-4A08-A119-24170A74C760";
+//			string    accessKey = "8b031c20a1ad343c97afe1869e2e7994";
+//			string    secretKey = "2ea6c71fa7e04304a78f417c1e4d95677abb9673c7cd45ec803a08696041ea62b5eae10527704f4580ae8da223c295c0b42f97808adf4b6db1a2bf032eb74bd7376d9d1393f1443aaf8bcba7cd4d1148b3157119169c404fa74be9e4cd5cf9cacc34f76976f54bfa93136e4de6b1f53750a5e9d4b1cc4fcebd67a14bbcc156c3";
+//	Testing [End]
+
+			string    url       = payment.ProviderURL;
+			string    profileId = payment.ProviderAccount;
+			string    accessKey = payment.ProviderUserID;
+			string    secretKey = payment.ProviderKey;
 			string    ccNo      = payment.CardNumber;
 			string    ccType    = CardType(payment.CardNumber);
 			DateTime  dt        = DateTime.Now.ToUniversalTime();
@@ -917,7 +925,7 @@ namespace PCIBusiness
 				fieldS = new string[,] { { "reference_number"                   , Tools.JSONSafe(payment.MerchantReference) }
 				                       , { "transaction_type"                   , "sale,create_payment_token" }
 				                       , { "currency"                           , "ZAR" }
-				                       , { "amount"                             , "0.10" }
+				                       , { "amount"                             , "0.99" }
 				                       , { "locale"                             , "en" }
 				                       , { "profile_id"                         , profileId }
 				                       , { "access_key"                         , accessKey }
@@ -973,12 +981,12 @@ namespace PCIBusiness
 				                  + unsSent
 				                  + "&signature="            + Tools.URLString(sigF);
 
-				Tools.LogInfo("ThreeDSecurePayment/10","Profile Id="+profileId, 10,this);
-				Tools.LogInfo("ThreeDSecurePayment/20","Access Key="+accessKey, 10,this);
-				Tools.LogInfo("ThreeDSecurePayment/30","Secret Key="+secretKey, 10,this);
-				Tools.LogInfo("ThreeDSecurePayment/40","Signature Input="+sigX, 10,this);
-				Tools.LogInfo("ThreeDSecurePayment/50","Signature Output="+sigF,10,this);
-				Tools.LogInfo("ThreeDSecurePayment/70","URL params="+xmlSent,   10,this);
+				Tools.LogInfo("ThreeDSecurePayment/10","Profile Id="+profileId
+				                                   + ", Access Key="+accessKey
+				                                   + ", Secret Key="+secretKey
+				                                   + ", Signature Input="+sigX
+				                                   + ", Signature Output="+sigF
+				                                   + ", URL params="+xmlSent,222,this);
 
 				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
 				ret                       = 110;
@@ -1032,9 +1040,13 @@ namespace PCIBusiness
 				resultMsg  = Tools.HTMLValue(strResult,"message") + ( resultMsg.Length > 0 ? " (" + resultMsg + ")" : "" );
 				ret        = 210;
 			}
-			catch (Exception ex)
+			catch (WebException ex1)
 			{
-				Tools.LogException("ThreeDSecurePayment/199","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex,this);
+				Tools.DecodeWebException(ex1,ClassName+".ThreeDSecurePayment/298","ret="+ret.ToString());
+			}
+			catch (Exception ex2)
+			{
+				Tools.LogException("ThreeDSecurePayment/299","Ret="+ret.ToString()+", XML Sent=" + xmlSent,ex2,this);
 			}
 			return ret;
 		}
