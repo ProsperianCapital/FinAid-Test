@@ -64,8 +64,8 @@ namespace PCIWebFinAid
 				contractCode        = WebTools.ViewStateString(ViewState,"ContractCode");
 				contractPIN         = WebTools.ViewStateString(ViewState,"ContractPIN");
 				bureauCodeToken     = WebTools.ViewStateString(ViewState,"BureauCodeToken");
-////			bureauCodePayment   = WebTools.ViewStateString(ViewState,"BureauCodePayment"); [TEST]
-				bureauCodePayment   = Tools.BureauCode(Constants.PaymentProvider.CyberSource);
+				bureauCodePayment   = WebTools.ViewStateString(ViewState,"BureauCodePayment");
+//				bureauCodePayment   = Tools.BureauCode(Constants.PaymentProvider.CyberSource);// TEST
 				paymentURL          = WebTools.ViewStateString(ViewState,"PaymentURL");
 				tokenAccount        = WebTools.ViewStateString(ViewState,"TokenAccount");
 				tokenKey            = WebTools.ViewStateString(ViewState,"TokenKey");
@@ -643,7 +643,8 @@ namespace PCIWebFinAid
 							ViewState["ContractCode"] = contractCode;
 							ViewState["ContractPIN"]  = contractPIN;
 							lblError.Text             = "";
-							sql                       = "exec sp_WP_Get_ProductInfo @ProductCode=" + Tools.DBString(productCode);
+							spr                       = "sp_WP_Get_ProductInfo";
+							sql                       = "exec " + spr + " @ProductCode=" + Tools.DBString(productCode);
 							if ( miscList.ExecQuery(sql,0) != 0 )
 								SetErrorDetail("LoadContractCode",10033,"Error retrieving product info ; please try again later",sql);
 							else if ( miscList.EOF )
@@ -664,16 +665,15 @@ namespace PCIWebFinAid
 								paymentAmount     = "0"; // miscList.GetColumn("TransactionalAmount");
 
 								if ( paymentURL.Length < 1 || paymentAccount.Length < 1 || paymentKey.Length < 1 )
-									Tools.LogInfo("RegisterEx3.LoadContractCode",sql+" ->"
-									            +  " bureauCodeToken="  +bureauCodeToken
-									            + ", bureauCodePayment="+bureauCodePayment
-									            + ", tokenAccount="     +tokenAccount
-									            + ", tokenKey="         +tokenKey
-									            + ", paymentURL="       +paymentURL
-									            + ", paymentAccount="   +paymentAccount
-									            + ", paymentId="        +paymentId
-									            + ", paymentKey="       +paymentKey
-									            + ", paymentCurrency="  +paymentCurrency,224);
+									Tools.LogInfo("LoadContractCode",sql+" -> bureauCodeToken="  +bureauCodeToken
+									                                     + ", bureauCodePayment="+bureauCodePayment
+									                                     + ", tokenAccount="     +tokenAccount
+									                                     + ", tokenKey="         +tokenKey
+									                                     + ", paymentURL="       +paymentURL
+									                                     + ", paymentAccount="   +paymentAccount
+									                                     + ", paymentId="        +paymentId
+									                                     + ", paymentKey="       +paymentKey
+									                                     + ", paymentCurrency="  +paymentCurrency,224,this);
 //	TESTING
 								if ( ! Tools.SystemIsLive() && bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 								{
