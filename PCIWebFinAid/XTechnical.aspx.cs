@@ -20,7 +20,7 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) != 0 )
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) != 0 )
 				StartOver(10999);
 		}
 

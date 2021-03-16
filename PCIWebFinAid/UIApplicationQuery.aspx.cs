@@ -28,7 +28,6 @@ namespace PCIWebFinAid
 		private string        queryName;
 		private string        userCode;
 		private string        applicationCode;
-//		private string        contractCode;
 		private string        countryCode;
 		private string        languageCode;
 		private string        languageDialectCode;
@@ -96,14 +95,14 @@ namespace PCIWebFinAid
 				mobileNumber        = ParmValue("MobileNumber");
 
 				if ( inputDataType != (byte)Constants.WebDataType.FormPost )
-					Tools.LogInfo("UIApplicationQuery.QueryData/10","dataType="+inputDataType.ToString()
-					                                             +", queryName="+queryName
-					                                             +", applicationCode"+applicationCode
-					                                             +", countryCode"+countryCode
-					                                             +", languageCode"+languageCode
-					                                             +", languageDialectCode"+languageDialectCode
-					                                             +", userCode"+userCode
-					                                             +", mobileNumber"+mobileNumber,220);
+					Tools.LogInfo("QueryData/10","dataType="+inputDataType.ToString()
+					                          +", queryName="+queryName
+					                          +", applicationCode"+applicationCode
+					                          +", countryCode"+countryCode
+					                          +", languageCode"+languageCode
+					                          +", languageDialectCode"+languageDialectCode
+					                          +", userCode"+userCode
+					                          +", mobileNumber"+mobileNumber,220,this);
 	
 				if ( Tools.SystemLiveTestOrDev() != Constants.SystemMode.Development && secretKey != "7e6415a7cb790238fd12430a0ce419b3" )
 					return SendJSON(10005,"Invalid secret key");
@@ -184,7 +183,7 @@ namespace PCIWebFinAid
 			{ }
 			catch (Exception ex)
 			{
-				Tools.LogException("QueryData/9","",ex,this);
+				Tools.LogException("QueryData/99","",ex,this);
 			}
 
 			return 0;
@@ -346,11 +345,6 @@ namespace PCIWebFinAid
 						buttonText = mList.GetColumn(colName+"Text",0);
 						if ( buttonText.Length < 1 )
 							break;
-//						json.Append ( Tools.JSONPair(colName+"Text"         ,buttonText)
-//						            + Tools.JSONPair(colName+"ImageCode"    ,mList.GetColumn(colName+"ImageCode"))
-//						            + Tools.JSONPair(colName+"ImageFileName",mList.GetColumn(colName+"ImageFileName"))
-//						            + Tools.JSONPair(colName+"NumberToDial" ,mList.GetColumn(colName+"NumberToDial")) );
-//	No, create a JSON array rather
 						json.Append ( Tools.JSONPair("Button"       ,k.ToString(),1,"{")
 						            + Tools.JSONPair("Text"         ,buttonText)
 						            + Tools.JSONPair("ImageCode"    ,mList.GetColumn(colName+"ImageCode"))
@@ -477,7 +471,7 @@ namespace PCIWebFinAid
 
 			List<MenuItem> menuList;
 			using ( MenuItems menuItems = new MenuItems() )
-				menuList = menuItems.LoadMenu(userCode,applicationCode);
+				menuList = menuItems.LoadMenu(userCode,applicationCode,languageCode,languageDialectCode);
 
 			if ( menuList == null || menuList.Count < 1 )
 			{
@@ -698,10 +692,6 @@ namespace PCIWebFinAid
 				data = data.Substring(0,data.Length-1);
 			data = "{" + data + "}";
 
-//			contractCode = Tools.NullToString(contractCode);
-//			string log   = "ContractCode="+contractCode+", Query: "+queryName
-//			             + ( errCode > 0 ? " (Error " + errCode.ToString() + ": " + errMessage + ")" : "" );
-
 			try
 			{
 				Tools.LogInfo("UIApplicationQuery.SendJSON/1",data,10);
@@ -717,13 +707,13 @@ namespace PCIWebFinAid
 			{ }
 			catch (Exception ex)
 			{
-				Tools.LogException("SendJSON/9","",ex,this);
+				Tools.LogException("SendJSON/99","",ex,this);
 			}
 
 			return errCode;
 		}
 
-		private string ParmValue(string parmName) // ,byte parmType=0,Object parmData=null)
+		private string ParmValue(string parmName)
 		{
 			try
 			{

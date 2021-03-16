@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.UI.WebControls;
 using PCIBusiness;
 
 namespace PCIWebFinAid
@@ -18,26 +17,23 @@ namespace PCIWebFinAid
 			if ( Page.IsPostBack )
 				return;
 
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
+			{
+				LoadLabelText(ascxXMenu);
 				LoadPageData();
+			}
 			else
 				StartOver(12010);
 		}
 
 		private void ClearData()
 		{
-//		Called every time
-
 			SetErrorDetail("",-888);
 			ascxXFooter.JSText = "";
 		}
 
 		protected override void LoadPageData()
 		{
-//		Called once in the beginning
-
-			LoadLabelText(ascxXMenu);
-
 			using (MiscList mList = new MiscList())
 			{
 				sqlProc = "sp_WP_Get_DashboardInfo";

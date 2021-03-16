@@ -19,8 +19,11 @@ namespace PCIWebFinAid
 			if ( Page.IsPostBack )
 				return;
 
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
+			{
+				LoadLabelText(ascxXMenu);
 				LoadPageData();
+			}
 			else
 				StartOver(13010);
 		}
@@ -35,10 +38,6 @@ namespace PCIWebFinAid
 
 		protected override void LoadPageData()
 		{
-//		Called once in the beginning
-
-			LoadLabelText(ascxXMenu);
-
 			using (MiscList mList = new MiscList())
 			{
 				bool   rowEven = true;

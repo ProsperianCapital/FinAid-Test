@@ -18,8 +18,11 @@ namespace PCIWebFinAid
 			if ( Page.IsPostBack )
 				return;
 
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
+			{
+				LoadLabelText(ascxXMenu);
 				LoadPageData();
+			}
 			else
 				StartOver(11010);
 		}
@@ -35,10 +38,6 @@ namespace PCIWebFinAid
 
 		protected override void LoadPageData()
 		{
-//		Called once in the beginning
-
-			LoadLabelText(ascxXMenu);
-
 			using (MiscList mList = new MiscList())
 			{
 				sqlProc = "sp_Get_CRMClientWelcome";
@@ -47,7 +46,7 @@ namespace PCIWebFinAid
 					SetErrorDetail("LoadPageData",11100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else if ( ! mList.EOF )
 				{
-					lblAddress.Text   = mList.GetColumn("Address").Replace(Environment.NewLine,"<br />");
+					lblAddress.Text   = mList.GetColumn("Address",1,6);
 					lblEMail.Text     = mList.GetColumn("EmailAddress");
 					lblCellNo.Text    = mList.GetColumn("TelephoneNumber");
 					lblOption.Text    = mList.GetColumn("ProductOptionDescription");
@@ -61,6 +60,7 @@ namespace PCIWebFinAid
 				bool rowEven = true;
 				sqlProc      = "sp_CRM_GetContractContactLog";
 				sql          = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+
 				if ( mList.ExecQuery(sql,0,"",false) != 0 )
 					SetErrorDetail("LoadPageData",11110,"Internal database error (" + sqlProc + ")",sql,102,2);
 				else

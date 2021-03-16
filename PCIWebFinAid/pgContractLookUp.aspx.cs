@@ -20,7 +20,7 @@ namespace PCIWebFinAid
 			if ( Page.IsPostBack )
 				return;
 
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) != 0 )
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) != 0 )
 				StartOver(11888);
 			else
 			{
@@ -37,7 +37,7 @@ namespace PCIWebFinAid
 			pnlView1.Visible = show;
 			pnlView2.Visible = show;
 
-			if ( view == 1 &&  show )
+			if      ( view == 1 &&  show )
 				pnlView2.Visible = ! show;
 			else if ( view == 2 &&  show )
 				pnlView1.Visible = ! show;
@@ -387,10 +387,8 @@ namespace PCIWebFinAid
 						SetErrorDetail("btnSearch_Click",22071,"Product option details not found. Please try again",sql);
 					else
 					{
-						lbl100325.Text = miscList.GetColumn("FieldValue");
-						if ( lbl100325.Text.Length > 0 )
-							lbl100325.Text = lbl100325.Text.Replace(Environment.NewLine,"<br />");
-						else
+						lbl100325.Text = miscList.GetColumn("FieldValue",1,6);
+						if ( lbl100325.Text.Length < 1 )
 							SetErrorDetail("btnSearch_Click",22072,"Product option data is empty/blank (sp_WP_CRM_Get_WebsiteProductOptionA, column 'FieldValue')",sql);
 					}
 
@@ -415,12 +413,9 @@ namespace PCIWebFinAid
 						SetErrorDetail("btnSearch_Click",22081,"Product policy details not found. Please try again",sql);
 					else
 					{
-						string refundPolicy          = miscList.GetColumn("RefundPolicyText");
-						string moneyBackPolicy       = miscList.GetColumn("MoneyBackPolicyText");
-						string cancellationPolicy    = miscList.GetColumn("CancellationPolicyText");
-						lblp6RefundPolicy.Text       = refundPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
-						lblp6MoneyBackPolicy.Text    = moneyBackPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
-						lblp6CancellationPolicy.Text = cancellationPolicy.Replace(Environment.NewLine,"<br />");
+						lblp6RefundPolicy.Text       = miscList.GetColumn("RefundPolicyText",1,6) + "<br />&nbsp;";
+						lblp6MoneyBackPolicy.Text    = miscList.GetColumn("MoneyBackPolicyText",1,6) + "<br />&nbsp;";
+						lblp6CancellationPolicy.Text = miscList.GetColumn("CancellationPolicyText",1,6);
 					}
 
 				//	Collection mandate

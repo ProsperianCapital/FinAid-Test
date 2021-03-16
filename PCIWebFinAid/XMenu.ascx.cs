@@ -15,24 +15,34 @@ namespace PCIWebFinAid
 			userCode = "";
 		}
 
-		public int LoadMenu(string sessionUserCode,string sessionAppCode)
+//		public int LoadMenu(string sessionUserCode,string sessionAppCode)
+		public int LoadMenu(string sessionAppCode,SessionGeneral sessionGeneral)
 		{
-			userCode        = Tools.NullToString(sessionUserCode);
-			applicationCode = Tools.NullToString(sessionAppCode);
-			if ( userCode.Length < 1 || applicationCode.Length < 1 )
+			if ( sessionGeneral == null )
 			{
-				Tools.LogInfo("LoadMenu/10","userCode="+userCode+", applicationCode="+applicationCode,222);
+				Tools.LogInfo("LoadMenu/10","User session is NULL/empty",222,this);
 				return 10;
+			}
+			string languageCode        = Tools.NullToString(sessionGeneral.LanguageCode);
+			string languageDialectCode = Tools.NullToString(sessionGeneral.LanguageDialectCode);
+			userCode                   = Tools.NullToString(sessionGeneral.UserCode);
+			applicationCode            = Tools.NullToString(sessionAppCode);
+			languageDialectCode        = ( languageDialectCode.Length < 1 ? "0001" : languageDialectCode );
+
+			if ( userCode.Length < 1 || languageCode.Length < 1 || applicationCode.Length < 1 )
+			{
+				Tools.LogInfo("LoadMenu/11","Invalid menu values : " + userCode+"/"+applicationCode+"/"+languageCode+"/"+languageDialectCode,222,this);
+				return 11;
 			}
 
 //	Ver 2
 			List<MenuItem> menuList;
 			using ( MenuItems menuItems = new MenuItems() )
-				menuList = menuItems.LoadMenu(userCode,applicationCode);
+				menuList = menuItems.LoadMenu(userCode,applicationCode,languageCode,languageDialectCode);
 
 			if ( menuList == null || menuList.Count < 1 )
 			{
-				Tools.LogInfo("LoadMenu/12","Menu is NULL/empty, userCode="+userCode+", applicationCode="+applicationCode,222);
+				Tools.LogInfo("LoadMenu/12","Menu is NULL/empty : " + userCode+"/"+applicationCode+"/"+languageCode+"/"+languageDialectCode,222,this);
 				return 12;
 			}
 

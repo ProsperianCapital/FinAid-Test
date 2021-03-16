@@ -18,8 +18,11 @@ namespace PCIWebFinAid
 			if ( Page.IsPostBack )
 				return;
 
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
+			{
+				LoadLabelText(ascxXMenu);
 				LoadPageData();
+			}
 			else
 				StartOver(20010);
 		}
@@ -34,11 +37,8 @@ namespace PCIWebFinAid
 
 		protected override void LoadPageData()
 		{
-//		Called once in the beginning
-
-			LoadLabelText(ascxXMenu);
-
 			System.Web.UI.WebControls.ListItem lItem;
+
 			for ( int k = 1 ; k < 13 ; k++ )
 			{
 				lItem       = new System.Web.UI.WebControls.ListItem();
@@ -85,12 +85,12 @@ namespace PCIWebFinAid
 		{
 			try
 			{
-				string   cName   = txtName.Text.Trim();
-				string   cNumber = txtNumber.Text.Trim();
-				int      cCVV    = Tools.StringToInt(txtCVV.Text);
-				int      cDD     = 31;
-				int      cMM     = WebTools.ListValue(lstMM);
-				int      cYY     = WebTools.ListValue(lstYY);
+				string cName   = txtName.Text.Trim();
+				string cNumber = txtNumber.Text.Trim();
+				int    cCVV    = Tools.StringToInt(txtCVV.Text);
+				int    cDD     = 31;
+				int    cMM     = WebTools.ListValue(lstMM);
+				int    cYY     = WebTools.ListValue(lstYY);
 
 				if ( cName.Length < 3 || cNumber.Length < 14 || cCVV < 1 || txtCVV.Text.Length < 3 || cMM < 1 || cYY < System.DateTime.Now.Year )
 					return;
@@ -111,21 +111,14 @@ namespace PCIWebFinAid
 						break;
 					}
 
-//			if (allOK)
-//				using (MiscList mList = new MiscList())
+//				if (allOK)
 //				{
 //					sqlProc = "sp_CRM_Blah";
-//					sql     = "exec " + sqlProc + " @ContractCode="        + Tools.DBString(sessionGeneral.ContractCode)
-//					                            + ",@X='"        + Tools.DecimalToCurrency(amt) + "'"
-//					                            + ",@Y="        + Tools.DBString(sessionGeneral.LanguageCode)
-//					                            + ",@Z=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
-//					                            + ",@Access="              + Tools.DBString(sessionGeneral.AccessType);
-//					if ( mList.ExecQuery(sql,0,"",false) != 0 )
-//						SetErrorDetail("btnOK_Click",20200,"Internal database error (" + sqlProc + ")",sql,102,1);
-//					else if ( ! mList.EOF )
-//						SetErrorDetail("btnOK_Click",20220,mList.GetColumn("ResultMessage"),"",102,0);
+//					sql     = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode)
+//					                            + ",@Access="       + Tools.DBString(sessionGeneral.AccessType)
+//					                            + ",Blah="
+//					UpdatePageData("btnOK_Click");
 //				}
-
 			}
 			catch
 			{ }

@@ -19,8 +19,11 @@ namespace PCIWebFinAid
 			if ( Page.IsPostBack )
 				return;
 
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
+			{
+				LoadLabelText(ascxXMenu);
 				LoadPageData();
+			}
 			else
 				StartOver(14010);
 		}
@@ -35,27 +38,26 @@ namespace PCIWebFinAid
 
 		protected override void LoadPageData()
 		{
-//		Called once in the beginning
-
-			LoadLabelText(ascxXMenu);
-
 			using (MiscList mList = new MiscList())
 			{
-				bool rowEven = true;
-				sqlProc      = "sp_CRM_GetContractContactLog";
-				sql          = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+				TableRow  row;
+				TableCell col;
+				bool      rowEven = true;
+				sqlProc           = "sp_CRM_GetContractContactLog";
+				sql               = "exec " + sqlProc + " @ContractCode=" + Tools.DBString(sessionGeneral.ContractCode);
+
 				if ( mList.ExecQuery(sql,0,"",false) != 0 )
 					SetErrorDetail("LoadPageData",14100,"Internal database error (" + sqlProc + ")",sql,102,1);
 				else
 					while ( ! mList.EOF )
 					{
-						TableRow  row  = new TableRow();
-						TableCell col1 = new TableCell();
-						TableCell col2 = new TableCell();
-						col1.Text      = mList.GetColumn("ContactDate");
-						col2.Text      = mList.GetColumn("ContactDescription");
-						row.Cells.Add(col1);
-						row.Cells.Add(col2);
+						row      = new TableRow();
+						col      = new TableCell();
+						col.Text = mList.GetColumn("ContactDate");
+						row.Cells.Add(col);
+						col      = new TableCell();
+						col.Text = mList.GetColumn("ContactDescription");
+						row.Cells.Add(col);
 						if (rowEven)
 							row.CssClass = "tRow";
 						else

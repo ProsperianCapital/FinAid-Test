@@ -18,8 +18,11 @@ namespace PCIWebFinAid
 			if ( Page.IsPostBack )
 				return;
 
-			if ( ascxXMenu.LoadMenu(sessionGeneral.UserCode,ApplicationCode) == 0 )
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
+			{
+				LoadLabelText(ascxXMenu);
 				LoadPageData();
+			}
 			else
 				StartOver(18010);
 		}
@@ -34,10 +37,6 @@ namespace PCIWebFinAid
 
 		protected override void LoadPageData()
 		{
-//		Called once in the beginning
-
-			LoadLabelText(ascxXMenu);
-
 //	Test
 //			lblCurr.Text    = "R";
 //			lblBalance.Text = "8913.76";
@@ -56,6 +55,7 @@ namespace PCIWebFinAid
 				}
 			}
 
+			txtAmt.Text = "";
 			txtAmt.Focus();
 		}
 
@@ -64,19 +64,30 @@ namespace PCIWebFinAid
 			decimal amt = Tools.StringToDecimal(txtAmt.Text);
 
 			if ( amt > 0 )
-				using (MiscList mList = new MiscList())
-				{
-					sqlProc = "sp_CRM_Blah";
-					sql     = "exec " + sqlProc + " @ContractCode="        + Tools.DBString(sessionGeneral.ContractCode)
-					                            + ",@AmountToPay='"        + Tools.DecimalToCurrency(amt) + "'"
-					                            + ",@LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
-					                            + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
-					                            + ",@Access="              + Tools.DBString(sessionGeneral.AccessType);
-					if ( mList.ExecQuery(sql,0,"",false) != 0 )
-						SetErrorDetail("btnOK_Click",18100,"Internal database error (" + sqlProc + ")",sql,102,1);
-					else if ( ! mList.EOF )
-						SetErrorDetail("btnOK_Click",18120,mList.GetColumn("ResultMessage"),"",102,0);
-				}
+			{
+				sqlProc = "sp_CRM_Blah";
+				sql     = "exec " + sqlProc + " @ContractCode="        + Tools.DBString(sessionGeneral.ContractCode)
+				                            + ",@AmountToPay='"        + Tools.DecimalToCurrency(amt) + "'"
+				                            + ",@LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
+				                            + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
+				                            + ",@Access="              + Tools.DBString(sessionGeneral.AccessType);
+				UpdatePageData("btnOK_Click");
+			}
+
+//				using (MiscList mList = new MiscList())
+//				{
+//					sqlProc = "sp_CRM_Blah";
+//					sql     = "exec " + sqlProc + " @ContractCode="        + Tools.DBString(sessionGeneral.ContractCode)
+//					                            + ",@AmountToPay='"        + Tools.DecimalToCurrency(amt) + "'"
+//					                            + ",@LanguageCode="        + Tools.DBString(sessionGeneral.LanguageCode)
+//					                            + ",@LanguageDialectCode=" + Tools.DBString(sessionGeneral.LanguageDialectCode)
+//					                            + ",@Access="              + Tools.DBString(sessionGeneral.AccessType);
+//					if ( mList.ExecQuery(sql,0,"",false) != 0 )
+//						SetErrorDetail("btnOK_Click",18100,"Internal database error (" + sqlProc + ")",sql,102,1);
+//					else if ( ! mList.EOF )
+//						SetErrorDetail("btnOK_Click",18120,mList.GetColumn("ResultMessage"),"",102,0);
+//				}
+
 		}
 	}
 }
