@@ -69,8 +69,6 @@ namespace PCIWebFinAid
 
 					if ( resultCode.Length > 0 && resultCode != "0" && resultCode != "00" && resultCode != "000" && resultCode != "0000" )
 						SetMessage("Error ...","Your payment was rejected.");
-
-				//	providerURL = WebTools.RequestValueString(Request,"X");
 				}
 				else
 				{
@@ -101,61 +99,67 @@ namespace PCIWebFinAid
 
 				using (MiscList mList = new MiscList())
 				{
-					ret = 120;
+					ret    = 120;
 //	Single language
 //					sqlRet = mList.ExecQuery(sql,0,"",false,true);
 
 //	Multi language
 					sqlRet = mList.ExecQuery(sql,0);
+					Tools.LogInfo("PageLoad/45",sql+" (sqlRet="+sqlRet.ToString()+")",222,this);
+
 					if ( sqlRet == 0 )
 					{
-						ret         = 130;
-						string  pc  = mList.GetColumn("ProductCode");
-						string  lc  = mList.GetColumn("LanguageCode");
-						string  ldc = mList.GetColumn("LanguageDialectCode");
-						string  fieldCode;
-						string  fieldValue;
-						Literal ctlLabel;
-						sql = "exec sp_WP_Get_ProductWebsiteRegContent"
-						    +     " @ProductCode="         + Tools.DBString(pc)
-							 +     ",@LanguageCode="        + Tools.DBString(lc)
-							 +     ",@LanguageDialectCode=" + Tools.DBString(ldc)
-							 +     ",@Page='S'";
+						ret = 0;
 
-//						Tools.LogInfo("RegisterThreeD.PageLoad/10",sql,222);
+	//					ret         = 130;
+	//					string  pc  = mList.GetColumn("ProductCode");
+	//					string  lc  = mList.GetColumn("LanguageCode");
+	//					string  ldc = mList.GetColumn("LanguageDialectCode");
+	//					string  fieldCode;
+	//					string  fieldValue;
+	//					Literal ctlLabel;
+	//					sql = "exec sp_WP_Get_ProductWebsiteRegContent"
+	//					    +     " @ProductCode="         + Tools.DBString(pc)
+	//						 +     ",@LanguageCode="        + Tools.DBString(lc)
+	//						 +     ",@LanguageDialectCode=" + Tools.DBString(ldc)
+	//						 +     ",@Page='S'";
+	//
+//	//					Tools.LogInfo("RegisterThreeD.PageLoad/10",sql,222);
+	//
+	//					ret    = 150;
+	//					sqlRet = mList.ExecQuery(sql,0);
+	//					Tools.LogInfo("PageLoad/55",sql+" (sqlRet="+sqlRet.ToString()+")",222,this);
+	//
+	//					if ( sqlRet == 0 && ! mList.EOF )
+	//						while ( ! mList.EOF )
+	//						{
+	//							ret        = 0; // All OK
+	//							fieldCode  = mList.GetColumn("WebsiteFieldCode");
+	//							fieldValue = mList.GetColumn("WebsiteFieldValue");
+	//							ctlLabel  = (Literal)FindControl("lbl"+fieldCode);
+	//							if ( ctlLabel   != null )
+	//								ctlLabel.Text = fieldValue.Replace(Environment.NewLine,"<br />");
+	//							mList.NextRow();
+	//						}
+	//					else
+	//					{
+	//						ret = 190;
+	//						sql =   "Contract Code="           + transRef
+	//						    + ", Transaction Id="          + providerRef
+	//						    + ", Transaction Result Code=" + resultCode
+	//						    + ", sqlRet="                  + sqlRet.ToString()
+	//						    + ", Ret="                     + ret.ToString()
+	//						    + ", SQL="                     + sql;
+//	//						Tools.LogException("PageLoad/20",sql,this);
+	//						Tools.LogInfo     ("PageLoad/65",sql,222,this);
+	//					}
 
-						ret    = 150;
-						sqlRet = mList.ExecQuery(sql,0);
-						if ( sqlRet == 0 && ! mList.EOF )
-							while ( ! mList.EOF )
-							{
-								ret        = 0; // All OK
-								fieldCode  = mList.GetColumn("WebsiteFieldCode");
-								fieldValue = mList.GetColumn("WebsiteFieldValue");
-//								Tools.LogInfo("RegisterThreeD.PageLoad/15","WebsiteFieldCode="+fieldCode+" ("+fieldValue+")",222);
-								ctlLabel  = (Literal)FindControl("lbl"+fieldCode);
-								if ( ctlLabel   != null )
-									ctlLabel.Text = fieldValue.Replace(Environment.NewLine,"<br />");
-								mList.NextRow();
-							}
-						else
-						{
-							ret = 190;
-							sql =   "Contract Code="           + transRef
-							    + ", Transaction Id="          + providerRef
-							    + ", Transaction Result Code=" + resultCode
-							    + ", sqlRet="                  + sqlRet.ToString()
-							    + ", Ret="                     + ret.ToString()
-							    + ", SQL="                     + sql;
-//							Tools.LogException("PageLoad/20",sql,this);
-							Tools.LogInfo     ("PageLoad/25",sql,222,this);
-						}
 					}
 					else
 					{
 						ret = 210;
-						Tools.LogException("PageLoad/30","sqlRet="+sqlRet.ToString()+" ("+sql+")",null,this);
-						Tools.LogInfo     ("PageLoad/35","sqlRet="+sqlRet.ToString()+" ("+sql+")",222,this);
+						Tools.LogException("PageLoad/70","sqlRet="+sqlRet.ToString()+" ("+sql+")",null,this);
+						Tools.LogInfo     ("PageLoad/75","sqlRet="+sqlRet.ToString()+" ("+sql+")",222,this);
 					}
 				}
 				if ( ret == 0 )
