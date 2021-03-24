@@ -9,7 +9,7 @@
 	</div>
 	<div class="HCol3">
 		<asp:HyperLink runat="server" ID="X100008" CssClass="TopButton TopButtonO"></asp:HyperLink>&nbsp;
-		<asp:HyperLink runat="server" ID="X100009" CssClass="TopButton TopButtonY"></asp:HyperLink>&nbsp;
+		<asp:HyperLink runat="server" ID="X100009" CssClass="TopButton TopButtonY" Target="_blank"></asp:HyperLink>&nbsp;
 		<asp:DropDownList runat="server" ID="lstLang" CssClass="TopButton" AutoPostBack="true" style="padding:0px"></asp:DropDownList>
 	</div>
 </div>
