@@ -86,7 +86,7 @@ function Legal(code)
 			</div>
 			<br />
 			<div style="margin-left:40px">
-			<asp:HyperLink runat="server" ID="X100009" class="TopButton" style="height:32px;width:120px;padding:3px;padding-top:4px;color:#FFFFFF;background-color:#54595F;text-decoration:none" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">100009</asp:HyperLink>
+			<asp:HyperLink runat="server" ID="X100009" class="TopButton" style="height:32px;width:120px;padding:3px;padding-top:4px;color:#FFFFFF;background-color:#54595F;text-decoration:none" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'" NavigateUrl="JavaScript:ShowElt('divNotAvailable',true,0,59)">100009</asp:HyperLink>
 			</div>
 			<br />&nbsp;
 		</div>
@@ -120,7 +120,7 @@ function Legal(code)
 	</div>
 	-->
 
-	<hr />
+	<br />&nbsp;<hr />
 
 	<div>
 		<p style="color:#FF7400;font-family:Sans-serif;font-size:18px;font-weight:600;letter-spacing:0.8px">
@@ -131,7 +131,6 @@ function Legal(code)
 		<asp:Literal runat="server" ID="X104402"></asp:Literal>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X100095"></asp:Literal>
-
 		</b></p><p style="display:flex">
 		<asp:Image runat="server" ID="P12031" style="object-fit:contain" />&nbsp;
 		<asp:Label runat="server" ID="X100096"></asp:Label>
@@ -145,7 +144,8 @@ function Legal(code)
 		<asp:Label runat="server" ID="X100102" style="padding-top:4px"></asp:Label>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X104418"></asp:Literal>
-		</b></p><div style="display:flex">
+		</b></p>
+		<div style="display:flex">
 		<div style="vertical-align:top"><asp:Image runat="server" ID="P12034" style="object-fit:contain" /></div>
 		<asp:Label runat="server" ID="X100105"></asp:Label>
 		</div>
@@ -206,6 +206,18 @@ function Legal(code)
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('LV004',false)" title="Close" style="float:right;padding:4px" />
 		<p class='FAQQuestion'><asp:Literal runat="server" ID="LH004">Header 004</asp:Literal></p>
 		<p class='FAQAnswer'><asp:Literal runat="server" ID="LD004">Detail 004</asp:Literal></p>
+	</div>
+
+	<div id="divNotAvailable" style="display:none;visibility:hidden" class="Popup2">
+	<div class="PopupHead">
+	Sorry ...
+	<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('divNotAvailable',false,0,0)" title="Close" style="float:right" />
+	</div>
+	<p>
+	Bookings for this service are not yet available.
+	<br /><br />
+	Please contact customer support for more information.
+	</p>
 	</div>
 
 	<!--#include file="IncludeErrorDtl.htm" -->
