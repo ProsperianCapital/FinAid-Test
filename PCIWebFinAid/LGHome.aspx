@@ -41,11 +41,11 @@ function Legal(code)
 
 	<asp:Button runat="server" ID="btnWidth" Text="Width" OnClientClick="JavaScript:alert('Width = '+window.innerWidth.toString()+' pixels');return false" />
 
-	<div style="margin:0px;padding:0px;display:block;width:100%;height:375px">
-	<asp:Image runat="server" ID="P12002" style="max-width:100%;max-height:346px;float:left" />
+	<div style="margin:0px;padding:0px;display:block;width:100%;min-height:375px">
+	<asp:Image runat="server" ID="P12002" style="max-width:100%;max-height:346px;float:left;margin-right:5px" />
 	<p style="color:#242424;font-family:Arial;font-size:35px;font-weight:600;line-height:1.5em; letter-spacing:0.8px;text-shadow:0px 0px 0px #000000;top:100px;left:0px;right:0px;word-break:break-word;word-wrap:break-word;text-align:center">
 	<asp:Literal runat="server" ID="X100002">100002</asp:Literal>
-	</p><p style="color:#54595F;font-family:Sans-serif; font-size:19px; font-weight:500; line-height:1.6em; letter-spacing:0.8px; text-shadow:0px 0px 51px #FFFFFF; top:210px; left:0px; right:0px">
+	</p><p style="color:#54595F;font-family:Sans-serif;font-size:19px;font-weight:500;line-height:1.6em;letter-spacing:0.8px;text-shadow:0px 0px 51px #FFFFFF;top:210px">
 	<asp:Literal runat="server" ID="X100004">100004</asp:Literal>
 	</p>
 	</div>
@@ -92,20 +92,22 @@ function Legal(code)
 		</div>
 	</div>
 
-	<div style="color:#F9CF0E;font-family:Sans-serif;font-size:40px;font-weight:600;line-height:1.4em;letter-spacing:0.8px;margin-left:10px">
-	<asp:Literal runat="server" ID="X105009">105009</asp:Literal>
+	<div style="margin:0 auto;padding:0px;display:inline-block;width:100%">
+		<p style="color: #F88742;font-family:Sans-serif;font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;text-align:center">
+		<asp:Literal runat="server" ID="X100051">100051</asp:Literal>
+		</p>
+		<!--
+		<figure> images included here
+		-->
 	</div>
 
-	<!--
-	<div style="display:block;width:100%;height:250px">
-	<asp Image run@t="server" ID="P12035" style="float:left" />
-	<p style="font-size:20px;font-weight:bold">
-	<asp Literal run@t="server" ID="X105041">105041</asp:Literal>
-	</p><p>
-	<asp Literal run@t="server" ID="X105042">105042</asp:Literal>
-	</p>
+	<div style="font-size:10.5pt;font-family:Helvetica,sans-serif;line-height:1.5;margin-left:10px;margin-right:10px">
+	<asp:Literal runat="server" ID="xHIW"></asp:Literal>
+	<b>
+	<asp:Literal runat="server" ID="X105007">105007</asp:Literal>
+	</b><br /><br />
+	<asp:Literal runat="server" ID="X105008">105008</asp:Literal>
 	</div>
-	-->
 
 	<!--
 	<div style="text-align:center">
