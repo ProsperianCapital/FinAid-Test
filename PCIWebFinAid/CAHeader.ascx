@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CAHeader.ascx.cs" Inherits="PCIWebFinAid.CAHeader" %>
 
-<div class="Header1">
+<div class="Header1 HeaderCA">
 	<div class="HCol1">
 		<asp:Image runat="server" ID="P12001" />
 	</div>

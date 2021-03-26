@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LGHeader.ascx.cs" Inherits="PCIWebFinAid.LGHeader" %>
 
-<div class="Header1" style="height:100px">
+<div class="Header1 HeaderLG">
 	<div class="HCol1">
 		<asp:Image runat="server" ID="P12001" />
 	</div>
