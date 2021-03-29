@@ -15,6 +15,8 @@ namespace PCIWebFinAid
 		string languageCode;
 		string languageDialectCode;
 
+		protected Literal F12014; // Favicon
+
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
 			ApplicationCode = "120";
@@ -175,6 +177,10 @@ namespace PCIWebFinAid
 					ret = 10205;
 					spr = "";
 
+//	Test					
+//					WebTools.ReplaceImage(this.Page,"12014","favicon.ico","","",0,0);
+//	Test
+
 //					if ( P12010.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12010',false);";
 //					if ( P12011.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12011',false);";
 //					if ( P12012.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12012',false);";
@@ -263,6 +269,15 @@ namespace PCIWebFinAid
 //							mList.NextRow();
 //						}
 
+					pnlContact01.Visible = ( X100093.Text.Length > 0 );
+					pnlContact02.Visible = ( X104402.Text.Length > 0 );
+					pnlContact03.Visible = ( X100095.Text.Length > 0 );
+					pnlContact04.Visible = ( X100096.Text.Length > 0 || P12031.ImageUrl.Length > 0 );
+					pnlContact05.Visible = ( X100101.Text.Length > 0 );
+					pnlContact06.Visible = ( X104404.Text.Length > 0 || P12032.ImageUrl.Length > 0 );
+					pnlContact07.Visible = ( X100102.Text.Length > 0 || P12033.ImageUrl.Length > 0 );
+					pnlContact08.Visible = ( X104418.Text.Length > 0 );
+					pnlContact09.Visible = ( X100105.Text.Length > 0 || P12034.ImageUrl.Length > 0 );
 				}
 				catch (Exception ex)
 				{

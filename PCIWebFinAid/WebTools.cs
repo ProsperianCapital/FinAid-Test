@@ -536,6 +536,21 @@ namespace PCIWebFinAid
 		{
 			try
 			{
+//				Control ctl = webPage.FindControl("P"+ctlID);
+//				if ( ctl.GetType() == typeof(Literal) )
+//				{
+//					Literal lbl = (Literal)ctl;
+//					if ( lbl   != null ) // Favicon
+//						lbl.Text = "<link rel='shortcut icon' href='" + PCIBusiness.Tools.ImageFolder("ImagesCA") + imgFileName + "' />";
+//					else
+//					{
+//						lbl = (Literal)webPage.FindControl("H"+ctlID);
+//						if ( lbl != null )
+//							lbl.Text = "<img src='" + PCIBusiness.Tools.ImageFolder("ImagesCA") + imgFileName + "' title='" + imgTooltip + "' />";
+//					}
+//					return 0;
+//				}
+
 				Image ctl = (Image)webPage.FindControl("P"+ctlID);
 				if ( ctl == null && subCtl1 != null )
 					ctl    = (Image)subCtl1.FindControl("P"+ctlID);
@@ -544,18 +559,21 @@ namespace PCIWebFinAid
 
 				if ( ctl == null )
 				{
-					Literal lbl = (Literal)webPage.FindControl("P"+ctlID);
-					if ( lbl == null )
-						return 10;
-					else if ( lbl.SkinID.ToUpper() == "FAVICON" )
+					Literal lbl = (Literal)webPage.FindControl("F"+ctlID);
+					if ( lbl   != null ) // Favicon
 						lbl.Text = "<link rel='shortcut icon' href='" + PCIBusiness.Tools.ImageFolder("ImagesCA") + imgFileName + "' />";
 					else
-						lbl.Text = "<img src='" + PCIBusiness.Tools.ImageFolder("ImagesCA") + imgFileName + "' title='" + imgTooltip + "' />";
+					{
+						lbl = (Literal)webPage.FindControl("H"+ctlID);
+						if ( lbl != null )
+							lbl.Text = "<img src='" + PCIBusiness.Tools.ImageFolder("ImagesCA") + imgFileName + "' title='" + imgTooltip + "' />";
+					}
 					return 0;
 				}
 
-				if ( ctl.GetType() != typeof(Image) )
-					return 20;
+//				if ( ctl.GetType() != typeof(Image) )
+//					return 20;
+
 				ctl.ToolTip   = imgTooltip;
 				ctl.ImageUrl  = PCIBusiness.Tools.ImageFolder("ImagesCA") + imgFileName;
 				if ( imgHeight > 0 )

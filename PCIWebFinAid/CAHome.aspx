@@ -279,7 +279,6 @@ function Legal(code)
 		<asp:Literal runat="server" ID="X104402"></asp:Literal>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X100095"></asp:Literal>
-
 		</b></p><p style="display:flex">
 		<asp:Image runat="server" ID="P12031" style="object-fit:contain" />&nbsp;
 		<asp:Label runat="server" ID="X100096">100096</asp:Label>
@@ -293,8 +292,11 @@ function Legal(code)
 		<asp:Label runat="server" ID="X100102" style="padding-top:4px"></asp:Label>
 		</p><p><b>
 		<asp:Literal runat="server" ID="X104418">104418</asp:Literal>
-		</b></p><div style="display:flex">
-		<div style="vertical-align:top"><asp:Image runat="server" ID="P12034" style="object-fit:contain" /></div>
+		</b></p>
+		<div style="display:flex">
+		<div style="vertical-align:top">
+		<asp:Image runat="server" ID="P12034" style="object-fit:contain" />
+		</div>
 		<asp:Label runat="server" ID="X100105">100105</asp:Label>
 		</div>
 	</div>

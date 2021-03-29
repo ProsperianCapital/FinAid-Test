@@ -15,7 +15,7 @@ namespace PCIWebFinAid
 		string languageCode;
 		string languageDialectCode;
 
-		protected Literal P12014; // Favicon
+		protected Literal F12014; // Favicon
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{

@@ -22,15 +22,6 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal lblGoogleUA;
         
         /// <summary>
-        /// P12014 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal P12014;
-        
-        /// <summary>
         /// X105040 control.
         /// </summary>
         /// <remarks>
@@ -220,6 +211,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X100092;
         
         /// <summary>
+        /// pnlContact01 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlContact01;
+        
+        /// <summary>
         /// X100093 control.
         /// </summary>
         /// <remarks>
@@ -227,6 +227,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X100093;
+        
+        /// <summary>
+        /// pnlContact02 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlContact02;
         
         /// <summary>
         /// X104402 control.
@@ -238,6 +247,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X104402;
         
         /// <summary>
+        /// pnlContact03 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlContact03;
+        
+        /// <summary>
         /// X100095 control.
         /// </summary>
         /// <remarks>
@@ -245,6 +263,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X100095;
+        
+        /// <summary>
+        /// pnlContact04 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlContact04;
         
         /// <summary>
         /// P12031 control.
@@ -265,6 +292,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Label X100096;
         
         /// <summary>
+        /// pnlContact05 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlContact05;
+        
+        /// <summary>
         /// X100101 control.
         /// </summary>
         /// <remarks>
@@ -272,6 +308,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X100101;
+        
+        /// <summary>
+        /// pnlContact06 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlContact06;
         
         /// <summary>
         /// P12032 control.
@@ -292,6 +337,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Label X104404;
         
         /// <summary>
+        /// pnlContact07 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlContact07;
+        
+        /// <summary>
         /// P12033 control.
         /// </summary>
         /// <remarks>
@@ -310,6 +364,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Label X100102;
         
         /// <summary>
+        /// pnlContact08 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlContact08;
+        
+        /// <summary>
         /// X104418 control.
         /// </summary>
         /// <remarks>
@@ -317,6 +380,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X104418;
+        
+        /// <summary>
+        /// pnlContact09 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlContact09;
         
         /// <summary>
         /// P12034 control.
