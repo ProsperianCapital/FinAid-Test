@@ -76,6 +76,7 @@
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
+    <Content Include="ISHeader.ascx" />
     <Content Include="ISHome.aspx" />
     <Content Include="LGHeader.ascx" />
     <Content Include="LGHome.aspx" />
@@ -227,6 +228,13 @@
     </Compile>
     <Compile Include="Detokenize.aspx.designer.cs">
       <DependentUpon>Detokenize.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ISHeader.ascx.cs">
+      <DependentUpon>ISHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ISHeader.ascx.designer.cs">
+      <DependentUpon>ISHeader.ascx</DependentUpon>
     </Compile>
     <Compile Include="ISHome.aspx.cs">
       <DependentUpon>ISHome.aspx</DependentUpon>

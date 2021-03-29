@@ -219,6 +219,16 @@ namespace PCIWebFinAid
 							{ }
 							mList.NextRow();
 						}
+
+					pnlContact01.Visible = ( X100093.Text.Length > 0 );
+					pnlContact02.Visible = ( X104402.Text.Length > 0 );
+					pnlContact03.Visible = ( X100095.Text.Length > 0 );
+					pnlContact04.Visible = ( X100096.Text.Length > 0 || P12031.ImageUrl.Length > 0 );
+					pnlContact05.Visible = ( X100101.Text.Length > 0 );
+					pnlContact06.Visible = ( X104404.Text.Length > 0 || P12032.ImageUrl.Length > 0 );
+					pnlContact07.Visible = ( X100102.Text.Length > 0 || P12033.ImageUrl.Length > 0 );
+					pnlContact08.Visible = ( X104418.Text.Length > 0 );
+					pnlContact09.Visible = ( X100105.Text.Length > 0 || P12034.ImageUrl.Length > 0 );
 				}
 				catch (Exception ex)
 				{

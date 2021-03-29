@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="ISHome.aspx.cs" Inherits="PCIWebFinAid.ISHome" %>
-<%@ Register TagPrefix="ascx" TagName="Header" Src="LGHeader.ascx" %>
+<%@ Register TagPrefix="ascx" TagName="Header" Src="ISHeader.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="Footer" Src="CAFooter.ascx" %>
 
 <!DOCTYPE html>
@@ -49,7 +49,7 @@ function Legal(code)
 
 	<asp:Button runat="server" ID="btnWidth" Text="Width" OnClientClick="JavaScript:alert('Width = '+window.innerWidth.toString()+' pixels');return false" />
 
-	<div style="margin:0px;padding:0px;display:block;width:100%">
+	<div style="margin:0px;padding:0px;display:block;width:100%;min-height:346px">
 	<asp:Image runat="server" ID="P12002" style="max-width:100%;max-height:346px;float:left" />
 	<p style="color:#242424;font-family:Arial;font-size:35px;font-weight:600;line-height:1.5em; letter-spacing:0.8px;text-shadow:0px 0px 0px #000000;top:100px;left:0px;right:0px;word-break:break-word;word-wrap:break-word;text-align:center">
 	<asp:Literal runat="server" ID="X100002">100002</asp:Literal>
@@ -183,33 +183,70 @@ function Legal(code)
 	<asp:HyperLink runat="server" ID="H12027"><asp:Image runat="server" ID="P12027" /></asp:HyperLink>
 	</div>
 
-	<div style="background-color:#2A2C2F;color:#FFFFFF;padding:10px">
-		<p style="font-family:Sans-serif;font-size:18px;font-weight:600;letter-spacing:0.8px">
+	<div>
+		<p style="color:#FF7400;font-family:Sans-serif;font-size:18px;font-weight:600;letter-spacing:0.8px">
 		<asp:Literal runat="server" ID="X100092"></asp:Literal>
-		</p><p><b>
-		<asp:Literal runat="server" ID="X100093"></asp:Literal>
-		</b></p><p>
-		<asp:Literal runat="server" ID="X104402"></asp:Literal>
-		</p><p><b>
-		<asp:Literal runat="server" ID="X100095"></asp:Literal>
+		</p>
 
-		</b></p><p style="display:flex">
+		<asp:PlaceHolder runat="server" ID="pnlContact01">
+		<p><b>
+		<asp:Literal runat="server" ID="X100093"></asp:Literal>
+		</b></p>
+		</asp:PlaceHolder>
+
+		<asp:PlaceHolder runat="server" ID="pnlContact02">
+		<p>
+		<asp:Literal runat="server" ID="X104402"></asp:Literal>
+		</p>
+		</asp:PlaceHolder>
+
+		<asp:PlaceHolder runat="server" ID="pnlContact03">
+		<p><b>
+		<asp:Literal runat="server" ID="X100095"></asp:Literal>
+		</b></p>
+		</asp:PlaceHolder>
+
+		<asp:PlaceHolder runat="server" ID="pnlContact04">
+		<p style="display:flex">
 		<asp:Image runat="server" ID="P12031" style="object-fit:contain" />&nbsp;
-		<asp:Label runat="server" ID="X100096">100096</asp:Label>
-		</p><p><b>
-		<asp:Literal runat="server" ID="X100101">100101</asp:Literal>
-		</b></p><p style="display:flex">
+		<asp:Label runat="server" ID="X100096"></asp:Label>
+		</p>
+		</asp:PlaceHolder>
+
+		<asp:PlaceHolder runat="server" ID="pnlContact05">
+		<p><b>
+		<asp:Literal runat="server" ID="X100101"></asp:Literal>
+		</b></p>
+		</asp:PlaceHolder>
+
+		<asp:PlaceHolder runat="server" ID="pnlContact06">
+		<p style="display:flex">
 		<asp:Image runat="server" ID="P12032" style="object-fit:contain" />&nbsp;
 		<asp:Label runat="server" ID="X104404" style="padding-top:4px"></asp:Label>
-		</p><p style="display:flex">
+		</p>
+		</asp:PlaceHolder>
+
+		<asp:PlaceHolder runat="server" ID="pnlContact07">
+		<p style="display:flex">
 		<asp:Image runat="server" ID="P12033" style="object-fit:contain" />&nbsp;
 		<asp:Label runat="server" ID="X100102" style="padding-top:4px"></asp:Label>
-		</p><p><b>
-		<asp:Literal runat="server" ID="X104418">104418</asp:Literal>
-		</b></p><div style="display:flex">
-		<div style="vertical-align:top"><asp:Image runat="server" ID="P12034" style="object-fit:contain" /></div>
-		<asp:Label runat="server" ID="X100105">100105</asp:Label>
+		</p>
+		</asp:PlaceHolder>
+
+		<asp:PlaceHolder runat="server" ID="pnlContact08">
+		<p><b>
+		<asp:Literal runat="server" ID="X104418"></asp:Literal>
+		</b></p>
+		</asp:PlaceHolder>
+		
+		<asp:PlaceHolder runat="server" ID="pnlContact09">
+		<div style="display:flex">
+		<div style="vertical-align:top">
+		<asp:Image runat="server" ID="P12034" style="object-fit:contain" />
 		</div>
+		<asp:Label runat="server" ID="X100105"></asp:Label>
+		</div>
+		</asp:PlaceHolder>
 	</div>
 
 	<!--
