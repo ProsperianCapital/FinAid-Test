@@ -264,7 +264,10 @@ function Legal(code)
 	<asp:Image runat="server" ID="P12018" />
 	<asp:Image runat="server" ID="P12019" />
 
+	<asp:PlaceHolder runat="server" ID="pnlBr1">
 	<br /><br />
+	</asp:PlaceHolder>
+
 	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="JavaScript:Legal(1)">100041</asp:HyperLink> |
 	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="JavaScript:Legal(3)">100042</asp:HyperLink> |
 	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="JavaScript:Legal(5)">100043</asp:HyperLink> |

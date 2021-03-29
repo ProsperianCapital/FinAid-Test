@@ -229,6 +229,11 @@ namespace PCIWebFinAid
 					pnlContact07.Visible = ( X100102.Text.Length > 0 || P12033.ImageUrl.Length > 0 );
 					pnlContact08.Visible = ( X104418.Text.Length > 0 );
 					pnlContact09.Visible = ( X100105.Text.Length > 0 || P12034.ImageUrl.Length > 0 );
+					pnlBr1.Visible       = ( P12015.ImageUrl.Length > 0 ||
+					                         P12016.ImageUrl.Length > 0 ||
+					                         P12017.ImageUrl.Length > 0 ||
+					                         P12018.ImageUrl.Length > 0 ||
+					                         P12019.ImageUrl.Length > 0 );
 				}
 				catch (Exception ex)
 				{
