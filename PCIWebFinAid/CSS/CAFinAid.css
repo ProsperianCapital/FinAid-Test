@@ -297,8 +297,8 @@ table td
 
 .Popup2
 {
-	top: 20%;
-	left: 20%;
+	top: 10%;
+	left: 10%;
 	position: fixed;
 	z-index: 100;
 	border: 1px solid #999999;
