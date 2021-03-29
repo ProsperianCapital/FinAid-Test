@@ -210,13 +210,15 @@ function Legal(code)
 
 	<div id="divNotAvailable" style="display:none;visibility:hidden" class="Popup2">
 	<div class="PopupHead">
-	Sorry ...
+	<asp:Literal runat="server" id="X105045">Sorry ...</asp:Literal>
 	<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('divNotAvailable',false,0,0)" title="Close" style="float:right" />
 	</div>
 	<p>
+	<asp:Literal runat="server" id="X105046">
 	Bookings for this service are not yet available.
 	<br /><br />
 	Please contact customer support for more information.
+	</asp:Literal>
 	</p>
 	</div>
 

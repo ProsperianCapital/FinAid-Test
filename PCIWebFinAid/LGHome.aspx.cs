@@ -109,7 +109,7 @@ namespace PCIWebFinAid
 		{
 			byte   err;
 			string fieldCode;
-//			string fieldHead;
+			string fieldHead;
 			string fieldValue;
 			string fieldURL;
 			string stdParms = " @ProductCode="         + Tools.DBString(productCode)
@@ -183,30 +183,30 @@ namespace PCIWebFinAid
 //					if ( P12028.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12028',false);";
 //					ascxFooter.JSText = WebTools.JavaScriptSource(spr);
 
-//					ret       = 10210;
-//					xHIW.Text = "";
-//					spr       = "sp_WP_Get_ProductHIWInfo";
-//					sql       = "exec " + spr + stdParms;
-//					if ( mList.ExecQuery(sql,0) != 0 )
-//						SetErrorDetail("LoadDynamicDetails", 10220, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
-//					else if ( mList.EOF )
-//						SetErrorDetail("LoadDynamicDetails", 10230, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
-//					else
-//						while ( ! mList.EOF )
-//						{
-//							ret        = 10240;
-//							fieldCode  = mList.GetColumn("Serial");
-//							fieldHead  = mList.GetColumn("HIWHeader",0,6);
-//							fieldValue = mList.GetColumn("HIWDetail",0,6);
-//							Tools.LogInfo("LoadDynamicDetails/10240","HIW="+fieldCode+"/"+fieldHead,errPriority,this);
-//							if ( "0123456789".Contains(fieldHead.Substring(0,1)) )
-//								xHIW.Text = xHIW.Text + "<p class='HIWHead1'>"   + fieldHead  + "</p>"
-//								                      + "<p class='HIWDetail1'>" + fieldValue + "</p>";
-//							else
-//								xHIW.Text = xHIW.Text + "<p class='HIWHead2'>"   + fieldHead  + "</p>"
-//								                      + "<p class='HIWDetail2'>" + fieldValue + "</p>";
-//							mList.NextRow();
-//						}
+					ret       = 10210;
+					xHIW.Text = "";
+					spr       = "sp_WP_Get_ProductHIWInfo";
+					sql       = "exec " + spr + stdParms;
+					if ( mList.ExecQuery(sql,0) != 0 )
+						SetErrorDetail("LoadDynamicDetails", 10220, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+					else if ( mList.EOF )
+						SetErrorDetail("LoadDynamicDetails", 10230, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
+					else
+						while ( ! mList.EOF )
+						{
+							ret        = 10240;
+							fieldCode  = mList.GetColumn("Serial");
+							fieldHead  = mList.GetColumn("HIWHeader",0,6);
+							fieldValue = mList.GetColumn("HIWDetail",0,6);
+							Tools.LogInfo("LoadDynamicDetails/10240","HIW="+fieldCode+"/"+fieldHead,errPriority,this);
+							if ( "0123456789".Contains(fieldHead.Substring(0,1)) )
+								xHIW.Text = xHIW.Text + "<p class='HIWHead1'>"   + fieldHead  + "</p>"
+								                      + "<p class='HIWDetail1'>" + fieldValue + "</p>";
+							else
+								xHIW.Text = xHIW.Text + "<p class='HIWHead2'>"   + fieldHead  + "</p>"
+								                      + "<p class='HIWDetail2'>" + fieldValue + "</p>";
+							mList.NextRow();
+						}
 
 //					ret       = 10310;
 //					xFAQ.Text = "";

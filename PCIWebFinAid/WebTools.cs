@@ -541,8 +541,19 @@ namespace PCIWebFinAid
 					ctl    = (Image)subCtl1.FindControl("P"+ctlID);
 				if ( ctl == null && subCtl2 != null )
 					ctl    = (Image)subCtl2.FindControl("P"+ctlID);
+
 				if ( ctl == null )
-					return 10;
+				{
+					Literal lbl = (Literal)webPage.FindControl("P"+ctlID);
+					if ( lbl == null )
+						return 10;
+					else if ( lbl.SkinID.ToUpper() == "FAVICON" )
+						lbl.Text = "<link rel='shortcut icon' href='" + PCIBusiness.Tools.ImageFolder("ImagesCA") + imgFileName + "' />";
+					else
+						lbl.Text = "<img src='" + PCIBusiness.Tools.ImageFolder("ImagesCA") + imgFileName + "' title='" + imgTooltip + "' />";
+					return 0;
+				}
+
 				if ( ctl.GetType() != typeof(Image) )
 					return 20;
 				ctl.ToolTip   = imgTooltip;
