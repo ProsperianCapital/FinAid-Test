@@ -463,6 +463,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Image P12019;
         
         /// <summary>
+        /// pnlBr1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder pnlBr1;
+        
+        /// <summary>
         /// X100041 control.
         /// </summary>
         /// <remarks>

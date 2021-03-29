@@ -148,13 +148,13 @@ function Legal(code)
 		<asp:PlaceHolder runat="server" ID="pnlContact04">
 		<p style="display:flex">
 		<asp:Image runat="server" ID="P12031" style="object-fit:contain" />&nbsp;
-		<asp:Label runat="server" ID="X100096">100096</asp:Label>
+		<asp:Label runat="server" ID="X100096"></asp:Label>
 		</p>
 		</asp:PlaceHolder>
 
 		<asp:PlaceHolder runat="server" ID="pnlContact05">
 		<p><b>
-		<asp:Literal runat="server" ID="X100101">100101</asp:Literal>
+		<asp:Literal runat="server" ID="X100101"></asp:Literal>
 		</b></p>
 		</asp:PlaceHolder>
 
@@ -174,7 +174,7 @@ function Legal(code)
 
 		<asp:PlaceHolder runat="server" ID="pnlContact08">
 		<p><b>
-		<asp:Literal runat="server" ID="X104418">104418</asp:Literal>
+		<asp:Literal runat="server" ID="X104418"></asp:Literal>
 		</b></p>
 		</asp:PlaceHolder>
 		
@@ -183,7 +183,7 @@ function Legal(code)
 		<div style="vertical-align:top">
 		<asp:Image runat="server" ID="P12034" style="object-fit:contain" />
 		</div>
-		<asp:Label runat="server" ID="X100105">100105</asp:Label>
+		<asp:Label runat="server" ID="X100105"></asp:Label>
 		</div>
 		</asp:PlaceHolder>
 	</div>
@@ -202,6 +202,9 @@ function Legal(code)
 	<asp:Image runat="server" ID="P12017" />
 	<asp:Image runat="server" ID="P12018" />
 	<asp:Image runat="server" ID="P12019" />
+	<asp:PlaceHolder runat="server" ID="pnlBr1">
+	<br /><br />
+	</asp:PlaceHolder>
 
 	<!--
 	<div style="float:left;width:10%">&nbsp;</div>
@@ -215,7 +218,6 @@ function Legal(code)
 	<div style="float:left;width:10%">&nbsp;</div>
 	-->
 
-	<br /><br />
 	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="JavaScript:Legal(1)"></asp:HyperLink> |
 	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="JavaScript:Legal(3)"></asp:HyperLink> |
 	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="JavaScript:Legal(5)"></asp:HyperLink> |
