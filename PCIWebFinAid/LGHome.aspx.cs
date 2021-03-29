@@ -15,8 +15,6 @@ namespace PCIWebFinAid
 		string languageCode;
 		string languageDialectCode;
 
-		protected Literal P12014;
-
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
 			ApplicationCode = "120";
