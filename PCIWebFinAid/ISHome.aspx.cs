@@ -234,6 +234,11 @@ namespace PCIWebFinAid
 					                         P12017.ImageUrl.Length > 0 ||
 					                         P12018.ImageUrl.Length > 0 ||
 					                         P12019.ImageUrl.Length > 0 );
+
+//	Testing
+//					WebTools.ReplaceImage(this.Page,"12002","isos1.png","isos1");
+//					WebTools.ReplaceImage(this.Page,"12036","isos2.png","isos2");
+//	Testing
 				}
 				catch (Exception ex)
 				{

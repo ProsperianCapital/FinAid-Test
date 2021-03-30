@@ -80,7 +80,7 @@ function Legal(code)
 		<asp:Literal runat="server" ID="X100046">100046</asp:Literal>
 		</p>
 
-		<asp:Image runat="server" ID="P12036" title="Image 12036" style="padding-left:10px" />
+		<asp:Image runat="server" ID="P12036" style="padding-left:5px" class="ImageAdjust" />
 
 		<div style="color:#54595F;font-size:19px;font-weight:600;padding-left:10px">
 			<asp:Image runat="server" ID="PSignup" style="float:left" />
@@ -114,7 +114,7 @@ function Legal(code)
 		<p style="color:#F88742;font-family:Sans-serif;font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;text-align:center">
 		<asp:Literal runat="server" ID="X100051">100051</asp:Literal>
 		</p>
-		<p>
+		<p class="HIWDetail2">
 		<asp:Literal runat="server" ID="X105044">105044</asp:Literal>
 		</p>
 		<div class="HFig" id="D12010">
