@@ -34,6 +34,11 @@ table td
 	height: 12px;
 }
 
+.ImageAdjust
+{
+	max-width: 2400px;
+}
+
 .Header1
 {
 	font-family: "Trebuchet MS", serif;
@@ -77,6 +82,11 @@ table td
 		padding: 10px;
 		padding-top: 20px;
 	}
+	.HCol4
+	{
+		padding: 10px;
+		padding-top: 25px;
+	}
 }
 
 @media screen and (max-width: 1004px)
@@ -97,6 +107,12 @@ table td
 		padding: 10px;
 		padding-top: 8px;
 		padding-bottom: 0px;
+	}
+	.HCol4
+	{
+		padding: 10px;
+		padding-top: 25px;
+		padding-bottom: 8px;
 	}
 }
 
@@ -132,6 +148,17 @@ table td
 		padding-left: 16px;
 		padding-top: 4px;
 		padding-bottom: 4px;
+	}
+	.HCol4
+	{
+		float: none;
+		padding-left: 8px;
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
+	.ImageAdjust
+	{
+		max-width: 407px;
 	}
 }
 
@@ -440,16 +467,24 @@ table td
 	float: left;
 */
 }
-.HCol3
-{
+.HCol3 {
 	padding: 0px;
 	padding-top: 10px;
 	margin: 0 auto;
 	text-align: center;
-/*
+	/*
 	padding: 5px;
 	float: left;
 */
+}
+.HCol4
+{
+	font-size: 18px;
+	letter-spacing: 1.5px;
+	padding: 0px;
+	padding-top: 25px;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .HFig
@@ -473,6 +508,11 @@ table td
 	{
 		float: left;
 		padding: 20px 20px 0px 20px;
+	}
+	.HCol4
+	{
+		float: left;
+		padding: 25px 20px 0px 20px;
 	}
 	.HeaderCA
 	{
@@ -505,6 +545,11 @@ table td
 		float: left;
 		padding: 10px 20px 0px 20px;
 	}
+	.HCol4
+	{
+		float: left;
+		padding: 25px 20px 0px 20px;
+	}
 	.HeaderCA
 	{
 		height: 75px;
@@ -535,6 +580,11 @@ table td
 	{
 		float: none;
 		padding: 10px 0px 0px 0px;
+	}
+	.HCol4
+	{
+		float: none;
+		padding: 25px 0px 0px 0px;
 	}
 	.HeaderCA
 	{
