@@ -114,7 +114,7 @@ function Legal(code)
 		<p style="color:#F88742;font-family:Sans-serif;font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;text-align:center">
 		<asp:Literal runat="server" ID="X100051">100051</asp:Literal>
 		</p>
-		<p class="HIWDetail2">
+		<p style="font-size:10.5pt;font-family:Helvetica,sans-serif;line-height:1.5;margin-left:10px;margin-right:10px">
 		<asp:Literal runat="server" ID="X105044">105044</asp:Literal>
 		</p>
 		<div class="HFig" id="D12010">

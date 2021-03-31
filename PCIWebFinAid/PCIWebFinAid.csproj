@@ -76,6 +76,7 @@
     <Content Include="Footer.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Home.aspx" />
+    <Content Include="ISCRM.aspx" />
     <Content Include="ISHeader.ascx" />
     <Content Include="ISHome.aspx" />
     <Content Include="LGHeader.ascx" />
@@ -228,6 +229,13 @@
     </Compile>
     <Compile Include="Detokenize.aspx.designer.cs">
       <DependentUpon>Detokenize.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ISCRM.aspx.cs">
+      <DependentUpon>ISCRM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ISCRM.aspx.designer.cs">
+      <DependentUpon>ISCRM.aspx</DependentUpon>
     </Compile>
     <Compile Include="ISHeader.ascx.cs">
       <DependentUpon>ISHeader.ascx</DependentUpon>
