@@ -52,7 +52,7 @@ namespace PCIWebFinAid
 		private void LoadStaticDetails()
 		{
 		//	Defaults
-			productCode         = "10387";
+			productCode         = "10472";
 			languageCode        = "ENG";
 			languageDialectCode = "0002";
 			ret                 = 10003;
@@ -97,7 +97,7 @@ namespace PCIWebFinAid
 							languageCode        = mList.GetColumn("LanguageCode");
 							languageDialectCode = mList.GetColumn("LanguageDialectCode");
 							ret                 = 10042;
-							if ( productCode.Length         < 1 ) productCode         = "10387";
+							if ( productCode.Length         < 1 ) productCode         = "10472";
 							if ( languageCode.Length        < 1 ) languageCode        = "ENG";
 							if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
 						}
