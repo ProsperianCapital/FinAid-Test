@@ -83,7 +83,7 @@ namespace PCIWebFinAid
 						if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
 					}
 
-					Tools.LogInfo("LoadStaticDetails/10040",sql+" ... PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,222,this);
+					Tools.LogInfo("LoadStaticDetails/10040",sql+" ... PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,10,this);
 				}
 				catch (Exception ex)
 				{
