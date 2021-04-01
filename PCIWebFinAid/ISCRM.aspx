@@ -24,6 +24,10 @@
 	{
 		flex: 66%;
 	}
+	.InputCol99
+	{
+		flex: 99%;
+	}
 	@media screen and (max-width: 800px)
 	{
 		.InputCol33
@@ -31,6 +35,10 @@
 			flex: 100%;
 		}
 		.InputCol66
+		{
+			flex: 100%;
+		}
+		.InputCol99
 		{
 			flex: 100%;
 		}
@@ -86,107 +94,113 @@
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<label id="lblName" for="txtName" class="InputLabel">Name</label>
-			<asp:TextBox runat="server" ID="txtName" CssClass="InputBox" PlaceHolder="Your full name"></asp:TextBox>
+			<asp:Label runat="server" ID="X105102" AssociatedControlID="X105103" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105103" CssClass="InputBox"></asp:TextBox>
 		</div>
-		<div class="InputCol33">
-			<label id="lblNumber" for="txtNumber" class="InputLabel">Number</label>
-			<asp:TextBox runat="server" ID="txtNumber" CssClass="InputBox" PlaceHolder="Your phone number"></asp:TextBox>
-		</div>
-		<div class="InputCol33">
-			<label id="lblEMail" for="txtEMail" class="InputLabel">Email</label>
-			<asp:TextBox runat="server" ID="txtEMail" CssClass="InputBox" PlaceHolder="Your email address"></asp:TextBox>
+		<div class="InputCol66">
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<label id="lbl1n" for="txt1n" class="InputLabel">1. Medical Emergency</label>
-			<asp:TextBox runat="server" ID="txt1n" CssClass="InputBox" PlaceHolder="Number you want to contact"></asp:TextBox>
+			<asp:Label runat="server" ID="X105104" AssociatedControlID="X105105" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105105" CssClass="InputBox"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<label id="lbl1d" for="txt1d" class="InputLabel">Message 1</label>
-			<asp:TextBox runat="server" ID="txt1d" CssClass="InputBox" PlaceHolder="MEDICAL EMERGENCY: Please assist user at the listed location"></asp:TextBox>
+			<br />
+			<asp:TextBox runat="server" ID="X105106" CssClass="InputBox"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<label id="lbl2n" for="txt2n" class="InputLabel">2. Roadside Incident</label>
-			<asp:TextBox runat="server" ID="txt2n" CssClass="InputBox" PlaceHolder="Number you want to contact"></asp:TextBox>
+			<asp:Label runat="server" ID="X105107" AssociatedControlID="X105108" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105108" CssClass="InputBox"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<label id="lbl2d" for="txt2d" class="InputLabel">Message 2</label>
-			<asp:TextBox runat="server" ID="txt2d" CssClass="InputBox" PlaceHolder="ROADSIDE INCIDENT: Please assist user at the listed location"></asp:TextBox>
+			<br />
+			<asp:TextBox runat="server" ID="X105109" CssClass="InputBox"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<label id="lbl3n" for="txt3n" class="InputLabel">3. Burglary/Intrusion</label>
-			<asp:TextBox runat="server" ID="txt3n" CssClass="InputBox" PlaceHolder="Number you want to contact"></asp:TextBox>
+			<asp:Label runat="server" ID="X105110" AssociatedControlID="X105111" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105111" CssClass="InputBox"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<label id="lbl3d" for="txt3d" class="InputLabel">Message 3</label>
-			<asp:TextBox runat="server" ID="txt3d" CssClass="InputBox" PlaceHolder="BURGLARY/INTRUSION: Please assist user at the listed location"></asp:TextBox>
+			<br />
+			<asp:TextBox runat="server" ID="X105112" CssClass="InputBox"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<label id="lbl4n" for="txt4n" class="InputLabel">4. Fire</label>
-			<asp:TextBox runat="server" ID="txt4n" CssClass="InputBox" PlaceHolder="Number you want to contact"></asp:TextBox>
+			<asp:Label runat="server" ID="X105113" AssociatedControlID="X105114" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105114" CssClass="InputBox"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<label id="lbl4d" for="txt4d" class="InputLabel">Message 4</label>
-			<asp:TextBox runat="server" ID="txt4d" CssClass="InputBox" PlaceHolder="FIRE: Please assist user at the listed location"></asp:TextBox>
+			<br />
+			<asp:TextBox runat="server" ID="X105115" CssClass="InputBox"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<label id="lbl5n" for="txt5n" class="InputLabel">5. Hijack</label>
-			<asp:TextBox runat="server" ID="txt5n" CssClass="InputBox" PlaceHolder="Number you want to contact"></asp:TextBox>
+			<asp:Label runat="server" ID="X105116" AssociatedControlID="X105117" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105117" CssClass="InputBox"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<label id="lbl5d" for="txt5d" class="InputLabel">Message 5</label>
-			<asp:TextBox runat="server" ID="txt5d" CssClass="InputBox" PlaceHolder="HIJACK: Please assist user at the listed location"></asp:TextBox>
+			<br />
+			<asp:TextBox runat="server" ID="X105118" CssClass="InputBox"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<label id="lbl6n" for="txt6n" class="InputLabel">6. Wildlife Attack</label>
-			<asp:TextBox runat="server" ID="txt6n" CssClass="InputBox" PlaceHolder="Number you want to contact"></asp:TextBox>
+			<asp:Label runat="server" ID="X105119" AssociatedControlID="X105120" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105120" CssClass="InputBox"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<label id="lbl6d" for="txt6d" class="InputLabel">Message 6</label>
-			<asp:TextBox runat="server" ID="txt6d" CssClass="InputBox" PlaceHolder="WILDLIFE ATTACK: Please assist user at the listed location"></asp:TextBox>
+			<br />
+			<asp:TextBox runat="server" ID="X105121" CssClass="InputBox"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<label id="lbl7n" for="txt7n" class="InputLabel">7. Kidnap</label>
-			<asp:TextBox runat="server" ID="txt7n" CssClass="InputBox" PlaceHolder="Number you want to contact"></asp:TextBox>
+			<asp:Label runat="server" ID="X105122" AssociatedControlID="X105123" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105123" CssClass="InputBox"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<label id="lbl7d" for="txt7d" class="InputLabel">Message 7</label>
-			<asp:TextBox runat="server" ID="txt7d" CssClass="InputBox" PlaceHolder="KIDNAPPING: Please assist user at the listed location"></asp:TextBox>
+			<br />
+			<asp:TextBox runat="server" ID="X105124" CssClass="InputBox"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<label id="lbl8n" for="txt8n" class="InputLabel">8. Fetch Me</label>
-			<asp:TextBox runat="server" ID="txt8n" CssClass="InputBox" PlaceHolder="Number you want to contact"></asp:TextBox>
+			<asp:Label runat="server" ID="X105125" AssociatedControlID="X105126" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105126" CssClass="InputBox"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<label id="lbl8d" for="txt8d" class="InputLabel">Message 8</label>
-			<asp:TextBox runat="server" ID="txt8d" CssClass="InputBox" PlaceHolder="PICKUP: Please assist user at the listed location"></asp:TextBox>
+			<br />
+			<asp:TextBox runat="server" ID="X105127" CssClass="InputBox"></asp:TextBox>
 		</div>
 	</div>
 
+	<div class="InputRow">
+		<div class="InputCol33">
+			<asp:Label runat="server" ID="X105128" AssociatedControlID="X105129" class="InputLabel"></asp:Label>
+			<asp:TextBox runat="server" ID="X105129" CssClass="InputBox"></asp:TextBox>
+		</div>
+		<div class="InputCol66">
+			<br />
+			<asp:TextBox runat="server" ID="X105130" CssClass="InputBox"></asp:TextBox>
+		</div>
+	</div>
+
+	<!--
 	<div class="InputRow">
 		<div class="InputCol33">
 			<label id="lbl9n" for="txt9n" class="InputLabel">9. General/Other</label>
@@ -197,8 +211,9 @@
 			<asp:TextBox runat="server" ID="txt9d" CssClass="InputBox" PlaceHolder="Type your message"></asp:TextBox>
 		</div>
 	</div>
+	-->
 
-	<asp:HyperLink runat="server" ID="xSend" CssClass="TopButton TopButtonO">Save</asp:HyperLink>
+	<asp:HyperLink runat="server" ID="X105131" CssClass="TopButton TopButtonO">Save</asp:HyperLink>
 
 	<div>
 		<p style="color:#FF7400;font-family:Sans-serif;font-size:18px;font-weight:600;letter-spacing:0.8px">
@@ -270,11 +285,10 @@
 	<asp Image run@t="server" ID="P12001" style="height:30px" />
 	-->
 	<p style="line-height:1.5;margin: 0 0 1em 0;padding-top:10px;font-size:11px">
-	<asp:Literal runat="server" ID="X100040">100040</asp:Literal>
+	<asp:Literal runat="server" ID="X105132">105132</asp:Literal>
 	</p>
 
 	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="JavaScript:Legal(1)">100041</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="JavaScript:Legal(3)">100042</asp:HyperLink> |
 	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="JavaScript:Legal(5)">100043</asp:HyperLink> |
 	<asp:HyperLink runat="server" ID="X100044" ForeColor="Orange" NavigateUrl="JavaScript:Legal(4)">100044</asp:HyperLink>
 
@@ -282,12 +296,6 @@
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('LV001',false)" title="Close" style="float:right;padding:4px" />
 		<p class='FAQQuestion'><asp:Literal runat="server" ID="LH001">Header 001</asp:Literal></p>
 		<p class='FAQAnswer'><asp:Literal runat="server" ID="LD001">Detail 001</asp:Literal></p>
-	</div>
-
-	<div id="LV003" style="color:#FFFFFF;font-family:Sans-serif;background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
-		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('LV003',false)" title="Close" style="float:right;padding:4px" />
-		<p class='FAQQuestion'><asp:Literal runat="server" ID="LH003">Header 003</asp:Literal></p>
-		<p class='FAQAnswer'><asp:Literal runat="server" ID="LD003">Detail 003</asp:Literal></p>
 	</div>
 
 	<div id="LV005" style="color:#FFFFFF;font-family:Sans-serif;background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
@@ -306,7 +314,6 @@
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error" Visible="false" Enabled="false" ViewStateMode="Disabled"></asp:Label>
 	<asp:HiddenField runat="server" ID="hdnVer" />
-	<asp:Literal runat="server" id="lblChat"></asp:Literal>
 </form>
 <br />
 <ascx:Footer runat="server" ID="ascxFooter" />

@@ -467,24 +467,6 @@ namespace PCIWebFinAid
 		{
 			Control ctl;
 
-//			bool    found = false;
-//			foreach ( char ch in fieldValue )
-//				if ( (byte)ch > 0 && (byte)ch < 32 )
-//				{
-//					found = true;
-//					PCIBusiness.Tools.LogInfo("WebTools.ReplaceControlText/1","Char " + ((byte)ch).ToString() + " found",222,"WebTools");
-//				}
-//
-//			if (found)
-//				PCIBusiness.Tools.LogInfo("WebTools.ReplaceControlText/2",fieldValue,222);
-
-//			if ( fieldValue.Contains(Environment.NewLine) || fieldValue.Contains("\r\n") || fieldValue.Contains("\r") || fieldValue.Contains("\n") )
-//			{
-//				PCIBusiness.Tools.LogInfo("WebTools.ReplaceControlText/3","[cr][lf] found : " + fieldValue,222);
-//				fieldValue = fieldValue.Replace(Environment.NewLine,"<br />").Replace("\r\n","<br />");
-//				fieldValue = fieldValue.Replace("\r","<br />").Replace("\n","<br />");
-//			}
-
 			fieldValue = fieldValue.Replace(Environment.NewLine,"<br />").Replace("\r\n","<br />");
 			
 			for ( int k = 1 ; k < 4 ; k++ )
@@ -520,9 +502,63 @@ namespace PCIWebFinAid
 					if ( fieldURL.Length  > 0 )
 						lnk.NavigateUrl = fieldURL;
 				}
+				else if (ctl.GetType()  == typeof(TextBox))
+					((TextBox)ctl).Attributes.Add("placeholder",fieldValue);
 			}
 			return 0;
 		}
+
+		public static byte LoadProductFromURL(HttpRequest req,
+		                                  ref string      productCode,
+		                                  ref string      languageCode,
+		                                  ref string      languageDialectCode)
+		{
+			byte   ret          = 10;
+			string sql          = "";
+			productCode         = "";
+			languageCode        = "";
+			languageDialectCode = "";
+
+			using (PCIBusiness.MiscList mList = new PCIBusiness.MiscList())
+				try
+				{
+					ret             = 20;
+					string pageName = System.IO.Path.GetFileName(req.Url.AbsolutePath);
+					string refer    = req.Url.AbsoluteUri.Trim();
+					int    k        = refer.IndexOf("://");
+					refer           = refer.Substring(k+3);
+
+					if ( ! pageName.StartsWith("/") )
+						pageName = "/" + pageName;
+
+					ret = 30;
+					k   = refer.ToUpper().IndexOf(pageName.ToUpper());
+					if ( k > 0 )
+						refer = refer.Substring(0,k);
+
+					ret = 40;
+					sql = "exec sp_WP_Get_WebsiteInfoByURL " + PCIBusiness.Tools.DBString(refer);
+					if ( mList.ExecQuery(sql,0) != 0 )
+						PCIBusiness.Tools.LogInfo("WebTools.LoadProductFromURL/3","SQL failed: " + sql,229);
+					else if ( mList.EOF )
+						PCIBusiness.Tools.LogInfo("WebTools.LoadProductFromURL/6","SQL returned no data: " + sql,229);
+					else
+					{
+						ret                 = 70;
+						productCode         = mList.GetColumn("ProductCode");
+						languageCode        = mList.GetColumn("LanguageCode");
+						languageDialectCode = mList.GetColumn("LanguageDialectCode");
+						return 0;
+					}
+				}
+				catch (Exception ex)
+				{
+					PCIBusiness.Tools.LogInfo     ("WebTools.LoadProductFromURL/8","ret="+ret.ToString()+" ("+ex.Message+")",229);
+					PCIBusiness.Tools.LogException("WebTools.LoadProductFromURL/9","ret="+ret.ToString(),ex);
+				}
+			return ret;
+		}
+
 
 		public static byte ReplaceImage ( Page    webPage,
 		                                  string  ctlID,

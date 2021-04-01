@@ -34,6 +34,9 @@ namespace PCIWebFinAid
 				languageCode        = WebTools.RequestValueString(Request,"LanguageCode");
 				languageDialectCode = WebTools.RequestValueString(Request,"LanguageDialectCode");
 
+				if ( productCode.Length < 1 || languageCode.Length < 1 || languageDialectCode.Length < 1 )
+					LoadProduct();
+
 				if ( ! Tools.SystemIsLive() )
 				{
 					if ( productCode.Length         < 1 ) productCode         = "10387";
@@ -44,13 +47,10 @@ namespace PCIWebFinAid
 //				LoadStaticDetails();
 				LoadDynamicDetails();
 				LoadGoogleAnalytics();
-				LoadChat();
+//				LoadChat();
 
-				hdnProductCode.Value     = productCode;
-				hdnLangCode.Value        = languageCode;
-				hdnLangDialectCode.Value = languageDialectCode;
-				btnErrorDtl.Visible      = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
-				btnWidth.Visible         = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
+				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
+				btnWidth.Visible    = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 			}
 		}
 
@@ -167,6 +167,9 @@ namespace PCIWebFinAid
 //	Testing
 //					WebTools.ReplaceImage(this.Page,"12002","isos1.png","isos1");
 //					WebTools.ReplaceImage(this.Page,"12036","isos2.png","isos2");
+					WebTools.ReplaceControlText(this.Page,"X105104","Label 105104","");
+					WebTools.ReplaceControlText(this.Page,"X105105","PlaceHolder 105105","");
+					WebTools.ReplaceControlText(this.Page,"X105106","PlaceHolder 105106","");
 //	Testing
 				}
 				catch (Exception ex)
@@ -174,11 +177,27 @@ namespace PCIWebFinAid
 					PCIBusiness.Tools.LogException("LoadDynamicDetails/99","ret="+ret.ToString(),ex,this);
 				}
 		}
-
-		private void LoadChat()
+		private void LoadProduct()
 		{
-			lblChat.Text = Tools.LoadChat(productCode);
+			byte ret  = WebTools.LoadProductFromURL(Request,ref productCode,ref languageCode,ref languageDialectCode);
+			if ( ret != 0 || productCode.Length < 1 || languageCode.Length < 1 || languageDialectCode.Length < 1 )
+			{
+				SetErrorDetail("LoadProduct", 10777, "Unable to load product/language details", "ret="+ret.ToString(), 2, 2, null, false, errPriority);
+				productCode           = "10472";
+				languageCode          = "ENG";
+				languageDialectCode   = "0002";
+			}
+			hdnProductCode.Value     = productCode;
+			hdnLangCode.Value        = languageCode;
+			hdnLangDialectCode.Value = languageDialectCode;
+
+			Tools.LogInfo("LoadProduct","PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,10,this);
 		}	
+
+//		private void LoadChat()
+//		{
+//			lblChat.Text = Tools.LoadChat(productCode);
+//		}	
 
 		private void LoadGoogleAnalytics()
 		{

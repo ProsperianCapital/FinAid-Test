@@ -104,7 +104,9 @@
 
 	<asp:Label runat="server" ID="lblError" CssClass="Error" Visible="false" Enabled="false" ViewStateMode="Disabled"></asp:Label>
 	<asp:HiddenField runat="server" ID="hdnVer" />
-	<asp:Literal runat="server" id="lblChat"></asp:Literal>
+	<!--
+	<asp Literal run@t="server" id="lblChat"></asp>
+	-->
 </form>
 <br />
 <ascx:Footer runat="server" ID="ascxFooter" />

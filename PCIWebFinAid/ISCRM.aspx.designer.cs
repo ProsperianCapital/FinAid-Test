@@ -85,175 +85,265 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Button btnWidth;
         
         /// <summary>
-        /// txtName control.
+        /// X105102 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtName;
+        protected global::System.Web.UI.WebControls.Label X105102;
         
         /// <summary>
-        /// txtNumber control.
+        /// X105103 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumber;
+        protected global::System.Web.UI.WebControls.TextBox X105103;
         
         /// <summary>
-        /// txtEMail control.
+        /// X105104 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEMail;
+        protected global::System.Web.UI.WebControls.Label X105104;
         
         /// <summary>
-        /// txt1n control.
+        /// X105105 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt1n;
+        protected global::System.Web.UI.WebControls.TextBox X105105;
         
         /// <summary>
-        /// txt1d control.
+        /// X105106 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt1d;
+        protected global::System.Web.UI.WebControls.TextBox X105106;
         
         /// <summary>
-        /// txt2n control.
+        /// X105107 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt2n;
+        protected global::System.Web.UI.WebControls.Label X105107;
         
         /// <summary>
-        /// txt2d control.
+        /// X105108 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt2d;
+        protected global::System.Web.UI.WebControls.TextBox X105108;
         
         /// <summary>
-        /// txt3n control.
+        /// X105109 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt3n;
+        protected global::System.Web.UI.WebControls.TextBox X105109;
         
         /// <summary>
-        /// txt3d control.
+        /// X105110 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt3d;
+        protected global::System.Web.UI.WebControls.Label X105110;
         
         /// <summary>
-        /// txt4n control.
+        /// X105111 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt4n;
+        protected global::System.Web.UI.WebControls.TextBox X105111;
         
         /// <summary>
-        /// txt4d control.
+        /// X105112 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt4d;
+        protected global::System.Web.UI.WebControls.TextBox X105112;
         
         /// <summary>
-        /// txt5n control.
+        /// X105113 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt5n;
+        protected global::System.Web.UI.WebControls.Label X105113;
         
         /// <summary>
-        /// txt5d control.
+        /// X105114 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt5d;
+        protected global::System.Web.UI.WebControls.TextBox X105114;
         
         /// <summary>
-        /// txt6n control.
+        /// X105115 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt6n;
+        protected global::System.Web.UI.WebControls.TextBox X105115;
         
         /// <summary>
-        /// txt6d control.
+        /// X105116 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt6d;
+        protected global::System.Web.UI.WebControls.Label X105116;
         
         /// <summary>
-        /// txt7n control.
+        /// X105117 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt7n;
+        protected global::System.Web.UI.WebControls.TextBox X105117;
         
         /// <summary>
-        /// txt7d control.
+        /// X105118 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt7d;
+        protected global::System.Web.UI.WebControls.TextBox X105118;
         
         /// <summary>
-        /// txt8n control.
+        /// X105119 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt8n;
+        protected global::System.Web.UI.WebControls.Label X105119;
         
         /// <summary>
-        /// txt8d control.
+        /// X105120 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt8d;
+        protected global::System.Web.UI.WebControls.TextBox X105120;
+        
+        /// <summary>
+        /// X105121 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox X105121;
+        
+        /// <summary>
+        /// X105122 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label X105122;
+        
+        /// <summary>
+        /// X105123 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox X105123;
+        
+        /// <summary>
+        /// X105124 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox X105124;
+        
+        /// <summary>
+        /// X105125 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label X105125;
+        
+        /// <summary>
+        /// X105126 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox X105126;
+        
+        /// <summary>
+        /// X105127 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox X105127;
+        
+        /// <summary>
+        /// X105128 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label X105128;
+        
+        /// <summary>
+        /// X105129 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox X105129;
+        
+        /// <summary>
+        /// X105130 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox X105130;
         
         /// <summary>
         /// txt9n control.
@@ -274,13 +364,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox txt9d;
         
         /// <summary>
-        /// xSend control.
+        /// X105131 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink xSend;
+        protected global::System.Web.UI.WebControls.HyperLink X105131;
         
         /// <summary>
         /// X100092 control.
@@ -490,13 +580,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Label X100105;
         
         /// <summary>
-        /// X100040 control.
+        /// X105132 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal X100040;
+        protected global::System.Web.UI.WebControls.Literal X105132;
         
         /// <summary>
         /// X100041 control.
@@ -506,15 +596,6 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink X100041;
-        
-        /// <summary>
-        /// X100042 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink X100042;
         
         /// <summary>
         /// X100043 control.
@@ -551,24 +632,6 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal LD001;
-        
-        /// <summary>
-        /// LH003 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LH003;
-        
-        /// <summary>
-        /// LD003 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LD003;
         
         /// <summary>
         /// LH005 control.
@@ -614,15 +677,6 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnVer;
-        
-        /// <summary>
-        /// lblChat control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lblChat;
         
         /// <summary>
         /// ascxFooter control.

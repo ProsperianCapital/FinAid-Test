@@ -29,91 +29,31 @@ namespace PCIWebFinAid
 			}
 			else
 			{
-//				productCode         = WebTools.RequestValueString(Request,"ProductCode");
-//				languageCode        = WebTools.RequestValueString(Request,"LanguageCode");
-//				languageDialectCode = WebTools.RequestValueString(Request,"LanguageDialectCode");
-
-//				if ( ! Tools.SystemIsLive() )
-//				{
-//					if ( productCode.Length         < 1 ) productCode         = "10472";
-//					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
-//					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
-//				}	
-
+				LoadProduct();
 				LoadStaticDetails();
 				LoadDynamicDetails();
 				LoadGoogleAnalytics();
-				LoadChat();
+//				LoadChat();
 
-//				hdnProductCode.Value     = productCode;
-//				hdnLangCode.Value        = languageCode;
-//				hdnLangDialectCode.Value = languageDialectCode;
-
-				btnErrorDtl.Visible      = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
-				btnWidth.Visible         = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
+				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
+				btnWidth.Visible    = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 			}
 		}
 
 		private void LoadStaticDetails()
 		{
-		//	Defaults
-			productCode         = "10472";
-			languageCode        = "ENG";
-			languageDialectCode = "0002";
-			ret                 = 10003;
+			ret = 10003;
 
-			using (MiscList mList = new MiscList())
-				try
-				{
-					ret             = 10008;
-//					string pageName = System.IO.Path.GetFileNameWithoutExtension(Page.AppRelativeVirtualPath);
-//					string pageName = Request.Url.LocalPath;
-					string pageName = System.IO.Path.GetFileName(Request.Url.AbsolutePath);
-					string refer    = Request.Url.AbsoluteUri.Trim();
-					int    k        = refer.IndexOf("://");
-					refer           = refer.Substring(k+3);
+//			using (MiscList mList = new MiscList())
+//				try
+//				{
+//				}
+//				catch (Exception ex)
+//				{
+//					PCIBusiness.Tools.LogException("LoadStaticDetails/99","ret="+ret.ToString(),ex,this);
+//				}
 
-					if ( ! pageName.StartsWith("/") )
-						pageName = "/" + pageName;
-
-					k = refer.ToUpper().IndexOf(pageName.ToUpper());
-					if ( k > 0 )
-						refer = refer.Substring(0,k);
-
-					ret = 10010;
-					spr = "sp_WP_Get_WebsiteInfoByURL";
-					sql = "exec " + spr + " " + Tools.DBString(refer);
-
-					Tools.LogInfo("LoadStaticDetails/5","pageName="+pageName+", refer="+refer+", sql="+sql,222);
-
-					if ( mList.ExecQuery(sql,0) != 0 )
-						SetErrorDetail("LoadStaticDetails", 10020, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
-					else if ( mList.EOF )
-						SetErrorDetail("LoadStaticDetails", 10030, "Internal database error (" + spr + " no data returned)", sql, 2, 2, null, false, errPriority);
-					else
-					{
-						ret                 = 10040;
-						productCode         = mList.GetColumn("ProductCode");
-						languageCode        = mList.GetColumn("LanguageCode");
-						languageDialectCode = mList.GetColumn("LanguageDialectCode");
-						ret                 = 10042;
-						Tools.LogInfo("LoadStaticDetails/6","productCode="+productCode+", languageCode="+languageCode+", languageDialectCode="+languageDialectCode,222);
-						if ( productCode.Length         < 1 ) productCode         = "10472";
-						if ( languageCode.Length        < 1 ) languageCode        = "ENG";
-						if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
-					}
-					if ( ret < 10040 )
-						Tools.LogInfo("LoadStaticDetails/7","productCode="+productCode+", languageCode="+languageCode+", languageDialectCode="+languageDialectCode,222);
-				}
-				catch (Exception ex)
-				{
-					PCIBusiness.Tools.LogException("LoadStaticDetails/99","ret="+ret.ToString(),ex,this);
-				}
-
-			hdnProductCode.Value     = productCode;
-			hdnLangCode.Value        = languageCode;
-			hdnLangDialectCode.Value = languageDialectCode;
-			hdnVer.Value             = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
+			hdnVer.Value = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
 		}
 
 		private void LoadDynamicDetails()
@@ -236,10 +176,27 @@ namespace PCIWebFinAid
 				}
 		}
 
-		private void LoadChat()
+		private void LoadProduct()
 		{
-			lblChat.Text = Tools.LoadChat(productCode);
+			byte ret  = WebTools.LoadProductFromURL(Request,ref productCode,ref languageCode,ref languageDialectCode);
+			if ( ret != 0 || productCode.Length < 1 || languageCode.Length < 1 || languageDialectCode.Length < 1 )
+			{
+				SetErrorDetail("LoadProduct", 10666, "Unable to load product/language details", "ret="+ret.ToString(), 2, 2, null, false, errPriority);
+				productCode           = "10472";
+				languageCode          = "ENG";
+				languageDialectCode   = "0002";
+			}
+			hdnProductCode.Value     = productCode;
+			hdnLangCode.Value        = languageCode;
+			hdnLangDialectCode.Value = languageDialectCode;
+
+			Tools.LogInfo("LoadProduct","PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,10,this);
 		}	
+
+//		private void LoadChat()
+//		{
+//			lblChat.Text = Tools.LoadChat(productCode);
+//		}	
 
 		private void LoadGoogleAnalytics()
 		{
