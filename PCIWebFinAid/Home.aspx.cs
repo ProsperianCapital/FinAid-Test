@@ -53,7 +53,7 @@ namespace PCIWebFinAid
 				                            + ", goTo="      + goTo
 				                            + ", parms="     + parms
 				                            + ", appCode="   + ApplicationCode
-				                            + ", appStatus=" + appStatus,233);
+				                            + ", appStatus=" + appStatus,10);
 
 				Response.Redirect(goTo+parms);
 			}	
