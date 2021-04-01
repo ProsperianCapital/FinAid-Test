@@ -238,7 +238,7 @@ namespace PCIWebFinAid
 //	Testing
 //					WebTools.ReplaceImage(this.Page,"12002","isos1.png","isos1");
 //					WebTools.ReplaceImage(this.Page,"12036","isos2.png","isos2");
-					X105045.NavigateUrl = "ISCRM.aspx";
+//					X105045.NavigateUrl = "ISCRM.aspx";
 //	Testing
 				}
 				catch (Exception ex)

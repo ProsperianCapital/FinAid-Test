@@ -370,7 +370,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink X105131;
+        protected global::System.Web.UI.WebControls.Button X105131;
         
         /// <summary>
         /// X100092 control.

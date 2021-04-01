@@ -167,9 +167,9 @@ namespace PCIWebFinAid
 //	Testing
 //					WebTools.ReplaceImage(this.Page,"12002","isos1.png","isos1");
 //					WebTools.ReplaceImage(this.Page,"12036","isos2.png","isos2");
-					WebTools.ReplaceControlText(this.Page,"X105104","Label 105104","");
-					WebTools.ReplaceControlText(this.Page,"X105105","PlaceHolder 105105","");
-					WebTools.ReplaceControlText(this.Page,"X105106","PlaceHolder 105106","");
+//					WebTools.ReplaceControlText(this.Page,"X105104","Label 105104","");
+//					WebTools.ReplaceControlText(this.Page,"X105105","PlaceHolder 105105","");
+//					WebTools.ReplaceControlText(this.Page,"X105106","PlaceHolder 105106","");
 //	Testing
 				}
 				catch (Exception ex)
@@ -177,6 +177,42 @@ namespace PCIWebFinAid
 					PCIBusiness.Tools.LogException("LoadDynamicDetails/99","ret="+ret.ToString(),ex,this);
 				}
 		}
+
+		protected void btnSave_Click(Object sender, EventArgs e)
+		{
+			using (MiscList mList = new MiscList())
+				try
+				{
+					ret = 13110;
+					spr = "sp_WP_Upd_iSOSUser";
+					sql = "exec " + spr + " @MobileNumber="   + Tools.DBString(X105103.Text,47)
+					                    + ",@Button1Number="  + Tools.DBString(X105105.Text,47)
+					                    + ",@Button1Message=" + Tools.DBString(X105106.Text,47)
+					                    + ",@Button2Number="  + Tools.DBString(X105108.Text,47)
+					                    + ",@Button2Message=" + Tools.DBString(X105109.Text,47)
+					                    + ",@Button3Number="  + Tools.DBString(X105111.Text,47)
+					                    + ",@Button3Message=" + Tools.DBString(X105112.Text,47)
+					                    + ",@Button4Number="  + Tools.DBString(X105114.Text,47)
+					                    + ",@Button4Message=" + Tools.DBString(X105115.Text,47)
+					                    + ",@Button5Number="  + Tools.DBString(X105117.Text,47)
+					                    + ",@Button5Message=" + Tools.DBString(X105118.Text,47)
+					                    + ",@Button6Number="  + Tools.DBString(X105120.Text,47)
+					                    + ",@Button6Message=" + Tools.DBString(X105121.Text,47)
+					                    + ",@Button7Number="  + Tools.DBString(X105123.Text,47)
+					                    + ",@Button7Message=" + Tools.DBString(X105124.Text,47)
+					                    + ",@Button8Number="  + Tools.DBString(X105126.Text,47)
+					                    + ",@Button8Message=" + Tools.DBString(X105127.Text,47)
+					                    + ",@Button9Number="  + Tools.DBString(X105129.Text,47)
+					                    + ",@Button9Message=" + Tools.DBString(X105130.Text,47);
+					if ( mList.ExecQuery(sql,0,"",false,true) != 0 )
+						SetErrorDetail("btnSave_Click", 13120, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+				}
+				catch (Exception ex)
+				{
+					SetErrorDetail("btnSave_Click", 13130, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+				}
+		}
+
 		private void LoadProduct()
 		{
 			byte ret  = WebTools.LoadProductFromURL(Request,ref productCode,ref languageCode,ref languageDialectCode);
