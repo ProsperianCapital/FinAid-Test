@@ -92,7 +92,7 @@
 
 	<asp:Button runat="server" ID="btnWidth" Text="Width" OnClientClick="JavaScript:alert('Width = '+window.innerWidth.toString()+' pixels');return false" />
 
-	<br />
+	<p></p>
 
 	<div class="InputRow">
 		<div class="InputCol33">
@@ -215,7 +215,7 @@
 	</div>
 	-->
 
-	<asp:Button runat="server" ID="X105131" CssClass="TopButton TopButtonO" Width="150px" OnClick="btnSave_Click"></asp:Button>
+	<asp:Button runat="server" ID="X105131" CssClass="TopButton TopButtonO" Width="180px" OnClick="btnSave_Click"></asp:Button>
 
 	<div>
 		<p style="color:#FF7400;font-family:Sans-serif;font-size:18px;font-weight:600;letter-spacing:0.8px">

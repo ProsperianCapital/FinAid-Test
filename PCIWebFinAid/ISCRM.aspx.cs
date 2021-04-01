@@ -204,8 +204,10 @@ namespace PCIWebFinAid
 					                    + ",@Button8Message=" + Tools.DBString(X105127.Text,47)
 					                    + ",@Button9Number="  + Tools.DBString(X105129.Text,47)
 					                    + ",@Button9Message=" + Tools.DBString(X105130.Text,47);
-					if ( mList.ExecQuery(sql,0,"",false,true) != 0 )
+					ret = mList.ExecQuery(sql,0,"",false,true);
+					if ( ret != 0 )
 						SetErrorDetail("btnSave_Click", 13120, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+					Tools.LogInfo("btnSave_Click","Save iSOS config (ret="+ret.ToString() + ") : " +sql,229,this);
 				}
 				catch (Exception ex)
 				{
