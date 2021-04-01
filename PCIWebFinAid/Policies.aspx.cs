@@ -83,6 +83,9 @@ namespace PCIWebFinAid
 					ret = 10010;
 					spr = "sp_WP_Get_WebsiteInfoByURL";
 					sql = "exec " + spr + " " + Tools.DBString(refer);
+
+					Tools.LogInfo("LoadStaticDetails/5","pageName="+pageName+", refer="+refer+", sql="+sql,222);
+
 					if ( mList.ExecQuery(sql,0) != 0 )
 						SetErrorDetail("LoadStaticDetails", 10020, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
@@ -94,10 +97,13 @@ namespace PCIWebFinAid
 						languageCode        = mList.GetColumn("LanguageCode");
 						languageDialectCode = mList.GetColumn("LanguageDialectCode");
 						ret                 = 10042;
+						Tools.LogInfo("LoadStaticDetails/6","productCode="+productCode+", languageCode="+languageCode+", languageDialectCode="+languageDialectCode,222);
 						if ( productCode.Length         < 1 ) productCode         = "10472";
 						if ( languageCode.Length        < 1 ) languageCode        = "ENG";
 						if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
 					}
+					if ( ret < 10040 )
+						Tools.LogInfo("LoadStaticDetails/7","productCode="+productCode+", languageCode="+languageCode+", languageDialectCode="+languageDialectCode,222);
 				}
 				catch (Exception ex)
 				{
