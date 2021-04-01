@@ -5,7 +5,7 @@ using PCIBusiness;
 
 namespace PCIWebFinAid
 {
-	public partial class ISCRM : BasePage
+	public partial class Policies : BasePage
 	{
 		byte   errPriority;
 		int    ret;
@@ -19,8 +19,7 @@ namespace PCIWebFinAid
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			ApplicationCode = "210";
-			errPriority     = 19;
+			errPriority = 19;
 
 			if ( Page.IsPostBack )
 			{
@@ -34,12 +33,12 @@ namespace PCIWebFinAid
 				languageCode        = WebTools.RequestValueString(Request,"LanguageCode");
 				languageDialectCode = WebTools.RequestValueString(Request,"LanguageDialectCode");
 
-				if ( ! Tools.SystemIsLive() )
-				{
+//				if ( ! Tools.SystemIsLive() )
+//				{
 					if ( productCode.Length         < 1 ) productCode         = "10387";
 					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
 					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
-				}	
+//				}	
 
 //				LoadStaticDetails();
 				LoadDynamicDetails();
@@ -142,15 +141,14 @@ namespace PCIWebFinAid
 					else
 						while ( ! mList.EOF )
 						{
-							ret       = 10440;
-							fieldCode = mList.GetColumn("DocumentTypeCode");
-							try
+							ret = 10440;
+							if ( mList.GetColumn("DocumentTypeCode") == "003" )
 							{
-								((Literal)FindControl("LH"+fieldCode)).Text = mList.GetColumn("DocumentHeader",1,6);
-								((Literal)FindControl("LD"+fieldCode)).Text = mList.GetColumn("DocumentText",1,6);
+								ret          = 10444;
+								polHead.Text = mList.GetColumn("DocumentHeader",1,6);
+								polDtl.Text  = mList.GetColumn("DocumentText",1,6);
+								break;
 							}
-							catch
-							{ }
 							mList.NextRow();
 						}
 

@@ -104,6 +104,7 @@
     <Content Include="pgViewProfile.aspx" />
     <Content Include="pgViewRewardTransactions.aspx" />
     <Content Include="pgViewSubscriptionDetail.aspx" />
+    <Content Include="Policies.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx3.aspx" />
     <Content Include="RegisterThreeD.aspx" />
@@ -327,6 +328,13 @@
     </Compile>
     <Compile Include="pgViewSubscriptionDetail.aspx.designer.cs">
       <DependentUpon>pgViewSubscriptionDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Policies.aspx.cs">
+      <DependentUpon>Policies.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Policies.aspx.designer.cs">
+      <DependentUpon>Policies.aspx</DependentUpon>
     </Compile>
     <Compile Include="XMenuItem.cs" />
     <Compile Include="AJAXProcess.aspx.cs">

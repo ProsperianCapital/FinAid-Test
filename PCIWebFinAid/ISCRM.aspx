@@ -75,8 +75,6 @@
 	</style>
 </head>
 <body>
-<script type="text/javascript">
-</script>
 <form id="frmHome" runat="server">
 	<ascx:Header runat="server" ID="ascxHeader" />
 
