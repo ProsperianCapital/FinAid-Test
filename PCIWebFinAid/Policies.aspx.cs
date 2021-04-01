@@ -35,7 +35,7 @@ namespace PCIWebFinAid
 
 //				if ( ! Tools.SystemIsLive() )
 //				{
-					if ( productCode.Length         < 1 ) productCode         = "10387";
+					if ( productCode.Length         < 1 ) productCode         = "10472";
 					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
 					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
 //				}	
