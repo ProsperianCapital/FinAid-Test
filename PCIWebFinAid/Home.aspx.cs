@@ -8,6 +8,7 @@ namespace PCIWebFinAid
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
 			string url = Request.Url.AbsoluteUri.Trim();
+			byte   err = 0;
 
 			try
 			{
@@ -33,27 +34,33 @@ namespace PCIWebFinAid
 						appStatus          = mList.GetColumn("ApplicationStatus").ToUpper();
 						ApplicationCode    = mList.GetColumn("ApplicationCode");
 
-						if ( appStatus == "A" )
-							if ( ApplicationCode == "000" )
-								goTo = "Register3.aspx";
-							else if ( ApplicationCode == "002" ) // CRM
-								goTo = "pgLogonCRM.aspx";
-//							else if ( ApplicationCode == "006" ) // Mobile app
-//								goTo = "pgLogonCRM.aspx";
-							else if ( ApplicationCode == "100" ) // Care Assist
-								goTo = "CAHome.aspx";
-							else if ( ApplicationCode == "110" ) // ISOS
-								goTo = "ISHome.aspx";
-							else if ( ApplicationCode == "120" ) // Life Guru
-								goTo = "LGHome.aspx";
+						if ( appStatus != "A" )
+							err  = 10;
+						else if ( ApplicationCode == "000" )
+							goTo = "Register3.aspx";
+						else if ( ApplicationCode == "002" ) // CRM
+							goTo = "pgLogonCRM.aspx";
+//						else if ( ApplicationCode == "006" ) // Mobile app
+//							goTo = "pgLogonCRM.aspx";
+						else if ( ApplicationCode == "100" ) // Care Assist
+							goTo = "CAHome.aspx";
+						else if ( ApplicationCode == "110" ) // ISOS
+							goTo = "ISHome.aspx";
+						else if ( ApplicationCode == "120" ) // Life Guru
+							goTo = "LGHome.aspx";
+						else
+							err  = 20;
 					}
+					else
+						err = 30;
 
-				Tools.LogInfo("Home.PageLoad/1","url="       + url
+				Tools.LogInfo("Home.PageLoad/1","err="       + err.ToString()
+				                            + ", url="       + url
 				                            + ", domain="    + dName
 				                            + ", goTo="      + goTo
 				                            + ", parms="     + parms
 				                            + ", appCode="   + ApplicationCode
-				                            + ", appStatus=" + appStatus,10);
+				                            + ", appStatus=" + appStatus, ( err == 0 ? (byte)10 : (byte)222 ));
 
 				Response.Redirect(goTo+parms);
 			}	
@@ -63,8 +70,14 @@ namespace PCIWebFinAid
 			}
 			catch (Exception ex)
 			{
+				err = 90;
 				Tools.LogException("Home.PageLoad/2","url="+url,ex);
 			}
+
+			if ( err > 0 )
+				Tools.LogInfo("Home.PageLoad/3","err="     + err.ToString()
+				                            + ", url="     + url
+				                            + ", appCode=" + ApplicationCode, 222);
 		}
 	}
 }
