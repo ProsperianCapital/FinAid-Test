@@ -7,8 +7,12 @@ namespace PCIWebFinAid
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			string url = Request.Url.AbsoluteUri.Trim();
-			byte   err = 0;
+			byte   err   = 0;
+			string url   = Request.Url.AbsoluteUri.Trim();
+			string urlT1 = Tools.ObjectToString(Request.UrlReferrer);
+			string urlT2 = Tools.ObjectToString(Request.Headers["Referer"]);
+			string urlT3 = Request.Url.AbsolutePath;
+			string urlT4 = Request.Url.OriginalString;
 
 			try
 			{
@@ -56,6 +60,10 @@ namespace PCIWebFinAid
 
 				Tools.LogInfo("Home.PageLoad/1","err="       + err.ToString()
 				                            + ", url="       + url
+				                            + ", urlT1="     + urlT1
+				                            + ", urlT2="     + urlT2
+				                            + ", urlT3="     + urlT3
+				                            + ", urlT4="     + urlT4
 				                            + ", domain="    + dName
 				                            + ", goTo="      + goTo
 				                            + ", parms="     + parms
@@ -77,6 +85,10 @@ namespace PCIWebFinAid
 			if ( err > 0 )
 				Tools.LogInfo("Home.PageLoad/3","err="     + err.ToString()
 				                            + ", url="     + url
+				                            + ", urlT1="   + urlT1
+				                            + ", urlT2="   + urlT2
+				                            + ", urlT3="   + urlT3
+				                            + ", urlT4="   + urlT4
 				                            + ", appCode=" + ApplicationCode, 222);
 		}
 	}
