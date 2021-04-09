@@ -100,6 +100,7 @@
 			<asp:TextBox runat="server" ID="X105103" CssClass="InputBox"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
+			<br />
 			<asp:Button runat="server" ID="btnGet" CssClass="TopButton TopButtonO" Width="180px" OnClick="btnGetData_Click" Text="Verify Number" />
 			&nbsp;&nbsp;&nbsp;
 			<asp:Image runat="server" ID="imgOK" />

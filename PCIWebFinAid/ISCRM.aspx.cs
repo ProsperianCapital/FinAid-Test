@@ -223,6 +223,7 @@ namespace PCIWebFinAid
 
 		protected void btnGetData_Click(Object sender, EventArgs e)
 		{
+			X105103.Focus();
 			imgOK.ImageUrl = PCIBusiness.Tools.ImageFolder() + "Cross.png";
 			string phone   = X105103.Text.Trim().Replace(" ","").Replace("-","").Replace("(","").Replace(")","");
 			
