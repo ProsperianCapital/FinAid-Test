@@ -51,6 +51,49 @@ namespace PCIWebFinAid
 
 				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 				btnWidth.Visible    = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
+
+				EnableControls(1);
+			}
+		}
+
+		private void EnableControls(byte seq)
+		{
+		//	Phone number
+			X105103.Enabled = ( seq == 1 );
+			btnGet.Enabled  = ( seq == 1 );
+
+		//	Emregency data
+			X105105.Enabled = ( seq == 2 );
+			X105106.Enabled = ( seq == 2 );
+			X105108.Enabled = ( seq == 2 );
+			X105109.Enabled = ( seq == 2 );
+			X105111.Enabled = ( seq == 2 );
+			X105112.Enabled = ( seq == 2 );
+			X105114.Enabled = ( seq == 2 );
+			X105115.Enabled = ( seq == 2 );
+			X105117.Enabled = ( seq == 2 );
+			X105118.Enabled = ( seq == 2 );
+			X105120.Enabled = ( seq == 2 );
+			X105121.Enabled = ( seq == 2 );
+			X105123.Enabled = ( seq == 2 );
+			X105124.Enabled = ( seq == 2 );
+			X105126.Enabled = ( seq == 2 );
+			X105127.Enabled = ( seq == 2 );
+			X105129.Enabled = ( seq == 2 );
+			X105130.Enabled = ( seq == 2 );
+			X105131.Enabled = ( seq == 2 ); // Button "Save"
+
+			if ( seq == 1 )
+			{
+				imgOK.ImageUrl = "";
+			//	imgOK.ImageUrl = PCIBusiness.Tools.ImageFolder() + "Question.png";
+				X105103.Text   = "";
+				X105103.Focus();
+			}
+			else
+			{
+				imgOK.ImageUrl = PCIBusiness.Tools.ImageFolder() + "Tick.png";
+				X105105.Focus();
 			}
 		}
 
@@ -58,7 +101,7 @@ namespace PCIWebFinAid
 		{
 			byte   err;
 			string fieldCode;
-			string fieldHead;
+		//	string fieldHead;
 			string fieldValue;
 			string fieldURL;
 			string stdParms = " @ProductCode="         + Tools.DBString(productCode)
@@ -154,15 +197,15 @@ namespace PCIWebFinAid
 							mList.NextRow();
 						}
 
-					pnlContact01.Visible = ( X100093.Text.Length > 0 );
-					pnlContact02.Visible = ( X104402.Text.Length > 0 );
-					pnlContact03.Visible = ( X100095.Text.Length > 0 );
-					pnlContact04.Visible = ( X100096.Text.Length > 0 || P12031.ImageUrl.Length > 0 );
-					pnlContact05.Visible = ( X100101.Text.Length > 0 );
-					pnlContact06.Visible = ( X104404.Text.Length > 0 || P12032.ImageUrl.Length > 0 );
-					pnlContact07.Visible = ( X100102.Text.Length > 0 || P12033.ImageUrl.Length > 0 );
-					pnlContact08.Visible = ( X104418.Text.Length > 0 );
-					pnlContact09.Visible = ( X100105.Text.Length > 0 || P12034.ImageUrl.Length > 0 );
+//					pnlContact01.Visible = ( X100093.Text.Length > 0 );
+//					pnlContact02.Visible = ( X104402.Text.Length > 0 );
+//					pnlContact03.Visible = ( X100095.Text.Length > 0 );
+//					pnlContact04.Visible = ( X100096.Text.Length > 0 || P12031.ImageUrl.Length > 0 );
+//					pnlContact05.Visible = ( X100101.Text.Length > 0 );
+//					pnlContact06.Visible = ( X104404.Text.Length > 0 || P12032.ImageUrl.Length > 0 );
+//					pnlContact07.Visible = ( X100102.Text.Length > 0 || P12033.ImageUrl.Length > 0 );
+//					pnlContact08.Visible = ( X104418.Text.Length > 0 );
+//					pnlContact09.Visible = ( X100105.Text.Length > 0 || P12034.ImageUrl.Length > 0 );
 
 //	Testing
 //					WebTools.ReplaceImage(this.Page,"12002","isos1.png","isos1");
@@ -175,6 +218,45 @@ namespace PCIWebFinAid
 				catch (Exception ex)
 				{
 					PCIBusiness.Tools.LogException("LoadDynamicDetails/99","ret="+ret.ToString(),ex,this);
+				}
+		}
+
+		protected void btnGetData_Click(Object sender, EventArgs e)
+		{
+			imgOK.ImageUrl = PCIBusiness.Tools.ImageFolder() + "Cross.png";
+			string phone   = X105103.Text.Trim().Replace(" ","").Replace("-","").Replace("(","").Replace(")","");
+			
+			if ( phone.Length < 6 )
+				return;
+
+			using (MiscList mList = new MiscList())
+				try
+				{
+					ret = 14110;
+					spr = "sp_Blah";
+					sql = "exec " + spr + " @MobileNumber=" + Tools.DBString(phone,47);
+				//	TEST
+					sql = "select '1' as Col1";
+				//	TEST
+					ret = mList.ExecQuery(sql,0,"",false);
+					if ( ret == 0 )
+					{
+						EnableControls(2);
+						if ( mList.EOF)
+						{
+						//	Show meesage "New customer"
+						}
+						else
+						{
+						//	Populate fields
+						}
+					}
+					else
+						SetErrorDetail("btnGetData_Click", 14120, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+				}
+				catch (Exception ex)
+				{
+					SetErrorDetail("btnGetData_Click", 14130, "Internal database error (" + spr + " failed)", sql, 2, 2, ex, false, errPriority);
 				}
 		}
 
@@ -211,7 +293,7 @@ namespace PCIWebFinAid
 				}
 				catch (Exception ex)
 				{
-					SetErrorDetail("btnSave_Click", 13130, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+					SetErrorDetail("btnSave_Click", 13130, "Internal database error (" + spr + " failed)", sql, 2, 2, ex, false, errPriority);
 				}
 		}
 
