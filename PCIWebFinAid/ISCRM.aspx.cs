@@ -234,10 +234,10 @@ namespace PCIWebFinAid
 				try
 				{
 					ret = 14110;
-					spr = "sp_Blah";
+					spr = "sp_WP_Get_iSOSUser";
 					sql = "exec " + spr + " @MobileNumber=" + Tools.DBString(phone,47);
 				//	TEST
-					sql = "select '1' as Col1";
+				//	sql = "select '1' as Col1";
 				//	TEST
 					ret = mList.ExecQuery(sql,0,"",false);
 					if ( ret == 0 )
@@ -249,7 +249,24 @@ namespace PCIWebFinAid
 						}
 						else
 						{
-						//	Populate fields
+					       X105105.Text = mList.GetColumn("Button1Number");
+					       X105106.Text = mList.GetColumn("Button1Message");
+					       X105108.Text = mList.GetColumn("Button2Number");
+					       X105109.Text = mList.GetColumn("Button2Message");
+					       X105111.Text = mList.GetColumn("Button3Number");
+					       X105112.Text = mList.GetColumn("Button3Message");
+					       X105114.Text = mList.GetColumn("Button4Number");
+					       X105115.Text = mList.GetColumn("Button4Message");
+					       X105117.Text = mList.GetColumn("Button5Number");
+					       X105118.Text = mList.GetColumn("Button5Message");
+					       X105120.Text = mList.GetColumn("Button6Number");
+					       X105121.Text = mList.GetColumn("Button6Message");
+					       X105123.Text = mList.GetColumn("Button7Number");
+					       X105124.Text = mList.GetColumn("Button7Message");
+					       X105126.Text = mList.GetColumn("Button8Number");
+					       X105127.Text = mList.GetColumn("Button8Message");
+					       X105129.Text = mList.GetColumn("Button9Number");
+					       X105130.Text = mList.GetColumn("Button9Message");
 						}
 					}
 					else

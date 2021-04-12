@@ -103,13 +103,13 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.TextBox X105103;
         
         /// <summary>
-        /// btnGet control.
+        /// X105133 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGet;
+        protected global::System.Web.UI.WebControls.Button X105133;
         
         /// <summary>
         /// imgOK control.
