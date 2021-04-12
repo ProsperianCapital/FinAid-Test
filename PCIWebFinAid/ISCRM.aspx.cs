@@ -175,6 +175,8 @@ namespace PCIWebFinAid
 //					if ( P12028.ImageUrl.Length < 5 ) spr = spr + "ShowElt('D12028',false);";
 //					ascxFooter.JSText = WebTools.JavaScriptSource(spr);
 
+//	Removed
+/*
 					ret = 10410;
 					spr = "sp_WP_Get_ProductLegalDocumentInfo";
 					sql = "exec " + spr + stdParms;
@@ -196,6 +198,7 @@ namespace PCIWebFinAid
 							{ }
 							mList.NextRow();
 						}
+*/
 
 //					pnlContact01.Visible = ( X100093.Text.Length > 0 );
 //					pnlContact02.Visible = ( X104402.Text.Length > 0 );
@@ -221,7 +224,7 @@ namespace PCIWebFinAid
 				}
 		}
 
-		protected void btnGetData_Click(Object sender, EventArgs e)
+		protected void btnGet_Click(Object sender, EventArgs e)
 		{
 			X105103.Focus();
 			imgOK.ImageUrl = PCIBusiness.Tools.ImageFolder() + "Cross.png";
@@ -236,45 +239,48 @@ namespace PCIWebFinAid
 					ret = 14110;
 					spr = "sp_WP_Get_iSOSUser";
 					sql = "exec " + spr + " @MobileNumber=" + Tools.DBString(phone,47);
-				//	TEST
-				//	sql = "select '1' as Col1";
-				//	TEST
 					ret = mList.ExecQuery(sql,0,"",false);
+					Tools.LogInfo("btnGet_Click/1",sql + " (ret=" + ret.ToString() + ")",222,this);
 					if ( ret == 0 )
 					{
 						EnableControls(2);
 						if ( mList.EOF)
 						{
+							Tools.LogInfo("btnGet_Click/2",sql + " (No data)",222,this);
 						//	Show meesage "New customer"
 						}
 						else
 						{
-					       X105105.Text = mList.GetColumn("Button1Number");
-					       X105106.Text = mList.GetColumn("Button1Message");
-					       X105108.Text = mList.GetColumn("Button2Number");
-					       X105109.Text = mList.GetColumn("Button2Message");
-					       X105111.Text = mList.GetColumn("Button3Number");
-					       X105112.Text = mList.GetColumn("Button3Message");
-					       X105114.Text = mList.GetColumn("Button4Number");
-					       X105115.Text = mList.GetColumn("Button4Message");
-					       X105117.Text = mList.GetColumn("Button5Number");
-					       X105118.Text = mList.GetColumn("Button5Message");
-					       X105120.Text = mList.GetColumn("Button6Number");
-					       X105121.Text = mList.GetColumn("Button6Message");
-					       X105123.Text = mList.GetColumn("Button7Number");
-					       X105124.Text = mList.GetColumn("Button7Message");
-					       X105126.Text = mList.GetColumn("Button8Number");
-					       X105127.Text = mList.GetColumn("Button8Message");
-					       X105129.Text = mList.GetColumn("Button9Number");
-					       X105130.Text = mList.GetColumn("Button9Message");
+							X105105.Text = mList.GetColumn("Button1Number");
+							X105106.Text = mList.GetColumn("Button1Message");
+							X105108.Text = mList.GetColumn("Button2Number");
+							X105109.Text = mList.GetColumn("Button2Message");
+							X105111.Text = mList.GetColumn("Button3Number");
+							X105112.Text = mList.GetColumn("Button3Message");
+							X105114.Text = mList.GetColumn("Button4Number");
+							X105115.Text = mList.GetColumn("Button4Message");
+							X105117.Text = mList.GetColumn("Button5Number");
+							X105118.Text = mList.GetColumn("Button5Message");
+							X105120.Text = mList.GetColumn("Button6Number");
+							X105121.Text = mList.GetColumn("Button6Message");
+							X105123.Text = mList.GetColumn("Button7Number");
+							X105124.Text = mList.GetColumn("Button7Message");
+							X105126.Text = mList.GetColumn("Button8Number");
+							X105127.Text = mList.GetColumn("Button8Message");
+							X105129.Text = mList.GetColumn("Button9Number");
+							X105130.Text = mList.GetColumn("Button9Message");
+							Tools.LogInfo("btnGet_Click/3","(1) " + X105105.Text + "/" + X105106.Text
+							                           + ", (2) " + X105108.Text + "/" + X105109.Text  
+							                           + ", (3) " + X105111.Text + "/" + X105112.Text  
+							                           + ", (9) " + X105129.Text + "/" + X105130.Text,222,this);  
 						}
 					}
 					else
-						SetErrorDetail("btnGetData_Click", 14120, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
+						SetErrorDetail("btnGet_Click", 14120, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 				}
 				catch (Exception ex)
 				{
-					SetErrorDetail("btnGetData_Click", 14130, "Internal database error (" + spr + " failed)", sql, 2, 2, ex, false, errPriority);
+					SetErrorDetail("btnGet_Click", 14130, "Internal database error (" + spr + " failed)", sql, 2, 2, ex, false, errPriority);
 				}
 		}
 

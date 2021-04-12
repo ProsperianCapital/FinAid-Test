@@ -101,7 +101,7 @@
 		</div>
 		<div class="InputCol66">
 			<br />
-			<asp:Button runat="server" ID="X105133" CssClass="TopButton TopButtonO" Width="180px" OnClick="btnGetData_Click" Text="Verify Number" />
+			<asp:Button runat="server" ID="X105133" CssClass="TopButton TopButtonO" Width="180px" OnClick="btnGet_Click" Text="Verify Number" />
 			&nbsp;&nbsp;&nbsp;
 			<asp:Image runat="server" ID="imgOK" />
 		</div>
