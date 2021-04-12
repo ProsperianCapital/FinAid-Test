@@ -60,7 +60,7 @@ namespace PCIWebFinAid
 		{
 		//	Phone number
 			X105103.Enabled = ( seq == 1 );
-			btnGet.Enabled  = ( seq == 1 );
+			X105133.Enabled = ( seq == 1 );
 
 		//	Emregency data
 			X105105.Enabled = ( seq == 2 );
