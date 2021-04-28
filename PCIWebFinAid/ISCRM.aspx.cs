@@ -240,13 +240,13 @@ namespace PCIWebFinAid
 					spr = "sp_WP_Get_iSOSUser";
 					sql = "exec " + spr + " @MobileNumber=" + Tools.DBString(phone,47);
 					ret = mList.ExecQuery(sql,0,"",false);
-					Tools.LogInfo("btnGet_Click/1",sql + " (ret=" + ret.ToString() + ")",222,this);
+				//	Tools.LogInfo("btnGet_Click/1",sql + " (ret=" + ret.ToString() + ")",10,this);
 					if ( ret == 0 )
 					{
 						EnableControls(2);
 						if ( mList.EOF)
 						{
-							Tools.LogInfo("btnGet_Click/2",sql + " (No data)",222,this);
+							Tools.LogInfo("btnGet_Click/2",sql + " (ret=0, No data)",222,this);
 						//	Show meesage "New customer"
 						}
 						else

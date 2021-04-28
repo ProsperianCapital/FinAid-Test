@@ -28,6 +28,22 @@
 	{
 		flex: 99%;
 	}
+	.SpaceAbove1
+	{
+		margin-top: 6px;
+	}
+	.SpaceAbove2
+	{
+		margin-top: 22px;
+	}
+	.SpaceAbove3
+	{
+		margin-top: 24px;
+	}
+	.SpaceAbove4
+	{
+		margin-top: 4px;
+	}
 	@media screen and (max-width: 800px)
 	{
 		.InputCol33
@@ -41,6 +57,22 @@
 		.InputCol99
 		{
 			flex: 100%;
+		}
+		.SpaceAbove2
+		{
+			margin-top: 2px;
+		}
+		.SpaceAbove3
+		{
+			margin-top: 8px;
+			margin-left: 24%;
+			margin-right: 20%;
+		}
+		.SpaceAbove4
+		{
+			margin-top: 6px;
+			margin-left: 25%;
+			margin-right: 25%;
 		}
 	}
 	.InputLabel
@@ -68,7 +100,6 @@
 		font-size: 13px;
 		line-height: 0.1em;
 		letter-spacing: 1px;
-		margin: 0;
 		max-width: 100%;
 		min-height: 33px;
 		text-align: inherit;
@@ -96,11 +127,10 @@
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105102" AssociatedControlID="X105103" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105103" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105102" AssociatedControlID="X105103" class="InputLabel">105102</asp:Label>
+			<asp:TextBox runat="server" ID="X105103" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
-		<div class="InputCol66">
-			<br />
+		<div class="InputCol66 SpaceAbove3">
 			<asp:Button runat="server" ID="X105133" CssClass="TopButton TopButtonO" Width="180px" OnClick="btnGet_Click" Text="Verify Number" />
 			&nbsp;&nbsp;&nbsp;
 			<asp:Image runat="server" ID="imgOK" />
@@ -111,100 +141,91 @@
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105104" AssociatedControlID="X105105" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105105" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105104" AssociatedControlID="X105105" class="InputLabel">105104</asp:Label>
+			<asp:TextBox runat="server" ID="X105105" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<br />
-			<asp:TextBox runat="server" ID="X105106" CssClass="InputBox"></asp:TextBox>
+			<asp:TextBox runat="server" ID="X105106" CssClass="InputBox SpaceAbove2"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105107" AssociatedControlID="X105108" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105108" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105107" AssociatedControlID="X105108" class="InputLabel">105107</asp:Label>
+			<asp:TextBox runat="server" ID="X105108" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<br />
-			<asp:TextBox runat="server" ID="X105109" CssClass="InputBox"></asp:TextBox>
+			<asp:TextBox runat="server" ID="X105109" CssClass="InputBox SpaceAbove2"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105110" AssociatedControlID="X105111" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105111" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105110" AssociatedControlID="X105111" class="InputLabel">105110</asp:Label>
+			<asp:TextBox runat="server" ID="X105111" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<br />
-			<asp:TextBox runat="server" ID="X105112" CssClass="InputBox"></asp:TextBox>
+			<asp:TextBox runat="server" ID="X105112" CssClass="InputBox SpaceAbove2"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105113" AssociatedControlID="X105114" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105114" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105113" AssociatedControlID="X105114" class="InputLabel">105113</asp:Label>
+			<asp:TextBox runat="server" ID="X105114" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<br />
-			<asp:TextBox runat="server" ID="X105115" CssClass="InputBox"></asp:TextBox>
+			<asp:TextBox runat="server" ID="X105115" CssClass="InputBox SpaceAbove2"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105116" AssociatedControlID="X105117" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105117" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105116" AssociatedControlID="X105117" class="InputLabel">105116</asp:Label>
+			<asp:TextBox runat="server" ID="X105117" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<br />
-			<asp:TextBox runat="server" ID="X105118" CssClass="InputBox"></asp:TextBox>
+			<asp:TextBox runat="server" ID="X105118" CssClass="InputBox SpaceAbove2"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105119" AssociatedControlID="X105120" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105120" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105119" AssociatedControlID="X105120" class="InputLabel">105119</asp:Label>
+			<asp:TextBox runat="server" ID="X105120" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<br />
-			<asp:TextBox runat="server" ID="X105121" CssClass="InputBox"></asp:TextBox>
+			<asp:TextBox runat="server" ID="X105121" CssClass="InputBox SpaceAbove2"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105122" AssociatedControlID="X105123" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105123" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105122" AssociatedControlID="X105123" class="InputLabel">105122</asp:Label>
+			<asp:TextBox runat="server" ID="X105123" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<br />
-			<asp:TextBox runat="server" ID="X105124" CssClass="InputBox"></asp:TextBox>
+			<asp:TextBox runat="server" ID="X105124" CssClass="InputBox SpaceAbove2"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105125" AssociatedControlID="X105126" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105126" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105125" AssociatedControlID="X105126" class="InputLabel">105125</asp:Label>
+			<asp:TextBox runat="server" ID="X105126" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<br />
-			<asp:TextBox runat="server" ID="X105127" CssClass="InputBox"></asp:TextBox>
+			<asp:TextBox runat="server" ID="X105127" CssClass="InputBox SpaceAbove2"></asp:TextBox>
 		</div>
 	</div>
 
 	<div class="InputRow">
 		<div class="InputCol33">
-			<asp:Label runat="server" ID="X105128" AssociatedControlID="X105129" class="InputLabel"></asp:Label>
-			<asp:TextBox runat="server" ID="X105129" CssClass="InputBox"></asp:TextBox>
+			<asp:Label runat="server" ID="X105128" AssociatedControlID="X105129" class="InputLabel">105128</asp:Label>
+			<asp:TextBox runat="server" ID="X105129" CssClass="InputBox SpaceAbove1"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
-			<br />
-			<asp:TextBox runat="server" ID="X105130" CssClass="InputBox"></asp:TextBox>
+			<asp:TextBox runat="server" ID="X105130" CssClass="InputBox SpaceAbove2"></asp:TextBox>
 		</div>
 	</div>
 
@@ -212,16 +233,16 @@
 	<div class="InputRow">
 		<div class="InputCol33">
 			<label id="lbl9n" for="txt9n" class="InputLabel">9. General/Other</label>
-			<asp:TextBox runat="server" ID="txt9n" CssClass="InputBox" PlaceHolder="Number you want to contact"></asp:TextBox>
+			<asp:TextBox runat="server" ID="txt9n" CssClass="InputBox SpaceAbove1" PlaceHolder="Number you want to contact"></asp:TextBox>
 		</div>
 		<div class="InputCol66">
 			<label id="lbl9d" for="txt9d" class="InputLabel">Message 9</label>
-			<asp:TextBox runat="server" ID="txt9d" CssClass="InputBox" PlaceHolder="Type your message"></asp:TextBox>
+			<asp:TextBox runat="server" ID="txt9d" CssClass="InputBox SpaceAbove2" PlaceHolder="Type your message"></asp:TextBox>
 		</div>
 	</div>
 	-->
 
-	<asp:Button runat="server" ID="X105131" CssClass="TopButton TopButtonO" Width="180px" OnClick="btnSave_Click"></asp:Button>
+	<asp:Button runat="server" ID="X105131" CssClass="TopButton TopButtonO SpaceAbove4" Width="180px" OnClick="btnSave_Click"></asp:Button>
 
 	<!--#include file="IncludeErrorDtl.htm" -->
 
