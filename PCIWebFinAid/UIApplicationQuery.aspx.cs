@@ -174,6 +174,9 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechRegisteriSOSEvent").ToUpper() )
 					RegisteriSOSEvent();
 
+				else if ( queryName == ("FinTechSendSMS").ToUpper() )
+					SendSMS();
+
 				else
 					SetError(10007,"Invalid query name");
 
@@ -648,6 +651,33 @@ namespace PCIWebFinAid
 				return SetError(11710,"Parameter eWalletDescription is missing");
 
 			return 0;
+		}
+
+		private int SendSMS()
+		{
+			if ( CheckParameters("App,Mobile,User") > 0 )
+				return errorCode;
+
+			string msgText = ParmValue("Message");
+
+			if ( msgText.Length < 1 )
+				return SetError(11715,"Parameter Message is missing");
+
+			using (SMS sms = new SMS())
+			{
+				sms.ProviderID  = ((int)Constants.MessageProvider.ClickaTell).ToString().PadLeft(3,'0');
+				sms.UserID      = "X";
+				sms.MessageID   = 0;
+				sms.PhoneNumber = mobileNumber;
+				sms.MessageBody = msgText;
+				if ( sms.LoadProvider() == 0 )
+					errorCode    = sms.Send();
+				else if ( ! Tools.SystemIsLive() )
+					errorCode    = sms.Send((byte)Constants.TransactionType.Test);
+				else
+					return SetError(11720,"Failed to load SMS provider details");
+			}
+			return errorCode;
 		}
 
 		private void JSONAppend(string term)

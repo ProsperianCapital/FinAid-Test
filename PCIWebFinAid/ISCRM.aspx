@@ -60,7 +60,7 @@
 		}
 		.SpaceAbove2
 		{
-			margin-top: 2px;
+			margin-top: 4px;
 		}
 		.SpaceAbove3
 		{
