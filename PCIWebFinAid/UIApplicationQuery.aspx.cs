@@ -655,7 +655,7 @@ namespace PCIWebFinAid
 
 		private int SendSMS()
 		{
-			if ( CheckParameters("App,Mobile,User") > 0 )
+			if ( CheckParameters("App,Mobile") > 0 )
 				return errorCode;
 
 			string msgText = ParmValue("Message");
