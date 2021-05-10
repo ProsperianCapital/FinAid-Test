@@ -97,12 +97,12 @@ namespace PCIWebFinAid
 				if ( inputDataType != (byte)Constants.WebDataType.FormPost )
 					Tools.LogInfo("QueryData/10","dataType="+inputDataType.ToString()
 					                          +", queryName="+queryName
-					                          +", applicationCode"+applicationCode
-					                          +", countryCode"+countryCode
-					                          +", languageCode"+languageCode
-					                          +", languageDialectCode"+languageDialectCode
-					                          +", userCode"+userCode
-					                          +", mobileNumber"+mobileNumber,220,this);
+					                          +", applicationCode="+applicationCode
+					                          +", countryCode="+countryCode
+					                          +", languageCode="+languageCode
+					                          +", languageDialectCode="+languageDialectCode
+					                          +", userCode="+userCode
+					                          +", mobileNumber="+mobileNumber,220,this);
 	
 				if ( Tools.SystemLiveTestOrDev() != Constants.SystemMode.Development && secretKey != "7e6415a7cb790238fd12430a0ce419b3" )
 					return SendJSON(10005,"Invalid secret key");
@@ -668,12 +668,17 @@ namespace PCIWebFinAid
 				sms.ProviderID  = ((int)Constants.MessageProvider.ClickaTell).ToString().PadLeft(3,'0');
 				sms.UserID      = "X";
 				sms.MessageID   = 0;
-				sms.PhoneNumber = mobileNumber;
 				sms.MessageBody = msgText;
+				if ( mobileNumber.StartsWith("+") )
+					sms.PhoneNumber = mobileNumber.Substring(1);
+				else if ( Tools.StringToInt(countryCode) > 0 )
+					sms.PhoneNumber = countryCode + mobileNumber;
+				else
+					sms.PhoneNumber = mobileNumber;
 				if ( sms.LoadProvider() == 0 )
-					errorCode    = sms.Send();
+					errorCode = sms.Send();
 				else if ( ! Tools.SystemIsLive() )
-					errorCode    = sms.Send((byte)Constants.TransactionType.Test);
+					errorCode = sms.Send((byte)Constants.TransactionType.Test);
 				else
 					return SetError(11720,"Failed to load SMS provider details");
 			}
