@@ -101,6 +101,16 @@ namespace PCIWebFinAid
 					PCIBusiness.Tools.LogException("LoadStaticDetails/99","ret="+ret.ToString(),ex,this);
 				}
 
+
+//	Override if passed via URL
+			ret      = 10044;
+			string h = WebTools.RequestValueString(Request,"ProductCode");
+			if ( h.Length > 0 ) productCode = h;
+			h        = WebTools.RequestValueString(Request,"LanguageCode");
+			if ( h.Length > 0 ) languageCode = h;
+			h        = WebTools.RequestValueString(Request,"LanguageDialectCode");
+			if ( h.Length > 0 ) languageDialectCode = h;
+
 			hdnProductCode.Value     = productCode;
 			hdnLangCode.Value        = languageCode;
 			hdnLangDialectCode.Value = languageDialectCode;

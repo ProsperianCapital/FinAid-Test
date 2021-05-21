@@ -511,7 +511,8 @@ namespace PCIWebFinAid
 		public static byte LoadProductFromURL(HttpRequest req,
 		                                  ref string      productCode,
 		                                  ref string      languageCode,
-		                                  ref string      languageDialectCode)
+		                                  ref string      languageDialectCode,
+		                                      bool        checkURLParms = false)
 		{
 			byte   ret          = 10;
 			string sql          = "";
@@ -548,7 +549,7 @@ namespace PCIWebFinAid
 						productCode         = mList.GetColumn("ProductCode");
 						languageCode        = mList.GetColumn("LanguageCode");
 						languageDialectCode = mList.GetColumn("LanguageDialectCode");
-						return 0;
+						ret                 = 0;
 					}
 				}
 				catch (Exception ex)
@@ -556,9 +557,19 @@ namespace PCIWebFinAid
 					PCIBusiness.Tools.LogInfo     ("WebTools.LoadProductFromURL/8","ret="+ret.ToString()+" ("+ex.Message+")",229);
 					PCIBusiness.Tools.LogException("WebTools.LoadProductFromURL/9","ret="+ret.ToString(),ex);
 				}
+
+			if ( checkURLParms )
+			{
+				string h = RequestValueString(req,"ProductCode");
+				if ( h.Length > 0 ) productCode = h;
+				h        = RequestValueString(req,"LanguageCode");
+				if ( h.Length > 0 ) languageCode = h;
+				h        = RequestValueString(req,"LanguageDialectCode");
+				if ( h.Length > 0 ) languageDialectCode = h;
+			}
+
 			return ret;
 		}
-
 
 		public static byte ReplaceImage ( Page    webPage,
 		                                  string  ctlID,

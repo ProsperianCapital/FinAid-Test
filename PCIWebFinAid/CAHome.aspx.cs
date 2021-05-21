@@ -278,7 +278,7 @@ namespace PCIWebFinAid
 
 		private void LoadProduct()
 		{
-			byte ret  = WebTools.LoadProductFromURL(Request,ref productCode,ref languageCode,ref languageDialectCode);
+			byte ret  = WebTools.LoadProductFromURL(Request,ref productCode,ref languageCode,ref languageDialectCode,true);
 			if ( ret != 0 || productCode.Length < 1 || languageCode.Length < 1 || languageDialectCode.Length < 1 )
 			{
 				SetErrorDetail("LoadProduct", 10888, "Unable to load product/language details", "ret="+ret.ToString(), 2, 2, null, false, errPriority);
