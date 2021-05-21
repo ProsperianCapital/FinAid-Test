@@ -58,21 +58,32 @@ namespace PCIBusiness
 
 			try
 			{
-				xmlSent = "{ \"creditCard\" : "  + Tools.JSONPair("token"    ,payment.CardToken,1,"{","}")
-				        + ", \"transaction\" : " + Tools.JSONPair("reference",payment.MerchantReference,1,"{")
-				                                 + Tools.JSONPair("currency" ,payment.CurrencyCode,1)
-				                                 + Tools.JSONPair("amount"   ,payment.PaymentAmount.ToString(),11,"","}")
-				        + ", "                   + Tools.JSONPair("threeDSecure","false",12,"","")
-				        + "}";
-
+				xmlSent = Tools.JSONPair("amount"                   ,payment.PaymentAmount.ToString(),11,"{") // Amount must be INT in CENTS
+				        + Tools.JSONPair("currency"                 ,payment.CurrencyCode,1)
+				        + Tools.JSONPair("statement_soft_descriptor",payment.PaymentDescription,1,"","}");
 				ret     = 20;
-//				ret     = CallWebService(payment,"/pg/api/v2/payment/create");
-				ret     = CallWebService(payment,(byte)Constants.TransactionType.TokenPayment);
+				ret     = CallWebService(payment,(byte)Constants.TransactionType.TokenPayment,1);
 				ret     = 30;
-				payRef  = Tools.JSONValue(XMLResult,"reference");
+				payRef  = Tools.JSONValue(XMLResult,"id");
 				ret     = 40;
+
 				if ( Successful && payRef.Length > 0 )
-					ret  = 0;
+				{
+					ret     = 50;
+					xmlSent = Tools.JSONPair("reconciliation_id",payment.MerchantReference,1,"{")
+					        + "\"payment_method\":"
+					        + Tools.JSONPair("type"             ,"tokenized",1,"{")
+					        + Tools.JSONPair("token"            ,payment.CardToken,1)
+					        + Tools.JSONPair("credit_card_cvv"  ,payment.CardCVV,1,"","}") + "}";
+					ret     = 60;
+					ret     = CallWebService(payment,(byte)Constants.TransactionType.TokenPayment,2);
+					ret     = 70;
+					payRef  = Tools.JSONValue(XMLResult,"id");
+					ret     = 80;
+				}
+
+				if ( Successful && payRef.Length > 0 )
+					ret   = 0;
 //				else
 //					Tools.LogInfo("TokenPayment/50","JSON Sent="+xmlSent+", JSON Rec="+XMLResult,199,this);
 			}
@@ -84,7 +95,7 @@ namespace PCIBusiness
 			return ret;
 		}
 
-		private int CallWebService(Payment payment,byte transactionType)
+		private int CallWebService(Payment payment,byte transactionType,byte subType=0)
       {
 			int    ret      = 10;
 			string url      = payment.ProviderURL;
@@ -105,7 +116,7 @@ namespace PCIBusiness
 			}
 			else
 			{
-				url         = url + "/payments";
+				url         = url + "/payments" + ( subType == 2 ? "/" + payRef + "/charges" : "" );
 				if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
 					tranDesc = "Token Payment";
 				else if ( transactionType == (byte)Constants.TransactionType.CardPayment )
@@ -140,14 +151,14 @@ namespace PCIBusiness
 				}
 
 				webRequest.Headers["x-payments-os-env"] = ( Tools.SystemIsLive() ? "live" : "test" );
+				webRequest.Headers["api-version"]       = "1.3.0";
 
-				Tools.LogInfo("CallWebService/20",
-				              "Transaction Type=" + tranDesc +
-				            ", URL=" + url +
-				            ", App Id=" + payment.ProviderAccount +
-				            ", Public Key=" + payment.ProviderKey +
-				            ", Private Key=" + payment.ProviderPassword +
-				            ", JSON Sent=" + xmlSent, 210, this);
+				Tools.LogInfo("CallWebService/20","Transaction Type=" + tranDesc +
+				                                ", URL=" + url +
+				                                ", App Id=" + payment.ProviderAccount +
+				                                ", Public Key=" + payment.ProviderKey +
+				                                ", Private Key=" + payment.ProviderPassword +
+				                                ", JSON Sent=" + xmlSent, 210, this);
 
 				using (Stream stream = webRequest.GetRequestStream())
 				{

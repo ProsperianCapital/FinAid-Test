@@ -73,7 +73,8 @@ namespace PCIBusiness
 			FNB              = 24,
 			CyberSource      = 25,
 			CyberSource_Moto = 26,
-			PaymentsOS       = 27 // PayU Hub
+			PaymentsOS       = 27, // PayU Hub
+			Stripe           = 28
 		}
 
 		public enum MessageProvider : int
