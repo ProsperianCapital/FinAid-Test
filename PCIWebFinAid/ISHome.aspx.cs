@@ -77,21 +77,20 @@ namespace PCIWebFinAid
 						productCode         = mList.GetColumn("ProductCode");
 						languageCode        = mList.GetColumn("LanguageCode");
 						languageDialectCode = mList.GetColumn("LanguageDialectCode");
-						ret                 = 10042;
+						ret                 = 10050;
 						if ( productCode.Length         < 1 ) productCode         = "10387";
 						if ( languageCode.Length        < 1 ) languageCode        = "ENG";
 						if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
 					}
-
-					Tools.LogInfo("LoadStaticDetails/10040",sql+" ... PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,10,this);
+					Tools.LogInfo("LoadStaticDetails/10060",sql+" ... PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,10,this);
 				}
 				catch (Exception ex)
 				{
-					PCIBusiness.Tools.LogException("LoadStaticDetails/99","ret="+ret.ToString(),ex,this);
+					PCIBusiness.Tools.LogException("LoadStaticDetails/10999","ret="+ret.ToString(),ex,this);
 				}
 
 //	Override if passed via URL
-			ret      = 10044;
+			ret      = 10070;
 			string h = WebTools.RequestValueString(Request,"ProductCode");
 			if ( h.Length > 0 ) productCode = h;
 			h        = WebTools.RequestValueString(Request,"LanguageCode");
@@ -103,6 +102,8 @@ namespace PCIWebFinAid
 			hdnLangCode.Value        = languageCode;
 			hdnLangDialectCode.Value = languageDialectCode;
 			hdnVer.Value             = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
+
+			Tools.LogInfo("LoadStaticDetails/10080","PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,231,this);
 		}
 
 		private void LoadDynamicDetails()
