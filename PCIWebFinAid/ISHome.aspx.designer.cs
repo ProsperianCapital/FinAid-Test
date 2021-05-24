@@ -697,6 +697,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X100040;
         
         /// <summary>
+        /// H12015 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink H12015;
+        
+        /// <summary>
         /// P12015 control.
         /// </summary>
         /// <remarks>
@@ -704,6 +713,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image P12015;
+        
+        /// <summary>
+        /// H12016 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink H12016;
         
         /// <summary>
         /// P12016 control.
@@ -715,6 +733,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Image P12016;
         
         /// <summary>
+        /// H12017 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink H12017;
+        
+        /// <summary>
         /// P12017 control.
         /// </summary>
         /// <remarks>
@@ -724,6 +751,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Image P12017;
         
         /// <summary>
+        /// H12018 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink H12018;
+        
+        /// <summary>
         /// P12018 control.
         /// </summary>
         /// <remarks>
@@ -731,6 +767,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image P12018;
+        
+        /// <summary>
+        /// H12019 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink H12019;
         
         /// <summary>
         /// P12019 control.

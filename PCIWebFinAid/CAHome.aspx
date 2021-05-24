@@ -311,11 +311,11 @@ function Legal(code)
 	<div style="text-align:center">
 	-->
 
-	<asp:Image runat="server" ID="P12015" />
-	<asp:Image runat="server" ID="P12016" />
-	<asp:Image runat="server" ID="P12017" />
-	<asp:Image runat="server" ID="P12018" />
-	<asp:Image runat="server" ID="P12019" />
+	<asp:HyperLink runat="server" ID="H12015"><asp:Image runat="server" ID="P12015" /></asp:HyperLink>
+	<asp:HyperLink runat="server" ID="H12016"><asp:Image runat="server" ID="P12016" /></asp:HyperLink>
+	<asp:HyperLink runat="server" ID="H12017"><asp:Image runat="server" ID="P12017" /></asp:HyperLink>
+	<asp:HyperLink runat="server" ID="H12018"><asp:Image runat="server" ID="P12018" /></asp:HyperLink>
+	<asp:HyperLink runat="server" ID="H12019"><asp:Image runat="server" ID="P12019" /></asp:HyperLink>
 
 	<p style="font-size:13px">
 	<asp:Literal runat="server" ID="X105010">105010</asp:Literal>
