@@ -30,9 +30,9 @@ namespace PCIWebFinAid
 			}
 			else
 			{
-				productCode         = WebTools.RequestValueString(Request,"ProductCode");
-				languageCode        = WebTools.RequestValueString(Request,"LanguageCode");
-				languageDialectCode = WebTools.RequestValueString(Request,"LanguageDialectCode");
+				productCode         = WebTools.RequestValueString(Request,"PC");
+				languageCode        = WebTools.RequestValueString(Request,"LC");
+				languageDialectCode = WebTools.RequestValueString(Request,"LDC");
 
 				if ( productCode.Length < 1 || languageCode.Length < 1 || languageDialectCode.Length < 1 )
 					LoadProduct();

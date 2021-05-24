@@ -560,11 +560,11 @@ namespace PCIWebFinAid
 
 			if ( checkURLParms )
 			{
-				string h = RequestValueString(req,"ProductCode");
+				string h = RequestValueString(req,"PC");
 				if ( h.Length > 0 ) productCode = h;
-				h        = RequestValueString(req,"LanguageCode");
+				h        = RequestValueString(req,"LC");
 				if ( h.Length > 0 ) languageCode = h;
-				h        = RequestValueString(req,"LanguageDialectCode");
+				h        = RequestValueString(req,"LDC");
 				if ( h.Length > 0 ) languageDialectCode = h;
 			}
 

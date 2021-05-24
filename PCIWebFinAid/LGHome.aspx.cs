@@ -104,11 +104,11 @@ namespace PCIWebFinAid
 
 //	Override if passed via URL
 			ret      = 10044;
-			string h = WebTools.RequestValueString(Request,"ProductCode");
+			string h = WebTools.RequestValueString(Request,"PC");
 			if ( h.Length > 0 ) productCode = h;
-			h        = WebTools.RequestValueString(Request,"LanguageCode");
+			h        = WebTools.RequestValueString(Request,"LC");
 			if ( h.Length > 0 ) languageCode = h;
-			h        = WebTools.RequestValueString(Request,"LanguageDialectCode");
+			h        = WebTools.RequestValueString(Request,"LDC");
 			if ( h.Length > 0 ) languageDialectCode = h;
 
 			hdnProductCode.Value     = productCode;
