@@ -665,8 +665,12 @@ namespace PCIWebFinAid
 
 			using (SMS sms = new SMS())
 			{
+			//	Clickatell
 				sms.ProviderID  = ((int)Constants.MessageProvider.ClickaTell).ToString().PadLeft(3,'0');
-				sms.UserID      = "";
+				sms.UserID      = "002";
+			//	Other, add here
+			//	sms.ProviderID  = ((int)Constants.MessageProvider.Blah).ToString().PadLeft(3,'0');
+			//	sms.UserID      = "Blah";
 				sms.MessageID   = 0;
 				sms.MessageBody = msgText;
 				if ( mobileNumber.StartsWith("+") )
