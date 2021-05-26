@@ -168,9 +168,10 @@ function Legal(code)
 	<asp:Literal runat="server" ID="X105042">105042</asp:Literal>
 	</div>
 
+	<div>
 	<asp:HyperLink runat="server" ID="H12037"><asp:Image runat="server" ID="P12037" /></asp:HyperLink>
 	<asp:HyperLink runat="server" ID="H12038"><asp:Image runat="server" ID="P12038" /></asp:HyperLink>
-	<br />
+	</div>
 
 	<asp:HyperLink runat="server" ID="X100009" CssClass="TopButton TopButtonD"></asp:HyperLink>&nbsp;
 	<asp:HyperLink runat="server" ID="X105045" CssClass="TopButton TopButtonD"></asp:HyperLink>
