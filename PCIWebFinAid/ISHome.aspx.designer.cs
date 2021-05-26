@@ -373,13 +373,40 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X105042;
         
         /// <summary>
-        /// X100008 control.
+        /// H12037 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink X100008;
+        protected global::System.Web.UI.WebControls.HyperLink H12037;
+        
+        /// <summary>
+        /// P12037 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image P12037;
+        
+        /// <summary>
+        /// H12038 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink H12038;
+        
+        /// <summary>
+        /// P12038 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image P12038;
         
         /// <summary>
         /// X100009 control.

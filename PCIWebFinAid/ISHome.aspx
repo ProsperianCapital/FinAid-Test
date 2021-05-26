@@ -167,7 +167,11 @@ function Legal(code)
 	<div style="margin-bottom:20px">
 	<asp:Literal runat="server" ID="X105042">105042</asp:Literal>
 	</div>
-	<asp:HyperLink runat="server" ID="X100008" CssClass="TopButton TopButtonD"></asp:HyperLink>&nbsp;
+
+	<asp:HyperLink runat="server" ID="H12037"><asp:Image runat="server" ID="P12037" /></asp:HyperLink>
+	<asp:HyperLink runat="server" ID="H12038"><asp:Image runat="server" ID="P12038" /></asp:HyperLink>
+	<br />
+
 	<asp:HyperLink runat="server" ID="X100009" CssClass="TopButton TopButtonD"></asp:HyperLink>&nbsp;
 	<asp:HyperLink runat="server" ID="X105045" CssClass="TopButton TopButtonD"></asp:HyperLink>
 	<div style="margin-top:20px">
@@ -269,10 +273,10 @@ function Legal(code)
 	<br /><br />
 	</asp:PlaceHolder>
 
-	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="JavaScript:Legal(1)">100041</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="JavaScript:Legal(3)">100042</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="JavaScript:Legal(5)">100043</asp:HyperLink> |
-	<asp:HyperLink runat="server" ID="X100044" ForeColor="Orange" NavigateUrl="JavaScript:Legal(4)">100044</asp:HyperLink>
+	<asp:HyperLink runat="server" ID="X100041" ForeColor="Orange" NavigateUrl="JavaScript:Legal(1)"></asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100042" ForeColor="Orange" NavigateUrl="JavaScript:Legal(3)"></asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100043" ForeColor="Orange" NavigateUrl="JavaScript:Legal(5)"></asp:HyperLink> |
+	<asp:HyperLink runat="server" ID="X100044" ForeColor="Orange" NavigateUrl="JavaScript:Legal(4)"></asp:HyperLink>
 
 	<div id="LV001" style="color:#FFFFFF;font-family:Sans-serif;background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;visibility:hidden;display:none">
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>Close1.png" onclick="JavaScript:ShowElt('LV001',false)" title="Close" style="float:right;padding:4px" />
