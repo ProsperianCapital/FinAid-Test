@@ -23,7 +23,8 @@ namespace PCIWebFinAid
 				string[] lCode  = { "LanguageCode"       , "ENG" };
 				string[] lDial  = { "LanguageDialectCode", "0002" };
 				string[] coun   = { "CountryCode"        , "RSA" };
-				string[] mobile = { "MobileNumber"       , "0827851977" };
+				string[] mobile = { "MobileNumber"       , "27827851977" };
+				string[] msg    = { "Message"            , "Some message here" };
 				string[] query  = { "QueryName"          , "FinTechLogOn" };
 				string[] key    = { "SecretKey"          , "7e6415a7cb790238fd12430a0ce419b3" };
 				string[] app    = { "ApplicationCode"    , "006" };
@@ -38,6 +39,7 @@ namespace PCIWebFinAid
 					          + Tools.JSONPair(lDial [0],lDial [1]      ) + Environment.NewLine
 					          + Tools.JSONPair(coun  [0],coun  [1]      ) + Environment.NewLine
 					          + Tools.JSONPair(mobile[0],mobile[1]      ) + Environment.NewLine
+					          + Tools.JSONPair(msg   [0],msg   [1]      ) + Environment.NewLine
 					          + Tools.JSONPair(query [0],query [1]      ) + Environment.NewLine
 					          + Tools.JSONPair(key   [0],key   [1]      ) + Environment.NewLine
 					          + Tools.JSONPair(app   [0],app   [1],1,"","}");
@@ -50,6 +52,7 @@ namespace PCIWebFinAid
 					          + Tools.XMLCell(lDial [0],lDial [1]) + Environment.NewLine
 					          + Tools.XMLCell(coun  [0],coun  [1]) + Environment.NewLine
 					          + Tools.XMLCell(mobile[0],mobile[1]) + Environment.NewLine
+					          + Tools.XMLCell(msg   [0],msg   [1]) + Environment.NewLine
 					          + Tools.XMLCell(query [0],query [1]) + Environment.NewLine
 					          + Tools.XMLCell(key   [0],key   [1]) + Environment.NewLine
 					          + Tools.XMLCell(app   [0],app   [1]) + Environment.NewLine
@@ -62,6 +65,7 @@ namespace PCIWebFinAid
 				             + lDial [0] + "=" + lDial [1] + "&" + Environment.NewLine
 				             + coun  [0] + "=" + coun  [1] + "&" + Environment.NewLine
 				             + mobile[0] + "=" + mobile[1] + "&" + Environment.NewLine
+				             + msg   [0] + "=" + msg   [1] + "&" + Environment.NewLine
 				             + query [0] + "=" + query [1] + "&" + Environment.NewLine
 				             + key   [0] + "=" + key   [1] + "&" + Environment.NewLine
 				             + app   [0] + "=" + app   [1];
@@ -75,6 +79,7 @@ namespace PCIWebFinAid
 				             + "<input type='hidden' name='" + lDial [0] + "' value='" + lDial [1] + "' />" + Environment.NewLine
 				             + "<input type='hidden' name='" + coun  [0] + "' value='" + coun  [1] + "' />" + Environment.NewLine
 				             + "<input type='hidden' name='" + mobile[0] + "' value='" + mobile[1] + "' />" + Environment.NewLine
+				             + "<input type='hidden' name='" + msg   [0] + "' value='" + msg   [1] + "' />" + Environment.NewLine
 				             + "<input type='hidden' name='" + query [0] + "' value='" + query [1] + "' />" + Environment.NewLine
 				             + "<input type='hidden' name='" + key   [0] + "' value='" + key   [1] + "' />" + Environment.NewLine
 				             + "<input type='hidden' name='" + app   [0] + "' value='" + app   [1] + "' />" + Environment.NewLine
