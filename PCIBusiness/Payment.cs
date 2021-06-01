@@ -47,7 +47,7 @@ namespace PCIBusiness
 		private string   providerUserID;
 		private string   providerPassword;
 		private string   providerURL;
-//		private string   providerHost;
+		private string   providerProfileID;
 
 //	Token Provider (eg. TokenEx)
 		private string   tokenizerCode;
@@ -58,6 +58,10 @@ namespace PCIBusiness
 		private int      processMode;
 		private byte     transactionType;
 		private string   webForm;
+
+//	Stripe-specific fields
+		private string   customerID;
+		private string   paymentMethodID;
 
 		private Transaction transaction;
 
@@ -83,6 +87,16 @@ namespace PCIBusiness
 //			get { return  Tools.NullToString(tokenizerURL); }
 //			set { tokenizerURL = Tools.NullToString(value); }
 //		}
+
+//		Stripe stuff
+		public string    CustomerID
+		{
+			get { return  Tools.NullToString(customerID); }
+		}
+		public string    PaymentMethodID
+		{
+			get { return  Tools.NullToString(paymentMethodID); }
+		}
 
 //		Payment Provider stuff
 		public string    BureauCode
@@ -173,6 +187,19 @@ namespace PCIBusiness
 //				return "";
 //			}
 //		}
+		public string    ProviderProfileID
+		{
+			set { providerProfileID = value.Trim(); }
+			get
+			{
+				if ( Tools.NullToString(providerProfileID).Length > 0 )
+					return providerProfileID;
+//				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+//					return "601591F8-04DA-4E9D-94E1-A5D7649C0EB7";
+				return "";
+			}
+		}
+
 		public string    ProviderUserID
 		{
 			set { providerUserID = value.Trim(); }
@@ -526,6 +553,21 @@ namespace PCIBusiness
 //				return 0;
 			}
 		}
+		public  int      CardExpiryYear
+		{
+			get
+			{
+				try
+				{
+					int x = Convert.ToInt32(ccExpiryYear);
+					if ( x > 1900 && x < 9999 )
+						return x;
+				}
+				catch
+				{ }
+				return System.DateTime.Now.Year+1;
+			}
+		}
 		public  string   CardExpiryMM // Pad with zeroes, eg. 07
 		{
 			get
@@ -579,6 +621,18 @@ namespace PCIBusiness
 		{
 			get { return  Tools.NullToString(ccName); }
 			set { ccName = value.Trim(); }
+		}
+		public  string   CardNameSplit(byte firstLast)
+		{
+			string nm = Tools.NullToString(ccName);
+			if ( nm.Length < 1 )
+				return "";
+			int k = nm.IndexOf(" ");
+			if ( k < 1 )
+				return nm;
+			if ( firstLast <= 1 )
+				return nm.Substring(0,k);
+			return nm.Substring(k).Trim();
 		}
 		public  string   CardCVV
 		{
@@ -796,9 +850,9 @@ namespace PCIBusiness
 
 		//	Payment Provider
 			providerKey       = dbConn.ColString("SafeKey");
-		//	providerKeyPublic = dbConn.ColString("PublicKey");
 			providerURL       = dbConn.ColString("url");
 			providerAccount   = dbConn.ColString("MerchantAccount",0,0);
+			providerProfileID = dbConn.ColString("MerchantProfileId",0,0);
 			providerUserID    = dbConn.ColString("MerchantUserId",0,0);
 			providerPassword  = dbConn.ColString("MerchantUserPassword",0,0);
 
@@ -826,15 +880,17 @@ namespace PCIBusiness
 			paymentDescription        = dbConn.ColString("description",0,0);
 
 		//	Card/token/transaction details, not always present, don't log errors
-			ccName        = dbConn.ColString("nameOnCard",0,0);
-			ccNumber      = dbConn.ColString("cardNumber",0,0);
-			ccExpiryMonth = dbConn.ColString("cardExpiryMonth",0,0);
-			ccExpiryYear  = dbConn.ColString("cardExpiryYear",0,0);
-			ccType        = dbConn.ColString("cardType",0,0);
-			ccCVV         = dbConn.ColString("cvv",0,0);
-			ccToken       = dbConn.ColString("token",0,0);
-			ccPIN         = dbConn.ColString("PIN",0,0);
-			transactionID = dbConn.ColString("transactionId",0,0);
+			ccName          = dbConn.ColString("nameOnCard",0,0);
+			ccNumber        = dbConn.ColString("cardNumber",0,0);
+			ccExpiryMonth   = dbConn.ColString("cardExpiryMonth",0,0);
+			ccExpiryYear    = dbConn.ColString("cardExpiryYear",0,0);
+			ccType          = dbConn.ColString("cardType",0,0);
+			ccCVV           = dbConn.ColString("cvv",0,0);
+			ccToken         = dbConn.ColString("token",0,0);
+			ccPIN           = dbConn.ColString("PIN",0,0);
+			transactionID   = dbConn.ColString("transactionId",0,0);
+			customerID      = dbConn.ColString("customerId",0,0);
+			paymentMethodID = dbConn.ColString("paymentMethodId",0,0);
 
 		//	Token Provider (if empty, then it is the same as the payment provider)
 			if ( dbConn.ColStatus("TxKey") == Constants.DBColumnStatus.ColumnOK )

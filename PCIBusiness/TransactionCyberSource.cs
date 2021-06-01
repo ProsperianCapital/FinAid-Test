@@ -496,6 +496,9 @@ namespace PCIBusiness
 //				webReq.Headers["Date"]            = theDate.ToString();        // "Fri, 11 Dec 2020 07:18:03 GMT";
 //				webReq.Headers["Host"]            = "apitest.cybersource.com"; // NO! Cannot set this here
 				webReq.Headers["Digest"]          = digest;
+//	Not needed for REST, but include it if supplied
+				if ( payment.ProviderProfileID.Length > 0 )
+					webReq.Headers["profile-id"]   = payment.ProviderProfileID;
 
 //				ret                               = 175;
 //				sigSource                         = "host: "            + webRequest.Host            + "\n"
@@ -521,23 +524,26 @@ namespace PCIBusiness
 				                                  + ", signature=" + sep + sigCoded + sep;
 				ret                               = 200;
 
-				Tools.LogInfo("CallWebService/200", "Tran="             + tranDesc                + Environment.NewLine
-				                                  + "pURL="             + pURL                    + Environment.NewLine
-				                                  + "tURL="             + tURL                    + Environment.NewLine
-				                                  + "Merchant Id="      + payment.ProviderAccount + Environment.NewLine
-				                                  + "Key Detail/Id="    + payment.ProviderUserID  + Environment.NewLine
-				                                  + "Secret Key="       + payment.ProviderKey     + Environment.NewLine
-				                                  + "JSON Sent="        + xmlSent                 + Environment.NewLine
-				                                  + "Signature Input="  + sigSource               + Environment.NewLine
-				                                  + "Signature Output=" + sigCoded                + Environment.NewLine
-				                                  + "Request Header[v-c-merchant-id]=" + webReq.Headers["v-c-merchant-id"] + Environment.NewLine
-				                                  + "Request Header[Date]="            + webReq.Headers["Date"]            + Environment.NewLine
-				                                  + "Request Header[Host]="            + webReq.Host                       + Environment.NewLine
-				                                  + "Request Header[Digest]="          + webReq.Headers["Digest"]          + Environment.NewLine
-				                                  + "Request Header[Signature]="       + webReq.Headers["Signature"]
-				                                  , 10, this);
-
-				Tools.LogInfo("CallWebService/203", "(In) Tran=" + tranDesc + Environment.NewLine + xmlSent, 220, this);
+				if ( Tools.SystemIsLive() )
+					Tools.LogInfo("CallWebService/201", "(In) Tran=" + tranDesc + Environment.NewLine + xmlSent, 220, this);
+				else
+					Tools.LogInfo("CallWebService/202", "Tran="             + tranDesc                  + Environment.NewLine
+					                                  + "pURL="             + pURL                      + Environment.NewLine
+					                                  + "tURL="             + tURL                      + Environment.NewLine
+					                                  + "Merchant Id="      + payment.ProviderAccount   + Environment.NewLine
+					                                  + "Profile Id="       + payment.ProviderProfileID + Environment.NewLine
+					                                  + "Key Detail/Id="    + payment.ProviderUserID    + Environment.NewLine
+					                                  + "Secret Key="       + payment.ProviderKey       + Environment.NewLine
+					                                  + "JSON Sent="        + xmlSent                   + Environment.NewLine
+					                                  + "Signature Input="  + sigSource                 + Environment.NewLine
+					                                  + "Signature Output=" + sigCoded                  + Environment.NewLine
+					                                  + "Request Header[v-c-merchant-id]=" + webReq.Headers["v-c-merchant-id"] + Environment.NewLine
+					                                  + "Request Header[Date]="            + webReq.Headers["Date"]            + Environment.NewLine
+					                                  + "Request Header[Host]="            + webReq.Host                       + Environment.NewLine
+					                                  + "Request Header[Digest]="          + webReq.Headers["Digest"]          + Environment.NewLine
+					                                  + "Request Header[Signature]="       + webReq.Headers["Signature"]       + Environment.NewLine
+					                                  + "Request Header[profile-id]="      + payment.ProviderProfileID
+					                                  , 231, this);
 
 				using (Stream stream = webReq.GetRequestStream())
 				{
@@ -936,8 +942,8 @@ namespace PCIBusiness
 				                       , { "signed_date_time"                   , dt.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'") } // "2021-01-10T03:16:54Z"
 				                       , { "payment_method"                     , "card" }
 				                       , { "card_cvn"                           , Tools.JSONSafe(payment.CardCVV) }
-				                       , { "bill_to_forename"                   , Tools.JSONSafe(payment.FirstName) }
-				                       , { "bill_to_surname"                    , Tools.JSONSafe(payment.LastName) }
+				                       , { "bill_to_forename"                   , Tools.JSONSafe(payment.CardNameSplit(1)) }
+				                       , { "bill_to_surname"                    , Tools.JSONSafe(payment.CardNameSplit(2)) }
 				                       , { "bill_to_email"                      , Tools.JSONSafe(payment.EMail,1) }
 				                       , { "bill_to_phone"                      , Tools.JSONSafe(payment.PhoneCell) }
 				                       , { "bill_to_address_line1"              , Tools.JSONSafe(payment.Address1(65)) }
