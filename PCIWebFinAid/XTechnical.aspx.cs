@@ -20,8 +20,13 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) != 0 )
+
+			int  x  = ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral);
+			if ( x != 0 && ! sessionGeneral.AdminUser )
 				StartOver(10999);
+
+//			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) != 0 )
+//				StartOver(10999);
 		}
 
 		private string ReplacePassword(string connStr)

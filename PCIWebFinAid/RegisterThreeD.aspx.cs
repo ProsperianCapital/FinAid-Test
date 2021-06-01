@@ -24,19 +24,19 @@ namespace PCIWebFinAid
 			resultCode   = WebTools.RequestValueString(Request,"ResultCode");
 			resultMsg    = WebTools.RequestValueString(Request,"ResultMessage");
 
-			string sql   = "exec sp_WP_PaymentRegister3DSecA @ContractCode=" + Tools.DBString(transRef);
-
-			try
-			{
-				using (StreamReader reader = new StreamReader(Request.InputStream))
-				{
-					ret           = 20;
-					string webStr = reader.ReadToEnd();
-					Tools.LogInfo("PageLoad/14",webStr,222,this);
-				}
-			}
-			catch
-			{ }
+//	Testing ...
+//
+//			try
+//			{
+//				using (StreamReader reader = new StreamReader(Request.InputStream))
+//				{
+//					ret           = 20;
+//					string webStr = reader.ReadToEnd();
+//					Tools.LogInfo("PageLoad/14",webStr,222,this);
+//				}
+//			}
+//			catch
+//			{ }
 
 			try
 			{
@@ -52,9 +52,11 @@ namespace PCIWebFinAid
 				ret               = 40;
 				Transaction trans = null;
 				string      token = "";
+				string      sql   = "exec sp_WP_PaymentRegister3DSecA @ContractCode=" + Tools.DBString(transRef);
 
 				if ( providerCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
 				{
+					Tools.LogInfo("PageLoad/16",Request.Url.AbsoluteUri,222,this);
 					ret         = 50;
 					trans       = new TransactionCyberSource();
 					resultCode  = WebTools.RequestValueString(Request,"auth_response");
@@ -182,11 +184,12 @@ namespace PCIWebFinAid
 			if ( overWrite || lbl100504.Text.Length < 1 )
 				lbl100504.Text = head2 + ( head2.Length > 0 ? "<br /><br />" : "" )
 					            + "<table style='white-space:nowrap'>"
-								   + "<tr><td><b>Transaction Result Code</b></td><td> : " + resultCode + "</td></tr>"
-								   + "<tr><td><b>Transaction Message</b></td><td> : "     + resultMsg + "</td></tr>"
-								   + "<tr><td><b>Transaction Id</b></td><td> : "          + providerRef + "</td></tr>"
-								   + "<tr><td><b>Contract/Transaction Reference</b></td><td> : " + transRef + "</td></tr>"
-								   + "<tr><td><b>Internal code (ret)</b></td><td> : "            + ret.ToString() + "</td></tr></table>";
+								   + "<tr><td><b>Transaction Result Code</b></td><td> : "        + resultCode     + "</td></tr>"
+								   + "<tr><td><b>Transaction Message</b></td><td> : "            + resultMsg      + "</td></tr>"
+								   + "<tr><td><b>Transaction Id</b></td><td> : "                 + providerRef    + "</td></tr>"
+								   + "<tr><td><b>Contract/Transaction Reference</b></td><td> : " + transRef       + "</td></tr>"
+								   + "<tr><td><b>Internal code (ret)</b></td><td> : "            + ret.ToString() + "</td></tr>"
+				               + "</table>";
 		}
 	}
 }

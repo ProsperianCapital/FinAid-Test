@@ -171,6 +171,12 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechGetiSOSInfo").ToUpper() )
 					GetiSOSInfo();
 
+				else if ( queryName == ("FinTechGetiSOSInfo(v2)").ToUpper() )
+					GetiSOSInfo(2);
+
+				else if ( queryName == ("FinTechGetiSOSInfo(Test)").ToUpper() )
+					GetiSOSInfo(199);
+
 				else if ( queryName == ("FinTechRegisteriSOSEvent").ToUpper() )
 					RegisteriSOSEvent();
 
@@ -310,12 +316,15 @@ namespace PCIWebFinAid
 			return SetError(13999,"Internal error: SQL " + sqlSP,sql,sql);
 		}
 
-		private int GetiSOSInfo()
+		private int GetiSOSInfo(byte verNo=0) // Use verNo = 199 for testing
 		{
 			if ( CheckParameters("Mobile") > 0 )
 				return errorCode;
 
-			sqlSP = "sp_iSOS_Get_iSOSAppDataA";
+			if ( verNo == 2 )
+				sqlSP = "sp_iSOS_Get_iSOSAppDataB";
+			else
+				sqlSP = "sp_iSOS_Get_iSOSAppDataA";
 
 			using (MiscList mList = new MiscList())
 				try
@@ -352,7 +361,12 @@ namespace PCIWebFinAid
 						            + Tools.JSONPair("Text"         ,buttonText)
 						            + Tools.JSONPair("ImageCode"    ,mList.GetColumn(colName+"ImageCode"))
 						            + Tools.JSONPair("ImageFileName",mList.GetColumn(colName+"ImageFileName"))
-						            + Tools.JSONPair("NumberToDial" ,mList.GetColumn(colName+"NumberToDial"),1,"","},") );
+						            + Tools.JSONPair("NumberToDial" ,mList.GetColumn(colName+"NumberToDial"),1,"","") );
+						if ( verNo == 2 )
+							json.Append ( Tools.JSONPair("SMSText"   ,mList.GetColumn(colName+"SMSText"),1,",") );
+						else if ( verNo == 199 ) // Test
+							json.Append ( Tools.JSONPair("SMSText"   ,"This is some SMS text",1,",") );
+						json.Append("},");
 					}
 					JSONAppend("]");
 					return 0;
