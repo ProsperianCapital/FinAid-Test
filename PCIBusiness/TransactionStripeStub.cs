@@ -1,7 +1,4 @@
 using System;
-using System.Text;
-using System.Net;
-using System.IO;
 
 namespace PCIBusiness
 {
@@ -9,7 +6,7 @@ namespace PCIBusiness
 	{
 		public  bool Successful
 		{
-			get { return true; }
+			get { return false; }
 		}
 
 		public override int GetToken(Payment payment)
@@ -25,11 +22,6 @@ namespace PCIBusiness
 		public override int CardPayment(Payment payment)
 		{
 			return 99030;
-		}
-
-		private int TestService(byte live=0)
-      {
-			return 99040;;
 		}
 
 		public TransactionStripe() : base()

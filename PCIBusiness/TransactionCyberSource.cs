@@ -923,8 +923,6 @@ namespace PCIBusiness
 				ret       = 20;
 				urlReturn = urlReturn + "RegisterThreeD.aspx?ProviderCode="+bureauCode
 				                      +                    "&TransRef="+Tools.XMLSafe(payment.MerchantReference);
-//				urlReturn = urlReturn + "RegisterThreeD.aspx?ProviderCode="+Tools.BureauCode(Constants.PaymentProvider.CyberSource)
-//				                      +                    "&TransRef="+Tools.XMLSafe(payment.MerchantReference);
 
 				if ( payment.TokenizerCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
 					ccNo = "{{{" + payment.CardToken + "}}}";
@@ -934,7 +932,7 @@ namespace PCIBusiness
 				fieldS = new string[,] { { "reference_number"                   , Tools.JSONSafe(payment.MerchantReference) }
 				                       , { "transaction_type"                   , "sale,create_payment_token" }
 				                       , { "currency"                           , "ZAR" }
-				                       , { "amount"                             , "1.49" }
+				                       , { "amount"                             , "0.00" } // "1.49" }
 				                       , { "locale"                             , "en" }
 				                       , { "profile_id"                         , profileId }
 				                       , { "access_key"                         , accessKey }
