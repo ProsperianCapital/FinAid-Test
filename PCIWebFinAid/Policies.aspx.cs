@@ -11,6 +11,7 @@ namespace PCIWebFinAid
 		int    ret;
 		string sql;
 		string spr;
+		string countryCode;
 		string productCode;
 		string languageCode;
 		string languageDialectCode;
@@ -23,6 +24,7 @@ namespace PCIWebFinAid
 
 			if ( Page.IsPostBack )
 			{
+				countryCode         = hdnCountryCode.Value;
 				productCode         = hdnProductCode.Value;
 				languageCode        = hdnLangCode.Value;
 				languageDialectCode = hdnLangDialectCode.Value;
@@ -60,7 +62,6 @@ namespace PCIWebFinAid
 		{
 			byte   err;
 			string fieldCode;
-			string fieldHead;
 			string fieldValue;
 			string fieldURL;
 			string stdParms = " @ProductCode="         + Tools.DBString(productCode)
@@ -178,7 +179,7 @@ namespace PCIWebFinAid
 
 		private void LoadProduct()
 		{
-			byte ret  = WebTools.LoadProductFromURL(Request,ref productCode,ref languageCode,ref languageDialectCode);
+			byte ret  = WebTools.LoadProductFromURL(Request,ref countryCode,ref productCode,ref languageCode,ref languageDialectCode);
 			if ( ret != 0 || productCode.Length < 1 || languageCode.Length < 1 || languageDialectCode.Length < 1 )
 			{
 				SetErrorDetail("LoadProduct", 10666, "Unable to load product/language details", "ret="+ret.ToString(), 2, 2, null, false, errPriority);
@@ -186,6 +187,7 @@ namespace PCIWebFinAid
 				languageCode          = "ENG";
 				languageDialectCode   = "0002";
 			}
+			hdnCountryCode.Value     = countryCode;
 			hdnProductCode.Value     = productCode;
 			hdnLangCode.Value        = languageCode;
 			hdnLangDialectCode.Value = languageDialectCode;

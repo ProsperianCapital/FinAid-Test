@@ -12,11 +12,14 @@ namespace PCIWebFinAid
 		private string transRef;
 		private string resultCode;
 		private string resultMsg;
+		private int    provRet;
 		private int    sqlRet;
 		private int    ret;
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
+			provRet      = 990;
+			sqlRet       = 770;
 			ret          = 10;
 			providerRef  = "";
 			providerCode = WebTools.RequestValueString(Request,"ProviderCode");
@@ -40,25 +43,26 @@ namespace PCIWebFinAid
 
 			try
 			{
-				if ( resultCode.Length > 0 || resultMsg.Length > 0 || transRef.Length < 1 )
-				{
-					ret = 30;
-					SetMessage("Error ...","Your payment failed.");
-//					Tools.LogException("PageLoad/20",sql,this);
-//					Tools.LogInfo     ("PageLoad/13",sql,222,this);
-					return;
-				}
+				Tools.LogInfo("PageLoad/16",Request.Url.AbsoluteUri,222,this);
+
+			//	if ( resultCode.Length > 0 || resultMsg.Length > 0 || transRef.Length < 1 )
+			//	{
+			//		ret = 30;
+			//		SetMessage("Error ...","Your payment failed.");
+			//		return;
+			//	}
 
 				ret               = 40;
 				Transaction trans = null;
 				string      token = "";
 				string      sql   = "exec sp_WP_PaymentRegister3DSecA @ContractCode=" + Tools.DBString(transRef);
 
-				if ( providerCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
+				if ( providerCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) ||
+				     providerCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource_Moto) )
 				{
-					Tools.LogInfo("PageLoad/16",Request.Url.AbsoluteUri,222,this);
 					ret         = 50;
-					trans       = new TransactionCyberSource();
+					provRet     = 0;
+				//	trans       = new TransactionCyberSource(providerCode);
 					resultCode  = WebTools.RequestValueString(Request,"auth_response");
 					providerRef = WebTools.RequestValueString(Request,"transaction_id");
 					token       = WebTools.RequestValueString(Request,"payment_token");
@@ -70,7 +74,20 @@ namespace PCIWebFinAid
 					if ( xMsg.Length      > 0 ) resultMsg = resultMsg + " (" + xMsg + ")";
 
 					if ( resultCode.Length > 0 && resultCode != "0" && resultCode != "00" && resultCode != "000" && resultCode != "0000" )
+					{
 						SetMessage("Error ...","Your payment was rejected.");
+						provRet = 210;
+					}
+				}
+				else if ( providerCode == Tools.BureauCode(Constants.PaymentProvider.Stripe) )
+				{
+					ret         = 50;
+					trans       = new TransactionStripe();
+					providerRef = WebTools.RequestValueString(Request,"payment_intent");
+				//	string id   = WebTools.RequestValueString(Request,"payment_intent_client_secret");
+					provRet     = trans.ThreeDSecureCheck(providerRef);
+					resultCode  = trans.ResultCode;
+					resultMsg   = trans.ResultMessage;
 				}
 				else
 				{
@@ -79,29 +96,20 @@ namespace PCIWebFinAid
 				//	resultCode  = "XXX-XXX-XXX";
 				//	providerURL = WebTools.RequestValueString(Request,"resourcePath");
 					providerRef = WebTools.RequestValueString(Request,"id");
-					sqlRet      = trans.ThreeDSecureCheck(providerRef);
+					provRet     = trans.ThreeDSecureCheck(providerRef);
 					resultCode  = trans.ResultCode;
 				}
 
-				ret   = 100;
+				ret   = 0;
 				trans = null;
 				sql   = sql + ",@ReferenceNumber="    + Tools.DBString(providerRef)
 				            + ",@Status="             + Tools.DBString(resultCode)
 				            + ",@PaymentBureauCode="  + Tools.DBString(providerCode)
 				            + ",@PaymentBureauToken=" + Tools.DBString(token);
 
-//				using (TransactionPeach trans = new TransactionPeach())
-//				{
-//					sqlRet    = trans.ThreeDSecureCheck(peachID);
-//					peachCode = trans.ResultCode;
-//					sql       = sql + Tools.DBString(peachCode);
-//				}
-
-//				Tools.LogInfo("RegisterThreeD.PageLoad/5",sql,222);
-
 				using (MiscList mList = new MiscList())
 				{
-					ret    = 120;
+				//	ret    = 120;
 //	Single language
 //					sqlRet = mList.ExecQuery(sql,0,"",false,true);
 
@@ -111,69 +119,27 @@ namespace PCIWebFinAid
 
 					if ( sqlRet == 0 )
 					{
-						ret = 0;
-
-	//					ret         = 130;
-	//					string  pc  = mList.GetColumn("ProductCode");
-	//					string  lc  = mList.GetColumn("LanguageCode");
-	//					string  ldc = mList.GetColumn("LanguageDialectCode");
-	//					string  fieldCode;
-	//					string  fieldValue;
-	//					Literal ctlLabel;
-	//					sql = "exec sp_WP_Get_ProductWebsiteRegContent"
-	//					    +     " @ProductCode="         + Tools.DBString(pc)
-	//						 +     ",@LanguageCode="        + Tools.DBString(lc)
-	//						 +     ",@LanguageDialectCode=" + Tools.DBString(ldc)
-	//						 +     ",@Page='S'";
-	//
-//	//					Tools.LogInfo("RegisterThreeD.PageLoad/10",sql,222);
-	//
-	//					ret    = 150;
-	//					sqlRet = mList.ExecQuery(sql,0);
-	//					Tools.LogInfo("PageLoad/55",sql+" (sqlRet="+sqlRet.ToString()+")",222,this);
-	//
-	//					if ( sqlRet == 0 && ! mList.EOF )
-	//						while ( ! mList.EOF )
-	//						{
-	//							ret        = 0; // All OK
-	//							fieldCode  = mList.GetColumn("WebsiteFieldCode");
-	//							fieldValue = mList.GetColumn("WebsiteFieldValue");
-	//							ctlLabel  = (Literal)FindControl("lbl"+fieldCode);
-	//							if ( ctlLabel   != null )
-	//								ctlLabel.Text = fieldValue.Replace(Environment.NewLine,"<br />");
-	//							mList.NextRow();
-	//						}
-	//					else
-	//					{
-	//						ret = 190;
-	//						sql =   "Contract Code="           + transRef
-	//						    + ", Transaction Id="          + providerRef
-	//						    + ", Transaction Result Code=" + resultCode
-	//						    + ", sqlRet="                  + sqlRet.ToString()
-	//						    + ", Ret="                     + ret.ToString()
-	//						    + ", SQL="                     + sql;
-//	//						Tools.LogException("PageLoad/20",sql,this);
-	//						Tools.LogInfo     ("PageLoad/65",sql,222,this);
-	//					}
-
+					//	ret = 0;
 					}
 					else
 					{
-						ret = 210;
+					//	ret = 210;
 						Tools.LogException("PageLoad/70","sqlRet="+sqlRet.ToString()+" ("+sql+")",null,this);
 						Tools.LogInfo     ("PageLoad/75","sqlRet="+sqlRet.ToString()+" ("+sql+")",222,this);
 					}
 				}
-				if ( ret == 0 )
+				if ( provRet == 0 )
 					SetMessage("Thank You ...","Your application has been successfully received.",false);
+				else if ( provRet < 1000 )
+					SetMessage("Thank You ...","Your application was received but there was a problem with your card and/or payment.",false);
 				else
-					SetMessage("Oops ...","Something seems to have gone wrong with your payment.<br /><br />We have logged the error and will investigate.",false);
+					SetMessage("Oops ...","Something seems to have gone wrong.<br /><br />We have logged the error and will investigate.",false);
 			}
 			catch (Exception ex)
 			{
 				SetMessage("Oops ...","Something seems to have gone wrong.");
-				Tools.LogException("PageLoad/90","",ex,this);
-				Tools.LogInfo     ("PageLoad/95",ex.Message,222,this);
+				Tools.LogException("PageLoad/90","ret="+ret.ToString(),ex,this);
+				Tools.LogInfo     ("PageLoad/95","ret="+ret.ToString()+", "+ex.Message,222,this);
 			}
 		}
 
@@ -188,7 +154,8 @@ namespace PCIWebFinAid
 								   + "<tr><td><b>Transaction Message</b></td><td> : "            + resultMsg      + "</td></tr>"
 								   + "<tr><td><b>Transaction Id</b></td><td> : "                 + providerRef    + "</td></tr>"
 								   + "<tr><td><b>Contract/Transaction Reference</b></td><td> : " + transRef       + "</td></tr>"
-								   + "<tr><td><b>Internal code (ret)</b></td><td> : "            + ret.ToString() + "</td></tr>"
+								   + "<tr><td><b>Internal Return Codes</b></td><td> : "
+				               + ret.ToString() + " / " + provRet.ToString() + " / " + sqlRet.ToString()      + "</td></tr>"
 				               + "</table>";
 		}
 	}

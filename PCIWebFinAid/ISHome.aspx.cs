@@ -11,6 +11,7 @@ namespace PCIWebFinAid
 		int    ret;
 		string sql;
 		string spr;
+		string countryCode;
 		string productCode;
 		string languageCode;
 		string languageDialectCode;
@@ -24,6 +25,7 @@ namespace PCIWebFinAid
 
 			if ( Page.IsPostBack )
 			{
+				countryCode         = hdnCountryCode.Value;
 				productCode         = hdnProductCode.Value;
 				languageCode        = hdnLangCode.Value;
 				languageDialectCode = hdnLangDialectCode.Value;
@@ -43,6 +45,7 @@ namespace PCIWebFinAid
 		private void LoadStaticDetails()
 		{
 		//	Defaults
+			countryCode         = "ZA";
 			productCode         = "10387";
 			languageCode        = "ENG";
 			languageDialectCode = "0002";
@@ -56,6 +59,10 @@ namespace PCIWebFinAid
 					string refer    = Request.Url.AbsoluteUri.Trim();
 					int    k        = refer.IndexOf("://");
 					refer           = refer.Substring(k+3);
+
+					k = refer.IndexOf(".");
+					if ( k > 0 )
+						countryCode = refer.Substring(0,k).ToUpper();
 
 					if ( ! pageName.StartsWith("/") )
 						pageName = "/" + pageName;
@@ -89,7 +96,7 @@ namespace PCIWebFinAid
 					PCIBusiness.Tools.LogException("LoadStaticDetails/10999","ret="+ret.ToString(),ex,this);
 				}
 
-//	Override if passed via URL
+//	Override if passed via URL (not CountryCode)
 			ret      = 10070;
 			string h = WebTools.RequestValueString(Request,"PC");
 			if ( h.Length > 0 ) productCode = h;
@@ -98,6 +105,7 @@ namespace PCIWebFinAid
 			h        = WebTools.RequestValueString(Request,"LDC");
 			if ( h.Length > 0 ) languageDialectCode = h;
 
+			hdnCountryCode.Value     = countryCode;
 			hdnProductCode.Value     = productCode;
 			hdnLangCode.Value        = languageCode;
 			hdnLangDialectCode.Value = languageDialectCode;

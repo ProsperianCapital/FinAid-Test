@@ -43,6 +43,7 @@ function Legal(code)
 <form id="frmHome" runat="server">
 	<ascx:Header runat="server" ID="ascxHeader" />
 
+	<asp:HiddenField runat="server" ID="hdnCountryCode" />
 	<asp:HiddenField runat="server" ID="hdnProductCode" />
 	<asp:HiddenField runat="server" ID="hdnLangCode" />
 	<asp:HiddenField runat="server" ID="hdnLangDialectCode" />

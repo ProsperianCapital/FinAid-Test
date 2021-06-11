@@ -11,6 +11,7 @@ namespace PCIWebFinAid
 		int    ret;
 		string sql;
 		string spr;
+		string countryCode;
 		string productCode;
 		string languageCode;
 		string languageDialectCode;
@@ -24,28 +25,14 @@ namespace PCIWebFinAid
 
 			if ( Page.IsPostBack )
 			{
+				countryCode         = hdnCountryCode.Value;
 				productCode         = hdnProductCode.Value;
 				languageCode        = hdnLangCode.Value;
 				languageDialectCode = hdnLangDialectCode.Value;
 			}
 			else
 			{
-//				productCode         = WebTools.RequestValueString(Request,"PC");
-//				languageCode        = WebTools.RequestValueString(Request,"LC");
-//				languageDialectCode = WebTools.RequestValueString(Request,"LDC");
-//
-//				if ( productCode.Length < 1 || languageCode.Length < 1 || languageDialectCode.Length < 1 )
-//					LoadProduct();
-
 				LoadProduct();
-
-				if ( ! Tools.SystemIsLive() )
-				{
-					if ( productCode.Length         < 1 ) productCode         = "10387";
-					if ( languageCode.Length        < 1 ) languageCode        = "ENG";
-					if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
-				}	
-
 //				LoadStaticDetails();
 				LoadDynamicDetails();
 				LoadGoogleAnalytics();
@@ -301,7 +288,9 @@ namespace PCIWebFinAid
 					                    + ",@Button8Number="  + Tools.DBString(X105126.Text,47)
 					                    + ",@Button8Message=" + Tools.DBString(X105127.Text,47)
 					                    + ",@Button9Number="  + Tools.DBString(X105129.Text,47)
-					                    + ",@Button9Message=" + Tools.DBString(X105130.Text,47);
+					                    + ",@Button9Message=" + Tools.DBString(X105130.Text,47)
+					                    + ",@LanguageCode="   + Tools.DBString(languageCode,47)
+					                    + ",@CountryCode="    + Tools.DBString(countryCode ,47);
 					ret = mList.ExecQuery(sql,0,"",false,true);
 					if ( ret != 0 )
 						SetErrorDetail("btnSave_Click", 13120, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
@@ -315,10 +304,20 @@ namespace PCIWebFinAid
 
 		private void LoadProduct()
 		{
-			byte ret  = WebTools.LoadProductFromURL(Request,ref productCode,ref languageCode,ref languageDialectCode,true);
+			byte ret = WebTools.LoadProductFromURL(Request,ref countryCode,ref productCode,ref languageCode,ref languageDialectCode,true);
+
+			if ( ! Tools.SystemIsLive() )
+			{
+				if ( countryCode.Length         < 1 ) countryCode         = "ZA";
+				if ( productCode.Length         < 1 ) productCode         = "10387";
+				if ( languageCode.Length        < 1 ) languageCode        = "ENG";
+				if ( languageDialectCode.Length < 1 ) languageDialectCode = "0002";
+			}	
+
 			if ( ret != 0 || productCode.Length < 1 || languageCode.Length < 1 || languageDialectCode.Length < 1 )
 				SetErrorDetail("LoadProduct", 10777, "Unable to load product/language details", "ret="+ret.ToString(), 2, 2, null, false, errPriority);
 
+			hdnCountryCode.Value     = countryCode;
 			hdnProductCode.Value     = productCode;
 			hdnLangCode.Value        = languageCode;
 			hdnLangDialectCode.Value = languageDialectCode;

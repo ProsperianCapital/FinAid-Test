@@ -509,6 +509,7 @@ namespace PCIWebFinAid
 		}
 
 		public static byte LoadProductFromURL(HttpRequest req,
+		                                  ref string      countryCode,
 		                                  ref string      productCode,
 		                                  ref string      languageCode,
 		                                  ref string      languageDialectCode,
@@ -516,6 +517,7 @@ namespace PCIWebFinAid
 		{
 			byte   ret          = 10;
 			string sql          = "";
+			countryCode         = "";
 			productCode         = "";
 			languageCode        = "";
 			languageDialectCode = "";
@@ -529,15 +531,25 @@ namespace PCIWebFinAid
 					int    k        = refer.IndexOf("://");
 					refer           = refer.Substring(k+3);
 
+					ret = 30;
+					k   = refer.IndexOf(".");
+					if ( k > 0 )
+						countryCode = refer.Substring(0,k).ToUpper();
+					ret            = 40;
+					if ( countryCode.Length < 2 || countryCode.StartsWith("WWW") || countryCode.StartsWith("LOCALHOST") )
+						countryCode = "ZA";
+					else if ( countryCode.Length > 2 )
+						countryCode = countryCode.Substring(0,2);
+
 					if ( ! pageName.StartsWith("/") )
 						pageName = "/" + pageName;
 
-					ret = 30;
+					ret = 50;
 					k   = refer.ToUpper().IndexOf(pageName.ToUpper());
 					if ( k > 0 )
 						refer = refer.Substring(0,k);
 
-					ret = 40;
+					ret = 60;
 					sql = "exec sp_WP_Get_WebsiteInfoByURL " + PCIBusiness.Tools.DBString(refer);
 					if ( mList.ExecQuery(sql,0) != 0 )
 						PCIBusiness.Tools.LogInfo("WebTools.LoadProductFromURL/3","SQL failed: " + sql,229);
