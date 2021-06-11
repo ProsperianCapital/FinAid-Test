@@ -40,6 +40,7 @@ namespace PCIWebFinAid
 
 				btnErrorDtl.Visible = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
 				btnWidth.Visible    = ( Tools.SystemLiveTestOrDev() == Constants.SystemMode.Development );
+				hdnVer.Value        = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
 
 				EnableControls(1);
 			}
