@@ -420,9 +420,9 @@ namespace PCIWebFinAid
 						            + Tools.JSONPair("ImageFileName",mList.GetColumn(colName+"ImageFileName"))
 						            + Tools.JSONPair("NumberToDial" ,mList.GetColumn(colName+"NumberToDial"),1,"","") );
 						if ( verNo == 2 )
-							json.Append ( Tools.JSONPair("SMSText"   ,mList.GetColumn(colName+"SMSText"),1,",") );
+							json.Append ( Tools.JSONPair("SMSText"   ,mList.GetColumn(colName+"SMSText"),1,",","") );
 						else if ( appMode == "TEST" )
-							json.Append ( Tools.JSONPair("SMSText"   ,"This is some SMS text",1,",") );
+							json.Append ( Tools.JSONPair("SMSText"   ,"This is some SMS text",1,",","") );
 						json.Append("},");
 					}
 					JSONAppend("]");
