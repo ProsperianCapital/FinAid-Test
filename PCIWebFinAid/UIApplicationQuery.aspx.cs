@@ -32,6 +32,7 @@ namespace PCIWebFinAid
 		private string        languageCode;
 		private string        languageDialectCode;
 		private string        mobileNumber;
+		private string        appMode;
 
 		private enum ResultCode
 		{
@@ -93,6 +94,7 @@ namespace PCIWebFinAid
 				userCode            = ParmValue("UserCode");
 				secretKey           = ParmValue("SecretKey");
 				mobileNumber        = ParmValue("MobileNumber");
+				appMode             = ParmValue("AppMode").ToUpper();
 
 				if ( inputDataType != (byte)Constants.WebDataType.FormPost )
 					Tools.LogInfo("QueryData/10","dataType="+inputDataType.ToString()
@@ -174,14 +176,19 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechGetiSOSInfo(v2)").ToUpper() )
 					GetiSOSInfo(2);
 
-				else if ( queryName == ("FinTechGetiSOSInfo(Test)").ToUpper() )
-					GetiSOSInfo(199);
+//				else if ( queryName == ("FinTechGetiSOSInfo(Test)").ToUpper() )
+//					GetiSOSInfo(199);
 
 				else if ( queryName == ("FinTechRegisteriSOSEvent").ToUpper() )
 					RegisteriSOSEvent();
 
 				else if ( queryName == ("FinTechSendSMS").ToUpper() )
 					SendSMS();
+
+//	Should this be here at all?
+				else if ( queryName == ("FinTechGetPageContent").ToUpper() )
+					GetPageContent();
+//	Should this be here at all?
 
 				else
 					SetError(10007,"Invalid query name");
@@ -316,12 +323,62 @@ namespace PCIWebFinAid
 			return SetError(13999,"Internal error: SQL " + sqlSP,sql,sql);
 		}
 
+		private int GetPageContent()
+		{
+			if ( CheckParameters("Lang") > 0 )
+				return errorCode;
+
+			sqlSP = "sp_iSOS_Get_iSOSContent";
+
+			using (MiscList mList = new MiscList())
+				try
+				{
+					if ( appMode == "TEST" )
+						sql = "create table #Temp (FieldCode varchar(100),MobileFieldName varchar(100),MobileFieldValue varchar(100)) "
+						    + "insert into  #Temp values "
+						    + "('1','Field 1','Value 1'),"
+						    + "('2','Field 2','Value 2'),"
+						    + "('3','Field 3','Value 3'),"
+						    + "('4','Field 4','Value 4') "
+						    + "select *,'ENG' as LanguageCode from #Temp";
+					else
+						sql = "exec " + sqlSP + " @LanguageCode=" + Tools.DBString(languageCode);
+
+					if ( mList.ExecQuery(sql,0,"",false) != 0 )
+						return SetError(11705,"Internal error: SQL " + sqlSP,sql,sql);
+
+					if ( mList.EOF )
+						return SetError(11710,"No data returned: SQL " + sqlSP,sql);
+
+					json.Append("\"FieldData\":[");
+
+					while ( ! mList.EOF )
+					{
+						json.Append ( Tools.JSONPair("FieldCode"       ,mList.GetColumn("FieldCode"), 1, "{")
+						            + Tools.JSONPair("LanguageCode"    ,mList.GetColumn("LanguageCode"))
+						            + Tools.JSONPair("MobileFieldName" ,mList.GetColumn("MobileFieldName"))
+						            + Tools.JSONPair("MobileFieldValue",mList.GetColumn("MobileFieldValue"), 1, "", "},") );
+						mList.NextRow();
+					}
+					json.Append("]");
+					return 0;
+				}
+				catch (Exception ex)
+				{
+					Tools.LogException("GetPageContent",sql,ex,this);
+				}
+
+			return SetError(11715,"Internal error: SQL " + sqlSP,sql,sql);
+		}
+
 		private int GetiSOSInfo(byte verNo=0) // Use verNo = 199 for testing
 		{
 			if ( CheckParameters("Mobile") > 0 )
 				return errorCode;
 
-			if ( verNo == 2 )
+			if ( appMode == "TEST" )
+				sqlSP = "sp_iSOS_Get_iSOSAppDataA";
+			else if ( verNo == 2 )
 				sqlSP = "sp_iSOS_Get_iSOSAppDataB";
 			else
 				sqlSP = "sp_iSOS_Get_iSOSAppDataA";
@@ -364,7 +421,7 @@ namespace PCIWebFinAid
 						            + Tools.JSONPair("NumberToDial" ,mList.GetColumn(colName+"NumberToDial"),1,"","") );
 						if ( verNo == 2 )
 							json.Append ( Tools.JSONPair("SMSText"   ,mList.GetColumn(colName+"SMSText"),1,",") );
-						else if ( verNo == 199 ) // Test
+						else if ( appMode == "TEST" )
 							json.Append ( Tools.JSONPair("SMSText"   ,"This is some SMS text",1,",") );
 						json.Append("},");
 					}
@@ -740,7 +797,7 @@ namespace PCIWebFinAid
 			if ( errCode == 0 && json != null && json.Length > 0 )
 				data = data + json.ToString();
 
-			data = data.Trim();
+			data = data.Trim().Replace(",]","]").Replace("[,","[");
 			if ( data.EndsWith(",") )
 				data = data.Substring(0,data.Length-1);
 			data = "{" + data + "}";

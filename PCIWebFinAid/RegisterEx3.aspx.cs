@@ -662,9 +662,14 @@ namespace PCIWebFinAid
 								paymentKey        = miscList.GetColumn("PaymentBureauUserSaveKey");
 								paymentCurrency   = miscList.GetColumn("TransactionalCurrencyCode");
 								paymentAmount     = "0"; // miscList.GetColumn("TransactionalAmount");
-//	Testing
+//	Testing : Stripe
 //								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Stripe);
 //								paymentAccount    = "sk_test_51It78gGmZVKtO2iKBZF7DA5JisJzRqvibQdXSfBj9eQh4f5UDvgCShZIjznOWCxu8MtcJG5acVkDcd8K184gIegx001uXlHI5g"; // Secret key
+//	Testing : PayU
+//								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.PayU);
+//								paymentId         = "800060";
+//								paymentAccount    = "qDRLeKI9";
+//								paymentKey        = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
 //	Testing
 								if ( paymentURL.Length < 1 || paymentAccount.Length < 1 || paymentKey.Length < 1 )
 									Tools.LogInfo("LoadContractCode",sql+" -> bureauCodeToken="  +bureauCodeToken
@@ -706,6 +711,12 @@ namespace PCIWebFinAid
 									{
 										if ( paymentAccount.Length < 1 ) paymentAccount = Tools.ProviderCredentials("Stripe","SecretKey");
 									//	if ( paymentKey.Length     < 1 ) paymentKey     = Tools.ProviderCredentials("Stripe","PublicKey");
+									}
+									else if ( bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.PayU) )
+									{
+										if ( paymentAccount.Length < 1 ) paymentAccount = Tools.ProviderCredentials("PayU","Password");
+										if ( paymentId.Length      < 1 ) paymentId      = Tools.ProviderCredentials("PayU","Id");
+										if ( paymentKey.Length     < 1 ) paymentKey     = Tools.ProviderCredentials("PayU","Key");
 									}
 									if ( paymentCurrency.Length < 1 )
 										paymentCurrency = "ZAR";
@@ -848,6 +859,13 @@ namespace PCIWebFinAid
 				payment.ProviderPassword = paymentAccount; // Secret Key
 			//	payment.PaymentAmount    = 050;            // 50 US Cents
 			//	payment.CurrencyCode     = "USD";          // Minimum amount for Stripe
+			}
+			else if ( payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.PayU) )
+			{
+				trans                    = new TransactionPayU();
+				payment.ProviderUserID   = paymentId;
+				payment.ProviderPassword = paymentAccount;
+				payment.ProviderKey      = paymentKey; // Secret Key
 			}
 			else
 				return;
