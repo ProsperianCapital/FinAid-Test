@@ -325,8 +325,9 @@ namespace PCIWebFinAid
 
 		private int GetPageContent()
 		{
-			if ( CheckParameters("Lang") > 0 )
-				return errorCode;
+//			Don't need language
+//			if ( CheckParameters("Lang") > 0 )
+//				return errorCode;
 
 			sqlSP = "sp_iSOS_Get_iSOSContent";
 
@@ -334,15 +335,17 @@ namespace PCIWebFinAid
 				try
 				{
 					if ( appMode == "TEST" )
-						sql = "create table #Temp (FieldCode varchar(100),MobileFieldName varchar(100),MobileFieldValue varchar(100)) "
-						    + "insert into  #Temp values "
-						    + "('1','Field 1','Value 1'),"
-						    + "('2','Field 2','Value 2'),"
-						    + "('3','Field 3','Value 3'),"
-						    + "('4','Field 4','Value 4') "
-						    + "select *,'ENG' as LanguageCode from #Temp";
-					else
+						sql = "create table #X (FieldCode varchar(50),MobileFieldName varchar(100),MobileFieldValue varchar(100)) "
+						    + "insert into  #X values "
+						    + "('1','Name 1','Value 1'),"
+						    + "('2','Name 2','Value 2'),"
+						    + "('3','Name 3','Value 3'),"
+						    + "('4','Name 4','Value 4') "
+						    + "select *,'ENG' as LanguageCode from #X";
+					else if ( languageCode.Length == 3 )
 						sql = "exec " + sqlSP + " @LanguageCode=" + Tools.DBString(languageCode);
+					else
+						sql = "exec " + sqlSP;
 
 					if ( mList.ExecQuery(sql,0,"",false) != 0 )
 						return SetError(11705,"Internal error: SQL " + sqlSP,sql,sql);
