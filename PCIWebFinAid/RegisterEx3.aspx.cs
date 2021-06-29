@@ -707,7 +707,9 @@ namespace PCIWebFinAid
 										if ( paymentId.Length      < 1 ) paymentId      = Tools.ProviderCredentials("CyberSource_Moto","KeyId");
 										if ( paymentKey.Length     < 1 ) paymentKey     = Tools.ProviderCredentials("CyberSource_Moto","Key");
 									}
-									else if ( bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.Stripe) )
+									else if ( bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.Stripe_EU)  ||
+									          bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.Stripe_USA) ||
+									          bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.Stripe_Asia) )
 									{
 										if ( paymentAccount.Length < 1 ) paymentAccount = Tools.ProviderCredentials("Stripe","SecretKey");
 									//	if ( paymentKey.Length     < 1 ) paymentKey     = Tools.ProviderCredentials("Stripe","PublicKey");
@@ -853,7 +855,9 @@ namespace PCIWebFinAid
 				payment.ProviderAccount = paymentAccount;
 				payment.ProviderUserID  = paymentId;
 			}
-			else if ( payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.Stripe) )
+			else if ( payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.Stripe_EU)  ||
+			          payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.Stripe_USA) ||
+			          payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.Stripe_Asia) )
 			{
 				trans                    = new TransactionStripe();
 				payment.ProviderPassword = paymentAccount; // Secret Key

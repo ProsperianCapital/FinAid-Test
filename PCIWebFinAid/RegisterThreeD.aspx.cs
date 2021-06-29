@@ -79,7 +79,9 @@ namespace PCIWebFinAid
 						provRet = 210;
 					}
 				}
-				else if ( providerCode == Tools.BureauCode(Constants.PaymentProvider.Stripe) )
+				else if ( providerCode == Tools.BureauCode(Constants.PaymentProvider.Stripe_EU)  ||
+				          providerCode == Tools.BureauCode(Constants.PaymentProvider.Stripe_USA) ||
+				          providerCode == Tools.BureauCode(Constants.PaymentProvider.Stripe_Asia) )
 				{
 					ret         = 50;
 					trans       = new TransactionStripe();

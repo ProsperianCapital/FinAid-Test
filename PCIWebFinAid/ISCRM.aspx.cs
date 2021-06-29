@@ -196,6 +196,15 @@ namespace PCIWebFinAid
 //					WebTools.ReplaceControlText(this.Page,"X105104","Label 105104","");
 //					WebTools.ReplaceControlText(this.Page,"X105105","PlaceHolder 105105","");
 //					WebTools.ReplaceControlText(this.Page,"X105106","PlaceHolder 105106","");
+//					X105106.Text = "X105106 Default";
+//					X105109.Text = "X105109 Default";
+//					X105112.Text = "X105112 Default";
+//					X105115.Text = "X105115 Default";
+//					X105118.Text = "X105118 Default";
+//					X105121.Text = "X105121 Default";
+//					X105124.Text = "X105124 Default";
+//					X105127.Text = "X105127 Default";
+//					X105130.Text = "X105130 Default";
 //	Testing
 				}
 				catch (Exception ex)
@@ -219,6 +228,12 @@ namespace PCIWebFinAid
 					ret = 14110;
 					spr = "sp_WP_Get_iSOSUser";
 					sql = "exec " + spr + " @MobileNumber=" + Tools.DBString(phone,47);
+//	Testing
+					if ( phone == "0844385400" )
+						sql = "select '011 222 3333' as Button1Number,'Button 1 Msg' as Button1Message,"
+					       +        "'066 888 1111' as Button6Number,'Button 6 Msg' as Button6Message,"
+					       +        "'077 444 3333' as Button7Number,'Button 7 Msg' as Button7Message";
+//	Testing
 					ret = mList.ExecQuery(sql,0,"",false);
 				//	Tools.LogInfo("btnGet_Click/1",sql + " (ret=" + ret.ToString() + ")",10,this);
 					if ( ret == 0 )
@@ -227,32 +242,52 @@ namespace PCIWebFinAid
 						if ( mList.EOF)
 						{
 							Tools.LogInfo("btnGet_Click/2",sql + " (ret=0, No data)",222,this);
-						//	Show meesage "New customer"
+						//	Show message "New customer"
 						}
 						else
 						{
 							X105105.Text = mList.GetColumn("Button1Number");
-							X105106.Text = mList.GetColumn("Button1Message");
+						//	X105106.Text = mList.GetColumn("Button1Message");
 							X105108.Text = mList.GetColumn("Button2Number");
-							X105109.Text = mList.GetColumn("Button2Message");
+						//	X105109.Text = mList.GetColumn("Button2Message");
 							X105111.Text = mList.GetColumn("Button3Number");
-							X105112.Text = mList.GetColumn("Button3Message");
+						//	X105112.Text = mList.GetColumn("Button3Message");
 							X105114.Text = mList.GetColumn("Button4Number");
-							X105115.Text = mList.GetColumn("Button4Message");
+						//	X105115.Text = mList.GetColumn("Button4Message");
 							X105117.Text = mList.GetColumn("Button5Number");
-							X105118.Text = mList.GetColumn("Button5Message");
+						//	X105118.Text = mList.GetColumn("Button5Message");
 							X105120.Text = mList.GetColumn("Button6Number");
-							X105121.Text = mList.GetColumn("Button6Message");
+						//	X105121.Text = mList.GetColumn("Button6Message");
 							X105123.Text = mList.GetColumn("Button7Number");
-							X105124.Text = mList.GetColumn("Button7Message");
+						//	X105124.Text = mList.GetColumn("Button7Message");
 							X105126.Text = mList.GetColumn("Button8Number");
-							X105127.Text = mList.GetColumn("Button8Message");
+						//	X105127.Text = mList.GetColumn("Button8Message");
 							X105129.Text = mList.GetColumn("Button9Number");
-							X105130.Text = mList.GetColumn("Button9Message");
+						//	X105130.Text = mList.GetColumn("Button9Message");
+
+							string h     = mList.GetColumn("Button1Message");
+							if ( h.Length > 0 ) X105106.Text = h;
+							h            = mList.GetColumn("Button2Message");
+							if ( h.Length > 0 ) X105109.Text = h;
+							h            = mList.GetColumn("Button3Message");
+							if ( h.Length > 0 ) X105112.Text = h;
+							h            = mList.GetColumn("Button4Message");
+							if ( h.Length > 0 ) X105115.Text = h;
+							h            = mList.GetColumn("Button5Message");
+							if ( h.Length > 0 ) X105118.Text = h;
+							h            = mList.GetColumn("Button6Message");
+							if ( h.Length > 0 ) X105121.Text = h;
+							h            = mList.GetColumn("Button7Message");
+							if ( h.Length > 0 ) X105124.Text = h;
+							h            = mList.GetColumn("Button8Message");
+							if ( h.Length > 0 ) X105127.Text = h;
+							h            = mList.GetColumn("Button9Message");
+							if ( h.Length > 0 ) X105130.Text = h;
+
 							Tools.LogInfo("btnGet_Click/3","(1) " + X105105.Text + "/" + X105106.Text
 							                           + ", (2) " + X105108.Text + "/" + X105109.Text  
 							                           + ", (3) " + X105111.Text + "/" + X105112.Text  
-							                           + ", (9) " + X105129.Text + "/" + X105130.Text,222,this);  
+							                           + ", (9) " + X105129.Text + "/" + X105130.Text,10,this);  
 						}
 					}
 					else
