@@ -785,7 +785,8 @@ namespace PCIBusiness
 			{
 				if ( caller != null )
 				{
-					string h = caller.ToString();
+					string h = caller.GetType().ToString();
+				//	string h = caller.ToString();
 					int    p = h.IndexOf(",");
 					if ( p > 0 )
 						h = h.Substring(0,p).Trim();
@@ -1402,14 +1403,16 @@ namespace PCIBusiness
 		public static string MaskCardNumber(string cardNo)
 		{
 			cardNo = NullToString(cardNo);
+			if ( cardNo.Length >= 20 )
+				return cardNo.Substring(0,6) + "********" + cardNo.Substring(14);
 			if ( cardNo.Length >= 13 )
-				return cardNo.Substring(0,6) + "******" + cardNo.Substring(12);
+				return cardNo.Substring(0,6) + "******"   + cardNo.Substring(12);
 			if ( cardNo.Length >= 11 )
-				return cardNo.Substring(0,6) + "****"   + cardNo.Substring(10);
+				return cardNo.Substring(0,6) + "****"     + cardNo.Substring(10);
 			if ( cardNo.Length >=  9 )
-				return cardNo.Substring(0,4) + "****"   + cardNo.Substring( 8);
+				return cardNo.Substring(0,4) + "****"     + cardNo.Substring( 8);
 			if ( cardNo.Length >=  5 )
-				return cardNo.Substring(0,2) + "**"     + cardNo.Substring( 4);
+				return cardNo.Substring(0,2) + "**"       + cardNo.Substring( 4);
 			if ( cardNo.Length >=  1 )
 				return cardNo.Substring(0,1) + "****";
 			return "";
@@ -1636,11 +1639,29 @@ namespace PCIBusiness
 			if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Peach)            ) return new TransactionPeach();
 			if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.TokenEx)          ) return new TransactionTokenEx();
 			if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PaymentsOS)       ) return new TransactionPaymentsOS();
-			if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Stripe)           ) return new TransactionStripe();
+			if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Stripe_USA)       ) return new TransactionStripe(Constants.PaymentProvider.Stripe_USA);
+			if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Stripe_EU)        ) return new TransactionStripe(Constants.PaymentProvider.Stripe_EU);
+			if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.Stripe_Asia)      ) return new TransactionStripe(Constants.PaymentProvider.Stripe_Asia);
 			if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource)      ) return new TransactionCyberSource(Constants.PaymentProvider.CyberSource);
 			if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource_Moto) ) return new TransactionCyberSource(Constants.PaymentProvider.CyberSource_Moto);
 			return null;
 		}
+
+		public static string TransactionTypeName(byte transactionType)
+		{
+			if ( transactionType == (byte)Constants.TransactionType.CardPayment           ) return "Card Payment";
+			if ( transactionType == (byte)Constants.TransactionType.CardPaymentThirdParty ) return "Payment via 3rd Party";
+			if ( transactionType == (byte)Constants.TransactionType.DeleteToken           ) return "Delete Token";
+			if ( transactionType == (byte)Constants.TransactionType.GetCardFromToken      ) return "Get Card from Token";
+			if ( transactionType == (byte)Constants.TransactionType.GetToken              ) return "Get Token from Card";
+			if ( transactionType == (byte)Constants.TransactionType.GetTokenThirdParty    ) return "Token via 3rd Party";
+			if ( transactionType == (byte)Constants.TransactionType.ManualPayment         ) return "Manual Payment";
+			if ( transactionType == (byte)Constants.TransactionType.ThreeDSecurePayment   ) return "3d Secure Payment";
+			if ( transactionType == (byte)Constants.TransactionType.TokenPayment          ) return "Token Payment";
+			if ( transactionType == (byte)Constants.TransactionType.Test                  ) return "Test";
+			return "Unknown (transactionType=" + transactionType.ToString() + ")";
+		}
+
 
 		public static string LoadGoogleAnalytics(string productCode)
 		{
@@ -1676,6 +1697,9 @@ namespace PCIBusiness
 				}
 			return "";
 		}
+
+//		public static string LoadChat(string productCode)
+//		{
 
 		public static string LoadChat(string productCode)
 		{

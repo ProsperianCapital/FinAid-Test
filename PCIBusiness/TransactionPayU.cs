@@ -11,11 +11,33 @@ namespace PCIBusiness
 //		static string url      = "https://staging.payu.co.za";
 //		static string userID   = "800060";
 //		static string password = "qDRLeKI9";
+//		static string safeKey  = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
 
-//		static string url      = "https://staging.payu.co.za";
-//		static string userID   = "200239";
-//		static string password = "5AlTRPoD";
+//	Ver 2
+//		static string soapEnvelope =
+//			@"<soapenv:Envelope
+//					xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'
+//					xmlns:soap='http://soap.api.controller.web.payjar.com/'
+//					xmlns:SOAP-ENV='SOAP-ENV'>
+//				<soapenv:Header>
+//				<wsse:Security
+//					SOAP-ENV:mustUnderstand='1'
+//					xmlns:wsse='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'>
+//					<wsse:UsernameToken
+//						wsu:Id='UsernameToken-9'
+//						xmlns:wsu='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'>
+//						<wsse:Username></wsse:Username>
+//						<wsse:Password Type='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText'></wsse:Password>
+//					</wsse:UsernameToken>
+//				</wsse:Security>
+//				</soapenv:Header>
+//				<soapenv:Body>
+//					<soap:doTransaction>
+//					</soap:doTransaction>
+//				</soapenv:Body>
+//				</soapenv:Envelope>";
 
+//	Ver 3
 		static string soapEnvelope =
 			@"<soapenv:Envelope
 					xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'
@@ -34,7 +56,7 @@ namespace PCIBusiness
 				</wsse:Security>
 				</soapenv:Header>
 				<soapenv:Body>
-					<soap:doTransaction>
+					<soap:doTransaction xmlns:ns2='http://soap.api.controller.web.payjar.com/'>
 					</soap:doTransaction>
 				</soapenv:Body>
 				</soapenv:Envelope>";
@@ -48,9 +70,9 @@ namespace PCIBusiness
 
 		private int SendXML(string url,string userID,string password)
 		{
-			int    ret         = 10;
-			string xmlReceived = "";
-			payRef             = "";
+			int ret   = 10;
+			payRef    = "";
+			strResult = "";
 
 			try
 			{
@@ -59,76 +81,69 @@ namespace PCIBusiness
 				if ( ! url.ToUpper().EndsWith("WSDL") )
 					url = url + "/service/PayUAPI?wsdl";
 
-				Tools.LogInfo("SendXML/10","URL=" + url + ", XML Sent=" + xmlSent,10,this);
+				Tools.LogInfo("SendXML/10","URL=" + url + ", XML Sent=" + xmlSent,231,this);
 
 			// Construct soap object
-				ret                         = 20;
-				XmlDocument soapEnvelopeXml = CreateSoapEnvelope(xmlSent);
+				ret                       = 20;
+				XmlDocument soapXml       = CreateSoapEnvelope(xmlSent);
 
 			// Create username and password namespace
-				ret                     = 30;
-				XmlNamespaceManager mgr = new XmlNamespaceManager(soapEnvelopeXml.NameTable);
+				ret                       = 30;
+				XmlNamespaceManager mgr   = new XmlNamespaceManager(soapXml.NameTable);
 				mgr.AddNamespace("wsse", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd");
-				XmlNode userName        = soapEnvelopeXml.SelectSingleNode("//wsse:Username",mgr);
-				userName.InnerText      = userID;
-				XmlNode userPassword    = soapEnvelopeXml.SelectSingleNode("//wsse:Password",mgr);
-				userPassword.InnerText  = password;
+				XmlNode userName          = soapXml.SelectSingleNode("//wsse:Username",mgr);
+				userName.InnerText        = userID;
+				XmlNode userPassword      = soapXml.SelectSingleNode("//wsse:Password",mgr);
+				userPassword.InnerText    = password;
 
 			// Construct web request object
-				Tools.LogInfo("SendXML/30","Create/set up web request, URL=" + url,10,this);
 				ret                       = 40;
 				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
 
-				ret                    = 45;
+				ret                       = 45;
 				webRequest.Headers.Add(@"SOAP:Action");
-				webRequest.ContentType = "text/xml;charset=\"utf-8\"";
-				webRequest.Accept      = "text/xml";
-				webRequest.Method      = "POST";
+				webRequest.ContentType    = "text/xml;charset=\"utf-8\"";
+				webRequest.Accept         = "text/xml";
+				webRequest.Method         = "POST";
 
 			// Insert soap envelope into web request
-				Tools.LogInfo("SendXML/35","Save web request",10,this);
 				ret = 50;
 				using (Stream stream = webRequest.GetRequestStream())
-					soapEnvelopeXml.Save(stream);
+					soapXml.Save(stream);
 
 			// Get the completed web request XML
-				Tools.LogInfo("SendXML/40","Get web response",10,this);
 				ret = 60;
-
 				using (WebResponse webResponse = webRequest.GetResponse())
 				{
 					ret = 65;
-					Tools.LogInfo("SendXML/45","Read web response stream",10,this);
 					using (StreamReader rd = new StreamReader(webResponse.GetResponseStream()))
 					{
-						ret         = 70;
-						xmlReceived = rd.ReadToEnd();
+						ret       = 70;
+						strResult = rd.ReadToEnd();
 					}
 				}
 
-				Tools.LogInfo("SendXML/50","XML Rec=" + xmlReceived,255,this);
+				Tools.LogInfo("SendXML/50","XML Rec=" + strResult,231,this);
 
 			// Create an empty soap result object
 				ret       = 75;
 				xmlResult = new XmlDocument();
-				xmlResult.LoadXml(xmlReceived.ToString());
+				xmlResult.LoadXml(strResult.ToString());
 
 //			//	Get data from result XML
 				ret              = 80;
 				resultSuccessful = Tools.XMLNode(xmlResult,"successful");
 				resultCode       = Tools.XMLNode(xmlResult,"resultCode");
 				resultMsg        = Tools.XMLNode(xmlResult,"resultMessage");
-//				payRef           = Tools.XMLNode(xmlResult,"payUReference");
-//				payToken         = Tools.XMLNode(xmlResult,"pmId");
 
 				if ( Successful )
 					return 0;
 
-				Tools.LogInfo("SendXML/80","URL=" + url + ", XML Sent=" + xmlSent+", XML Rec="+xmlReceived,220,this);
+				Tools.LogInfo("SendXML/80","URL=" + url + ", XML Sent=" + xmlSent+", XML Rec="+strResult,10,this);
 			}
 			catch (WebException ex1)
 			{
-				Tools.DecodeWebException(ex1,"TransactionPayU.SendXML/97",xmlSent);
+				Tools.DecodeWebException(ex1,ClassName+".SendXML/97",xmlSent);
 			}
 			catch (Exception ex2)
 			{
@@ -143,19 +158,29 @@ namespace PCIBusiness
 			int ret = 300;
 			xmlSent = "";
 
-			Tools.LogInfo("GetToken/10","RESERVE, Merchant Ref=" + payment.MerchantReference,10,this);
-
 //	Testing
-//		payment.ProviderUserID   = "800060";
-//		payment.ProviderPassword = "qDRLeKI9";
-//		payment.ProviderKey      = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
+//			payment.ProviderURL      = "https://staging.payu.co.za";
+//			payment.ProviderUserID   = "800060";
+//			payment.ProviderPassword = "qDRLeKI9";
+//			payment.ProviderKey      = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
+//			payment.RegionalId       = "8212115010081";
+//			payment.CurrencyCode     = "ZAR";
+//			payment.CardNumber       = "4000015372250142"; // This card works!
+//			payment.CardExpiryMM     = "07";
+//			payment.CardExpiryYYYY   = "2025";
+//			payment.CardCVV          = "123";
 //	Testing
 
 			try
 			{
+				string tmp = Tools.ConfigValue("SystemURL")
+				           + "/Succeed.aspx?TransRef="
+				           + Tools.XMLSafe(payment.MerchantReference)
+				           + "&#38;Mode=";
 				xmlSent = "<Safekey>" + payment.ProviderKey + "</Safekey>"
 				        + "<Api>ONE_ZERO</Api>"
 				        + "<TransactionType>RESERVE</TransactionType>"
+				        + "<AuthenticationType>TOKEN</AuthenticationType>"
 				        + "<Customfield>"
 				        +   "<key>processingType</key>"
 				        +   "<value>REAL_TIME_RECURRING</value>"
@@ -163,28 +188,34 @@ namespace PCIBusiness
 				        + "<AdditionalInformation>"
 				        +   "<storePaymentMethod>true</storePaymentMethod>"
 				        +   "<secure3d>false</secure3d>"
+				        +   "<demoMode>false</demoMode>"
+				        +   "<redirectChannel>responsive</redirectChannel>"
+				        +   "<supportedPaymentMethods>CREDITCARD</supportedPaymentMethods>"
+				        +   "<returnUrl>"         + tmp + "1</returnUrl>"
+				        +   "<cancelUrl>"         + tmp + "2</cancelUrl>"
+				        +   "<notificationUrl>"   + tmp + "3</notificationUrl>"
 				        +   "<merchantReference>" + payment.MerchantReference + "</merchantReference>"
 				        + "</AdditionalInformation>"
 				        + "<Customer>"
 				        +   "<merchantUserId>" + payment.ProviderUserID + "</merchantUserId>"
-				        +   "<countryCode>" + payment.CountryCode() + "</countryCode>"
-				        +   "<email>" + payment.EMail + "</email>"
-				        +   "<firstName>" + payment.FirstName + "</firstName>"
-				        +   "<lastName>" + payment.LastName + "</lastName>"
-				        +   "<mobile>" + payment.PhoneCell + "</mobile>"
-				        +   "<regionalId>" + payment.RegionalId + "</regionalId>"
+				        +   "<countryCode>"    + payment.CountryCode()  + "</countryCode>"
+				        +   "<regionalId>"     + payment.RegionalId     + "</regionalId>"
+				        +   "<email>"          + payment.EMail          + "</email>"
+				        +   "<firstName>"      + payment.FirstName      + "</firstName>"
+				        +   "<lastName>"       + payment.LastName       + "</lastName>"
+				        +   "<mobile>"         + payment.PhoneCell      + "</mobile>"
 				        + "</Customer>"
 				        + "<Basket>"
-				        +   "<amountInCents>" + payment.PaymentAmount.ToString() + "</amountInCents>"
-				        +   "<currencyCode>" + payment.CurrencyCode + "</currencyCode>"
-				        +   "<description>" + payment.PaymentDescription + "</description>"
+				        +   "<amountInCents>"  + payment.PaymentAmount.ToString() + "</amountInCents>"
+				        +   "<currencyCode>"   + payment.CurrencyCode             + "</currencyCode>"
+				        +   "<description>"    + payment.PaymentDescription       + "</description>"
 				        + "</Basket>"
 				        + "<Creditcard>"
-				        +   "<nameOnCard>" + payment.CardName + "</nameOnCard>"
-				        +   "<amountInCents>" + payment.PaymentAmount.ToString() + "</amountInCents>"
-				        +   "<cardNumber>" + payment.CardNumber + "</cardNumber>"
-				        +   "<cardExpiry>" + payment.CardExpiryMM + payment.CardExpiryYYYY + "</cardExpiry>"
-				        +   "<cvv>" + payment.CardCVV + "</cvv>"
+				        +   "<nameOnCard>"     + payment.CardName                              + "</nameOnCard>"
+				        +   "<amountInCents>"  + payment.PaymentAmount.ToString()              + "</amountInCents>"
+				        +   "<cardNumber>"     + payment.CardNumber                            + "</cardNumber>"
+				        +   "<cardExpiry>"     + payment.CardExpiryMM + payment.CardExpiryYYYY + "</cardExpiry>"
+				        +   "<cvv>"            + payment.CardCVV                               + "</cvv>"
 				        + "</Creditcard>";
 
 				ret      = SendXML(payment.ProviderURL,payment.ProviderUserID,payment.ProviderPassword);
@@ -193,21 +224,22 @@ namespace PCIBusiness
 
 				if ( ret == 0 )
 				{
-					Tools.LogInfo("GetToken/20","ResultCode="+ResultCode + ", payRef=" + payRef + ", payToken=" + payToken,30,this);
-					Tools.LogInfo("GetToken/30","RESERVE_CANCEL, Merchant Ref=" + payment.MerchantReference,30,this);
+				//	Tools.LogInfo("GetToken/20","ResultCode="+ResultCode + ", payRef=" + payRef + ", payToken=" + payToken,30,this);
+				//	Tools.LogInfo("GetToken/30","RESERVE_CANCEL, Merchant Ref=" + payment.MerchantReference,30,this);
 					xmlSent = "<Safekey>" + payment.ProviderKey + "</Safekey>"
 				           + "<Api>ONE_ZERO</Api>"
 				           + "<TransactionType>RESERVE_CANCEL</TransactionType>"
+					        + "<AuthenticationType>TOKEN</AuthenticationType>"
 				           + "<AdditionalInformation>"
 				           +   "<merchantReference>" + payment.MerchantReference + "</merchantReference>"
-				           +   "<payUReference>" + payRef + "</payUReference>"
+				           +   "<payUReference>"     + payRef + "</payUReference>"
 				           + "</AdditionalInformation>"
 				           + "<Basket>"
 				           +	"<amountInCents>" + payment.PaymentAmount.ToString() + "</amountInCents>"
-				           +	"<currencyCode>" + payment.CurrencyCode + "</currencyCode>"
+				           +	"<currencyCode>"  + payment.CurrencyCode + "</currencyCode>"
 				           + "</Basket>";
 					ret = SendXML(payment.ProviderURL,payment.ProviderUserID,payment.ProviderPassword);
-					Tools.LogInfo("GetToken/40","ResultCode="+ResultCode,30,this);
+					Tools.LogInfo("GetToken/40","ResultCode="+ResultCode,10,this);
 				}
 				else
 					Tools.LogInfo("GetToken/50","ResultCode="+ResultCode + ", payRef=" + payRef + ", payToken=" + payToken,220,this);
@@ -229,10 +261,27 @@ namespace PCIBusiness
 			int ret = 600;
 			xmlSent = "";
 
-			Tools.LogInfo("TokenPayment/10","PAYMENT, Merchant Ref=" + payment.MerchantReference,10,this);
+//	Testing
+//			payment.ProviderURL      = "https://staging.payu.co.za";
+//			payment.ProviderUserID   = "800060";
+//			payment.ProviderPassword = "qDRLeKI9";
+//			payment.ProviderKey      = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
+//			payment.RegionalId       = "8212115010081";
+//			payment.CurrencyCode     = "ZAR";
+//	//		payment.CardToken        = "E13648542276F54C44C754843840821D";
+//			payment.CardToken        = "74BF0BC8AE9987B423AA94A4BC894A2A"; // This token WORKS!
+//	Testing
 
+//	Not needed
 //		   +   "<secure3d>false</secure3d>"
 //       +   "<storePaymentMethod>true</storePaymentMethod>"
+
+//       +   "<email>" + payment.EMail + "</email>"
+//       +   "<firstName>" + payment.FirstName + "</firstName>"
+//       +   "<lastName>" + payment.LastName + "</lastName>"
+//       +   "<mobile>" + payment.PhoneCell + "</mobile>"
+
+//		   +   "<cvv></cvv>"
 
 			try
 			{
@@ -246,24 +295,21 @@ namespace PCIBusiness
 				        + "</Customfield>"
 				        + "<AdditionalInformation>"
 				        +   "<merchantReference>" + payment.MerchantReference + "</merchantReference>"
+				        +   "<notificationUrl>" + Tools.ConfigValue("SystemURL")+"/Succeed.aspx?TransRef=" + Tools.XMLSafe(payment.MerchantReference) + "</notificationUrl>"
 				        + "</AdditionalInformation>"
 				        + "<Customer>"
 				        +   "<merchantUserId>" + payment.ProviderUserID + "</merchantUserId>"
-				        +   "<countryCode>" + payment.CountryCode() + "</countryCode>"
-				        +   "<email>" + payment.EMail + "</email>"
-				        +   "<firstName>" + payment.FirstName + "</firstName>"
-				        +   "<lastName>" + payment.LastName + "</lastName>"
-				        +   "<mobile>" + payment.PhoneCell + "</mobile>"
-				        +   "<regionalId>" + payment.RegionalId + "</regionalId>"
+				        +   "<countryCode>"    + payment.CountryCode()  + "</countryCode>"
+				        +   "<regionalId>"     + payment.RegionalId     + "</regionalId>"
 				        + "</Customer>"
 				        + "<Basket>"
 				        +   "<amountInCents>" + payment.PaymentAmount.ToString() + "</amountInCents>"
-				        +   "<currencyCode>" + payment.CurrencyCode + "</currencyCode>"
-				        +   "<description>" + payment.PaymentDescription + "</description>"
+				        +   "<currencyCode>"  + payment.CurrencyCode             + "</currencyCode>"
+				        +   "<description>"   + payment.PaymentDescription       + "</description>"
 				        + "</Basket>"
 				        + "<Creditcard>"
+				        +   "<pmId>"          + payment.CardToken                + "</pmId>"
 				        +   "<amountInCents>" + payment.PaymentAmount.ToString() + "</amountInCents>"
-				        +   "<pmId>" + payment.CardToken + "</pmId>"
 				        + "</Creditcard>";
 
 				ret    = SendXML(payment.ProviderURL,payment.ProviderUserID,payment.ProviderPassword);
@@ -311,24 +357,24 @@ namespace PCIBusiness
 				        + "</AdditionalInformation>"
 				        + "<Customer>"
 				        +   "<merchantUserId>" + payment.ProviderUserID + "</merchantUserId>"
-				        +   "<countryCode>" + payment.CountryCode() + "</countryCode>"
-				        +   "<email>" + payment.EMail + "</email>"
-				        +   "<firstName>" + payment.FirstName + "</firstName>"
-				        +   "<lastName>" + payment.LastName + "</lastName>"
-				        +   "<mobile>" + payment.PhoneCell + "</mobile>"
-				        +   "<regionalId>" + payment.RegionalId + "</regionalId>"
+				        +   "<countryCode>"    + payment.CountryCode() + "</countryCode>"
+				        +   "<email>"          + payment.EMail + "</email>"
+				        +   "<firstName>"      + payment.FirstName + "</firstName>"
+				        +   "<lastName>"       + payment.LastName + "</lastName>"
+				        +   "<mobile>"         + payment.PhoneCell + "</mobile>"
+				        +   "<regionalId>"     + payment.RegionalId + "</regionalId>"
 				        + "</Customer>"
 				        + "<Basket>"
-				        +   "<amountInCents>" + payment.PaymentAmount.ToString() + "</amountInCents>"
-				        +   "<currencyCode>" + payment.CurrencyCode + "</currencyCode>"
-				        +   "<description>" + payment.PaymentDescription + "</description>"
+				        +   "<amountInCents>"  + payment.PaymentAmount.ToString() + "</amountInCents>"
+				        +   "<currencyCode>"   + payment.CurrencyCode + "</currencyCode>"
+				        +   "<description>"    + payment.PaymentDescription + "</description>"
 				        + "</Basket>"
 				        + "<Creditcard>"
-				        +   "<nameOnCard>" + payment.CardName + "</nameOnCard>"
-				        +   "<amountInCents>" + payment.PaymentAmount.ToString() + "</amountInCents>"
-				        +   "<cardNumber>" + payment.CardNumber + "</cardNumber>"
-				        +   "<cardExpiry>" + payment.CardExpiryMM + payment.CardExpiryYYYY + "</cardExpiry>"
-				        +   "<cvv>" + payment.CardCVV + "</cvv>"
+				        +   "<nameOnCard>"     + payment.CardName + "</nameOnCard>"
+				        +   "<amountInCents>"  + payment.PaymentAmount.ToString() + "</amountInCents>"
+				        +   "<cardNumber>"     + payment.CardNumber + "</cardNumber>"
+				        +   "<cardExpiry>"     + payment.CardExpiryMM + payment.CardExpiryYYYY + "</cardExpiry>"
+				        +   "<cvv>"            + payment.CardCVV + "</cvv>"
 				        + "</Creditcard>";
 
 				ret     = SendXML(payment.ProviderURL,payment.ProviderUserID,payment.ProviderPassword);

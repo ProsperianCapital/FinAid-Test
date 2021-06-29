@@ -8,6 +8,9 @@ namespace PCIBusiness
 {
 	public class TransactionFNB : Transaction
 	{
+
+//		INCOMPLETE!
+
 		public  bool Successful
 		{
 			get { return Tools.JSONValue(strResult,"success").ToUpper() == "TRUE"; }
@@ -17,6 +20,14 @@ namespace PCIBusiness
 		{
 			int ret  = 10;
 			payToken = "";
+
+/* FNB test sample
+{ "apiKey" : "f9bd07c6-a662-441c-8335-365a967cf1b3",
+  "merchantOrderNumber" : "MON123456",
+  "amount" : "12300",
+  "validationURL" : "http://test.co.za/validate",
+  "description" : "Test Transaction" }
+*/
 
 			try
 			{
@@ -30,12 +41,9 @@ namespace PCIBusiness
 				                                 + Tools.JSONPair("cvv"        ,payment.CardCVV,1,"","}") // Changed to STRING from NUMERIC
 				         + "}";
 				ret      = 20;
-//				ret      = TestService(0); // Dev
-//				ret      = TestService(1); // Live
-//				ret      = CallWebService(payment,"/pg/api/v2/card/register");
 				ret      = CallWebService(payment,(byte)Constants.TransactionType.GetToken);
 				ret      = 30;
-				payToken = Tools.JSONValue(XMLResult,"token");
+				payToken = Tools.JSONValue(strResult,"txnToken");
 				ret      = 40;
 				if ( Successful && payToken.Length > 0 )
 					ret   = 0;
@@ -45,7 +53,7 @@ namespace PCIBusiness
 			catch (Exception ex)
 			{
 				Tools.LogInfo     ("GetToken/98","Ret="+ret.ToString()+", JSON Sent="+xmlSent,255,this);
-				Tools.LogException("GetToken/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent,ex,this);
+				Tools.LogException("GetToken/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent, ex,this);
 			}
 			return ret;
 		}
@@ -70,10 +78,9 @@ namespace PCIBusiness
 				        + "}";
 
 				ret     = 20;
-//				ret     = CallWebService(payment,"/pg/api/v2/payment/create");
 				ret     = CallWebService(payment,(byte)Constants.TransactionType.TokenPayment);
 				ret     = 30;
-				payRef  = Tools.JSONValue(XMLResult,"reference");
+				payRef  = Tools.JSONValue(strResult,"reference");
 				ret     = 40;
 				if ( Successful && payRef.Length > 0 )
 					ret  = 0;
@@ -83,7 +90,7 @@ namespace PCIBusiness
 			catch (Exception ex)
 			{
 				Tools.LogInfo     ("TokenPayment/98","Ret="+ret.ToString()+", JSON Sent="+xmlSent,255,this);
-				Tools.LogException("TokenPayment/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent,ex,this);
+				Tools.LogException("TokenPayment/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent, ex,this);
 			}
 			return ret;
 		}
@@ -191,7 +198,7 @@ namespace PCIBusiness
 			}
 			catch (WebException ex1)
 			{
-				Tools.DecodeWebException(ex1,"TransactionFNB.CallWebService/297","ret="+ret.ToString());
+				Tools.DecodeWebException(ex1,ClassName+".CallWebService/297","ret="+ret.ToString());
 			}
 			catch (Exception ex2)
 			{
@@ -206,7 +213,6 @@ namespace PCIBusiness
 //			Testing only!
 			try
 			{
-//				string         url        = ( live == 0 ? "https://developer.paygenius.co.za/pg/api/v2/util/validate" : "https://www.paygenius.co.za/pg/api/v2/util/validate" );
 				string         url        = BureauURL + "/pg/api/v2/util/validate";
 				string         key        = ( live == 0 ? "f1a7d3b1-e90b-42c0-a304-459382a47aba" : "bb3a0012-74a5-4e74-bc46-03afa3c30850" );
 				string         data       = "{\"data\":\"value\"}";
@@ -255,7 +261,6 @@ namespace PCIBusiness
 		public TransactionFNB() : base()
 		{
 			base.LoadBureauDetails(Constants.PaymentProvider.FNB);
-			xmlResult  = null;
 		}
 	}
 }
