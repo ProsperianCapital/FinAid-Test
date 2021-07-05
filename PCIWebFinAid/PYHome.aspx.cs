@@ -20,7 +20,7 @@ namespace PCIWebFinAid
 
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			ApplicationCode = "100";
+			ApplicationCode = "170";
 			errPriority     = 19;
 
 			if ( Page.IsPostBack )

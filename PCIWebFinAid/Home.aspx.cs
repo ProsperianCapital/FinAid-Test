@@ -54,6 +54,8 @@ namespace PCIWebFinAid
 							goTo = "ISHome.aspx";
 						else if ( ApplicationCode == "120" ) // Life Guru
 							goTo = "LGHome.aspx";
+						else if ( ApplicationCode == "170" ) // PayYaYa
+							goTo = "PYHome.aspx";
 						else
 							err  = 20;
 					}
