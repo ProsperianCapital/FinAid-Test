@@ -8,12 +8,10 @@ namespace PCIBusiness
 {
 	public class TransactionFNB : Transaction
 	{
-
-//		INCOMPLETE!
-
 		public  bool Successful
 		{
-			get { return Tools.JSONValue(strResult,"success").ToUpper() == "TRUE"; }
+		//	To Do
+			get { return true; }
 		}
 
 		public override int GetToken(Payment payment)
@@ -22,28 +20,31 @@ namespace PCIBusiness
 			payToken = "";
 
 /* FNB test sample
-{ "apiKey" : "f9bd07c6-a662-441c-8335-365a967cf1b3",
-  "merchantOrderNumber" : "MON123456",
-  "amount" : "12300",
-  "validationURL" : "http://test.co.za/validate",
-  "description" : "Test Transaction" }
+{ "cardHolderName" : "John Smith",
+  "PAN" : "1234567890123456",
+  "cvv" : "123",
+  "expiryDate" : 20161231
+}
 */
-
 			try
 			{
 				Tools.LogInfo("GetToken/10","Merchant Ref=" + payment.MerchantReference,10,this);
 
-				xmlSent  = "{ \"creditCard\" : " + Tools.JSONPair("number"     ,payment.CardNumber,1,"{")
-				                                 + Tools.JSONPair("cardHolder" ,payment.CardName,1)
-				                                 + Tools.JSONPair("expiryYear" ,payment.CardExpiryYYYY,11)
-				                                 + Tools.JSONPair("expiryMonth",payment.CardExpiryMonth.ToString(),11) // Not padded, so 7 not 07
-				                                 + Tools.JSONPair("type"       ,payment.CardType,1)
-				                                 + Tools.JSONPair("cvv"        ,payment.CardCVV,1,"","}") // Changed to STRING from NUMERIC
-				         + "}";
+//	Testing
+//				xmlSent  = Tools.JSONPair("cardHolderName","A N Other",1,"{")
+//				         + Tools.JSONPair("pan"           ,"5413330089010483",1)
+//				         + Tools.JSONPair("cvv"           ,"603",1)
+//				         + Tools.JSONPair("expiryDate"    ,"20251231",1,"","}");
+//	Testing
+
+				xmlSent  = Tools.JSONPair("cardHolderName",payment.CardName,1,"{")
+				         + Tools.JSONPair("pan"           ,payment.CardNumber,1)
+				         + Tools.JSONPair("cvv"           ,payment.CardCVV,11)
+				         + Tools.JSONPair("expiryDate"    ,payment.CardExpiryYYYY + payment.CardExpiryMM + payment.CardExpiryDD,11,"","}");
 				ret      = 20;
 				ret      = CallWebService(payment,(byte)Constants.TransactionType.GetToken);
 				ret      = 30;
-				payToken = Tools.JSONValue(strResult,"txnToken");
+				payToken = Tools.JSONValue(strResult,"tokenId");
 				ret      = 40;
 				if ( Successful && payToken.Length > 0 )
 					ret   = 0;
@@ -68,14 +69,44 @@ namespace PCIBusiness
 
 			Tools.LogInfo("TokenPayment/10","Merchant Ref=" + payment.MerchantReference,10,this);
 
+//	Testing
+//			payment.CardToken = "HgYwCV8vUE0qAFvxGr902XM1J04cFHgDSlW7sq5KmldkWi5zRjX2zrq8psW826Al";
+			payment.CardToken = "IdYsxppCTuLbrXDW3shAFCOXP1vpdSxH62dMR25I99UkabHaHY0vmeOfzXvEWhrJ";
+//	Testing
+
 			try
 			{
-				xmlSent = "{ \"creditCard\" : "  + Tools.JSONPair("token"    ,payment.CardToken,1,"{","}")
-				        + ", \"transaction\" : " + Tools.JSONPair("reference",payment.MerchantReference,1,"{")
-				                                 + Tools.JSONPair("currency" ,payment.CurrencyCode,1)
-				                                 + Tools.JSONPair("amount"   ,payment.PaymentAmount.ToString(),11,"","}")
-				        + ", "                   + Tools.JSONPair("threeDSecure","false",12,"","")
-				        + "}";
+				xmlSent = "{ \"paymentSplit\" : " + Tools.JSONPair("cardToken"  ,payment.CardToken,1,"[{")
+				                                  + Tools.JSONPair("amount"     ,payment.PaymentAmount.ToString(),11)
+				                                  + Tools.JSONPair("paymentType","MOTO",1,"","}],")
+				        +    "\"basket\" : { \"usingBasketDetails\" :"
+				        +                 "{ \"items\" : " + Tools.JSONPair("description","Subscription",1,"[{")
+				                                           + Tools.JSONPair("amount",payment.PaymentAmount.ToString(),11,"","}],")
+				        +                  Tools.JSONPair("merchantOrderNumber",payment.MerchantReference,1,"","")
+				        + "}}}";
+/*
+{ "paymentSplit" :
+  [
+   { "cardToken" : "IdYsxppCTuLbrXDW3shAFCOXP1vpdSxH62dMR25I99UkabHaHY0vmeOfzXvEWhrJ",
+     "amount" : 899,
+     "paymentType" : "MOTO"
+   }
+  ],
+  "basket" :
+  { 
+    "usingBasketDetails" :
+    {
+      "items" :
+      [
+       { "description" : "Subscription",
+         "amount" : 899
+       }
+      ],
+      "merchantOrderNumber" : "A133208703"
+    }
+  }
+}
+*/
 
 				ret     = 20;
 				ret     = CallWebService(payment,(byte)Constants.TransactionType.TokenPayment);
@@ -97,6 +128,7 @@ namespace PCIBusiness
 
 		private int CallWebService(Payment payment,byte transactionType)
       {
+			int    k;
 			int    ret      = 10;
 			string url      = payment.ProviderURL;
 			string tranDesc = "";
@@ -111,13 +143,18 @@ namespace PCIBusiness
 			ret = 30;
 			if ( transactionType == (byte)Constants.TransactionType.GetToken )
 			{
-				url      = url + "/pg/api/v2/card/register";
+				url      = url + "/mtokenizer/api/card";
 				tranDesc = "Get Token";
 			}
-			else if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
+			else if ( transactionType == (byte)Constants.TransactionType.TokenPayment ) // Spec section 3.3.3
 			{
-				url      = url + "/pg/api/v2/payment/create";
+				url      = url + "/ape/api/payment/simple";
 				tranDesc = "Process Payment";
+			}
+			else if ( transactionType == (byte)Constants.TransactionType.ThreeDSecurePayment )
+			{
+				url      = url + "/eCommerce/v2/prepareTransaction";
+				tranDesc = "3d Secure Payment";
 			}
 			else
 			{ }
@@ -128,27 +165,36 @@ namespace PCIBusiness
 			resultMsg  = "(99) Internal error connecting to " + url;
 			ret        = 70;
 
+//	Testing
+			payment.ProviderKey      = "REVqzPb4PTiD4n7Fo3e1p1VyQUbvmy5YZuhxhUpqL0EcUTGWHPchIUd8m3LeixLf"; // API Key
+			payment.ProviderPassword = "sbyq0CUAvUSPMifwRH0f68fByQ5ZgSjyEpbeKg77o1Cuh9BD30ucakuXtpCCUMJN"; // Instance Key
+//	Testing
+
 			try
 			{
-				string         sig;
-				byte[]         page               = Encoding.UTF8.GetBytes(xmlSent);
-				HttpWebRequest webRequest         = (HttpWebRequest)WebRequest.Create(url);
-				webRequest.ContentType            = "application/json";
-				webRequest.Accept                 = "application/json";
-				webRequest.Method                 = "POST";
-				ret                               = 60;
-				webRequest.Headers["X-Token"]     = payment.ProviderKey;
-				ret                               = 90;
-				sig                               = GetSignature(payment.ProviderPassword,url,xmlSent);
-				webRequest.Headers["X-Signature"] = sig;
-				ret                               = 100;
+				byte[]         page            = Encoding.UTF8.GetBytes(xmlSent);
+				HttpWebRequest webRequest      = (HttpWebRequest)WebRequest.Create(url);
+			//	webRequest.ContentType         = "application/json;charset=UTF-8";
+				webRequest.ContentType         = "application/json";
+				webRequest.Accept              = "application/json";
+				webRequest.Method              = "POST";
+				ret                            = 80;
+				webRequest.Headers["API-KEY"]  = payment.ProviderKey;
+				ret                            = 90;
+				webRequest.Headers["INST-KEY"] = payment.ProviderPassword;
+				ret                            = 100;
+
+//	Testing
+				string h = "";
+				k        = 0;
+				foreach (string key in webRequest.Headers.AllKeys )
+					h = h + Environment.NewLine + "[" + (k++).ToString() + "] " + key + " : " + webRequest.Headers[key];
 
 				Tools.LogInfo("CallWebService/20","Transaction Type=" + tranDesc +
 				                                ", URL="              + url +
-				                                ", Token="            + payment.ProviderKey +
-				                                ", Key="              + payment.ProviderPassword +
-				                                ", Signature="        + sig +
-				                                ", JSON Sent="        + xmlSent, 10, this);
+				                                ", Request Body="     + xmlSent +
+				                                ", Request Headers="  + h, 199, this);
+//	Testing
 
 				using (Stream stream = webRequest.GetRequestStream())
 				{
@@ -164,37 +210,46 @@ namespace PCIBusiness
 					ret = 130;
 					using (StreamReader rd = new StreamReader(webResponse.GetResponseStream()))
 					{
-						ret        = 140;
-						strResult  = rd.ReadToEnd();
+						ret       = 140;
+						strResult = rd.ReadToEnd();
 					}
 					if ( strResult.Length == 0 )
-					{
-						ret        = 150;
-						resultMsg  = "No data returned from " + url;
-						Tools.LogInfo("CallWebService/30","Failed, JSON Rec=(empty)",199,this);
-					}
-					else
-					{
-						ret        = 160;
-						resultCode = Tools.JSONValue(strResult,"code");
-						resultMsg  = Tools.JSONValue(strResult,"message");
-
-						if (Successful)
+						if ( transactionType == (byte)Constants.TransactionType.GetToken )
 						{
-							ret        = 170;
-							resultCode = "00";
-							Tools.LogInfo("CallWebService/40","Successful, JSON Rec=" + strResult,255,this);
+							ret       = 150;
+							strResult = webResponse.Headers["Location"].ToString();
+							k         = strResult.ToUpper().IndexOf("API/CARD/");
+							Tools.LogInfo("CallWebService/31","Success, Location="+strResult,199,this);
+							if ( k > 0 )
+							{
+								ret       = 160;
+								strResult = Tools.JSONPair("tokenId",strResult.Substring(k+("API/CARD/").Length),1,"{","}");
+								ret       = 0;
+							}
+							else
+								ret       = 170;
+						}
+						else if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
+						{
+							ret       = 180;
+							strResult = webResponse.Headers["Location"].ToString();
+							k         = strResult.ToUpper().IndexOf("PAYMENT/TRACK/");
+							Tools.LogInfo("CallWebService/32","Success, Location="+strResult,199,this);
 						}
 						else
 						{
-							ret = 180;
-							Tools.LogInfo("CallWebService/50","Failed, JSON Rec=" + strResult,199,this);
-							if ( Tools.StringToInt(resultCode) == 0 )
-								resultCode = "99";
+							ret        = 220;
+							resultMsg  = "No data returned from " + url;
+							Tools.LogInfo("CallWebService/33","Fail, JSON Rec=(empty)",199,this);
 						}
+					else
+					{
+						ret        = 0;
+					//	resultCode = Tools.JSONValue(strResult,"code");
+					//	resultMsg  = Tools.JSONValue(strResult,"message");
+						Tools.LogInfo("CallWebService/34","Success, JSON Rec="+strResult,199,this);
 					}
 				}
-				ret = 0;
 			}
 			catch (WebException ex1)
 			{
@@ -214,16 +269,15 @@ namespace PCIBusiness
 			try
 			{
 				string         url        = BureauURL + "/pg/api/v2/util/validate";
-				string         key        = ( live == 0 ? "f1a7d3b1-e90b-42c0-a304-459382a47aba" : "bb3a0012-74a5-4e74-bc46-03afa3c30850" );
 				string         data       = "{\"data\":\"value\"}";
 				byte[]         page       = Encoding.UTF8.GetBytes(data);
 				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
 
-				webRequest.ContentType    = "application/json";
-				webRequest.Accept         = "application/json";
-				webRequest.Method         = "POST";
-				webRequest.Headers["X-Token"]     = ( live == 0 ? "60977662-6640-4701-96c8-ca6accbaac11" : "5403bd05-93da-49f7-8118-7a2713316dfe" );
-				webRequest.Headers["X-Signature"] = GetSignature(key,url,data);
+				webRequest.ContentType         = "application/json";
+				webRequest.Accept              = "application/json";
+				webRequest.Method              = "POST";
+				webRequest.Headers["API-KEY"]  = "yZgqflutOnJ3nSN7s9ylGMAZDNpmllGzuPMHPVBwDOW8riDT3qu8Uivbg7xlWbeK";
+				webRequest.Headers["INST-KEY"] = "sxuAbskjc5AVdQ5qbyja7ClSAZQ9NmMYmzoTGQ1ucRB6Jxg3LAq9tOZLWFYorWpl";
 
 				using (Stream stream = webRequest.GetRequestStream())
 				{
@@ -245,21 +299,64 @@ namespace PCIBusiness
 			return 0;
 		}
 
-		private string GetSignature(string secretKey,string endPoint,string jsonData)
+		public override int ThreeDSecurePayment(Payment payment,Uri postBackURL,string languageCode="",string languageDialectCode="")
 		{
-			HMACSHA256 hmac = new HMACSHA256 (Encoding.Default.GetBytes(secretKey));
-			byte[]     hash = hmac.ComputeHash (Encoding.Default.GetBytes(endPoint + "\n" + jsonData));
-			string     sig  = "";
-			hmac            = null;
+			int    ret       = 10;
+			string urlReturn = "";
+			d3Form           = "";
 
-			for (int k = 0; k < hash.Length; k++)
-				sig = sig + hash[k].ToString("X2"); // Hexadecimal
+			try
+			{
+				Tools.LogInfo("ThreeDSecurePayment/10","Merchant Ref=" + payment.MerchantReference,10,this);
 
-			return sig.ToLower();
+				if ( postBackURL == null )
+					urlReturn = Tools.ConfigValue("SystemURL");
+				else
+					urlReturn = postBackURL.GetLeftPart(UriPartial.Authority);
+				if ( ! urlReturn.EndsWith("/") )
+					urlReturn = urlReturn + "/";
+				ret       = 20;
+				urlReturn = urlReturn + "RegisterThreeD.aspx?ProviderCode="+bureauCode
+				                      +                    "&TransRef="+Tools.XMLSafe(payment.MerchantReference)
+				                      +                    "&ResultCode=";
+
+/*
+{"apiKey" : "f9bd07c6-a662-441c-8335-365a967cf1b3",
+"merchantOrderNumber" : "MON123456",
+"amount" : 12300,
+"validationURL" : "http://test.co.za/validate",
+"description" : "Test Transaction"}
+*/
+
+				xmlSent  = Tools.JSONPair("apiKey"             ,payment.ProviderKey,1,"{")
+				         + Tools.JSONPair("merchantOrderNumber",payment.MerchantReference,1)
+				         + Tools.JSONPair("amount"             ,"100",11)
+				         + Tools.JSONPair("successURL"         ,urlReturn+"00",1)
+				         + Tools.JSONPair("failureURL"         ,urlReturn+"09",1)
+				         + Tools.JSONPair("description"        ,"Test",1,"","}");
+				ret      = 20;
+				ret      = CallWebService(payment,(byte)Constants.TransactionType.ThreeDSecurePayment);
+				ret      = 30;
+				payToken = Tools.JSONValue(strResult,"txnToken");
+				d3Form   = Tools.JSONValue(strResult,"URL");
+				ret      = 40;
+				if ( payToken.Length > 0 && d3Form.Length > 0 )
+					ret   = 0;
+//				else
+//					Tools.LogInfo("ThreeDSecurePayment/50","JSON Sent="+xmlSent+", JSON Rec="+XMLResult,199,this);
+			}
+			catch (Exception ex)
+			{
+				Tools.LogInfo     ("ThreeDSecurePayment/98","Ret="+ret.ToString()+", JSON Sent="+xmlSent,255,this);
+				Tools.LogException("ThreeDSecurePayment/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent, ex,this);
+			}
+			return ret;
 		}
 
 		public TransactionFNB() : base()
 		{
+			ServicePointManager.Expect100Continue = false; // Yes, this must be FALSE
+			ServicePointManager.SecurityProtocol  = SecurityProtocolType.Tls12;
 			base.LoadBureauDetails(Constants.PaymentProvider.FNB);
 		}
 	}
