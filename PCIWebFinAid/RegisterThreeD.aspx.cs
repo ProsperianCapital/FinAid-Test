@@ -91,6 +91,16 @@ namespace PCIWebFinAid
 					resultCode  = trans.ResultCode;
 					resultMsg   = trans.ResultMessage;
 				}
+				if ( providerCode == Tools.BureauCode(Constants.PaymentProvider.FNB) )
+				{
+					if ( resultCode == "0" || resultCode == "00" || resultCode == "000" )
+						provRet = 0;
+					else
+					{
+						SetMessage("Error ...","Your payment was rejected.");
+						provRet = 440;
+					}
+				}
 				else
 				{
 					ret         = 80;

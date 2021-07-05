@@ -105,6 +105,7 @@
     <Content Include="pgViewRewardTransactions.aspx" />
     <Content Include="pgViewSubscriptionDetail.aspx" />
     <Content Include="Policies.aspx" />
+    <Content Include="PYHome.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="RegisterEx3.aspx" />
     <Content Include="RegisterThreeD.aspx" />
@@ -335,6 +336,13 @@
     </Compile>
     <Compile Include="Policies.aspx.designer.cs">
       <DependentUpon>Policies.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PYHome.aspx.cs">
+      <DependentUpon>PYHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PYHome.aspx.designer.cs">
+      <DependentUpon>PYHome.aspx</DependentUpon>
     </Compile>
     <Compile Include="XMenuItem.cs" />
     <Compile Include="AJAXProcess.aspx.cs">

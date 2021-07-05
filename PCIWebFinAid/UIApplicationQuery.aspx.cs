@@ -149,9 +149,6 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechGeteWalletList").ToUpper() )
 					GetEWalletList();
 
-				else if ( queryName == ("FinTechGetPageInfoCreateNeweWallet").ToUpper() )
-					GetPageInfoCreateNeweWallet();
-
 				else if ( queryName == ("FinTechGeteWalletAccountCURList").ToUpper() )
 					GeteWalletAccountCURList();
 

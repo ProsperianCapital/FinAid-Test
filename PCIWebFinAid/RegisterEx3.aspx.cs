@@ -670,6 +670,11 @@ namespace PCIWebFinAid
 //								paymentId         = "800060";
 //								paymentAccount    = "qDRLeKI9";
 //								paymentKey        = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
+//	Testing : FNB
+								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.FNB);
+								paymentAccount    = "";
+								paymentKey        = "";
+								paymentURL        = "";
 //	Testing
 								if ( paymentURL.Length < 1 || paymentAccount.Length < 1 || paymentKey.Length < 1 )
 									Tools.LogInfo("LoadContractCode",sql+" -> bureauCodeToken="  +bureauCodeToken
@@ -694,6 +699,12 @@ namespace PCIWebFinAid
 									{
 										if ( paymentAccount.Length < 1 ) paymentAccount = Tools.ProviderCredentials("Peach","Id","3d");
 										if ( paymentKey.Length     < 1 ) paymentKey     = Tools.ProviderCredentials("Peach","Key");
+									}
+									else if ( bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.FNB) )
+									{
+										if ( paymentAccount.Length < 1 ) paymentAccount = Tools.ProviderCredentials("FNB","InstanceKey");
+									//	if ( paymentId.Length      < 1 ) paymentId      = Tools.ProviderCredentials("FNB","Id");
+										if ( paymentKey.Length     < 1 ) paymentKey     = Tools.ProviderCredentials("FNB","ApiKey");
 									}
 									else if ( bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
 									{
@@ -843,6 +854,12 @@ namespace PCIWebFinAid
 				trans                   = new TransactionPeach();
 				payment.ProviderUserID  = paymentAccount;
 			}
+			else if ( payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.FNB) )
+			{
+				trans                    = new TransactionFNB();
+				payment.ProviderPassword = paymentAccount;  // Instance Key
+			//	payment.ProviderKey      = paymentKey;      // Api Key
+			}
 			else if ( payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
 			{
 				trans                   = new TransactionCyberSource();
@@ -869,7 +886,7 @@ namespace PCIWebFinAid
 				trans                    = new TransactionPayU();
 				payment.ProviderUserID   = paymentId;
 				payment.ProviderPassword = paymentAccount;
-				payment.ProviderKey      = paymentKey; // Secret Key
+			//	payment.ProviderKey      = paymentKey; // Secret Key
 			}
 			else
 				return;
