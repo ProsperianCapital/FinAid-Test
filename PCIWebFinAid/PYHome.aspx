@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="false" CodeBehind="PYHome.aspx.cs" Inherits="PCIWebFinAid.PYHome" %>
-<%@ Register TagPrefix="ascx" TagName="Header" Src="CAHeader.ascx" %>
+<%@ Register TagPrefix="ascx" TagName="Header" Src="PYHeader.ascx" %>
 <%@ Register TagPrefix="ascx" TagName="Footer" Src="CAFooter.ascx" %>
 
 <!DOCTYPE html>
@@ -50,7 +50,7 @@ function Legal(code)
 
 	<div style="margin:0px;padding:0px;display:block;width:100%">
 	<asp:Image runat="server" ID="P12002" style="max-width:100%;max-height:346px;float:left" />
-	<p style="color:#242424;font-family:Arial;font-size:35px;font-weight:600;line-height:1.5em; letter-spacing:0.8px;text-shadow:0px 0px 0px #000000;top:100px;left:0px;right:0px;word-break:break-word;word-wrap:break-word;text-align:center">
+	<p style="color:#242424;font-family:Arial;font-size:32px;font-weight:600;line-height:1.5em; letter-spacing:0.75px;text-shadow:0px 0px 0px #000000;top:100px;left:0px;right:0px;word-break:break-word;word-wrap:break-word;text-align:center">
 	<asp:Literal runat="server" ID="X100002">100002</asp:Literal>
 	</p><p style="color:#54595F;font-family:Sans-serif;font-size:19px;font-weight:500;line-height:1.6em;letter-spacing:0.8px;text-shadow:0px 0px 51px #FFFFFF;top:210px;left:0px;right:0px">
 	<asp:Literal runat="server" ID="X100004">100004</asp:Literal>
@@ -60,7 +60,7 @@ function Legal(code)
 	<div style="margin:0 auto;width:100%;display:inline-block">
 
 	<div style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
-		<div style="background-color:#FFCC00;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
+		<div style="background-color:#FFCC00;color:#FDFEF2;border-radius:10%;height:60px;width:100px;padding:15px;float:left">
 			<div style="font-size:10px">&nbsp;</div>
 			<div style="font-size:20px">
 			<asp:Literal runat="server" ID="X105012">105012</asp:Literal>
@@ -88,7 +88,7 @@ function Legal(code)
 	</div>
 
 	<div style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
-		<div style="background-color:#A6A6A6;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
+		<div style="background-color:#A6A6A6;color:#FDFEF2;border-radius:10%;height:60px;width:100px;padding:15px;float:left">
 			<div style="font-size:10px">&nbsp;</div>
 			<div style="font-size:20px">
 			<asp:Literal runat="server" ID="X105020">105020</asp:Literal>
@@ -116,7 +116,7 @@ function Legal(code)
 	</div>
 
 	<div style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
-		<div style="background-color:#B18135;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
+		<div style="background-color:#B18135;color:#FDFEF2;border-radius:10%;height:60px;width:100px;padding:15px;float:left">
 			<div style="font-size:10px">&nbsp;</div>
 			<div style="font-size:20px">
 			<asp:Literal runat="server" ID="X105028">105028</asp:Literal>

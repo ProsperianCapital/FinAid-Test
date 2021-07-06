@@ -46,7 +46,7 @@ namespace PCIWebFinAid {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::PCIWebFinAid.CAHeader ascxHeader;
+        protected global::PCIWebFinAid.PYHeader ascxHeader;
         
         /// <summary>
         /// hdnCountryCode control.
