@@ -7,7 +7,7 @@
 	<div class="HCol2">
 		<asp:Literal runat="server" ID="X100003">100003</asp:Literal>
 	</div>
-	<div class="HCol3">
+	<div class="HCol3" style="visibility:hidden;display:none">
 		<asp:HyperLink runat="server" ID="X100008" CssClass="TopButton TopButtonO"></asp:HyperLink>&nbsp;
 		<asp:HyperLink runat="server" ID="X100009" CssClass="TopButton TopButtonP"></asp:HyperLink>&nbsp;
 		<asp:DropDownList runat="server" ID="lstLang" CssClass="TopButton" AutoPostBack="true" style="padding:0px"></asp:DropDownList>
