@@ -152,7 +152,8 @@ function Legal(code)
 				<asp:Literal runat="server" ID="X100289">100289</asp:Literal>
 			</div>
 			<div style="text-align:center">
-			<asp:HyperLink runat="server" ID="X100009" class="TopButton TopButtonP" style="height:32px;width:120px;padding:3px;padding-top:4px;text-decoration:none" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">REGISTER</asp:HyperLink>
+			<asp:HyperLink runat="server" ID="X100009" class="TopButton TopButtonP" style="height:32px;width:120px;padding:3px;padding-top:4px;text-decoration:none">REGISTER</asp:HyperLink>
+			<!-- class="TopButton TopButtonP" style="height:32px;width:120px;padding:3px;padding-top:4px;text-decoration:none" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">REGISTER -->
 			</div>
 		</div>
 
@@ -241,7 +242,8 @@ function Legal(code)
 	</div>
 
 	<div style="background-color:#F9CF0E;width:100%;padding:2px 0px 5px 0px;margin:10px 0px 0px 0px;text-align:center">
-		<a href="JavaScript:FAQ()"><div class="TopButton TopButtonP" style="width:120px;margin:4px 0px 0px 4px" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'"><asp:Literal runat="server" ID="X100063">100063</asp:Literal></div></a>
+	<!--  href="JavaScript:FAQ()"><div class="TopButton TopButtonP" style="width:120px;margin:4px 0px 0px 4px" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'"><asp:Literal runat="server" ID="Literal1">100063</asp:Literal></div></a> -->
+		<a href="JavaScript:FAQ()"><div class="TopButton TopButtonP" style="width:120px;margin:4px 0px 0px 4px"><asp:Literal runat="server" ID="X100063">100063</asp:Literal></div></a>
 		<div id="divFAQ" style="color:#FFFFFF;font-family:Sans-serif;visibility:hidden;display:none">
 		<asp:Literal runat="server" ID="xFAQ"></asp:Literal>
 		</div>
