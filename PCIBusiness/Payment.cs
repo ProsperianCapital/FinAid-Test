@@ -618,7 +618,6 @@ namespace PCIBusiness
 				catch
 				{ }
 				return 12;
-//				return 0;
 			}
 		}
 		public  int      CardExpiryYear
@@ -643,11 +642,11 @@ namespace PCIBusiness
 				byte mm = CardExpiryMonth;
 				if ( mm == 1 || mm == 3 || mm == 5 || mm == 7 || mm == 8 || mm == 10 || mm == 12 )
 					return "31";
-				else if ( mm == 4 || mm == 6 || mm == 9 || mm == 11 )
+				if ( mm == 4 || mm == 6 || mm == 9 || mm == 11 )
 					return "30";
-				else if ( CardExpiryYear == 2100 || CardExpiryYear == 2200 || CardExpiryYear == 2300 ) // Not leap years
+				if ( CardExpiryYear == 2100 || CardExpiryYear == 2200 || CardExpiryYear == 2300 ) // Not leap years
 					return "28";
-				else if ( ( CardExpiryYear % 4 ) == 0 )
+				if ( ( CardExpiryYear % 4 ) == 0 )
 					return "29";
 				return "28";
 			}
@@ -728,25 +727,6 @@ namespace PCIBusiness
 			get { return  transactionType; }
 			set { transactionType = value; }
 		}
-
-//		Moved to Tools.cs
-//		public  string   TransactionTypeName
-//		{
-//			get
-//			{
-//				if ( transactionType == (byte)Constants.TransactionType.CardPayment           ) return "Card Payment";
-//				if ( transactionType == (byte)Constants.TransactionType.CardPaymentThirdParty ) return "Payment via 3rd Party";
-//				if ( transactionType == (byte)Constants.TransactionType.DeleteToken           ) return "Delete Token";
-//				if ( transactionType == (byte)Constants.TransactionType.GetCardFromToken      ) return "Get Card from Token";
-//				if ( transactionType == (byte)Constants.TransactionType.GetToken              ) return "Get Token from Card";
-//				if ( transactionType == (byte)Constants.TransactionType.GetTokenThirdParty    ) return "Token via 3rd Party";
-//				if ( transactionType == (byte)Constants.TransactionType.ManualPayment         ) return "Manual Payment";
-//				if ( transactionType == (byte)Constants.TransactionType.ThreeDSecurePayment   ) return "3d Secure Payment";
-//				if ( transactionType == (byte)Constants.TransactionType.TokenPayment          ) return "Token Payment";
-//				if ( transactionType == (byte)Constants.TransactionType.Test                  ) return "Test";
-//				return "Unknown (transactionType=" + transactionType.ToString() + ")";
-//			}
-//		}
 
 		public int Detokenize()
 		{
