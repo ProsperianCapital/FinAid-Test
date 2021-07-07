@@ -33,12 +33,36 @@ namespace PCIBusiness
 				if ( ret == 0 && payToken.Length > 0 )
 					return 0;
 
-				Tools.LogInfo("GetToken/50","JSON Sent="+xmlSent+", JSON Rec="+XMLResult,199,this);
+				Tools.LogInfo("GetToken/50","JSON Sent="+xmlSent+", JSON Rec="+strResult,199,this);
 			}
 			catch (Exception ex)
 			{
 				Tools.LogInfo     ("GetToken/98","Ret="+ret.ToString()+", JSON Sent="+xmlSent,255,this);
 				Tools.LogException("GetToken/99","Ret="+ret.ToString()+", JSON Sent="+xmlSent, ex,this);
+			}
+			return ret;
+		}
+
+		public override int Reversal(Payment payment)
+		{
+			int ret = 10;
+			payRef  = "";
+			xmlSent = "";
+
+			try
+			{
+				Tools.LogInfo("Reversal/10","Merchant Ref=" + payment.MerchantReference,10,this);
+				ret      = 20;
+				ret      = CallWebService(payment,(byte)Constants.TransactionType.Reversal);
+				payRef   = Tools.JSONValue(strResult,"transactionId");
+				if ( ret == 0 && payRef.Length > 0 )
+					return 0;
+				Tools.LogInfo("Reversal/50","JSON Sent="+xmlSent+", JSON Rec="+strResult,199,this);
+			}
+			catch (Exception ex)
+			{
+				Tools.LogInfo     ("Reversal/98","Ret="+ret.ToString(),255,this);
+				Tools.LogException("Reversal/99","Ret="+ret.ToString(), ex,this);
 			}
 			return ret;
 		}
@@ -98,7 +122,7 @@ namespace PCIBusiness
 				if ( ret == 0 && payRef.Length > 0 )
 					return 0;
 
-				Tools.LogInfo("TokenPayment/50","JSON Sent="+xmlSent+", JSON Rec="+XMLResult,199,this);
+				Tools.LogInfo("TokenPayment/50","JSON Sent="+xmlSent+", JSON Rec="+strResult,199,this);
 			}
 			catch (Exception ex)
 			{
@@ -113,9 +137,9 @@ namespace PCIBusiness
 			int    k;
 			int    ret       = 10;
 			string url       = payment.ProviderURL;
-			string tranDesc  = "";
 			string resultURL = "";
 			string urlPart   = "";
+			string webMethod = "POST";
 
 			if ( Tools.NullToString(url).Length == 0 )
 				url = BureauURL;
@@ -128,22 +152,47 @@ namespace PCIBusiness
 			if ( transactionType == (byte)Constants.TransactionType.GetToken )
 			{
 				url      = url + "/mtokenizer/api/card";
-				tranDesc = "Get Token";
+			//	tranDesc = "Get Token";
 				urlPart  = "API/CARD/";
 			}
 			else if ( transactionType == (byte)Constants.TransactionType.TokenPayment ) // Spec section 3.3.3
 			{
 				url      = url + "/ape/api/pay/simple";
-				tranDesc = "Process Payment";
+			//	tranDesc = "Process Payment";
 				urlPart  = "PAY/TRACK/";
+			}
+			else if ( transactionType == (byte)Constants.TransactionType.Refund )
+			{
+				if ( payment.TransactionID.Length < 1 )
+				{
+					Tools.LogInfo("CallWebService/261","Refund, empty TransactionID",220,this);
+					return 33;
+				}
+				url      = url + "/ape/api/refund";
+			//	tranDesc = "Process Refund";
+				urlPart  = "PAY/BLAH/";
+			}
+			else if ( transactionType == (byte)Constants.TransactionType.Reversal )
+			{
+				if ( payment.TransactionID.Length < 1 )
+				{
+					Tools.LogInfo("CallWebService/262","Reversal, empty TransactionID",220,this);
+					return 36;
+				}
+				url       = url + "/ape/api/pay/reverse/" + payment.TransactionID;
+				urlPart   = "PAY/BLAH/";
+				webMethod = "PUT";
 			}
 			else if ( transactionType == (byte)Constants.TransactionType.ThreeDSecurePayment )
 			{
 				url      = url + "/eCommerce/v2/prepareTransaction";
-				tranDesc = "3d Secure Payment";
+			//	tranDesc = "3d Secure Payment";
 			}
 			else
-			{ }
+			{
+				Tools.LogInfo("CallWebService/263","transactionType="+transactionType.ToString(),220,this);
+				return 50;
+			}
 
 			ret        = 60;
 			strResult  = "";
@@ -163,7 +212,7 @@ namespace PCIBusiness
 			//	webRequest.ContentType         = "application/json;charset=UTF-8";
 				webRequest.ContentType         = "application/json";
 				webRequest.Accept              = "application/json";
-				webRequest.Method              = "POST";
+				webRequest.Method              = webMethod;
 				ret                            = 80;
 				webRequest.Headers["API-KEY"]  = payment.ProviderKey;
 				ret                            = 90;
@@ -223,63 +272,24 @@ namespace PCIBusiness
 					}
 					else
 						ret = 230;
-
-//					if ( strResult.Length == 0 )
-//						if ( transactionType == (byte)Constants.TransactionType.GetToken )
-//						{
-//							ret       = 150;
-//							strResult = webResponse.Headers["Location"].ToString();
-//							h         = "API/CARD/";
-//							k         = strResult.ToUpper().IndexOf(h);
-//							Tools.LogInfo("CallWebService/31","Success, Location="+strResult,199,this);
-//							if ( k > 0 )
-//							{
-//								ret       = 160;
-//								strResult = Tools.JSONPair("tokenId",strResult.Substring(h.Length+k),1,"{","}");
-//								ret       = 0;
-//							}
-//							else
-//								ret       = 170;
-//						}
-//						else if ( transactionType == (byte)Constants.TransactionType.TokenPayment )
-//						{
-//							ret       = 180;
-//							strResult = webResponse.Headers["Location"].ToString();
-//							h         = "PAY/TRACK/";
-//							k         = strResult.ToUpper().IndexOf(h);
-//							Tools.LogInfo("CallWebService/32","Success, Location="+strResult,199,this);
-//							if ( k > 0 )
-//							{
-//								ret       = 190;
-//								strResult = Tools.JSONPair("transactionId",strResult.Substring(h.Length+k),1,"{","}");
-//								ret       = 0;
-//							}
-//							else
-//								ret       = 200;
-//						}
-//						else
-//						{
-//							ret        = 220;
-//							resultMsg  = "Unknown transaction type";
-//							Tools.LogInfo("CallWebService/34","Fail, JSON Rec=(empty)",199,this);
-//						}
-//					else
-//					{
-//						ret       = 230;
-//						resultMsg = "Unknown transaction type";
-//						Tools.LogInfo("CallWebService/35","Success, JSON Rec="+strResult,199,this);
-//					}
-
 				}
 			}
 			catch (WebException ex1)
 			{
 				strResult = Tools.DecodeWebException(ex1,ClassName+".CallWebService/297","ret="+ret.ToString());
+				if ( strResult.Length == 0 )
+					strResult = Tools.JSONPair("status" ,ex1.Status.ToString(),1,"{")
+					          + Tools.JSONPair("error"  ,ex1.Message,1)
+					          + Tools.JSONPair("message",ex1.ToString(),1,"","}");
 			}
 			catch (Exception ex2)
 			{
 				Tools.LogInfo     ("CallWebService/298","ret="+ret.ToString(),220,this);
 				Tools.LogException("CallWebService/299","ret="+ret.ToString(),ex2,this);
+				if ( strResult.Length == 0 )
+					strResult = Tools.JSONPair("status" ,ex2.Source.ToString(),1,"{")
+					          + Tools.JSONPair("error"  ,ex2.Message,1)
+					          + Tools.JSONPair("message",ex2.ToString(),1,"","}");
 			}
 			return ret;
 		}
@@ -364,7 +374,7 @@ namespace PCIBusiness
 				if ( payToken.Length > 0 && d3Form.Length > 0 )
 					ret   = 0;
 //				else
-//					Tools.LogInfo("ThreeDSecurePayment/50","JSON Sent="+xmlSent+", JSON Rec="+XMLResult,199,this);
+//					Tools.LogInfo("ThreeDSecurePayment/50","JSON Sent="+xmlSent+", JSON Rec="+strResult,199,this);
 			}
 			catch (Exception ex)
 			{

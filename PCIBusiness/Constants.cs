@@ -144,6 +144,8 @@ namespace PCIBusiness
 			GetCardFromToken      =   5,
 			ThreeDSecurePayment   =   7,
 			Transfer              =   9,
+			Reversal              =  10,
+			Refund                =  11,
 			ManualPayment         =  73,
 			Test                  = 197
 		}

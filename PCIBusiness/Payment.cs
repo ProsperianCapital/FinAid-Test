@@ -790,6 +790,56 @@ namespace PCIBusiness
 			return retProc;
 		}
 
+		public int Reversal()
+		{
+			int retProc = 64020;
+			int retSQL  = 64020;
+			sql         = "";
+
+			if ( transaction == null || transaction.BureauCode != bureauCode )
+				transaction = Tools.CreateTransaction(bureauCode);
+			if ( transaction == null )
+				return retProc;
+
+			retProc = transaction.Reversal(this);
+			sql     = "exec sp_Upd_Reversal @MerchantReference = "           + Tools.DBString(merchantReference) // nvarchar(20),
+				                         + ",@PaymentBureauCode = "           + Tools.DBString(bureauCode)        // char(3),
+			                            + ",@TransactionId = "          + Tools.DBString(transaction.PaymentToken)
+			                            + ",@ReversalId = "          + Tools.DBString(transaction.PaymentToken)
+			                            + ",@BureauSubmissionSoap = "        + Tools.DBString(transaction.XMLSent,3)
+			                            + ",@BureauResultSoap = "            + Tools.DBString(transaction.XMLResult,3)
+			                            + ",@TransactionStatusCode = "       + Tools.DBString(transaction.ResultCode)
+		                               + ",@CardTokenisationStatusCode = '" + ( retProc == 0 ? "007'" : "001'" );
+			retSQL = ExecuteSQLUpdate();
+			Tools.LogInfo("Reversal/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString()+", SQL=" + sql,240,this);
+			return retProc;
+		}
+
+		public int Refund()
+		{
+			int retProc = 64020;
+			int retSQL  = 64020;
+			sql         = "";
+
+			if ( transaction == null || transaction.BureauCode != bureauCode )
+				transaction = Tools.CreateTransaction(bureauCode);
+			if ( transaction == null )
+				return retProc;
+
+			retProc = transaction.Refund(this);
+			sql     = "exec sp_Upd_Refund @MerchantReference = "           + Tools.DBString(merchantReference) // nvarchar(20),
+				                       + ",@PaymentBureauCode = "           + Tools.DBString(bureauCode)        // char(3),
+			                          + ",@TransactionId = "          + Tools.DBString(transaction.PaymentToken)
+			                          + ",@ReversalId = "          + Tools.DBString(transaction.PaymentToken)
+			                          + ",@BureauSubmissionSoap = "        + Tools.DBString(transaction.XMLSent,3)
+			                          + ",@BureauResultSoap = "            + Tools.DBString(transaction.XMLResult,3)
+			                          + ",@TransactionStatusCode = "       + Tools.DBString(transaction.ResultCode)
+		                             + ",@CardTokenisationStatusCode = '" + ( retProc == 0 ? "007'" : "001'" );
+			retSQL = ExecuteSQLUpdate();
+			Tools.LogInfo("Refund/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString()+", SQL=" + sql,240,this);
+			return retProc;
+		}
+
 		public int GetToken()
 		{
 //			int processMode = Tools.StringToInt(Tools.ConfigValue("ProcessMode"));
