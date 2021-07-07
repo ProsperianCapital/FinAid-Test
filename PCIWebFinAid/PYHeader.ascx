@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PYHeader.ascx.cs" Inherits="PCIWebFinAid.PYHeader" %>
 
-<div class="Header1 HeaderPY">
+<div class="Header1 HeaderPY" style="background-color:#A89889">
 	<div class="HCol1">
 		<asp:Image runat="server" ID="P12001" />
 	</div>

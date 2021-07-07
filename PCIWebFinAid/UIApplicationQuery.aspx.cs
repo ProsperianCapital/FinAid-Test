@@ -559,6 +559,7 @@ namespace PCIWebFinAid
 			{
 				json.Append ( Tools.JSONPair("MenuLevel","1",11,"{")
 				            + Tools.JSONPair("MenuDescription",m1.Description)
+				            + Tools.JSONPair("Blocked",m1.Blocked)
 				            + Tools.JSONPair("MenuImage",m1.ImageName)
 				            + Tools.JSONPair("SubItems",m1.SubItems.Count.ToString(),11)
 				            + Tools.JSONPair("RouterLink",m1.RouterLink) );
@@ -569,6 +570,7 @@ namespace PCIWebFinAid
 					{
 						json.Append ( Tools.JSONPair("MenuLevel","2",11,"{")
 						            + Tools.JSONPair("MenuDescription",m2.Description)
+				                  + Tools.JSONPair("Blocked",m2.Blocked)
 				                  + Tools.JSONPair("SubItems",m2.SubItems.Count.ToString(),11)
 				                  + Tools.JSONPair("RouterLink",m2.RouterLink) );
 						if ( m2.SubItems.Count > 0 )
@@ -578,6 +580,7 @@ namespace PCIWebFinAid
 							{
 								json.Append ( Tools.JSONPair("MenuLevel","3",11,"{")
 								            + Tools.JSONPair("MenuDescription",m3.Description)
+				                        + Tools.JSONPair("Blocked",m3.Blocked)
 				                        + Tools.JSONPair("SubItems",m3.SubItems.Count.ToString(),11)
 				                        + Tools.JSONPair("RouterLink",m3.RouterLink) );
 								if ( m3.SubItems.Count > 0 )
@@ -586,6 +589,7 @@ namespace PCIWebFinAid
 									foreach (MenuItem m4 in m3.SubItems)
 										json.Append ( Tools.JSONPair("MenuLevel","4",11,"{")
 										            + Tools.JSONPair("MenuDescription",m4.Description)
+				                              + Tools.JSONPair("Blocked",m4.Blocked)
 				                              + Tools.JSONPair("SubItems","0",11)
 				                              + Tools.JSONPair("RouterLink",m4.RouterLink)
 										            + Tools.JSONPair("Url",m4.URL,1,"","},") );
@@ -668,7 +672,9 @@ namespace PCIWebFinAid
 			json.Append ( Tools.JSONPair("FundingMethodCode","DER",1,"{")
 			            + Tools.JSONPair("FundingMethodDescription","Robbed a bank",1,"","},") );
 			json.Append ( Tools.JSONPair("FundingMethodCode","FAW",1,"{")
-			            + Tools.JSONPair("FundingMethodDescription","Got lucky in Las Vegas",1,"","}") );
+			            + Tools.JSONPair("FundingMethodDescription","Got lucky in Sun City",1,"","}") );
+			json.Append ( Tools.JSONPair("FundingMethodCode","MNS",1,"{")
+			            + Tools.JSONPair("FundingMethodDescription","Sold moonshine during lockdown",1,"","}") );
 			json.Append("]");
 
 			return 0;

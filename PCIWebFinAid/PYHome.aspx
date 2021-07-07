@@ -143,23 +143,23 @@ function Legal(code)
 
 	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:0px;margin:0px">
 		<div style="padding:10px;font-family:'Open Sans Hebrew',Sans-serif;font-size:20px;line-height:1.5em;letter-spacing:1.3px;margin:0px">
-			<div style="margin-left:10px;font-size:12px">
-				<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
+			<div style="margin-left:10px;font-size:12px;font-weight:bold">
+				<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle;width:16px" />
 				<asp:Literal runat="server" ID="X100287">100287</asp:Literal>&nbsp;&nbsp;&nbsp;&nbsp;
-				<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
+				<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle;width:16px"" />
 				<asp:Literal runat="server" ID="X100288">100288</asp:Literal>&nbsp;&nbsp;&nbsp;&nbsp;
-				<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle" />
+				<img src="<%=PCIBusiness.Tools.ImageFolder() %>TickOrange.png" onmouseover="JavaScript:TickOver(this,2)" onmouseout="JavaScript:TickOver(this,1)" style="vertical-align:middle;width:16px"" />
 				<asp:Literal runat="server" ID="X100289">100289</asp:Literal>
 			</div>
-			<div style="text-align:center">
+			<div style="text-align:center;margin-top:10px">
 			<asp:HyperLink runat="server" ID="X100009" class="TopButton TopButtonP" style="height:32px;width:120px;padding:3px;padding-top:4px;text-decoration:none">REGISTER</asp:HyperLink>
 			<!-- class="TopButton TopButtonP" style="height:32px;width:120px;padding:3px;padding-top:4px;text-decoration:none" onmouseover="JavaScript:this.style.backgroundColor='#FF7400'" onmouseout="JavaScript:this.style.backgroundColor='#54595F'">REGISTER -->
 			</div>
 		</div>
 
-		<p style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;text-align:center">
+		<div style="font-size:35px;font-weight:400;line-height:1.4em;letter-spacing:0.8px;color:#333232;text-align:center">
 		<asp:Literal runat="server" ID="X100045">100045</asp:Literal>
-		</p><p style="font-size:20px;font-weight:400;line-height:1.6em;color:#272626">
+		</div><p style="font-size:20px;font-weight:400;line-height:1.6em;color:#272626">
 		<asp:Literal runat="server" ID="X100046">100046</asp:Literal>
 		</p>
 
