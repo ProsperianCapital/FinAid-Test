@@ -463,7 +463,7 @@ namespace PCIWebFinAid
 			{ }
 			return 0;
 		}
-		public static byte ReplaceControlText(Page webPage,string ctlID,string fieldValue,string fieldURL,Control subCtl1=null,Control subCtl2=null)
+		public static byte ReplaceControlText(Page webPage,string ctlID,string blocked,string fieldValue,string fieldURL,Control subCtl1=null,Control subCtl2=null)
 		{
 			Control ctl;
 
@@ -478,8 +478,12 @@ namespace PCIWebFinAid
 					ctl = subCtl1.FindControl(ctlID);
 				else if ( k == 3 && subCtl2 != null )
 					ctl = subCtl2.FindControl(ctlID);
+
 				if ( ctl == null )
 					continue;
+
+				if ( blocked == "1" )
+					ctl.Visible = false;
 				else if (ctl.GetType()  == typeof(Literal))
 					((Literal)ctl).Text   = fieldValue;
 				else if (ctl.GetType()  == typeof(Label))
@@ -504,6 +508,8 @@ namespace PCIWebFinAid
 				}
 				else if (ctl.GetType()  == typeof(TextBox))
 					((TextBox)ctl).Attributes.Add("placeholder",fieldValue);
+
+				break;
 			}
 			return 0;
 		}

@@ -274,7 +274,7 @@ namespace PCIWebFinAid
 			if ( ccNumber.Length >= 6 )
 				ccAssociation = ccNumber.Substring(0,6);
 
-			ccNumber           = Tools.MaskCardNumber(ccNumber);
+			ccNumber           = Tools.MaskedValue(ccNumber);
 			lblCardNumber.Text = ccNumber;
 			lblp6CCNumber.Text = ccNumber;
 

@@ -254,7 +254,7 @@ namespace PCIWebFinAid
 
 		private int GetApplicationCode()
 		{
-			json.Append ( Tools.JSONPair("ApplicationCode","003") );
+			json.Append ( Tools.JSONPair("ApplicationCode",Tools.SystemCode(Constants.ApplicationCode.PayPayYa)) );
 			return 0;
 		}
 

@@ -45,6 +45,7 @@ function Legal(code)
 	<asp:HiddenField runat="server" ID="hdnProductCode" />
 	<asp:HiddenField runat="server" ID="hdnLangCode" />
 	<asp:HiddenField runat="server" ID="hdnLangDialectCode" />
+	<asp:HiddenField runat="server" ID="hdnPromoCode" />
 
 	<asp:Button runat="server" ID="btnWidth" Text="Width" OnClientClick="JavaScript:alert('Width = '+window.innerWidth.toString()+' pixels');return false" />
 
@@ -59,7 +60,7 @@ function Legal(code)
 
 	<div style="margin:0 auto;width:100%;display:inline-block">
 
-	<div style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
+	<asp:Panel runat="server" ID="X105141" style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
 		<div style="background-color:#FFCC00;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
 			<div style="font-size:10px">&nbsp;</div>
 			<div style="font-size:20px">
@@ -74,7 +75,7 @@ function Legal(code)
 			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105018">105018</asp:Literal></div>
 			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105019">105019</asp:Literal></div>
 		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
+		<asp:Panel runat="server" ID="X105144" style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
 			<div style="font-size:10px;vertical-align:top;text-align:center">
 			<asp:Literal runat="server" ID="X105014">105014</asp:Literal>
 			<span style="font-size:40px">
@@ -84,10 +85,10 @@ function Legal(code)
 			<div style="font-size:20px;text-align:center">
 			<asp:Literal runat="server" ID="X105016">105016</asp:Literal>
 			</div>
-		</div>
-	</div>
+		</asp:Panel>
+	</asp:Panel>
 
-	<div style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
+	<asp:Panel runat="server" ID="X105142" style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
 		<div style="background-color:#A6A6A6;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
 			<div style="font-size:10px">&nbsp;</div>
 			<div style="font-size:20px">
@@ -102,7 +103,7 @@ function Legal(code)
 			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105026">105026</asp:Literal></div>
 			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105027">105027</asp:Literal></div>
 		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
+		<asp:Panel runat="server" ID="X105145" style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
 			<div style="font-size:10px;vertical-align:top;text-align:center">
 			<asp:Literal runat="server" ID="X105022">105022</asp:Literal>
 			<span style="font-size:40px">
@@ -112,10 +113,10 @@ function Legal(code)
 			<div style="font-size:20px;text-align:center">
 			<asp:Literal runat="server" ID="X105024">105024</asp:Literal>
 			</div>
-		</div>
-	</div>
+		</asp:Panel>
+	</asp:Panel>
 
-	<div style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
+	<asp:Panel runat="server" ID="X105143" style="width:25%;border:1px solid #000000;display:inline-block;padding:10px;float:left;min-width:20% !important;margin:2px;width:340px;height:210px">
 		<div style="background-color:#B18135;color:#FDFEF2;border-radius:50%;height:75px;width:75px;padding:15px;float:left">
 			<div style="font-size:10px">&nbsp;</div>
 			<div style="font-size:20px">
@@ -130,7 +131,7 @@ function Legal(code)
 			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105034">105034</asp:Literal></div>
 			<div style="line-height:30px"><img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductUSPTick.png" style="float:left" />&nbsp;<asp:Literal runat="server" ID="X105035">105035</asp:Literal></div>
 		</div>
-		<div style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
+		<asp:Panel runat="server" ID="X105146" style="background-color:#FF6E01;color:#FEFFFE;border-radius:10px 10px 10px 10px;border:2px solid #EF9714;padding:10px;float:left;width:90%;margin-top:10px;margin-left:5px;margin-right:5px">
 			<div style="font-size:10px;vertical-align:top;text-align:center">
 			<asp:Literal runat="server" ID="X105030">105030</asp:Literal>
 			<span style="font-size:40px">
@@ -140,8 +141,8 @@ function Legal(code)
 			<div style="font-size:20px;text-align:center">
 			<asp:Literal runat="server" ID="X105032">105032</asp:Literal>
 			</div>
-		</div>
-	</div>
+		</asp:Panel>
+	</asp:Panel>
 	</div> 
 
 	<div style="color:#FFFFFF;background-color:#F9CF0E;font-family:Sans-serif;width:99%;padding:0px;margin:0px">

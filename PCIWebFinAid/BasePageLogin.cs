@@ -138,7 +138,7 @@ namespace PCIWebFinAid
 				sessionGeneral.UserCode   = "013";
 				sessionGeneral.UserName   = "Samual Briggs";
 				sessionGeneral.AccessType = "A";
-				ApplicationCode           = "001";
+				ApplicationCode           = Tools.SystemCode(Constants.ApplicationCode.BackOffice);
 			}
 
 //			else if ( ( sessionMode == 4 || sessionMode == 19 ) && ( sessionGeneral == null || sessionGeneral.UserCode.Length < 1 ) )

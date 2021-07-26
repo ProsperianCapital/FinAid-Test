@@ -85,6 +85,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.HiddenField hdnLangDialectCode;
         
         /// <summary>
+        /// hdnPromoCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnPromoCode;
+        
+        /// <summary>
         /// btnWidth control.
         /// </summary>
         /// <remarks>
@@ -119,6 +128,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X100004;
+        
+        /// <summary>
+        /// X105141 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel X105141;
         
         /// <summary>
         /// X105012 control.
@@ -166,6 +184,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X105019;
         
         /// <summary>
+        /// X105144 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel X105144;
+        
+        /// <summary>
         /// X105014 control.
         /// </summary>
         /// <remarks>
@@ -191,6 +218,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X105016;
+        
+        /// <summary>
+        /// X105142 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel X105142;
         
         /// <summary>
         /// X105020 control.
@@ -238,6 +274,15 @@ namespace PCIWebFinAid {
         protected global::System.Web.UI.WebControls.Literal X105027;
         
         /// <summary>
+        /// X105145 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel X105145;
+        
+        /// <summary>
         /// X105022 control.
         /// </summary>
         /// <remarks>
@@ -263,6 +308,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X105024;
+        
+        /// <summary>
+        /// X105143 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel X105143;
         
         /// <summary>
         /// X105028 control.
@@ -308,6 +362,15 @@ namespace PCIWebFinAid {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal X105035;
+        
+        /// <summary>
+        /// X105146 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel X105146;
         
         /// <summary>
         /// X105030 control.

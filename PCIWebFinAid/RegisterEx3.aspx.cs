@@ -671,10 +671,10 @@ namespace PCIWebFinAid
 //								paymentAccount    = "qDRLeKI9";
 //								paymentKey        = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
 //	Testing : FNB
-								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.FNB);
-								paymentAccount    = "";
-								paymentKey        = "";
-								paymentURL        = "";
+//								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.FNB);
+//								paymentAccount    = "";
+//								paymentKey        = "";
+//								paymentURL        = "";
 //	Testing
 								if ( paymentURL.Length < 1 || paymentAccount.Length < 1 || paymentKey.Length < 1 )
 									Tools.LogInfo("LoadContractCode",sql+" -> bureauCodeToken="  +bureauCodeToken
@@ -703,7 +703,6 @@ namespace PCIWebFinAid
 									else if ( bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.FNB) )
 									{
 										if ( paymentAccount.Length < 1 ) paymentAccount = Tools.ProviderCredentials("FNB","InstanceKey");
-									//	if ( paymentId.Length      < 1 ) paymentId      = Tools.ProviderCredentials("FNB","Id");
 										if ( paymentKey.Length     < 1 ) paymentKey     = Tools.ProviderCredentials("FNB","ApiKey");
 									}
 									else if ( bureauCodePayment == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
@@ -858,7 +857,7 @@ namespace PCIWebFinAid
 			{
 				trans                    = new TransactionFNB();
 				payment.ProviderPassword = paymentAccount;  // Instance Key
-			//	payment.ProviderKey      = paymentKey;      // Api Key
+				payment.ProviderKey      = paymentKey;      // Api Key
 			}
 			else if ( payment.BureauCode == Tools.BureauCode(Constants.PaymentProvider.CyberSource) )
 			{
@@ -1147,13 +1146,13 @@ namespace PCIWebFinAid
 								lblTx.Text          = WebTools.JavaScriptSource("TokenSetup()");
 //	[TESTING]
 //								txConcatenatedString.Value = data;
-								Tools.LogInfo("btnNext_Click/30035","Id="+txID.Value
-								                                 +"; Key="+apiKey
-								                                 +"; Origin="+txOrigin.Value
-								                                 +"; TimeStamp="+txTimestamp.Value
-								                                 +"; TokenScheme="+txTokenScheme.Value
-								                                 +"; Concat="+data
-								                                 +"; HMAC="+txHMAC.Value,10,this);
+//								Tools.LogInfo("btnNext_Click/30035","Id="+txID.Value
+//								                                 +"; Key="+apiKey
+//								                                 +"; Origin="+txOrigin.Value
+//								                                 +"; TimeStamp="+txTimestamp.Value
+//								                                 +"; TokenScheme="+txTokenScheme.Value
+//								                                 +"; Concat="+data
+//								                                 +"; HMAC="+txHMAC.Value,10,this);
 //	[TESTING]
 							}
 //	TokenEx End
@@ -1226,7 +1225,7 @@ namespace PCIWebFinAid
 							{
 								sql   = "exec sp_TokenEx_Ins_CardToken"
 								      +     " @ContractCode ="       + Tools.DBString(contractCode)
-								      +     ",@MaskedCardNumber ="   + Tools.DBString(Tools.MaskCardNumber(txToken.Value))
+								      +     ",@MaskedCardNumber ="   + Tools.DBString(Tools.MaskedValue(txToken.Value))
 								      +     ",@PaymentBureauCode ="  + Tools.DBString(Tools.BureauCode(Constants.PaymentProvider.TokenEx))
 								      +     ",@PaymentBureauToken =" + Tools.DBString(txToken.Value)
 								      +     ",@CardExpieryMonth ="   + Tools.DBString(WebTools.ListValue(lstCCMonth).ToString())
@@ -1332,9 +1331,9 @@ namespace PCIWebFinAid
 							lblp6IP.Text        = WebTools.ClientIPAddress(Request,1);
 							lblp6Browser.Text   = WebTools.ClientBrowser(Request,hdnBrowser.Value);
 							if ( bureauCodeToken == Tools.BureauCode(Constants.PaymentProvider.TokenEx) )
-								lblp6CCNumber.Text = Tools.MaskCardNumber(txToken.Value);
+								lblp6CCNumber.Text = Tools.MaskedValue(txToken.Value);
 							else
-								lblp6CCNumber.Text = Tools.MaskCardNumber(txtCCNumber.Text);
+								lblp6CCNumber.Text = Tools.MaskedValue(txtCCNumber.Text);
 
 							foreach (Control ctlOuter in Page.Controls)
 								if ( ctlOuter.GetType() == typeof(Literal) && mailText.Contains("#"+ctlOuter.ID+"#") )

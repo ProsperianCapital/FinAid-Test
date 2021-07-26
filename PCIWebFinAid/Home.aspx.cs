@@ -42,19 +42,19 @@ namespace PCIWebFinAid
 
 						if ( appStatus != "A" )
 							err  = 10;
-						else if ( ApplicationCode == "000" )
+						else if ( ApplicationCode == Tools.SystemCode(Constants.ApplicationCode.Registration) ) // 000
 							goTo = "Register3.aspx";
-						else if ( ApplicationCode == "002" ) // CRM
+						else if ( ApplicationCode == Tools.SystemCode(Constants.ApplicationCode.CRM)          ) // 002
 							goTo = "pgLogonCRM.aspx";
-//						else if ( ApplicationCode == "006" ) // Mobile app
+//						else if ( ApplicationCode == Tools.SystemCode(Constants.ApplicationCode.Mobile)       ) // 006
 //							goTo = "pgLogonCRM.aspx";
-						else if ( ApplicationCode == "100" ) // Care Assist
+						else if ( ApplicationCode == Tools.SystemCode(Constants.ApplicationCode.CareAssist)   ) // 100
 							goTo = "CAHome.aspx";
-						else if ( ApplicationCode == "110" ) // ISOS
+						else if ( ApplicationCode == Tools.SystemCode(Constants.ApplicationCode.iSOS)         ) // 110
 							goTo = "ISHome.aspx";
-						else if ( ApplicationCode == "120" ) // Life Guru
+						else if ( ApplicationCode == Tools.SystemCode(Constants.ApplicationCode.LifeGuru)     ) // 120
 							goTo = "LGHome.aspx";
-						else if ( ApplicationCode == "170" ) // PayYaYa
+						else if ( ApplicationCode == Tools.SystemCode(Constants.ApplicationCode.PayPayYa)     ) // 170
 							goTo = "PYHome.aspx";
 						else
 							err  = 20;

@@ -281,7 +281,7 @@ namespace PCIWebFinAid
 //			else if ( ccNumber.Length > 2 )
 //				ccNumber = "******";
 
-			ccNumber           = Tools.MaskCardNumber(ccNumber);
+			ccNumber           = Tools.MaskedValue(ccNumber);
 			lblCardNumber.Text = ccNumber;
 			lblp6CCNumber.Text = ccNumber;
 
@@ -394,10 +394,11 @@ namespace PCIWebFinAid
 						SetErrorDetail(moduleName,30081,"Product option details not found. Please try again",sql);
 					else
 					{
-						lbl100325.Text = miscList.GetColumn("FieldValue");
-						if ( lbl100325.Text.Length > 0 )
-							lbl100325.Text = lbl100325.Text.Replace(Environment.NewLine,"<br />");
-						else
+						lbl100325.Text = miscList.GetColumn("FieldValue",1,6);
+//						if ( lbl100325.Text.Length > 0 )
+//							lbl100325.Text = lbl100325.Text.Replace(Environment.NewLine,"<br />");
+//						else
+						if ( lbl100325.Text.Length < 1 )
 							SetErrorDetail(moduleName,30082,"Product option data is empty/blank (sp_WP_CRM_Get_WebsiteProductOptionA, column 'FieldValue')",sql);
 					}
 
@@ -422,12 +423,12 @@ namespace PCIWebFinAid
 						SetErrorDetail(moduleName,30091,"Product policy details not found. Please try again",sql);
 					else
 					{
-						string refundPolicy          = miscList.GetColumn("RefundPolicyText");
-						string moneyBackPolicy       = miscList.GetColumn("MoneyBackPolicyText");
-						string cancellationPolicy    = miscList.GetColumn("CancellationPolicyText");
-						lblp6RefundPolicy.Text       = refundPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
-						lblp6MoneyBackPolicy.Text    = moneyBackPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
-						lblp6CancellationPolicy.Text = cancellationPolicy.Replace(Environment.NewLine,"<br />");
+						lblp6RefundPolicy.Text       = miscList.GetColumn("RefundPolicyText",1,6) + "<br />&nbsp;";
+						lblp6MoneyBackPolicy.Text    = miscList.GetColumn("MoneyBackPolicyText",1,6) + "<br />&nbsp;";
+						lblp6CancellationPolicy.Text = miscList.GetColumn("CancellationPolicyText",1,6);
+					//	lblp6RefundPolicy.Text       = refundPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
+					//	lblp6MoneyBackPolicy.Text    = moneyBackPolicy.Replace(Environment.NewLine,"<br />") + "<br />&nbsp;";
+					//	lblp6CancellationPolicy.Text = cancellationPolicy.Replace(Environment.NewLine,"<br />");
 					}
 
 				//	Collection mandate

@@ -15,6 +15,7 @@ namespace PCIWebFinAid
 		string productCode;
 		string languageCode;
 		string languageDialectCode;
+		string promoCode;
 
 		protected Literal F12014; // Favicon
 
@@ -29,6 +30,7 @@ namespace PCIWebFinAid
 				productCode         = hdnProductCode.Value;
 				languageCode        = hdnLangCode.Value;
 				languageDialectCode = hdnLangDialectCode.Value;
+				promoCode           = hdnPromoCode.Value;
 				ListItem lang       = ascxHeader.lstLanguage.SelectedItem;
 				if ( lang != null && ( lang.Text != languageCode || lang.Value != languageDialectCode ) )
 				{
@@ -41,6 +43,7 @@ namespace PCIWebFinAid
 			}
 			else
 			{
+				LoadPromo();
 				LoadProduct();
 				LoadStaticDetails();
 				LoadDynamicDetails();
@@ -61,7 +64,7 @@ namespace PCIWebFinAid
 				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem("ENG","0002"));
 				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem("THA","0001"));
 				ascxHeader.lstLanguage.Items.Add(new System.Web.UI.WebControls.ListItem("GER","0298"));
-				Tools.LogInfo("LoadStaticDetails/10003","BackDoor, PC/LC/LDC="+productCode+"/"+languageCode+"/"+languageDialectCode,222,this);
+				Tools.LogInfo("LoadStaticDetails/10003","BackDoor, PC/LC/LDC/Promo="+productCode+"/"+languageCode+"/"+languageDialectCode+"/"+promoCode,222,this);
 			}
 			else
 				using (MiscList mList = new MiscList())
@@ -122,6 +125,7 @@ namespace PCIWebFinAid
 			string fieldHead;
 			string fieldValue;
 			string fieldURL;
+			string blocked;
 			string stdParms = " @ProductCode="         + Tools.DBString(productCode)
 					          + ",@LanguageCode="        + Tools.DBString(languageCode)
 					          + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
@@ -131,7 +135,7 @@ namespace PCIWebFinAid
 				{
 					ret = 10110;
 					spr = "sp_WP_Get_ProductContent";
-					sql = "exec " + spr + stdParms;
+					sql = "exec " + spr + stdParms + ",@PromoCode=" + Tools.DBString(promoCode);
 					if ( mList.ExecQuery(sql,0) != 0 )
 						SetErrorDetail("LoadDynamicDetails", 10120, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
@@ -142,14 +146,14 @@ namespace PCIWebFinAid
 							ret         = 10140;
 							fieldCode   = mList.GetColumn("WebsiteFieldCode");
 						//	fieldName   = mList.GetColumn("WebsiteFieldName");
-						//	blocked     = mList.GetColumn("Blocked");
+							blocked     = mList.GetColumn("Blocked");
 							fieldValue  = mList.GetColumn("WebsiteFieldValue");
 							fieldURL    = mList.GetColumn("FieldHyperlinkTarget");
 							if ( fieldURL.Length > 0 && fieldURL.Contains("[") )
 								fieldURL = fieldURL.Replace("[PC]",Tools.URLString(productCode)).Replace("[LC]",Tools.URLString(languageCode)).Replace("[LDC]",Tools.URLString(languageDialectCode));
 
 							Tools.LogInfo("LoadDynamicDetails/10140","FieldCode="+fieldCode,errPriority,this);
-							err         = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,fieldURL,ascxHeader,ascxFooter);
+							err         = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,blocked,fieldValue,fieldURL,ascxHeader,ascxFooter);
 							if ( err   != 0 )
 								SetErrorDetail("LoadDynamicDetails", 10150, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
 							mList.NextRow();
@@ -169,7 +173,6 @@ namespace PCIWebFinAid
 							fieldCode  = mList.GetColumn("ImageCode");
 							fieldValue = mList.GetColumn("ImageFileName");
 							fieldURL   = mList.GetColumn("ImageHyperLink");
-							Tools.LogInfo("LoadDynamicDetails/10190","ImageCode="+fieldCode+"/"+fieldValue,errPriority,this);
 							err        = WebTools.ReplaceImage(this.Page,fieldCode,fieldValue,
 							                                   mList.GetColumn   ("ImageMouseHoverText"),
 							                                   fieldURL,
@@ -178,7 +181,8 @@ namespace PCIWebFinAid
 							                                   ascxHeader,
 							                                   ascxFooter);
 							if ( err != 0 )
-								SetErrorDetail("LoadDynamicDetails", 10200, "Unrecognized Image code ("+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceImage('"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
+								SetErrorDetail("LoadDynamicDetails", 10197, "Unrecognized Image code ("+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceImage('"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
+							Tools.LogInfo("LoadDynamicDetails/10201","ImageCode="+fieldCode+"/"+fieldValue,errPriority,this);
 							mList.NextRow();
 						}
 
@@ -195,7 +199,7 @@ namespace PCIWebFinAid
 					ret       = 10210;
 					xHIW.Text = "";
 					spr       = "sp_WP_Get_ProductHIWInfo";
-					sql       = "exec " + spr + stdParms;
+					sql       = "exec " + spr + stdParms + ",@PromoCode=" + Tools.DBString(promoCode);
 					if ( mList.ExecQuery(sql,0) != 0 )
 						SetErrorDetail("LoadDynamicDetails", 10220, "Internal database error (" + spr + " failed)", sql, 2, 2, null, false, errPriority);
 					else if ( mList.EOF )
@@ -274,9 +278,23 @@ namespace PCIWebFinAid
 				}
 				catch (Exception ex)
 				{
-					PCIBusiness.Tools.LogException("LoadDynamicDetails/99","ret="+ret.ToString(),ex,this);
+					Tools.LogException("LoadDynamicDetails/99","ret="+ret.ToString(),ex,this);
 				}
+
+//	Testing
+//				WebTools.ReplaceControlText(this.Page,"X090909","1","X","",ascxHeader,ascxFooter);
+//				WebTools.ReplaceControlText(this.Page,"X105141","1","X","",ascxHeader,ascxFooter);
+//				WebTools.ReplaceControlText(this.Page,"X105146","1","X","",ascxHeader,ascxFooter);
+//	Testing
 		}
+
+		private void LoadPromo()
+		{
+			promoCode          = WebTools.RequestValueString(Request,"PromoCode");
+			if ( promoCode.Length < 1 )
+				promoCode       = "10001"; // Default
+			hdnPromoCode.Value = promoCode;
+		}	
 
 		private void LoadProduct()
 		{

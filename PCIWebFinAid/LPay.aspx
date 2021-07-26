@@ -7,7 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMain.htm" -->
+	<!--#include file="IncludeMainSimple.htm" -->
 	<title>Pay</title>
 	<link rel="stylesheet" href="CSS/FinAid.css" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />

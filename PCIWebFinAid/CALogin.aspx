@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-	<!--#include file="IncludeMain.htm" -->
+	<!--#include file="IncludeMainSimple.htm" -->
 	<title>CareAssist Africa - Instant Help When You Need It Most</title>
 	<link rel="stylesheet" href="CSS/CAFinAid.css" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />

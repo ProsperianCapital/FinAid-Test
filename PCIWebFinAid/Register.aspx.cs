@@ -956,7 +956,7 @@ namespace PCIWebFinAid
 							else
 								lbl100209.Text   = lbl100209.Text.Replace("[Initials]","");
 							lblp6CCName.Text    = txtCCName.Text;
-							lblp6CCNumber.Text  = Tools.MaskCardNumber(txtCCNumber.Text);
+							lblp6CCNumber.Text  = Tools.MaskedValue(txtCCNumber.Text);
 							lblp6CCExpiry.Text  = lstCCYear.SelectedValue + "/" + lstCCMonth.SelectedValue;
 							lblp6Date.Text      = Tools.DateToString(System.DateTime.Now,2,1);
 							lblp6IP.Text        = WebTools.ClientIPAddress(Request,1);

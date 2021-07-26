@@ -12,7 +12,7 @@ namespace PCIWebFinAid
 	{
 		protected override void PageLoad(object sender, EventArgs e) // AutoEventWireup = false
 		{
-			ApplicationCode = "001"; // BackOffice
+			ApplicationCode = Tools.SystemCode(Constants.ApplicationCode.BackOffice); // 001
 			ShowSecure(false);
 			SetErrorDetail("",-888);
 

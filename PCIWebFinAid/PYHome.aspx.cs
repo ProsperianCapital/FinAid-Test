@@ -122,6 +122,7 @@ namespace PCIWebFinAid
 			string fieldHead;
 			string fieldValue;
 			string fieldURL;
+			string blocked;
 			string stdParms = " @ProductCode="         + Tools.DBString(productCode)
 					          + ",@LanguageCode="        + Tools.DBString(languageCode)
 					          + ",@LanguageDialectCode=" + Tools.DBString(languageDialectCode);
@@ -142,14 +143,14 @@ namespace PCIWebFinAid
 							ret         = 10140;
 							fieldCode   = mList.GetColumn("WebsiteFieldCode");
 						//	fieldName   = mList.GetColumn("WebsiteFieldName");
-						//	blocked     = mList.GetColumn("Blocked");
+							blocked     = mList.GetColumn("Blocked");
 							fieldValue  = mList.GetColumn("WebsiteFieldValue");
 							fieldURL    = mList.GetColumn("FieldHyperlinkTarget");
 							if ( fieldURL.Length > 0 && fieldURL.Contains("[") )
 								fieldURL = fieldURL.Replace("[PC]",Tools.URLString(productCode)).Replace("[LC]",Tools.URLString(languageCode)).Replace("[LDC]",Tools.URLString(languageDialectCode));
 
 							Tools.LogInfo("LoadDynamicDetails/10140","FieldCode="+fieldCode,errPriority,this);
-							err         = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,fieldValue,fieldURL,ascxHeader,ascxFooter);
+							err         = WebTools.ReplaceControlText(this.Page,"X"+fieldCode,blocked,fieldValue,fieldURL,ascxHeader,ascxFooter);
 							if ( err   != 0 )
 								SetErrorDetail("LoadDynamicDetails", 10150, "Unrecognized HTML control (X"+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceControlText('X"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
 							mList.NextRow();
@@ -169,7 +170,6 @@ namespace PCIWebFinAid
 							fieldCode  = mList.GetColumn("ImageCode");
 							fieldValue = mList.GetColumn("ImageFileName");
 							fieldURL   = mList.GetColumn("ImageHyperLink");
-							Tools.LogInfo("LoadDynamicDetails/10190","ImageCode="+fieldCode+"/"+fieldValue,errPriority,this);
 							err        = WebTools.ReplaceImage(this.Page,fieldCode,fieldValue,
 							                                   mList.GetColumn   ("ImageMouseHoverText"),
 							                                   fieldURL,
@@ -178,7 +178,8 @@ namespace PCIWebFinAid
 							                                   ascxHeader,
 							                                   ascxFooter);
 							if ( err != 0 )
-								SetErrorDetail("LoadDynamicDetails", 10200, "Unrecognized Image code ("+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceImage('"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
+								SetErrorDetail("LoadDynamicDetails", 10195, "Unrecognized Image code ("+fieldCode + "/" + fieldValue.ToString() + ")", "WebTools.ReplaceImage('"+fieldCode+"') => "+err.ToString(), 2, 0, null, false, errPriority);
+							Tools.LogInfo("LoadDynamicDetails/10202","ImageCode="+fieldCode+"/"+fieldValue,errPriority,this);
 							mList.NextRow();
 						}
 

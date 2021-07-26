@@ -112,7 +112,8 @@ namespace PCIWebFinAid
 			{
 				System.Configuration.ConnectionStringSettings db1 = System.Configuration.ConfigurationManager.ConnectionStrings["DBConn"];
 				System.Configuration.ConnectionStringSettings db2 = System.Configuration.ConfigurationManager.ConnectionStrings["DBConnTrade"];
-				x1 = "LogFileErrors<br />"
+				x1 = "AppDescription<br />"
+				   + "LogFileErrors<br />"
 				   + "LogFileInfo<br />"
 				   + "Tools.SystemFolder('')<br />"
 				   + "SystemPath<br />"
@@ -126,19 +127,20 @@ namespace PCIWebFinAid
 				   + "SMTP-BCC<br />"
 				   + "DBConn<br />"
 				   + "DBConnTrade";
-				x2 = PCIBusiness.Tools.ConfigValue("LogFileErrors") + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("LogFileInfo")   + "<br />"
-				   + PCIBusiness.Tools.SystemFolder("")             + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("SystemPath")    + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("SystemMode")    + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("SMTP-Mode")     + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("SMTP-Server")   + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("SMTP-User")     + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("SMTP-From")     + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("SMTP-Password") + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("SMTP-Port")     + "<br />"
-				   + PCIBusiness.Tools.ConfigValue("SMTP-BCC")      + "<br />"
-				   + ReplacePassword(db1.ConnectionString)          + "<br />"
+				x2 = PCIBusiness.Tools.ConfigValue("AppDescription") + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("LogFileErrors")  + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("LogFileInfo")    + "<br />"
+				   + PCIBusiness.Tools.SystemFolder("")              + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SystemPath")     + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SystemMode")     + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SMTP-Mode")      + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SMTP-Server")    + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SMTP-User")      + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SMTP-From")      + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SMTP-Password")  + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SMTP-Port")      + "<br />"
+				   + PCIBusiness.Tools.ConfigValue("SMTP-BCC")       + "<br />"
+				   + ReplacePassword(db1.ConnectionString)           + "<br />"
 				   + ReplacePassword(db2.ConnectionString);
 				lblResult.Text = "<table><tr><td><u>Setting</u><br />" + x1 + "</td>" + tdBlue + "<u>Value</u><br />" + x2 + "</td></tr></table>";
 			}
@@ -231,7 +233,10 @@ namespace PCIWebFinAid
 					if ( x1.EndsWith("/") )
 						x1        = x1.Substring(0,x1.Length-1);
 					mail.To      = txtData.Text.Trim();
-					mail.Heading = "Prosperian Test Message";
+					mail.Heading = PCIBusiness.Tools.ConfigValue("AppDescription");
+					if ( mail.Heading.Length < 1 )
+						mail.Heading = "Prosperian Capital International";
+					mail.Heading = mail.Heading + " : Test";
 					mail.Body    = "<html><head><title>Test</title></head>"
 					             + "<body><img src='" + x1 + "/Images/PCapital.png' title='Prosperian' style='float:right' />"
 					             + "<p>Good day, this is a test message from " + SystemDetails.AppName + " user " + sessionGeneral.UserName

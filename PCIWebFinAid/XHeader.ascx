@@ -32,13 +32,7 @@
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductLogoCareAssist.png" title="CareAssist" class="HImageBig" />
 		<img src="<%=PCIBusiness.Tools.ImageFolder() %>ProductLogoCareAssist.png" title="CareAssist" class="HImageSmall" />
 	</asp:PlaceHolder>
-	<asp:PlaceHolder runat="server" ID="pnl003" Visible="false"></asp:PlaceHolder>
-	<asp:PlaceHolder runat="server" ID="pnl004" Visible="false"></asp:PlaceHolder>
-	<asp:PlaceHolder runat="server" ID="pnl005" Visible="false"></asp:PlaceHolder>
-	<asp:PlaceHolder runat="server" ID="pnl006" Visible="false"></asp:PlaceHolder>
-	<asp:PlaceHolder runat="server" ID="pnl007" Visible="false"></asp:PlaceHolder>
-	<asp:PlaceHolder runat="server" ID="pnl008" Visible="false"></asp:PlaceHolder>
-	<asp:PlaceHolder runat="server" ID="pnl009" Visible="false"></asp:PlaceHolder>
+	<asp:PlaceHolder runat="server" ID="pnl003" Visible="false"></asp:PlaceHolder> <!--  Add as necessary -->
 
 	<div style="float:right;margin-right:20px">
 		<asp:Label runat="server" ID="lblUName" style="top:12px;position:relative"></asp:Label>
