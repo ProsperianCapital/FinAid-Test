@@ -526,6 +526,7 @@ namespace PCIBusiness
 					transactionID = (Guid.NewGuid()).ToString();
 				return Tools.NullToString(transactionID);
 			}
+			set { transactionID = value.Trim(); }
 		}
 //		public string    AuthorizationCode
 //		{
@@ -542,8 +543,20 @@ namespace PCIBusiness
 		}
 		public string    PaymentDescription
 		{
-			get { return  Tools.NullToString(paymentDescription); }
 			set { paymentDescription = value.Trim(); }
+			get
+			{
+				paymentDescription = Tools.NullToString(paymentDescription);
+				if ( paymentDescription.Length > 0 )
+					return paymentDescription;
+				paymentDescription = Tools.ConfigValue("AppDescription");
+				if ( paymentDescription.Length > 0 )
+					return paymentDescription;
+				paymentDescription = SystemDetails.Owner;
+				if ( paymentDescription.Length > 0 )
+					return paymentDescription;
+				return "Prosperian Capital International";
+			}	
 		}
 		public string    PaymentDescriptionLeft(short maxLength)
 		{
@@ -700,6 +713,42 @@ namespace PCIBusiness
 					ccExpiryYear = "";
 			}
 		}
+
+		public long CardExpiryMilliSeconds
+		{
+			get
+			{
+				try
+				{
+//	Version 3, no need to bother with the hours, minutes or seconds
+					DateTimeOffset expDate = new DateTime ( System.Convert.ToInt32(CardExpiryYYYY),
+					                                        System.Convert.ToInt32(CardExpiryMM),
+					                                        System.Convert.ToInt32(CardExpiryDD) );
+					return expDate.ToUnixTimeMilliseconds();
+
+//	Version 2
+//					DateTime jan1970 = new DateTime ( 1970, 01, 01, 00, 00, 00 , System.DateTimeKind.Utc );
+//					DateTime expDate = new DateTime ( System.Convert.ToInt32(CardExpiryYYYY),
+//					                                  System.Convert.ToInt32(CardExpiryMM),
+//					                                  System.Convert.ToInt32(CardExpiryDD), 23, 59, 59, 59 );
+//					TimeSpan diff    = expDate - jan1970;
+//					return System.Convert.ToInt64(diff.TotalMilliseconds);
+
+//	Version 1
+//					DateTime jan1970 = new DateTime ( 1970, 01, 01, 00, 00, 00 );
+//					DateTime expDate = new DateTime ( System.Convert.ToInt32(CardExpiryYYYY),
+//					                                  System.Convert.ToInt32(CardExpiryMM),
+//					                                  System.Convert.ToInt32(CardExpiryDD), 23, 59, 59, 59 );
+//					TimeSpan diff    = expDate - jan1970;
+//					return System.Convert.ToInt64(diff.TotalMilliseconds);
+				}
+				catch
+				{ }
+				DateTimeOffset h = System.DateTime.Now.AddYears(1);
+				return h.ToUnixTimeMilliseconds();
+			}
+		}
+
 		public  string   CardName
 		{
 			get { return  Tools.NullToString(ccName); }
@@ -730,10 +779,9 @@ namespace PCIBusiness
 
 		public int Detokenize()
 		{
-//			int processMode = Tools.StringToInt(Tools.ConfigValue("ProcessMode"));
-			int retProc     = 87020;
-			int retSQL      = 87020;
-			sql             = "";
+			int retProc = 87020;
+			int retSQL  = 87020;
+			sql         = "";
 			Tools.LogInfo("Detokenize/10","Token=" + CardToken,10,this);
 
 			if ( transaction == null || transaction.BureauCode != bureauCode )
@@ -802,16 +850,40 @@ namespace PCIBusiness
 				return retProc;
 
 			retProc = transaction.Reversal(this);
-			sql     = "exec sp_Upd_Reversal @MerchantReference = "           + Tools.DBString(merchantReference) // nvarchar(20),
-				                         + ",@PaymentBureauCode = "           + Tools.DBString(bureauCode)        // char(3),
-			                            + ",@TransactionId = "          + Tools.DBString(transaction.PaymentToken)
-			                            + ",@ReversalId = "          + Tools.DBString(transaction.PaymentToken)
-			                            + ",@BureauSubmissionSoap = "        + Tools.DBString(transaction.XMLSent,3)
-			                            + ",@BureauResultSoap = "            + Tools.DBString(transaction.XMLResult,3)
-			                            + ",@TransactionStatusCode = "       + Tools.DBString(transaction.ResultCode)
-		                               + ",@CardTokenisationStatusCode = '" + ( retProc == 0 ? "007'" : "001'" );
+//	To Do
+//			sql     = "exec sp_Upd_Reversal @MerchantReference = "     + Tools.DBString(merchantReference) // nvarchar(20),
+//				                         + ",@PaymentBureauCode = "     + Tools.DBString(bureauCode)        // char(3),
+//			                            + ",@CardToken = "             + Tools.DBString(transaction.PaymentToken)
+//			                            + ",@TransactionId = "         + Tools.DBString(transaction.PaymentReference)
+//			                            + ",@ReversalId = "            + Tools.DBString(transaction.OtherReference)
+//			                            + ",@BureauSubmissionSoap = "  + Tools.DBString(transaction.XMLSent,3)
+//			                            + ",@BureauResultSoap = "      + Tools.DBString(transaction.XMLResult,3)
+//			                            + ",@TransactionStatusCode = " + Tools.DBString(transaction.ResultCode)
+//		                               + ",@ReversalStatusCode = '" + ( retProc == 0 ? "007'" : "001'" );
+//			retSQL = ExecuteSQLUpdate();
+//			Tools.LogInfo("Reversal/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString()+", SQL=" + sql,240,this);
+
+			return retProc;
+		}
+
+		public int Lookup()
+		{
+			int retProc = 64120;
+			int retSQL  = 64120;
+			sql         = "";
+
+			if ( transaction == null || transaction.BureauCode != bureauCode )
+				transaction = Tools.CreateTransaction(bureauCode);
+			if ( transaction == null )
+				return retProc;
+
+			retProc = transaction.Lookup(this);
+			sql     = "exec sp_Upd_CardPayment_Ref @TransactionID = "           + Tools.DBString(TransactionID)
+			                                   + ",@TransactionStatusCode = "   + Tools.DBString(transaction.ResultCode);
+//			                                   + ",@TransactionStatusReason = " + Tools.DBString(transaction.ResultMessage);
+			Tools.LogInfo("Lookup/20","SQL=" + sql,20,this);
 			retSQL = ExecuteSQLUpdate();
-			Tools.LogInfo("Reversal/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString()+", SQL=" + sql,240,this);
+
 			return retProc;
 		}
 
@@ -827,25 +899,28 @@ namespace PCIBusiness
 				return retProc;
 
 			retProc = transaction.Refund(this);
-			sql     = "exec sp_Upd_Refund @MerchantReference = "           + Tools.DBString(merchantReference) // nvarchar(20),
-				                       + ",@PaymentBureauCode = "           + Tools.DBString(bureauCode)        // char(3),
-			                          + ",@TransactionId = "          + Tools.DBString(transaction.PaymentToken)
-			                          + ",@ReversalId = "          + Tools.DBString(transaction.PaymentToken)
-			                          + ",@BureauSubmissionSoap = "        + Tools.DBString(transaction.XMLSent,3)
-			                          + ",@BureauResultSoap = "            + Tools.DBString(transaction.XMLResult,3)
-			                          + ",@TransactionStatusCode = "       + Tools.DBString(transaction.ResultCode)
-		                             + ",@CardTokenisationStatusCode = '" + ( retProc == 0 ? "007'" : "001'" );
-			retSQL = ExecuteSQLUpdate();
-			Tools.LogInfo("Refund/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString()+", SQL=" + sql,240,this);
+
+//	To Do
+//			sql     = "exec sp_Upd_Refund @MerchantReference = "     + Tools.DBString(merchantReference) // nvarchar(20),
+//				                       + ",@PaymentBureauCode = "     + Tools.DBString(bureauCode)        // char(3),
+//			                          + ",@CardToken = "             + Tools.DBString(transaction.PaymentToken)
+//			                          + ",@TransactionId = "         + Tools.DBString(transaction.PaymentReference)
+//			                          + ",@RefundId = "              + Tools.DBString(transaction.OtherReference)
+//			                          + ",@BureauSubmissionSoap = "  + Tools.DBString(transaction.XMLSent,3)
+//			                          + ",@BureauResultSoap = "      + Tools.DBString(transaction.XMLResult,3)
+//			                          + ",@TransactionStatusCode = " + Tools.DBString(transaction.ResultCode)
+//		                             + ",@RefundStatusCode = '"     + ( retProc == 0 ? "007'" : "001'" );
+//			retSQL = ExecuteSQLUpdate();
+//			Tools.LogInfo("Refund/90","retProc=" + retProc.ToString()+", retSQL=" + retSQL.ToString()+", SQL=" + sql,240,this);
+
 			return retProc;
 		}
 
 		public int GetToken()
 		{
-//			int processMode = Tools.StringToInt(Tools.ConfigValue("ProcessMode"));
-			int retProc     = 64020;
-			int retSQL      = 64020;
-			sql             = "";
+			int retProc = 64020;
+			int retSQL  = 64020;
+			sql         = "";
 			Tools.LogInfo("GetToken/10","Merchant Ref=" + merchantReference,10,this);
 
 			if ( transaction == null || transaction.BureauCode != bureauCode )
@@ -896,7 +971,8 @@ namespace PCIBusiness
 			          processMode == (int)Constants.ProcessMode.UpdatePaymentStep1 ||
 			          processMode == (int)Constants.ProcessMode.UpdatePaymentStep1AndStep2 )
 			{
-				sql = "exec sp_Upd_CardPayment @MerchantReference = " + Tools.DBString(merchantReference)
+				sql = "exec sp_Upd_CardPayment @MerchantReference     = " + Tools.DBString(merchantReference)
+			                              + ",@TransactionID         = " + Tools.DBString(transaction.PaymentReference)
 			                              + ",@TransactionStatusCode = '77'";
 				Tools.LogInfo("ProcessPayment/30","SQL 1=" + sql,20,this);
 				retSQL = ExecuteSQLUpdate();
@@ -942,8 +1018,9 @@ namespace PCIBusiness
 			          processMode == (int)Constants.ProcessMode.UpdatePaymentStep2 ||
 			          processMode == (int)Constants.ProcessMode.UpdatePaymentStep1AndStep2 )
 			{
-				sql = "exec sp_Upd_CardPayment @MerchantReference = " + Tools.DBString(merchantReference)
-			                              + ",@TransactionStatusCode = " + Tools.DBString(transaction.ResultCode);
+				sql = "exec sp_Upd_CardPayment @MerchantReference = "     + Tools.DBString(merchantReference)
+			                              + ",@TransactionStatusCode = " + Tools.DBString(transaction.ResultCode)
+			                              + ",@TransactionID = "         + Tools.DBString(transaction.PaymentReference);
 				Tools.LogInfo("ProcessPayment/70","SQL 2=" + sql,20,this);
 				retSQL = ExecuteSQLUpdate();
 				Tools.LogInfo("ProcessPayment/80","SQL 2 complete",20,this);
@@ -974,6 +1051,15 @@ namespace PCIBusiness
 			providerUserID    = dbConn.ColString("MerchantUserId"      ,0,0);
 			providerPassword  = dbConn.ColString("MerchantUserPassword",0,0);
 
+		//	Lookup
+			if ( dbConn.ColStatus("TransactionId") == Constants.DBColumnStatus.ColumnOK &&
+			     dbConn.ColStatus("CardNumber")    != Constants.DBColumnStatus.ColumnOK &&
+			     dbConn.ColStatus("Token")         != Constants.DBColumnStatus.ColumnOK )
+			{
+				transactionID = dbConn.ColString("TransactionId");
+				return;
+			}
+
 		//	Customer
 			if ( dbConn.ColStatus("lastName") == Constants.DBColumnStatus.ColumnOK )
 			{
@@ -999,23 +1085,23 @@ namespace PCIBusiness
 			paymentDescription        = dbConn.ColString("description"              ,0,0);
 
 		//	Card/token/transaction details, not always present, don't log errors
-			ccName           = dbConn.ColString("nameOnCard"     ,0,0);
-			ccNumber         = dbConn.ColString("cardNumber"     ,0,0);
-			ccExpiryMonth    = dbConn.ColString("cardExpiryMonth",0,0);
-			ccExpiryYear     = dbConn.ColString("cardExpiryYear" ,0,0);
-			ccType           = dbConn.ColString("cardType"       ,0,0);
-			ccCVV            = dbConn.ColString("cvv"            ,0,0);
-			ccToken          = dbConn.ColString("token"          ,0,0);
-			ccPIN            = dbConn.ColString("PIN"            ,0,0);
-			transactionID    = dbConn.ColString("transactionId"  ,0,0);
+			ccName           = dbConn.ColUniCode("NameOnCard"     ,0,0);
+			ccNumber         = dbConn.ColString ("CardNumber"     ,0,0);
+			ccExpiryMonth    = dbConn.ColString ("CardExpiryMonth",0,0);
+			ccExpiryYear     = dbConn.ColString ("CardExpiryYear" ,0,0);
+			ccType           = dbConn.ColString ("CardType"       ,0,0);
+			ccCVV            = dbConn.ColString ("CVV"            ,0,0);
+			ccToken          = dbConn.ColString ("Token"          ,0,0);
+			ccPIN            = dbConn.ColString ("PIN"            ,0,0);
+			transactionID    = dbConn.ColString ("TransactionId"  ,0,0);
 		//	Used by Stripe (bureauCode 028)
-			customerID       = dbConn.ColString("customerId"     ,0,0);
-			paymentMethodID  = dbConn.ColString("paymentMethodId",0,0);
+			customerID       = dbConn.ColString ("CustomerId"     ,0,0);
+			paymentMethodID  = dbConn.ColString ("PaymentMethodId",0,0);
 
 		//	Contract/customer mandate
-			mandateDateTime  = dbConn.ColDate  ("ContractDate"   ,0,0);
-			mandateIPAddress = dbConn.ColString("IPAddres"       ,0,0);
-			mandateBrowser   = dbConn.ColString("Browser"        ,0,0);
+			mandateDateTime  = dbConn.ColDate   ("ContractDate"   ,0,0);
+			mandateIPAddress = dbConn.ColString ("IPAddres"       ,0,0);
+			mandateBrowser   = dbConn.ColString ("Browser"        ,0,0);
 
 		//	Token Provider (if empty, then it is the same as the payment provider)
 			if ( dbConn.ColStatus("TxKey") == Constants.DBColumnStatus.ColumnOK )

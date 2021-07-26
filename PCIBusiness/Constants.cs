@@ -108,6 +108,18 @@ namespace PCIBusiness
 			DoNotReadNextRow  = 244
 		}
 
+		public enum ApplicationCode : short
+		{
+			Registration =   0,
+			BackOffice   =   1,
+			CRM          =   2,
+			Mobile       =   6,
+			CareAssist   = 100,
+			iSOS         = 110,
+			LifeGuru     = 120,
+			PayPayYa     = 170
+		}
+
 		public enum BureauStatus : byte
 		{
 			Unknown     = 0,
@@ -147,6 +159,7 @@ namespace PCIBusiness
 			Reversal              =  10,
 			Refund                =  11,
 			ManualPayment         =  73,
+			TransactionLookup     =  81,
 			Test                  = 197
 		}
 

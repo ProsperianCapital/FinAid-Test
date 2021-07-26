@@ -1332,6 +1332,11 @@ namespace PCIBusiness
 			return ((short)providerCode).ToString().PadLeft(3,'0');
 		}
 
+		public static string SystemCode(Constants.ApplicationCode appCode)
+		{
+			return ((short)appCode).ToString().PadLeft(3,'0');
+		}
+
 		public static string TradingProviderCode(Constants.TradingProvider providerCode)
 		{
 			return ((short)providerCode).ToString().PadLeft(3,'0');
@@ -1400,21 +1405,25 @@ namespace PCIBusiness
 		}
 
 
-		public static string MaskCardNumber(string cardNo)
+		public static string MaskedValue(string strToMask)
 		{
-			cardNo = NullToString(cardNo);
-			if ( cardNo.Length >= 20 )
-				return cardNo.Substring(0,6) + "********" + cardNo.Substring(14);
-			if ( cardNo.Length >= 13 )
-				return cardNo.Substring(0,6) + "******"   + cardNo.Substring(12);
-			if ( cardNo.Length >= 11 )
-				return cardNo.Substring(0,6) + "****"     + cardNo.Substring(10);
-			if ( cardNo.Length >=  9 )
-				return cardNo.Substring(0,4) + "****"     + cardNo.Substring( 8);
-			if ( cardNo.Length >=  5 )
-				return cardNo.Substring(0,2) + "**"       + cardNo.Substring( 4);
-			if ( cardNo.Length >=  1 )
-				return cardNo.Substring(0,1) + "****";
+			strToMask = NullToString(strToMask);
+			if ( strToMask.Length >= 40 )
+				return strToMask.Substring(0,10) + "****************" + strToMask.Substring(26);
+			if ( strToMask.Length >= 30 )
+				return strToMask.Substring(0, 8) + "**********"       + strToMask.Substring(18);
+			if ( strToMask.Length >= 20 )
+				return strToMask.Substring(0, 6) + "********"         + strToMask.Substring(14);
+			if ( strToMask.Length >= 13 )
+				return strToMask.Substring(0, 6) + "******"           + strToMask.Substring(12);
+			if ( strToMask.Length >= 11 )
+				return strToMask.Substring(0, 6) + "****"             + strToMask.Substring(10);
+			if ( strToMask.Length >=  9 )
+				return strToMask.Substring(0, 4) + "****"             + strToMask.Substring( 8);
+			if ( strToMask.Length >=  5 )
+				return strToMask.Substring(0, 2) + "**"               + strToMask.Substring( 4);
+			if ( strToMask.Length >=  1 )
+				return strToMask.Substring(0, 1) + "****";
 			return "";
 		}
 
@@ -1662,6 +1671,7 @@ namespace PCIBusiness
 			if ( transactionType == (byte)Constants.TransactionType.Reversal              ) return "Payment Reversal";
 			if ( transactionType == (byte)Constants.TransactionType.Refund                ) return "Refund";
 			if ( transactionType == (byte)Constants.TransactionType.Transfer              ) return "Transfer";
+			if ( transactionType == (byte)Constants.TransactionType.TransactionLookup     ) return "Transaction Lookup";
 			if ( transactionType == (byte)Constants.TransactionType.Test                  ) return "Test";
 			return "Unknown (transactionType=" + transactionType.ToString() + ")";
 		}

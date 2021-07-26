@@ -6,6 +6,7 @@ namespace PCIBusiness
 {
 	public abstract class Transaction : StdDisposable
 	{
+		protected string      otherRef;
 		protected string      payRef;
 		protected string      payToken;
 		protected string      customerId;
@@ -31,6 +32,10 @@ namespace PCIBusiness
 		protected string      keyValuePairs;
 		protected string      d3Form;
 
+		public  string      OtherReference // For reversals, refunds, etc
+		{
+			get { return     Tools.NullToString(otherRef); }
+		}
 		public  string      PaymentReference
 		{
 			get { return     Tools.NullToString(payRef); }
@@ -189,6 +194,11 @@ namespace PCIBusiness
 			return 14060;
 		}
 
+		public virtual int Lookup(Payment payment)
+		{
+			return 14065;
+		}
+
 		public virtual int CardTest(Payment payment)
 		{
 			return 14070;
@@ -291,6 +301,7 @@ namespace PCIBusiness
 			bureauCode          = "";
 			bureauURL           = "";
 			payRef              = "";
+			otherRef            = "";
 			payToken            = "";
 			customerId          = "";
 			paymentMethodId     = "";
@@ -317,11 +328,5 @@ namespace PCIBusiness
 			Clear();
 			LoadBureauDetails(provider);
 		}
-
-//		public Transaction(string provider)
-//		{
-//			Clear();
-//			LoadBureauDetails((Constants.PaymentProvider)Tools.StringToInt(provider));
-//		}
 	}
 }

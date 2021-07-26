@@ -135,10 +135,18 @@ namespace PCIBusiness
 				spr  = "sp_Get_TokenToDelete";
 			else if ( transactionType == (byte)Constants.TransactionType.GetCardFromToken )
 				spr  = "sp_TokenEx_Detoken";
+			else if ( transactionType == (byte)Constants.TransactionType.TransactionLookup )
+				spr  = "sp_Get_CardPayment_Ref";
+			//	Testing
+			//	sql  = "select 1 as Seq,'EoD35wlB34RtDeIVG74RqEexmT8aYkNOw9T2kEH3nyu21zWwQ10Ls9Y8zXfs4pVc' as TransactionId"
+			//      + " union select 2,'M4lbEu9BvQoM6PwmYsym2RrEfM58nh2VpO7vrEZleJ5JbypaP8PYn3wbIEMa1ndZ'"
+			//      + " union select 3,'r39TNmEhjjveTJOY4ZavHE4jmy7WbltlgB0pOYhoV7rxlo72nBTBBWk2ctRcptiZ'"
+			//      + " union select 4,'cWbkjnKdfCnJUnJWxPFqb3i6cQYOw1frg7mFp8VjvxkVh7S7Dn1T2Th1VTpIKRmc'"
+			//      + " union select 5,'ZlXzGHCFCxx5lrj9lwic80hdJ4P8PCKwd04fiAi7bGhErdAI6Dqyp2sGvhgZzXDe'"
+			//      + " union select 6,'GonzoTheSlodFace-WithAnInvalidTransactionIdThatWillFailEveryTime'"
+			//      + " order by Seq";
 
 //	Transaction types with SELECT statements (testing)
-			else if ( transactionType == (byte)Constants.TransactionType.Transfer )
-				sql  = "select 'ZA' as CountryCode,'Janet Smith' as AccountName,'111111' as SortCode,'111111' as AccountNumber,'ZAR' as CurrencyCode,997 as Amount";
 			else if ( transactionType == (byte)Constants.TransactionType.Reversal )
 				sql  = "select 'Rev-001' as merchantReference,'1234' as token,'cj8WeFwDcTCkE74vxYR3V8nX0yv5pyf4Hp0j9oxZtFVZDyI6exUxL7gmlkoC7o2r' as transactionId,899 as amountInCents,'ZAR' as currencyCode,2 as Seq"
 			        + " union select 'Rev-002','1234','vEYFbdWHvcnXTXsyYguNwO7vgDl4DeoCJmfCQAZXnk26oureLdSV88xiXXIy3raP',899,'ZAR',3"
@@ -148,6 +156,8 @@ namespace PCIBusiness
 			        + " order by Seq";
 			else if ( transactionType == (byte)Constants.TransactionType.Refund )
 				sql  = "select 'Ref-001' as merchantReference,'' as token,'' as transactionId,388 as amountInCents,'ZAR' as currencyCode";
+			else if ( transactionType == (byte)Constants.TransactionType.Transfer )
+				sql  = "select 'ZA' as CountryCode,'Janet Smith' as AccountName,'111111' as SortCode,'111111' as AccountNumber,'ZAR' as CurrencyCode,997 as Amount";
 
 //	Transaction types unknown
 			else
@@ -197,6 +207,8 @@ namespace PCIBusiness
 							err = payment.Reversal();
 						else if ( transactionType == (byte)Constants.TransactionType.Refund )
 							err = payment.Refund();
+						else if ( transactionType == (byte)Constants.TransactionType.TransactionLookup )
+							err = payment.Lookup();
 						else if ( transactionType == (byte)Constants.TransactionType.Transfer )
 						//	err = payment.Transfer();
 							err = 41999;
