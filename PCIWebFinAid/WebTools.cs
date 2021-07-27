@@ -509,7 +509,8 @@ namespace PCIWebFinAid
 				else if (ctl.GetType()  == typeof(TextBox))
 					((TextBox)ctl).Attributes.Add("placeholder",fieldValue);
 
-				break;
+				if ( subCtl1 == null && subCtl2 == null )
+					break;
 			}
 			return 0;
 		}
