@@ -480,9 +480,8 @@ namespace PCIWebFinAid
 					ctl = subCtl2.FindControl(ctlID);
 
 				if ( ctl == null )
-					continue;
-
-				if ( blocked == "1" )
+				{ }
+				else if ( blocked == "1" )
 					ctl.Visible = false;
 				else if (ctl.GetType()  == typeof(Literal))
 					((Literal)ctl).Text   = fieldValue;
@@ -509,7 +508,9 @@ namespace PCIWebFinAid
 				else if (ctl.GetType()  == typeof(TextBox))
 					((TextBox)ctl).Attributes.Add("placeholder",fieldValue);
 
-				if ( subCtl1 == null && subCtl2 == null )
+				if ( k == 1 && subCtl1 == null ) // Main page check, first sub control is NULL
+					break;
+				if ( k == 2 && subCtl2 == null ) // First sub control check, second sub control is NULL
 					break;
 			}
 			return 0;
