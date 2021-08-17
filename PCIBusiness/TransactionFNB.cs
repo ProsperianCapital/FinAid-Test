@@ -560,13 +560,13 @@ namespace PCIBusiness
 				                      +                    "&TransRef="+Tools.XMLSafe(payment.MerchantReference)
 				                      +                    "&ResultCode=";
 
-/*
-{"apiKey" : "f9bd07c6-a662-441c-8335-365a967cf1b3",
-"merchantOrderNumber" : "MON123456",
-"amount" : 12300,
-"validationURL" : "http://test.co.za/validate",
-"description" : "Test Transaction"}
-*/
+//	Testing
+//	{	"apiKey" : "f9bd07c6-a662-441c-8335-365a967cf1b3",
+//		"merchantOrderNumber" : "MON123456",
+//		"amount" : 12300,
+//		"validationURL" : "http://test.co.za/validate",
+//		"description" : "Test Transaction" }
+//	Testing
 
 				xmlSent  = Tools.JSONPair("apiKey"             ,payment.ProviderKey,1,"{")
 				         + Tools.JSONPair("merchantOrderNumber",payment.MerchantReference,1)

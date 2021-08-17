@@ -161,19 +161,19 @@ namespace PCIBusiness
 			xmlSent = "";
 
 //	Testing
-			payment.ProviderURL      = "https://staging.payu.co.za";
-//			payment.ProviderUserID   = "800060";
-//			payment.ProviderPassword = "qDRLeKI9";
-//			payment.ProviderKey      = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
-			payment.ProviderUserID   = "200208";
-			payment.ProviderPassword = "g1Kzk8GY";
-			payment.ProviderKey      = "{A580B3C7-3EF3-47F1-9B90-4047CE0EC54C}";
-			payment.RegionalId       = "8212115010081";
-			payment.CurrencyCode     = "USD";
-			payment.CardNumber       = "4000015372250142"; // This card works!
-			payment.CardExpiryMM     = "07";
-			payment.CardExpiryYYYY   = "2025";
-			payment.CardCVV          = "123";
+	//		payment.ProviderURL      = "https://staging.payu.co.za";
+//	//		payment.ProviderUserID   = "800060";
+//	//		payment.ProviderPassword = "qDRLeKI9";
+//	//		payment.ProviderKey      = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
+	//		payment.ProviderUserID   = "200208";
+	//		payment.ProviderPassword = "g1Kzk8GY";
+	//		payment.ProviderKey      = "{A580B3C7-3EF3-47F1-9B90-4047CE0EC54C}";
+	//		payment.RegionalId       = "8212115010081";
+	//		payment.CurrencyCode     = "USD";
+	//		payment.CardNumber       = "4000015372250142"; // This card works!
+	//		payment.CardExpiryMM     = "07";
+	//		payment.CardExpiryYYYY   = "2025";
+	//		payment.CardCVV          = "123";
 //	Testing
 
 			try
