@@ -49,6 +49,8 @@ namespace PCIWebFinAid
 
 		private int QueryData()
 		{
+//			string msg = "";
+
 			try
 			{
 				string secretKey   = "";
@@ -56,6 +58,7 @@ namespace PCIWebFinAid
 				inputDataType      = (byte)Constants.WebDataType.FormPost;
 				errorCode          = 0;
 				errorMsg           = "";
+//				msg                = msg + contentType;
 
 				if ( contentType.Contains("JSON") || contentType.Contains("XML") )
 				{
@@ -71,6 +74,7 @@ namespace PCIWebFinAid
 					strIn.Close();
 					strIn         = null;
 					inputDataJSON = inputDataJSON.Replace(Environment.NewLine,"");
+//					msg           = msg + "=" + inputDataJSON;
 
 					if ( contentType.Contains("JSON") )
 						inputDataType = (byte)Constants.WebDataType.JSON;
@@ -275,7 +279,9 @@ namespace PCIWebFinAid
 			if ( CheckParameters("App,Country,Lang,Dialect") > 0 )
 				return errorCode;
 
-			json.Append ( Tools.JSONPair("LoginLine1","Your Email Address")
+			json.Append ( Tools.JSONPair("LoginHeading","Customer Login")
+			            + Tools.JSONPair("LoginLogo","PayPayYa.png")
+			            + Tools.JSONPair("LoginLine1","Your Email Address")
 			            + Tools.JSONPair("LoginLine2","Password")
 			            + Tools.JSONPair("LoginButtonText","Login")
 			            + Tools.JSONPair("ForgotPasswordText","Forgot Password") );
@@ -810,7 +816,7 @@ namespace PCIWebFinAid
 
 			try
 			{
-				Tools.LogInfo("UIApplicationQuery.SendJSON/1",data,10);
+				Tools.LogInfo("UIApplicationQuery.SendJSON/1",data,220);
 
 				Response.Clear();
 				Response.ContentType = "application/json; charset=utf-8";

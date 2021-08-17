@@ -101,6 +101,7 @@ namespace PCIWebFinAid
 			lblError.Visible = true;
 			lblError.Text    = "";
 			txtOut.Text      = "";
+			string msg       = "TargetURL="+TargetURL;
 
 			try
 			{
@@ -122,41 +123,51 @@ namespace PCIWebFinAid
 					webRequest.ContentType = "application/json;charset=\"utf-8\"";
 					webRequest.Accept      = "application/json";
 					page                   = Encoding.UTF8.GetBytes(txtJSON.Text.Trim());
+					msg                    = msg + " | JSON | " + txtJSON.Text.Trim();
 				}
 				else if ( rdoXML.Checked )
 				{
 					webRequest.ContentType = "text/xml;charset=\"utf-8\"";
 					webRequest.Accept      = "text/xml";
 					page                   = Encoding.UTF8.GetBytes(txtXML.Text.Trim());
+					msg                    = msg + " | XML | " + txtXML.Text.Trim();
 				}
 				else if ( rdoWeb.Checked )
 				{
 					webRequest.ContentType = "application/x-www-form-urlencoded";
 					webRequest.Accept      = "application/x-www-form-urlencoded";
 					page                   = Encoding.UTF8.GetBytes(txtWeb.Text.Trim().Replace(Environment.NewLine,""));
+					msg                    = msg + " | Web | " + txtWeb.Text.Trim().Replace(Environment.NewLine,"");
 				}
 				else
 					return;
+
+				Tools.LogInfo("btnOK_Click/10",msg,220,this);
 
 				using (Stream stream = webRequest.GetRequestStream())
 				{
 					stream.Write(page, 0, page.Length);
 					stream.Flush();
 					stream.Close();
+					msg = msg + " | Request sent";
 				}
 
 				using (WebResponse webResponse = webRequest.GetResponse())
 					using (StreamReader rd = new StreamReader(webResponse.GetResponseStream()))
+					{
 						txtOut.Text = rd.ReadToEnd();
+						msg         = msg + " | Response=" + txtOut.Text;
+						Tools.LogInfo("btnOK_Click/20","Response=" + txtOut.Text,220,this);
+					}
 			}
 			catch (WebException ex1)
 			{
-				Tools.DecodeWebException(ex1,"btnOK_Click/5","XTest");
+				Tools.DecodeWebException(ex1,"btnOK_Click/70","UIApplicationTest");
 			}
 			catch (Exception ex2)
 			{
-				Tools.LogInfo     ("btnOK_Click/10","",220,this);
-				Tools.LogException("btnOK_Click/15","",ex2,this);
+				Tools.LogInfo     ("btnOK_Click/80",msg,220,this);
+				Tools.LogException("btnOK_Click/90",msg,ex2,this);
 			}
 		}
 	}

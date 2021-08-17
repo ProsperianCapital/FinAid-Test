@@ -503,7 +503,7 @@ namespace PCIWebFinAid
 					HyperLink lnk         = (HyperLink)ctl;
 					lnk.Text              = fieldValue;
 					if ( fieldURL.Length  > 0 )
-						lnk.NavigateUrl = fieldURL;
+						lnk.NavigateUrl    = fieldURL;
 				}
 				else if (ctl.GetType()  == typeof(TextBox))
 					((TextBox)ctl).Attributes.Add("placeholder",fieldValue);
