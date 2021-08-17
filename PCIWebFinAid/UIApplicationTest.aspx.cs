@@ -91,6 +91,9 @@ namespace PCIWebFinAid
 		{
 			get
 			{
+//	Testing
+//				return "https://ProsperianBackOffice.azurewebsites.net/UIApplicationQuery.aspx";
+//	Testing
 				string url = Request.Url.GetLeftPart(UriPartial.Authority);
 				return url + ( url.EndsWith("/") ? "" : "/" ) + "UIApplicationQuery.aspx";
 			}
@@ -114,7 +117,10 @@ namespace PCIWebFinAid
 					return;
 				}
 
-				byte[]         page;
+				if ( TargetURL.ToUpper().StartsWith("HTTPS:") )
+					System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
+				string         reqData;
 				HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(TargetURL);
 				webRequest.Method         = "POST";
 
@@ -122,27 +128,31 @@ namespace PCIWebFinAid
 				{
 					webRequest.ContentType = "application/json;charset=\"utf-8\"";
 					webRequest.Accept      = "application/json";
-					page                   = Encoding.UTF8.GetBytes(txtJSON.Text.Trim());
-					msg                    = msg + " | JSON | " + txtJSON.Text.Trim();
+					reqData                = txtJSON.Text;
+					msg                    = msg + " | JSON";
 				}
 				else if ( rdoXML.Checked )
 				{
 					webRequest.ContentType = "text/xml;charset=\"utf-8\"";
 					webRequest.Accept      = "text/xml";
-					page                   = Encoding.UTF8.GetBytes(txtXML.Text.Trim());
-					msg                    = msg + " | XML | " + txtXML.Text.Trim();
+					reqData                = txtXML.Text;
+					msg                    = msg + " | XML";
 				}
 				else if ( rdoWeb.Checked )
 				{
 					webRequest.ContentType = "application/x-www-form-urlencoded";
 					webRequest.Accept      = "application/x-www-form-urlencoded";
-					page                   = Encoding.UTF8.GetBytes(txtWeb.Text.Trim().Replace(Environment.NewLine,""));
-					msg                    = msg + " | Web | " + txtWeb.Text.Trim().Replace(Environment.NewLine,"");
+					reqData                = txtWeb.Text;
+//					page                   = Encoding.UTF8.GetBytes(txtWeb.Text.Trim().Replace(Environment.NewLine,""));
+//					msg                    = msg + " | WebForm | " + txtWeb.Text.Trim().Replace(Environment.NewLine,"");
+					msg                    = msg + " | WebForm";
 				}
 				else
 					return;
 
-				Tools.LogInfo("btnOK_Click/10",msg,220,this);
+				msg         = msg + " | " + reqData;
+				byte[] page = Encoding.UTF8.GetBytes(reqData.Trim().Replace(Environment.NewLine,""));
+//				Tools.LogInfo("btnOK_Click/10",msg,220,this);
 
 				using (Stream stream = webRequest.GetRequestStream())
 				{
@@ -157,8 +167,10 @@ namespace PCIWebFinAid
 					{
 						txtOut.Text = rd.ReadToEnd();
 						msg         = msg + " | Response=" + txtOut.Text;
-						Tools.LogInfo("btnOK_Click/20","Response=" + txtOut.Text,220,this);
+//						Tools.LogInfo("btnOK_Click/20","Response=" + txtOut.Text,220,this);
 					}
+
+				webRequest = null;
 			}
 			catch (WebException ex1)
 			{
