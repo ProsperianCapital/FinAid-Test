@@ -280,7 +280,7 @@ namespace PCIWebFinAid
 				return errorCode;
 
 			json.Append ( Tools.JSONPair("LoginHeading","Customer Login")
-			            + Tools.JSONPair("LoginLogo","PayPayYa.png")
+			            + Tools.JSONPair("LoginLogo","PayPayYaWide.png")
 			            + Tools.JSONPair("LoginLine1","Your Email Address")
 			            + Tools.JSONPair("LoginLine2","Password")
 			            + Tools.JSONPair("LoginButtonText","Login")
