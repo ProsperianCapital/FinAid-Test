@@ -126,6 +126,9 @@ namespace PCIWebFinAid
 				if ( queryName == ("Test").ToUpper() )
 					GetTestData();
 
+				else if ( queryName == ("FinTechHelp").ToUpper() )
+					GetHelp();
+
 				else if ( queryName == ("FinTechGetApplicationCode").ToUpper() )
 					GetApplicationCode();
 
@@ -257,6 +260,33 @@ namespace PCIWebFinAid
 				SetError(11099,"Internal error 19999");
 			}
 			return errorCode;
+		}
+
+		private int GetHelp()
+		{
+			json.Append ( "\"FinTechAPI\":"
+		               + Tools.JSONPair("Help","",1,"{")
+		               + Tools.JSONPair("GetApplicationCode","")
+		               + Tools.JSONPair("GetApplicationInfo","App,Country,Lang,Dialect")
+		               + Tools.JSONPair("GetPageInfoStart"  ,"App,Country,Lang,Dialect")
+		               + Tools.JSONPair("GetPageInfoLogin"  ,"App,Country,Lang,Dialect")
+		               + Tools.JSONPair("GetPageInfo2FA"    ,"App,Country,Lang,Dialect")
+		               + Tools.JSONPair("GetMenuStructure"  ,"App,Lang,Dialect,User")
+		               + Tools.JSONPair("RegisteriSOSEvent" ,"Mobile,ButtonCode,Location")
+		               + Tools.JSONPair("GetiSOSInfo"       ,"Mobile")
+		               + Tools.JSONPair("GetPageContent"    ,"")
+		               + Tools.JSONPair("LogOn"             ,"App,UserName,UserPassword")
+		               + Tools.JSONPair("LogOn2FA"          ,"App,User,2FAChannelCode")
+		               + Tools.JSONPair("GetEWalletList"    ,"App,Country,Lang,Dialect,User")
+		               + Tools.JSONPair("Dashboard"         ,"App,Country,Lang,Dialect,User")
+		               + Tools.JSONPair("GetPageInfoCreateNeweWallet"             ,"App,Country,Lang,Dialect,User")
+		               + Tools.JSONPair("GeteWalletAccountCURList"                ,"App,Country,Lang,Dialect,User")
+		               + Tools.JSONPair("GeteWalletFundingMethodList"             ,"App,Country,Lang,Dialect,User")
+		               + Tools.JSONPair("GetPageInfoEditeWalletAccountDescription","App,Country,Lang,Dialect,User")
+		               + Tools.JSONPair("CreateNeweWalletAccount"                 ,"App,Country,Lang,Dialect,User,CurrencyCode,FundingMethodCode,eWalletDescription")
+		               + Tools.JSONPair("EditeWalletAccountDescription"           ,"App,Country,Lang,Dialect,User,eWalletAccountCode,eWalletDescription")
+		               + Tools.JSONPair("SendSMS","App,Mobile,Message",1,"","}"));
+			return 0;
 		}
 
 		private int GetApplicationCode()
@@ -492,7 +522,7 @@ namespace PCIWebFinAid
 
 		private int GetEWalletList()
 		{
-			if ( CheckParameters("App,User,Country,Lang,Dialect") > 0 )
+			if ( CheckParameters("App,Country,Lang,Dialect,User") > 0 )
 				return errorCode;
 
 			sqlSP = "sp_FinTechGeteWalletList";
@@ -561,7 +591,7 @@ namespace PCIWebFinAid
 
 		private int GetMenuStructure()
 		{
-			if ( CheckParameters("App,User") > 0 )
+			if ( CheckParameters("App,Lang,Dialect,User") > 0 )
 				return errorCode;
 
 			List<MenuItem> menuList;
