@@ -132,6 +132,9 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechGetApplicationInfo").ToUpper() )
 					GetApplicationInfo();
 
+				else if ( queryName == ("FinTechGetPageInfoStart").ToUpper() )
+					GetPageInfoStart();
+
 				else if ( queryName == ("FinTechGetPageInfoLogin").ToUpper() )
 					GetPageInfoLogin();
 
@@ -258,7 +261,8 @@ namespace PCIWebFinAid
 
 		private int GetApplicationCode()
 		{
-			json.Append ( Tools.JSONPair("ApplicationCode",Tools.SystemCode(Constants.ApplicationCode.PayPayYa)) );
+		//	json.Append ( Tools.JSONPair("ApplicationCode",Tools.SystemCode(Constants.ApplicationCode.PayPayYa)) );
+			json.Append ( Tools.JSONPair("ApplicationCode",Tools.SystemCode(Constants.ApplicationCode.Mobile)) );
 			return 0;
 		}
 
@@ -274,13 +278,24 @@ namespace PCIWebFinAid
 			return 0;
 		}
 
+		private int GetPageInfoStart()
+		{
+			if ( CheckParameters("App,Country,Lang,Dialect") > 0 )
+				return errorCode;
+
+			json.Append ( Tools.JSONPair("StartHeading","Mobile Banking User Interface")
+			            + Tools.JSONPair("StartLogo","PayPayYaWide.png")
+			            + Tools.JSONPair("StartButtonText","Login Here") );
+			return 0;
+		}
+
 		private int GetPageInfoLogin()
 		{
 			if ( CheckParameters("App,Country,Lang,Dialect") > 0 )
 				return errorCode;
 
 			json.Append ( Tools.JSONPair("LoginHeading","Customer Login")
-			            + Tools.JSONPair("LoginLogo","PayPayYaWide.png")
+			            + Tools.JSONPair("LoginLogo","PayPayYa.png")
 			            + Tools.JSONPair("LoginLine1","Your Email Address")
 			            + Tools.JSONPair("LoginLine2","Password")
 			            + Tools.JSONPair("LoginButtonText","Login")
