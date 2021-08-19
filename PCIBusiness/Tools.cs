@@ -147,13 +147,13 @@ namespace PCIBusiness
 
 			theDate = theDate.Trim();
 
-			if ( dateFormat == 1 && theDate.Length == 10 )
+			if ( dateFormat == 1 && theDate.Length >= 10 )
 			{
 				dd = theDate.Substring(0,2);	
 				mm = theDate.Substring(3,2);	
 				yy = theDate.Substring(6,4);	
 			}
-			else if ( ( dateFormat == 2 || dateFormat == 7 ) && theDate.Length == 10 )
+			else if ( ( dateFormat == 2 || dateFormat == 7 ) && theDate.Length >= 10 )
 			{
 				dd = theDate.Substring(8,2);	
 				mm = theDate.Substring(5,2);	
