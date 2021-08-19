@@ -10,14 +10,15 @@ namespace PCIBusiness
 	public static class Tools
 	{
 //		Date formats:
-//		 1	 dd/mm/yyyy                (31/12/2009)
-//		 2	 yyyy/mm/dd                (2006/04/22)
-//		 3	 DD 3-char Month Abbr YYYY (22 Sep 2008)
-//		 4	 DD full Month Name YYYY   (19 August 2003)
+//		 1	 dd/mm/yyyy                    (31/12/2009)
+//		 2	 yyyy/mm/dd                    (2006/04/22)
+//		 3	 DD 3-char Month Abbr YYYY     (22 Sep 2008)
+//		 4	 DD full Month Name YYYY       (19 August 2003)
 //		 5	 yyyymmdd
-//		 6  DayName DD MonthName YYYY (Saturday 13 October 2010)
+//		 6  DayName DD MonthName YYYY     (Saturday 13 October 2010)
 //		 7  YYYY-MM-DD
 //		 8	 Day DD 3-char Month Abbr YYYY (Fri 22 Sep 2008)
+//		 9  YYMMDD                        (210131)
 //		19	 yyyy/mm/dd (for SQL)
 
 //		Time formats:
@@ -27,6 +28,8 @@ namespace PCIBusiness
 //		 4  at HH:mm                  (at 17:03)
 //		11  HH:mm:ss                  Hard-code to 00:00:00
 //		12  HH:mm:ss                  Hard-code to 23:59:59
+//		23  HH:mm:ss                  Use time if non-zero, else hard-code to 00:00:00
+//		24  HH:mm:ss                  Use time if non-zero, else hard-code to 23:59:59
 
 		static byte logSeverity;
 
@@ -144,38 +147,57 @@ namespace PCIBusiness
 			string   hh  = "";
 			string   mi  = "";
 			string   ss  = "";
+			byte     pos = 0;
 
 			theDate = theDate.Trim();
 
-			if ( dateFormat == 1 && theDate.Length >= 10 )
+			if ( dateFormat == 1 && theDate.Length >= 10 ) // dd/mm/yyyy
 			{
-				dd = theDate.Substring(0,2);	
-				mm = theDate.Substring(3,2);	
-				yy = theDate.Substring(6,4);	
+				dd  = theDate.Substring(0,2);	
+				mm  = theDate.Substring(3,2);	
+				yy  = theDate.Substring(6,4);
+				pos = 12;
 			}
-			else if ( ( dateFormat == 2 || dateFormat == 7 ) && theDate.Length >= 10 )
+			else if ( dateFormat == 5 && theDate.Length >= 8 ) // yyyymmdd
 			{
-				dd = theDate.Substring(8,2);	
-				mm = theDate.Substring(5,2);	
-				yy = theDate.Substring(0,4);	
+				dd  = theDate.Substring(6,2);	
+				mm  = theDate.Substring(4,2);	
+				yy  = theDate.Substring(0,4);	
+				pos = 10;
 			}
-			else if ( dateFormat == 13 && ( theDate.Length == 16 || theDate.Length == 19 ) )
+			else if ( ( dateFormat == 2 || dateFormat == 7 ) && theDate.Length >= 10 ) // yyyy/mm/dd
 			{
-				dd = theDate.Substring(0,2);	
-				mm = theDate.Substring(3,2);	
-				yy = theDate.Substring(6,4);	
-				hh = theDate.Substring(11,2);	
-				mi = theDate.Substring(14,2);
-				if ( theDate.Length == 19 )
-					ss = theDate.Substring(17,2);
+				dd  = theDate.Substring(8,2);	
+				mm  = theDate.Substring(5,2);	
+				yy  = theDate.Substring(0,4);	
+				pos = 12;
 			}
-			else if ( dateFormat == 0 && timeFormat == 3 && theDate.Length == 5 )
+//			else if ( dateFormat == 13 && ( theDate.Length == 16 || theDate.Length == 19 ) )
+//			{
+//				dd = theDate.Substring(0,2);	
+//				mm = theDate.Substring(3,2);	
+//				yy = theDate.Substring(6,4);	
+//				hh = theDate.Substring(11,2);	
+//				mi = theDate.Substring(14,2);
+//				if ( theDate.Length == 19 )
+//					ss = theDate.Substring(17,2);
+//			}
+			else if ( dateFormat == 0 && timeFormat > 0 && theDate.Length > 0 )
 			{
 				dd = "31";
 				mm = "12";
 				yy = "1999";
-				hh = theDate.Substring(0,2);	
-				mi = theDate.Substring(3,2);
+				pos = 1;
+			}
+
+			if ( pos > 0 && timeFormat > 0 )
+			{
+				pos--;
+				hh = theDate.Substring(pos,2);
+				if ( theDate.Length > pos+3 )
+					mi = theDate.Substring(pos+3,2);
+				if ( theDate.Length > pos+6 )
+					ss = theDate.Substring(pos+6,2);
 			}
 
 			try
@@ -247,6 +269,16 @@ namespace PCIBusiness
 				theTime = "00:00:00";
 			else if ( timeFormat == 12 )  // 23:59:59
 				theTime = "23:59:59";
+			else if ( timeFormat == 23 )
+				if ( whatDate.Hour > 0 || whatDate.Minute > 0 || whatDate.Second > 0 )
+					theTime = whatDate.ToString("HH:mm:ss",CultureInfo.InvariantCulture);
+				else
+					theTime = "00:00:00";
+			else if ( timeFormat == 24 )
+				if ( whatDate.Hour > 0 || whatDate.Minute > 0 || whatDate.Second > 0 )
+					theTime = whatDate.ToString("HH:mm:ss",CultureInfo.InvariantCulture);
+				else
+					theTime = "23:59:59";
 
 			return ( quotes ? "'" : "" ) + (theDate + " " + theTime).Trim() + ( quotes ? "'" : "" );
 		}
