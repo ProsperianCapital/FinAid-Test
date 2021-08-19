@@ -438,33 +438,32 @@ namespace PCIWebFinAid
 
 			if ( startTime.Length > 0 )
 			{
-				sessionDate = Tools.StringToDate(startTime,2); // yyyy/mm/dd
+				sessionDate = Tools.StringToDate(startTime,2,3); // yyyy/mm/dd hh:mm
 				if ( sessionDate <= Constants.DateNull )
-					sessionDate    = Tools.StringToDate(startTime,1); // dd/mm/yyyy
+					sessionDate    = Tools.StringToDate(startTime,1,3); // dd/mm/yyyy hh:mm
 				if ( sessionDate <= Constants.DateNull )
 					return SetError(21710,"Invalid start date");
-				sql = sql + ",@StartDateTime=" + Tools.DateToSQL(sessionDate,0);
+				sql = sql + ",@StartDateTime=" + Tools.DateToSQL(sessionDate,23);
 			}
 
 			if ( endTime.Length > 0 )
 			{
-				sessionDate = Tools.StringToDate(endTime,2); // yyyy/mm/dd
+				sessionDate = Tools.StringToDate(endTime,2,3); // yyyy/mm/dd hh:mm
 				if ( sessionDate <= Constants.DateNull )
-					sessionDate    = Tools.StringToDate(endTime,1); // dd/mm/yyyy
+					sessionDate    = Tools.StringToDate(endTime,1,3); // dd/mm/yyyy hh:mm
 				if ( sessionDate <= Constants.DateNull )
 					return SetError(21720,"Invalid end date");
-				sql = sql + ",@EndDatetime=" + Tools.DateToSQL(sessionDate,0);
+				sql = sql + ",@EndDatetime=" + Tools.DateToSQL(sessionDate,24);
 			}
 
-			sqlSP = "sp_LG_Get_Calendar";
+			sqlSP  = "sp_LG_Get_Calendar";
+			if ( sql.StartsWith(",") )
+				sql = "  " + sql.Substring(1);
+			sql = "exec " + sqlSP + sql;
 
 			using (MiscList mList = new MiscList())
 				try
 				{
-					sql = "exec " + sqlSP + "[X]" + sql;
-					sql = sql.Replace("[X],","  ");
-					sql = sql.Replace("[X]","");
-
 					if ( mList.ExecQuery(sql,0,"",false) != 0 )
 						return SetError(21730,"Internal error: SQL " + sqlSP,sql,sql);
 
