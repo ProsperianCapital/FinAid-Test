@@ -192,6 +192,9 @@ namespace PCIWebFinAid
 				else if ( queryName == ("FinTechSendSMS").ToUpper() )
 					SendSMS();
 
+				else if ( queryName == ("FinTechGetGuruCalendar").ToUpper() )
+					GetGuruCalendar();
+
 //	Should this be here at all?
 				else if ( queryName == ("FinTechGetPageContent").ToUpper() )
 					GetPageContent();
@@ -279,6 +282,7 @@ namespace PCIWebFinAid
 		               + Tools.JSONPair("LogOn2FA"          ,"App,User,2FAChannelCode")
 		               + Tools.JSONPair("GetEWalletList"    ,"App,Country,Lang,Dialect,User")
 		               + Tools.JSONPair("Dashboard"         ,"App,Country,Lang,Dialect,User")
+		               + Tools.JSONPair("GetGuruCalendar"   ,"GuruCode,StartDate,EndDate")
 		               + Tools.JSONPair("GetPageInfoCreateNeweWallet"             ,"App,Country,Lang,Dialect,User")
 		               + Tools.JSONPair("GeteWalletAccountCURList"                ,"App,Country,Lang,Dialect,User")
 		               + Tools.JSONPair("GeteWalletFundingMethodList"             ,"App,Country,Lang,Dialect,User")
@@ -420,6 +424,79 @@ namespace PCIWebFinAid
 				}
 
 			return SetError(11715,"Internal error: SQL " + sqlSP,sql,sql);
+		}
+
+
+		private int GetGuruCalendar()
+		{
+			string   guruCode  = ParmValue("GuruCode");
+			string   startTime = ParmValue("StartDate");
+			string   endTime   = ParmValue("EndDate");
+			DateTime sessionDate;
+
+			sql = ( guruCode.Length  > 0 ? ",@GuruCode=" + Tools.DBString(guruCode) : "" );
+
+			if ( startTime.Length > 0 )
+			{
+				sessionDate = Tools.StringToDate(startTime,2); // yyyy/mm/dd
+				if ( sessionDate <= Constants.DateNull )
+					sessionDate    = Tools.StringToDate(startTime,1); // dd/mm/yyyy
+				if ( sessionDate <= Constants.DateNull )
+					return SetError(21710,"Invalid start date");
+				sql = sql + ",@StartDateTime=" + Tools.DateToSQL(sessionDate,0);
+			}
+
+			if ( endTime.Length > 0 )
+			{
+				sessionDate = Tools.StringToDate(endTime,2); // yyyy/mm/dd
+				if ( sessionDate <= Constants.DateNull )
+					sessionDate    = Tools.StringToDate(endTime,1); // dd/mm/yyyy
+				if ( sessionDate <= Constants.DateNull )
+					return SetError(21720,"Invalid end date");
+				sql = sql + ",@EndDatetime=" + Tools.DateToSQL(sessionDate,0);
+			}
+
+			sqlSP = "sp_LG_Get_Calendar";
+
+			using (MiscList mList = new MiscList())
+				try
+				{
+					sql = "exec " + sqlSP + "[X]" + sql;
+					sql = sql.Replace("[X],","  ");
+					sql = sql.Replace("[X]","");
+
+					if ( mList.ExecQuery(sql,0,"",false) != 0 )
+						return SetError(21730,"Internal error: SQL " + sqlSP,sql,sql);
+
+					if ( mList.EOF )
+						return SetError(21740,"No data returned: SQL " + sqlSP,sql);
+
+					json.Append("\"Calendar\":[");
+
+					while ( ! mList.EOF )
+					{
+						sessionDate = mList.GetColumnDate("SessionStartDateTime");
+						startTime   = sessionDate.Hour.ToString().PadLeft(2,'0') + ":" + sessionDate.Minute.ToString().PadLeft(2,'0');
+						sessionDate = mList.GetColumnDate("SessionEndDateTime");
+						endTime     = sessionDate.Hour.ToString().PadLeft(2,'0') + ":" + sessionDate.Minute.ToString().PadLeft(2,'0');
+						json.Append ( Tools.JSONPair("GuruName"             ,mList.GetColumn("GuruName"), 1, "{")
+						            + Tools.JSONPair("SessionDate"          ,Tools.DateToString(sessionDate,2))
+						            + Tools.JSONPair("StartTime"            ,startTime)
+						            + Tools.JSONPair("EndTime"              ,endTime)
+					//	            + Tools.JSONPair("GuruStatusCode"       ,mList.GetColumn("GuruStatusCode"))
+						            + Tools.JSONPair("GuruStatusDescription",mList.GetColumn("GuruStatusDescription"))
+						            + Tools.JSONPair("ClientDetails"        ,mList.GetColumn("ClientDetails"), 1, "", "},") );
+						mList.NextRow();
+					}
+					json.Append("]");
+					return 0;
+				}
+				catch (Exception ex)
+				{
+					Tools.LogException("GetGuruCalendar",sql,ex,this);
+				}
+
+			return SetError(21750,"Internal error: SQL " + sqlSP,sql,sql);
 		}
 
 		private int GetiSOSInfo(byte verNo=0) // Use verNo = 199 for testing
