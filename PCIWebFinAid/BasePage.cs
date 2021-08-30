@@ -80,7 +80,7 @@ namespace PCIWebFinAid
 			if ( lblError == null && detailMode == 0 ) // No brief msg holder and no detailed msg
 				return;
 
-			if ( errCode <  0 )
+			if ( errCode < 0 )
 			{
 				if ( lblError != null )
 				{

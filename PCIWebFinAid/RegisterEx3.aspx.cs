@@ -1261,6 +1261,7 @@ namespace PCIWebFinAid
 							string moneyBackPolicy    = "";
 							string cancellationPolicy = "";
 							lblp6CCType.Text          = "";
+							errNo                     = 30082;
 
 							sql = "exec sp_WP_Get_ProductPolicy"
 							    +     " @ProductCode ="         + Tools.DBString(productCode)
@@ -1268,12 +1269,17 @@ namespace PCIWebFinAid
 							    +     ",@LanguageDialectCode =" + Tools.DBString(languageDialectCode);
 							if ( miscList.ExecQuery(sql,0) == 0 && ! miscList.EOF )
 							{
+								errNo              = 30083;
 								refundPolicy       = miscList.GetColumn("RefundPolicyText",1,6);
 								moneyBackPolicy    = miscList.GetColumn("MoneyBackPolicyText",1,6);
 								cancellationPolicy = miscList.GetColumn("CancellationPolicyText",1,6);
 							}
+							Tools.LogInfo("btnNext_Click/30084",sql+" (errNo="+errNo.ToString()+")",223,this);
 							if ( refundPolicy.Length < 1 || moneyBackPolicy.Length < 1 || cancellationPolicy.Length < 1 )
-								SetErrorDetail("btnNext_Click/30085",30080,"Unable to retrieve product policy text",sql);
+//								SetErrorDetail("btnNext_Click/30085",30080,"Unable to retrieve product policy text",sql);
+//	Testing
+								SetErrorDetail("btnNext_Click/30085",30080,"Unable to retrieve product policy text",sql,2,2,null,false,223);
+//	Testing
 							else
 							{
 								lblp6RefundPolicy.Text       = refundPolicy + "<br />&nbsp;";
