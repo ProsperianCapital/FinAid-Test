@@ -269,11 +269,13 @@ namespace PCIBusiness
 			ret = 30;
 			if ( transactionType == (byte)Constants.TransactionType.GetToken )
 			{
+				ret     = 40;
 				url     = url + "/mtokenizer/api/card";
 				urlPart = "API/CARD/";
 			}
 			else if ( transactionType == (byte)Constants.TransactionType.TokenPayment ) // Spec section 3.3.3
 			{
+				ret     = 50;
 				url     = url + "/ape/api/pay/simple";
 				urlPart = "PAY/TRACK/";
 			}
@@ -282,7 +284,7 @@ namespace PCIBusiness
 				ret = 70;
 				if ( payment.TransactionID.Length < 1 )
 				{
-					Tools.LogInfo("CallWebService/260","Track, empty TransactionID",220,this);
+					Tools.LogInfo("CallWebService/260","Lookup, empty TransactionID",220,this);
 					resultCode = "70";
 					resultMsg  = "(70) Empty TransactionID";
 					return ret;
@@ -319,15 +321,16 @@ namespace PCIBusiness
 			}
 			else if ( transactionType == (byte)Constants.TransactionType.ThreeDSecurePayment )
 			{
-				url      = url + "/eCommerce/v2/prepareTransaction";
-			//	tranDesc = "3d Secure Payment";
+				ret = 100;
+				url = url + "/eCommerce/v2/prepareTransaction";
 			}
 			else
 			{
 				Tools.LogInfo("CallWebService/263","transactionType="+transactionType.ToString(),220,this);
+				ret        = 110;
 				resultCode = "110";
 				resultMsg  = "(110) Unknown transaction type";
-				return 110;
+				return ret;
 			}
 
 			ret         = 130;
@@ -338,8 +341,9 @@ namespace PCIBusiness
 			byte endLog = 1;
 
 //	Testing
-//			payment.ProviderKey      = "REVqzPb4PTiD4n7Fo3e1p1VyQUbvmy5YZuhxhUpqL0EcUTGWHPchIUd8m3LeixLf"; // API Key
-//			payment.ProviderPassword = "sbyq0CUAvUSPMifwRH0f68fByQ5ZgSjyEpbeKg77o1Cuh9BD30ucakuXtpCCUMJN"; // Instance Key
+//			payment.ProviderKey       = "REVqzPb4PTiD4n7Fo3e1p1VyQUbvmy5YZuhxhUpqL0EcUTGWHPchIUd8m3LeixLf"; // API Key
+//			payment.ProviderPassword  = "sbyq0CUAvUSPMifwRH0f68fByQ5ZgSjyEpbeKg77o1Cuh9BD30ucakuXtpCCUMJN"; // Instance Key
+//			payment.ProviderKeyPublic = "Blah ?"                                                          ; // Shared secret key
 //	Testing
 
 			try
@@ -352,9 +356,12 @@ namespace PCIBusiness
 				webRequest.Method              = webMethod;
 				ret                            = 170;
 				webRequest.Headers["API-KEY"]  = payment.ProviderKey;
-				ret                            = 190;
+				ret                            = 180;
 				webRequest.Headers["INST-KEY"] = payment.ProviderPassword;
-				ret                            = 200;
+				ret                            = 190;
+				if ( payment.ProviderKeyPublic.Length > 0 )
+					webRequest.Headers["SHARED-SECRET"] = payment.ProviderKeyPublic;
+				ret                                    = 200;
 
 //	Testing
 //	Detailed logging

@@ -49,7 +49,7 @@ namespace PCIBusiness
 		private string   bureauCode;
 		private string   providerAccount;
 		private string   providerKey;
-//		private string   providerKeyPublic;
+		private string   providerKeyPublic;
 		private string   providerUserID;
 		private string   providerPassword;
 		private string   providerURL;
@@ -216,22 +216,23 @@ namespace PCIBusiness
 				return "";
 			}
 		}
-//		public string    ProviderKeyPublic
-//		{
-//			set { providerKeyPublic = value.Trim(); }
-//			get
-//			{
-//				if ( Tools.NullToString(providerKeyPublic).Length > 0 )
-//					return providerKeyPublic;
-//
-//				else if ( Tools.SystemIsLive() )
-//					return "";
-//				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PaymentsOS) )
-//					return "daea1771-d849-4fa4-a648-230a54186964";
-//
-//				return "";
-//			}
-//		}
+		public string    ProviderKeyPublic
+		{
+			set { providerKeyPublic = value.Trim(); }
+			get
+			{
+				if ( Tools.NullToString(providerKeyPublic).Length > 0 )
+					return providerKeyPublic;
+				else if ( Tools.SystemIsLive() )
+					return "";
+				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.PaymentsOS) )
+					return "daea1771-d849-4fa4-a648-230a54186964";
+//				else if ( bureauCode == Tools.BureauCode(Constants.PaymentProvider.FNB) )
+//					return "Blah";
+
+				return "";
+			}
+		}
 		public string    ProviderProfileID
 		{
 			set { providerProfileID = value.Trim(); }
@@ -1067,6 +1068,7 @@ namespace PCIBusiness
 			providerProfileID = dbConn.ColString("MerchantProfileId"   ,0,0);
 			providerUserID    = dbConn.ColString("MerchantUserId"      ,0,0);
 			providerPassword  = dbConn.ColString("MerchantUserPassword",0,0);
+			providerKeyPublic = dbConn.ColString("MerchantKeyPublic"   ,0,0);
 
 		//	Lookup
 			if ( dbConn.ColStatus("TransactionId") == Constants.DBColumnStatus.ColumnOK &&
