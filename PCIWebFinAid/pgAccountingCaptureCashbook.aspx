@@ -12,7 +12,7 @@
 <body>
 <ascx:XHeader runat="server" ID="ascxXHeader" />
 <!--#include file="IncludeBusy.htm" -->
-<script type="text/javascript" src="JS/AJAXUtils.js"></script>
+<script async type="text/javascript" src="JS/AJAXUtils.js"></script>
 <script type="text/javascript">
 function AJAXFinalize(typeCode)
 {

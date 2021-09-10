@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 	<title>Secure Registration</title>
+	<link rel="preload" href="CSS/FinAid.css" as="style" />
 	<link rel="stylesheet" href="CSS/FinAid.css" type="text/css" />
 	<asp:Literal runat="server" ID="lblGoogleUA"></asp:Literal>
 	<!--#include file="IncludeMainSimple.htm" -->

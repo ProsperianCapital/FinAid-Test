@@ -6,6 +6,7 @@
 <head runat="server">
 	<!--#include file="IncludeMainSimple.htm" -->
 	<title>Contract Lookup</title>
+	<link rel="preload" href="CSS/FinAid.css" as="style" />
 	<link rel="stylesheet" href="CSS/FinAid.css" type="text/css" />
 	<link rel="stylesheet" href="CSS/Calendar.css" type="text/css" />
 	<link rel="shortcut icon" href="Images/favicon.ico" />

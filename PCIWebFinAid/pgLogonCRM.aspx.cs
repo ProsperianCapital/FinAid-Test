@@ -36,7 +36,7 @@ namespace PCIWebFinAid
 //	English
 					if ( sessionGeneral.ProductCode.Length           < 1 ) sessionGeneral.ProductCode         = "10387";
 					if ( sessionGeneral.LanguageCode.Length          < 1 ) sessionGeneral.LanguageCode        = "ENG";
-					if ( sessionGeneral.LanguageDialectCode.Length   < 1 ) sessionGeneral.LanguageDialectCode = "0001";
+					if ( sessionGeneral.LanguageDialectCode.Length   < 1 ) sessionGeneral.LanguageDialectCode = "0002";
 //	Thai
 //					if ( sessionGeneral.ProductCode.Length           < 1 ) sessionGeneral.ProductCode         = "10024";
 //					if ( sessionGeneral.LanguageCode.Length          < 1 ) sessionGeneral.LanguageCode        = "THA";
