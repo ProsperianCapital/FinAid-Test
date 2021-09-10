@@ -1,12 +1,6 @@
-//	JavaScript session timeout functionality
-
-//	(c)Paul Kilfoil
-//		Software Development & IT Consulting
-//		+27 84 438 5400 (phone)
-//		PaulKilfoil..[at]..gmail.com
-//		www.PaulKilfoil.co.za
-
-//	Do not copy without the permission of the author
+//	(c) Paul Kilfoil
+//	Software Development & IT Consulting
+//	www.PaulKilfoil.co.za
 
 try
 {
