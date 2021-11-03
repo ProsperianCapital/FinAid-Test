@@ -14,7 +14,7 @@ namespace PCIWebFinAid
 			if ( Page.IsPostBack )
 				return;
 			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) != 0 )
-				StartOver(10999);
+				StartOver(10995,(int)Constants.ErrorType.InvalidMenu);
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace PCIWebFinAid
 				LoadPageData();
 			}
 			else
-				StartOver(11010);
+				StartOver(11010,(int)Constants.ErrorType.InvalidMenu);
 		}
 
 		private void ClearData()

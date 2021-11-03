@@ -12,9 +12,9 @@ namespace PCIWebFinAid
 	{
 		protected string sqlProc;
 
-		protected override void StartOver(int errNo,string pageName="")
+		protected override void StartOver(int errNo,int errType=0,string pageName="")
 		{
-			base.StartOver ( errNo, ( pageName.Length > 0 ? pageName : "pgLogonCRM.aspx" ) );
+			base.StartOver ( errNo, errType, ( pageName.Length > 0 ? pageName : "pgLogonCRM.aspx" ) );
 		}
 
 		protected abstract void LoadPageData();

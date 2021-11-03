@@ -17,10 +17,10 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) != 0 )
-				StartOver(10888);
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
+				SetErrorDetail("",-777);
 			else
-				SetErrorDetail("",-888);
+				StartOver(10777,(int)Constants.ErrorType.InvalidMenu);
 		}
 
 		private int ValidateData()

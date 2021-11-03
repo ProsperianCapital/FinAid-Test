@@ -19,13 +19,13 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) != 0 )
-				StartOver(77088);
-			else
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
 			{
 				SetErrorDetail("",-888);
 				LoadTickers();
 			}
+			else
+				StartOver(77088,(int)Constants.ErrorType.InvalidMenu);
 		}
 
 		private void LoadTickers(int chgCode=0,int chgStatus=0)

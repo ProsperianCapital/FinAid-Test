@@ -26,10 +26,10 @@ namespace PCIWebFinAid
 				return;
 			if ( Page.IsPostBack )
 				return;
-			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) != 0 )
-				StartOver(10888);
-			else
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
 				LoadData();
+			else
+				StartOver(10887,(int)Constants.ErrorType.InvalidMenu);
 		}
 		private void LoadData()
 		{

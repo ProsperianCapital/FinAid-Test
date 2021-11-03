@@ -26,14 +26,14 @@ namespace PCIWebFinAid
 				LoadDataAJAX("S");
 				return;
 			}
-			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) != 0 )
-				StartOver(10888);
-			else
+			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
 			{
 				LoadDataInitial();
 				if ( WebTools.RequestValueInt(Request,"Mode") == 213 )
 					ascxXFooter.JSText = WebTools.JavaScriptSource("EditMode(2)");
 			}
+			else
+				StartOver(10888,(int)Constants.ErrorType.InvalidMenu);
 		}
 
 		private void LoadDataAJAX(string dType)

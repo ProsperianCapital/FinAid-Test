@@ -20,7 +20,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
 				LoadPageData();
 			else
-				StartOver(17666);
+				StartOver(17666,(int)PCIBusiness.Constants.ErrorType.InvalidMenu);
 		}
 
 		protected override void LoadPageData()

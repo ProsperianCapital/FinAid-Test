@@ -22,7 +22,7 @@ namespace PCIWebFinAid
 			if ( ascxXMenu.LoadMenu(ApplicationCode,sessionGeneral) == 0 )
 				LoadPageData();
 			else
-				StartOver(19010);
+				StartOver(19010,(int)Constants.ErrorType.InvalidMenu);
 		}
 
 		private void ClearData()
