@@ -13,9 +13,9 @@ namespace PCIWebFinAid
 		protected int tabNo;
 		protected int maxTab;
 
-		protected override void StartOver(int errNo,string pageName="")
+		protected override void StartOver(int errNo,int errType=0,string pageName="")
 		{
-			base.StartOver ( errNo, ( pageName.Length > 0 ? pageName : "Login.aspx" ) );
+			base.StartOver ( errNo, errType, ( pageName.Length > 0 ? pageName : "Login.aspx" ) );
 		}
 
 		protected int LoadLabelText(Control subCtl=null)
@@ -42,7 +42,8 @@ namespace PCIWebFinAid
 						{
 							ret        = 10050;
 							fieldCode  = mList.GetColumn("WebsiteFieldCode");
-							fieldValue = mList.GetColumn("WebsiteFieldValue").Replace(Environment.NewLine,"<br />");
+							fieldValue = mList.GetColumn("WebsiteFieldValue",1,6);
+						//	fieldValue = mList.GetColumn("WebsiteFieldValue").Replace(Environment.NewLine,"<br />");
 							ret        = 10060;
 							ReplaceControlText("X"+fieldCode,fieldValue,subCtl);
 							ReplaceControlText("Y"+fieldCode,fieldValue);
