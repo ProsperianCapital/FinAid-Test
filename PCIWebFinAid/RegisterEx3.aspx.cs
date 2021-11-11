@@ -689,21 +689,21 @@ namespace PCIWebFinAid
 //								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.Stripe);
 //								paymentAccount    = "sk_test_51It78gGmZVKtO2iKBZF7DA5JisJzRqvibQdXSfBj9eQh4f5UDvgCShZIjznOWCxu8MtcJG5acVkDcd8K184gIegx001uXlHI5g"; // Secret key
 //	Testing : PayU
-								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.PayU);
+//								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.PayU);
 //							//	paymentId         = "800060";
 //							//	paymentAccount    = "qDRLeKI9";
 //							//	paymentKey        = "{FBEF85FC-F395-4DE2-B17F-F53098D8F978}";
-								paymentId         = "200208";
-								paymentAccount    = "g1Kzk8GY";
-								paymentKey        = "{A580B3C7-3EF3-47F1-9B90-4047CE0EC54C}";
-								paymentURL        = "https://staging.payu.co.za";
+//								paymentId         = "200208";
+//								paymentAccount    = "g1Kzk8GY";
+//								paymentKey        = "{A580B3C7-3EF3-47F1-9B90-4047CE0EC54C}";
+//								paymentURL        = "https://staging.payu.co.za";
 //	Testing : FNB
 //								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.FNB);
 //								paymentAccount    = "";
 //								paymentKey        = "";
 //								paymentURL        = "";
 //	Testing
-								if ( paymentURL.Length < 1 || paymentAccount.Length < 1 || paymentKey.Length < 1 )
+//								if ( paymentURL.Length < 1 || paymentAccount.Length < 1 || paymentKey.Length < 1 )
 									Tools.LogInfo("LoadContractCode",sql+" -> bureauCodeToken="  +bureauCodeToken
 									                                     + ", bureauCodePayment="+bureauCodePayment
 									                                     + ", tokenAccount="     +tokenAccount
