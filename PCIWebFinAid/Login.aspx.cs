@@ -11,7 +11,8 @@ namespace PCIWebFinAid
 
 			if ( ! Page.IsPostBack )
 			{
-				hdnVer.Value                       = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
+			//	hdnVer.Value                       = "Version " + SystemDetails.AppVersion + " (" + SystemDetails.AppDate + ")";
+				hdnVer.Value                       = WebTools.VersionDetails(2);
 				lblVer.Text                        = hdnVer.Value;
 				lblVer.Visible                     = ! Tools.SystemIsLive();
 				sessionGeneral.ProductCode         = WebTools.RequestValueString(Request,"PC");

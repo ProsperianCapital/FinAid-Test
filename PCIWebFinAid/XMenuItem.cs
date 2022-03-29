@@ -9,7 +9,7 @@ namespace PCIWebFinAid
 	{
 		private byte   level;
 		private string menuCode;
-		private string menuName;
+//		private string menuName;
 		private string menuDescription;
 		private string url;
 		private string imageName;
@@ -26,11 +26,11 @@ namespace PCIWebFinAid
 			get { return Tools.NullToString(menuCode); }
 			set { menuCode = value.Trim(); }
 		}
-		public string   Name
-		{
-			get { return Tools.NullToString(menuName); }
-			set { menuName = value.Trim(); }
-		}
+//		public string   Name
+//		{
+//			get { return Tools.NullToString(menuName); }
+//			set { menuName = value.Trim(); }
+//		}
 		public string   Description
 		{
 			get { return Tools.NullToString(menuDescription); }
@@ -70,7 +70,7 @@ namespace PCIWebFinAid
 			string x           = "Level" + levelCode.ToString();
 			level              = levelCode;
 			menuCode           = mList.GetColumn("MenuItemCode");
-			menuName           = mList.GetColumn(x+"ItemDescription");
+//			menuName           = mList.GetColumn(x+"ItemDescription");
 			menuDescription    = mList.GetColumn(x+"ItemDescription");
 			url                = mList.GetColumn("URL");
 			imageName          = mList.GetColumn("MenuLevel1ImageFileName");
