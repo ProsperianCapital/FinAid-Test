@@ -555,6 +555,10 @@ namespace PCIBusiness
 		{
 			try
 			{
+			//	Quick check, if not there just exit
+				if ( xmlTag.Length > 0 && ! xmlDoc.OuterXml.ToString().ToUpper().Contains(xmlTag.ToUpper()))
+					return "";
+
 				string ret = "";
 
 				if ( parentNode.Length > 0 )
@@ -1825,6 +1829,7 @@ namespace PCIBusiness
 			if ( transactionType == (byte)Constants.TransactionType.Refund                ) return "Refund";
 			if ( transactionType == (byte)Constants.TransactionType.Transfer              ) return "Transfer";
 			if ( transactionType == (byte)Constants.TransactionType.TransactionLookup     ) return "Transaction Lookup";
+			if ( transactionType == (byte)Constants.TransactionType.ZeroValueCheck        ) return "Zero-Value Validation";
 			if ( transactionType == (byte)Constants.TransactionType.Test                  ) return "Test";
 			return "Unknown (transactionType=" + transactionType.ToString() + ")";
 		}
@@ -1870,9 +1875,6 @@ namespace PCIBusiness
 				}
 			return "";
 		}
-
-//		public static string LoadChat(string productCode)
-//		{
 
 		public static string LoadChat(string productCode)
 		{
