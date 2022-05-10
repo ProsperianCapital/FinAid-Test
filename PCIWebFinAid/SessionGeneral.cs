@@ -120,7 +120,12 @@
 		}
 		public  string  LanguageDialectCode
 		{
-			get { return languageDialectCode; }
+			get
+			{
+				if ( string.IsNullOrWhiteSpace(languageDialectCode) )
+					return "0001";
+				return languageDialectCode;
+			}
 			set { languageDialectCode = value.Trim(); }
 		}
 

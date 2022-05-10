@@ -15,7 +15,6 @@ namespace PCIWebFinAid
 			userCode = "";
 		}
 
-//		public int LoadMenu(string sessionUserCode,string sessionAppCode)
 		public int LoadMenu(string sessionAppCode,SessionGeneral sessionGeneral)
 		{
 			if ( sessionGeneral == null )
@@ -27,7 +26,6 @@ namespace PCIWebFinAid
 			string languageDialectCode = Tools.NullToString(sessionGeneral.LanguageDialectCode);
 			userCode                   = Tools.NullToString(sessionGeneral.UserCode);
 			applicationCode            = Tools.NullToString(sessionAppCode);
-			languageDialectCode        = ( languageDialectCode.Length < 1 ? "0001" : languageDialectCode );
 
 			if ( userCode.Length < 1 || languageCode.Length < 1 || applicationCode.Length < 1 )
 			{
