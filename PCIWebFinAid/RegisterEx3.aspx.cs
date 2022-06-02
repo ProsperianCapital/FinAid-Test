@@ -726,14 +726,14 @@ namespace PCIWebFinAid
 //								paymentURL        = "";
 
 //	WorldPay
-								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.WorldPay);
-								paymentAccount    = "PROSPERIANSGPECOM";
-								paymentId         = "AI5QP9YBY291AGF5AD7I";
-								paymentKey        = "st0nE#481";
-							//	paymentURL        = "https://centinelapistag.cardinalcommerce.com/V2/Cruise/Collect";
-							//	paymentURL        = "https://secure-test.worldpay.com/shopper/3ds/ddc.html";
-								paymentURL        = "https://secure-test.worldpay.com/jsp/merchant/xml/paymentService.jsp";
-								regTranType       = "3";
+//								bureauCodePayment = Tools.BureauCode(Constants.PaymentProvider.WorldPay);
+//								paymentAccount    = "PROSPERIANSGPECOM";
+//								paymentId         = "AI5QP9YBY291AGF5AD7I";
+//								paymentKey        = "st0nE#481";
+//							//	paymentURL        = "https://centinelapistag.cardinalcommerce.com/V2/Cruise/Collect";
+//							//	paymentURL        = "https://secure-test.worldpay.com/shopper/3ds/ddc.html";
+//								paymentURL        = "https://secure-test.worldpay.com/jsp/merchant/xml/paymentService.jsp";
+//								regTranType       = "3";
 //	WorldPay, zero-value validation
 //								regTranType       = "0";
 
