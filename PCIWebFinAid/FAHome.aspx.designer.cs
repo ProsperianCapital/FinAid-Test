@@ -105,13 +105,13 @@ namespace PCIWebFinAid
 		protected global::System.Web.UI.WebControls.Button btnWidth;
 
 		/// <summary>
-		/// P12006 control.
+		/// P12002 control.
 		/// </summary>
 		/// <remarks>
 		/// Auto-generated field.
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.Image P12006;
+		protected global::System.Web.UI.WebControls.Image P12002;
 
 		/// <summary>
 		/// X100002 control.
