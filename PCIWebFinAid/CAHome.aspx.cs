@@ -33,8 +33,6 @@ namespace PCIWebFinAid
 				promoCode           = hdnPromoCode.Value;
 				ListItem lang       = ascxHeader.lstLanguage.SelectedItem;
 
-//				if ( lang != null && ( lang.Text != languageCode || lang.Value != languageDialectCode ) )
-
 				if ( lang != null && lang.Value != languageCode + "|" + languageDialectCode )
 				{
 					languageCode        = lang.Text;

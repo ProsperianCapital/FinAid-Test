@@ -2,7 +2,7 @@
 
 <div class="Header1 HeaderCA">
 	<div class="HCol1">
-		<asp:Image runat="server" ID="P12001" />
+		<asp:Image runat="server" ID="P12001" Height="75px" />
 	</div>
 	<div class="HCol2">
 		<asp:Literal runat="server" ID="X100003">100003</asp:Literal>
