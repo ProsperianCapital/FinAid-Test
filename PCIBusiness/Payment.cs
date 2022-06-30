@@ -69,6 +69,7 @@ namespace PCIBusiness
 		private string   sessionIdClient;
 		private string   sessionIdProvider;
 		private string   machineCookie;
+		private string   schemeTranID;
 
 //	Stripe fields
 		private string   customerID;
@@ -146,7 +147,21 @@ namespace PCIBusiness
 		}
 		public string    PaymentMethodID
 		{
+			set { paymentMethodID = value.Trim(); }
 			get { return  Tools.NullToString(paymentMethodID); }
+		}
+
+//		WorldPay stuff
+		public string    SchemeTransactionID
+		{
+		//	Don't TRIM() here!
+			set { schemeTranID = value; }
+			get
+			{
+				if ( string.IsNullOrWhiteSpace(schemeTranID) )
+					return "";
+				return schemeTranID;
+			}
 		}
 
 //		Payment Provider stuff
@@ -961,11 +976,12 @@ namespace PCIBusiness
 				sql = "exec sp_Upd_CardTokenVault @MerchantReference = "           + Tools.DBString(merchantReference) // nvarchar(20),
 				                              + ",@PaymentBureauCode = "           + Tools.DBString(bureauCode)        // char(3),
 			                                 + ",@PaymentBureauToken = "          + Tools.DBString(transaction.PaymentToken)
-			                                 + ",@PaymentMethodId = "             + Tools.DBString(transaction.PaymentMethodId)
 			                                 + ",@CustomerId = "                  + Tools.DBString(transaction.CustomerId)
 			                                 + ",@BureauSubmissionSoap = "        + Tools.DBString(transaction.XMLSent,3)
 			                                 + ",@BureauResultSoap = "            + Tools.DBString(transaction.XMLResult,3)
 			                                 + ",@TransactionStatusCode = "       + Tools.DBString(transaction.ResultCode)
+//			                                 + ",@PaymentMethodId = "             + Tools.DBString(transaction.PaymentReference)
+			                                 + ",@PaymentMethodId = "             + Tools.DBString(transaction.PaymentMethodId)
 		                                    + ",@CardTokenisationStatusCode = '" + ( retProc == 0 ? "007'" : "001'" );
 				Tools.LogInfo("GetToken/20","SQL=" + sql,20,this);
 				retSQL = ExecuteSQLUpdate();
@@ -985,11 +1001,12 @@ namespace PCIBusiness
 				return 38020;
 
 			int retProc = transaction.CardValidation(this);
-			sql         = "exec sp_Upd_PaymentZeroValue @TransactionId = "            + Tools.DBString(transactionID)
-		                                           + ",@TransactionStatusCode = "    + Tools.DBString(transaction.ResultCode)
-		                                           + ",@TransactionStatusMessage = " + Tools.DBString(transaction.ResultMessage);
+			sql         = "exec sp_Upd_PaymentZeroValue @TransactionId = "               + Tools.DBString(transactionID)
+		                                           + ",@TransactionStatusCode = "       + Tools.DBString(transaction.ResultCode)
+		                                           + ",@TransactionStatusMessage = "    + Tools.DBString(transaction.ResultMessage)
+		                                           + ",@SchemeTransactionIdentifier = " + Tools.DBString(transaction.PaymentReference);
 
-			Tools.LogInfo("ZeroValueCheck/20","SQL=" + sql,222,this);
+			Tools.LogInfo("ZeroValueCheck/20","SQL=" + sql,20,this);
 			int retSQL = ExecuteSQLUpdate();
 			return retProc;
 		}
@@ -1146,6 +1163,8 @@ namespace PCIBusiness
 		//	Used by Stripe (bureauCode 028)
 			customerID       = dbConn.ColString ("CustomerId"     ,0,0);
 			paymentMethodID  = dbConn.ColString ("PaymentMethodId",0,0);
+		//	Used by WorldPay (bureauCode 032)
+			schemeTranID     = dbConn.ColString ("SchemeTransactionIdentifier",0,0);
 
 		//	Contract/customer mandate
 			mandateDateTime  = dbConn.ColDate   ("ContractDate"   ,0,0);
